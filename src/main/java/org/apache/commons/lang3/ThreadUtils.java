@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>
@@ -33,6 +35,7 @@ import java.util.List;
  * @see java.lang.ThreadGroup
  * @since 3.5
  */
+@AnnotatedFor({"nullness"}) 
 public class ThreadUtils {
 
     /**
@@ -49,7 +52,7 @@ public class ThreadUtils {
      * @throws  SecurityException  if the current thread cannot modify
      *          thread groups from this thread's thread group up to the system thread group
      */
-    public static Thread findThreadById(final long threadId, final ThreadGroup threadGroup) {
+    public static @Nullable Thread findThreadById(final long threadId, final ThreadGroup threadGroup) {
         Validate.isTrue(threadGroup != null, "The thread group must not be null");
         final Thread thread = findThreadById(threadId);
         if(thread != null && threadGroup.equals(thread.getThreadGroup())) {
@@ -72,7 +75,7 @@ public class ThreadUtils {
      * @throws  SecurityException  if the current thread cannot modify
      *          thread groups from this thread's thread group up to the system thread group
      */
-    public static Thread findThreadById(final long threadId, final String threadGroupName) {
+    public static @Nullable Thread findThreadById(final long threadId, final String threadGroupName) {
         Validate.isTrue(threadGroupName != null, "The thread group name must not be null");
         final Thread thread = findThreadById(threadId);
         if(thread != null && thread.getThreadGroup() != null && thread.getThreadGroup().getName().equals(threadGroupName)) {
@@ -218,7 +221,7 @@ public class ThreadUtils {
      * @throws  SecurityException  if the current thread cannot modify
      *          thread groups from this thread's thread group up to the system thread group
      */
-    public static Thread findThreadById(final long threadId) {
+    public static @Nullable Thread findThreadById(final long threadId) {
         final Collection<Thread> result = findThreads(new ThreadIdPredicate(threadId));
         return result.isEmpty() ? null : result.iterator().next();
     }

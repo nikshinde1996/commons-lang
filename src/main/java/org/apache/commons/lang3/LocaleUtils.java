@@ -25,6 +25,8 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>Operations to assist when working with a {@link Locale}.</p>
@@ -35,6 +37,7 @@ import java.util.concurrent.ConcurrentMap;
  *
  * @since 2.2
  */
+@AnnotatedFor({"nullness"}) 
 public class LocaleUtils {
 
     /** Concurrent map of language locales by country. */
@@ -87,7 +90,7 @@ public class LocaleUtils {
      * @throws IllegalArgumentException if the string is an invalid format
      * @see Locale#forLanguageTag(String)
      */
-    public static Locale toLocale(final String str) {
+    public static @Nullable Locale toLocale(final @Nullable String str) {
         if (str == null) {
             return null;
         }
@@ -223,7 +226,7 @@ public class LocaleUtils {
      * @param defaultLocale  the default locale to use if no other is found
      * @return the unmodifiable list of Locale objects, 0 being locale, not null
      */
-    public static List<Locale> localeLookupList(final Locale locale, final Locale defaultLocale) {
+    public static List<Locale> localeLookupList(final @Nullable Locale locale, final Locale defaultLocale) {
         final List<Locale> list = new ArrayList<>(4);
         if (locale != null) {
             list.add(locale);
@@ -289,7 +292,7 @@ public class LocaleUtils {
      * @param countryCode  the 2 letter country code, null returns empty
      * @return an unmodifiable List of Locale objects, not null
      */
-    public static List<Locale> languagesByCountry(final String countryCode) {
+    public static List<Locale> languagesByCountry(final @Nullable String countryCode) {
         if (countryCode == null) {
             return Collections.emptyList();
         }
@@ -320,7 +323,7 @@ public class LocaleUtils {
      * @param languageCode  the 2 letter language code, null returns empty
      * @return an unmodifiable List of Locale objects, not null
      */
-    public static List<Locale> countriesByLanguage(final String languageCode) {
+    public static List<Locale> countriesByLanguage(final @Nullable String languageCode) {
         if (languageCode == null) {
             return Collections.emptyList();
         }

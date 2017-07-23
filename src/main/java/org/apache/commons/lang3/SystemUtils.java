@@ -17,6 +17,8 @@
 package org.apache.commons.lang3;
 
 import java.io.File;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>
@@ -32,6 +34,7 @@ import java.io.File;
  *
  * @since 1.0
  */
+@AnnotatedFor({"nullness"}) 
 public class SystemUtils {
 
     /**
@@ -85,7 +88,7 @@ public class SystemUtils {
      *
      * @since 2.1
      */
-    public static final String AWT_TOOLKIT = getSystemProperty("awt.toolkit");
+    public static final @Nullable String AWT_TOOLKIT = getSystemProperty("awt.toolkit");
 
     /**
      * <p>
@@ -107,7 +110,7 @@ public class SystemUtils {
      * @since 2.0
      * @since Java 1.2
      */
-    public static final String FILE_ENCODING = getSystemProperty("file.encoding");
+    public static final @Nullable String FILE_ENCODING = getSystemProperty("file.encoding");
 
     /**
      * <p>
@@ -134,7 +137,7 @@ public class SystemUtils {
      * @since Java 1.1
      */
     @Deprecated
-    public static final String FILE_SEPARATOR = getSystemProperty("file.separator");
+    public static final @Nullable String FILE_SEPARATOR = getSystemProperty("file.separator");
 
     /**
      * <p>
@@ -152,7 +155,7 @@ public class SystemUtils {
      *
      * @since 2.1
      */
-    public static final String JAVA_AWT_FONTS = getSystemProperty("java.awt.fonts");
+    public static final @Nullable String JAVA_AWT_FONTS = getSystemProperty("java.awt.fonts");
 
     /**
      * <p>
@@ -170,7 +173,7 @@ public class SystemUtils {
      *
      * @since 2.1
      */
-    public static final String JAVA_AWT_GRAPHICSENV = getSystemProperty("java.awt.graphicsenv");
+    public static final @Nullable String JAVA_AWT_GRAPHICSENV = getSystemProperty("java.awt.graphicsenv");
 
     /**
      * <p>
@@ -191,7 +194,7 @@ public class SystemUtils {
      * @since 2.1
      * @since Java 1.4
      */
-    public static final String JAVA_AWT_HEADLESS = getSystemProperty("java.awt.headless");
+    public static final @Nullable String JAVA_AWT_HEADLESS = getSystemProperty("java.awt.headless");
 
     /**
      * <p>
@@ -209,7 +212,7 @@ public class SystemUtils {
      *
      * @since 2.1
      */
-    public static final String JAVA_AWT_PRINTERJOB = getSystemProperty("java.awt.printerjob");
+    public static final @Nullable String JAVA_AWT_PRINTERJOB = getSystemProperty("java.awt.printerjob");
 
     /**
      * <p>
@@ -227,7 +230,7 @@ public class SystemUtils {
      *
      * @since Java 1.1
      */
-    public static final String JAVA_CLASS_PATH = getSystemProperty("java.class.path");
+    public static final @Nullable String JAVA_CLASS_PATH = getSystemProperty("java.class.path");
 
     /**
      * <p>
@@ -245,7 +248,7 @@ public class SystemUtils {
      *
      * @since Java 1.1
      */
-    public static final String JAVA_CLASS_VERSION = getSystemProperty("java.class.version");
+    public static final @Nullable String JAVA_CLASS_VERSION = getSystemProperty("java.class.version");
 
     /**
      * <p>
@@ -264,7 +267,7 @@ public class SystemUtils {
      *
      * @since Java 1.2. Not used in Sun versions after 1.2.
      */
-    public static final String JAVA_COMPILER = getSystemProperty("java.compiler");
+    public static final @Nullable String JAVA_COMPILER = getSystemProperty("java.compiler");
 
     /**
      * <p>
@@ -282,7 +285,7 @@ public class SystemUtils {
      *
      * @since Java 1.4
      */
-    public static final String JAVA_ENDORSED_DIRS = getSystemProperty("java.endorsed.dirs");
+    public static final @Nullable String JAVA_ENDORSED_DIRS = getSystemProperty("java.endorsed.dirs");
 
     /**
      * <p>
@@ -300,7 +303,7 @@ public class SystemUtils {
      *
      * @since Java 1.3
      */
-    public static final String JAVA_EXT_DIRS = getSystemProperty("java.ext.dirs");
+    public static final @Nullable String JAVA_EXT_DIRS = getSystemProperty("java.ext.dirs");
 
     /**
      * <p>
@@ -318,7 +321,7 @@ public class SystemUtils {
      *
      * @since Java 1.1
      */
-    public static final String JAVA_HOME = getSystemProperty(JAVA_HOME_KEY);
+    public static final @Nullable String JAVA_HOME = getSystemProperty(JAVA_HOME_KEY);
 
     /**
      * <p>
@@ -336,7 +339,7 @@ public class SystemUtils {
      *
      * @since Java 1.2
      */
-    public static final String JAVA_IO_TMPDIR = getSystemProperty(JAVA_IO_TMPDIR_KEY);
+    public static final @Nullable String JAVA_IO_TMPDIR = getSystemProperty(JAVA_IO_TMPDIR_KEY);
 
     /**
      * <p>
@@ -354,7 +357,7 @@ public class SystemUtils {
      *
      * @since Java 1.2
      */
-    public static final String JAVA_LIBRARY_PATH = getSystemProperty("java.library.path");
+    public static final @Nullable String JAVA_LIBRARY_PATH = getSystemProperty("java.library.path");
 
     /**
      * <p>
@@ -373,7 +376,7 @@ public class SystemUtils {
      * @since 2.0
      * @since Java 1.3
      */
-    public static final String JAVA_RUNTIME_NAME = getSystemProperty("java.runtime.name");
+    public static final @Nullable String JAVA_RUNTIME_NAME = getSystemProperty("java.runtime.name");
 
     /**
      * <p>
@@ -392,7 +395,7 @@ public class SystemUtils {
      * @since 2.0
      * @since Java 1.3
      */
-    public static final String JAVA_RUNTIME_VERSION = getSystemProperty("java.runtime.version");
+    public static final @Nullable String JAVA_RUNTIME_VERSION = getSystemProperty("java.runtime.version");
 
     /**
      * <p>
@@ -410,7 +413,7 @@ public class SystemUtils {
      *
      * @since Java 1.2
      */
-    public static final String JAVA_SPECIFICATION_NAME = getSystemProperty("java.specification.name");
+    public static final @Nullable String JAVA_SPECIFICATION_NAME = getSystemProperty("java.specification.name");
 
     /**
      * <p>
@@ -428,7 +431,7 @@ public class SystemUtils {
      *
      * @since Java 1.2
      */
-    public static final String JAVA_SPECIFICATION_VENDOR = getSystemProperty("java.specification.vendor");
+    public static final @Nullable String JAVA_SPECIFICATION_VENDOR = getSystemProperty("java.specification.vendor");
 
     /**
      * <p>
@@ -446,8 +449,8 @@ public class SystemUtils {
      *
      * @since Java 1.3
      */
-    public static final String JAVA_SPECIFICATION_VERSION = getSystemProperty("java.specification.version");
-    private static final JavaVersion JAVA_SPECIFICATION_VERSION_AS_ENUM = JavaVersion.get(JAVA_SPECIFICATION_VERSION);
+    public static final @Nullable String JAVA_SPECIFICATION_VERSION = getSystemProperty("java.specification.version");
+    private static final @Nullable JavaVersion JAVA_SPECIFICATION_VERSION_AS_ENUM = JavaVersion.get(JAVA_SPECIFICATION_VERSION);
 
     /**
      * <p>
@@ -466,7 +469,7 @@ public class SystemUtils {
      * @since 2.1
      * @since Java 1.4
      */
-    public static final String JAVA_UTIL_PREFS_PREFERENCES_FACTORY =
+    public static final @Nullable String JAVA_UTIL_PREFS_PREFERENCES_FACTORY =
         getSystemProperty("java.util.prefs.PreferencesFactory");
 
     /**
@@ -485,7 +488,7 @@ public class SystemUtils {
      *
      * @since Java 1.1
      */
-    public static final String JAVA_VENDOR = getSystemProperty("java.vendor");
+    public static final @Nullable String JAVA_VENDOR = getSystemProperty("java.vendor");
 
     /**
      * <p>
@@ -503,7 +506,7 @@ public class SystemUtils {
      *
      * @since Java 1.1
      */
-    public static final String JAVA_VENDOR_URL = getSystemProperty("java.vendor.url");
+    public static final @Nullable String JAVA_VENDOR_URL = getSystemProperty("java.vendor.url");
 
     /**
      * <p>
@@ -521,7 +524,7 @@ public class SystemUtils {
      *
      * @since Java 1.1
      */
-    public static final String JAVA_VERSION = getSystemProperty("java.version");
+    public static final @Nullable String JAVA_VERSION = getSystemProperty("java.version");
 
     /**
      * <p>
@@ -540,7 +543,7 @@ public class SystemUtils {
      * @since 2.0
      * @since Java 1.2
      */
-    public static final String JAVA_VM_INFO = getSystemProperty("java.vm.info");
+    public static final @Nullable String JAVA_VM_INFO = getSystemProperty("java.vm.info");
 
     /**
      * <p>
@@ -558,7 +561,7 @@ public class SystemUtils {
      *
      * @since Java 1.2
      */
-    public static final String JAVA_VM_NAME = getSystemProperty("java.vm.name");
+    public static final @Nullable String JAVA_VM_NAME = getSystemProperty("java.vm.name");
 
     /**
      * <p>
@@ -576,7 +579,7 @@ public class SystemUtils {
      *
      * @since Java 1.2
      */
-    public static final String JAVA_VM_SPECIFICATION_NAME = getSystemProperty("java.vm.specification.name");
+    public static final @Nullable String JAVA_VM_SPECIFICATION_NAME = getSystemProperty("java.vm.specification.name");
 
     /**
      * <p>
@@ -594,7 +597,7 @@ public class SystemUtils {
      *
      * @since Java 1.2
      */
-    public static final String JAVA_VM_SPECIFICATION_VENDOR = getSystemProperty("java.vm.specification.vendor");
+    public static final @Nullable String JAVA_VM_SPECIFICATION_VENDOR = getSystemProperty("java.vm.specification.vendor");
 
     /**
      * <p>
@@ -612,7 +615,7 @@ public class SystemUtils {
      *
      * @since Java 1.2
      */
-    public static final String JAVA_VM_SPECIFICATION_VERSION = getSystemProperty("java.vm.specification.version");
+    public static final @Nullable String JAVA_VM_SPECIFICATION_VERSION = getSystemProperty("java.vm.specification.version");
 
     /**
      * <p>
@@ -630,7 +633,7 @@ public class SystemUtils {
      *
      * @since Java 1.2
      */
-    public static final String JAVA_VM_VENDOR = getSystemProperty("java.vm.vendor");
+    public static final @Nullable String JAVA_VM_VENDOR = getSystemProperty("java.vm.vendor");
 
     /**
      * <p>
@@ -648,7 +651,7 @@ public class SystemUtils {
      *
      * @since Java 1.2
      */
-    public static final String JAVA_VM_VERSION = getSystemProperty("java.vm.version");
+    public static final @Nullable String JAVA_VM_VERSION = getSystemProperty("java.vm.version");
 
     /**
      * <p>
@@ -668,7 +671,7 @@ public class SystemUtils {
      * @since Java 1.1
      */
     @Deprecated
-    public static final String LINE_SEPARATOR = getSystemProperty("line.separator");
+    public static final @Nullable String LINE_SEPARATOR = getSystemProperty("line.separator");
 
     /**
      * <p>
@@ -686,7 +689,7 @@ public class SystemUtils {
      *
      * @since Java 1.1
      */
-    public static final String OS_ARCH = getSystemProperty("os.arch");
+    public static final @Nullable String OS_ARCH = getSystemProperty("os.arch");
 
     /**
      * <p>
@@ -704,7 +707,7 @@ public class SystemUtils {
      *
      * @since Java 1.1
      */
-    public static final String OS_NAME = getSystemProperty("os.name");
+    public static final @Nullable String OS_NAME = getSystemProperty("os.name");
 
     /**
      * <p>
@@ -722,7 +725,7 @@ public class SystemUtils {
      *
      * @since Java 1.1
      */
-    public static final String OS_VERSION = getSystemProperty("os.version");
+    public static final @Nullable String OS_VERSION = getSystemProperty("os.version");
 
     /**
      * <p>
@@ -743,7 +746,7 @@ public class SystemUtils {
      * @since Java 1.1
      */
     @Deprecated
-    public static final String PATH_SEPARATOR = getSystemProperty("path.separator");
+    public static final @Nullable String PATH_SEPARATOR = getSystemProperty("path.separator");
 
     /**
      * <p>
@@ -763,7 +766,7 @@ public class SystemUtils {
      * @since 2.0
      * @since Java 1.2
      */
-    public static final String USER_COUNTRY = getSystemProperty("user.country") == null ?
+    public static final @Nullable String USER_COUNTRY = getSystemProperty("user.country") == null ?
             getSystemProperty("user.region") : getSystemProperty("user.country");
 
     /**
@@ -782,7 +785,7 @@ public class SystemUtils {
      *
      * @since Java 1.1
      */
-    public static final String USER_DIR = getSystemProperty(USER_DIR_KEY);
+    public static final @Nullable String USER_DIR = getSystemProperty(USER_DIR_KEY);
 
     /**
      * <p>
@@ -800,7 +803,7 @@ public class SystemUtils {
      *
      * @since Java 1.1
      */
-    public static final String USER_HOME = getSystemProperty(USER_HOME_KEY);
+    public static final @Nullable String USER_HOME = getSystemProperty(USER_HOME_KEY);
 
     /**
      * <p>
@@ -819,7 +822,7 @@ public class SystemUtils {
      * @since 2.0
      * @since Java 1.2
      */
-    public static final String USER_LANGUAGE = getSystemProperty("user.language");
+    public static final @Nullable String USER_LANGUAGE = getSystemProperty("user.language");
 
     /**
      * <p>
@@ -837,7 +840,7 @@ public class SystemUtils {
      *
      * @since Java 1.1
      */
-    public static final String USER_NAME = getSystemProperty("user.name");
+    public static final @Nullable String USER_NAME = getSystemProperty("user.name");
 
     /**
      * <p>
@@ -855,7 +858,7 @@ public class SystemUtils {
      *
      * @since 2.1
      */
-    public static final String USER_TIMEZONE = getSystemProperty("user.timezone");
+    public static final @Nullable String USER_TIMEZONE = getSystemProperty("user.timezone");
 
     // Java version checks
     // -----------------------------------------------------------------------
@@ -1570,7 +1573,7 @@ public class SystemUtils {
      * @param property the system property name
      * @return the system property value or {@code null} if a security problem occurs
      */
-    private static String getSystemProperty(final String property) {
+    private static @Nullable String getSystemProperty(final String property) {
         try {
             return System.getProperty(property);
         } catch (final SecurityException ex) {
@@ -1654,7 +1657,7 @@ public class SystemUtils {
      * @param versionPrefix the prefix for the expected Java version
      * @return true if matches, or false if not or can't determine
      */
-    static boolean isJavaVersionMatch(final String version, final String versionPrefix) {
+    static boolean isJavaVersionMatch(final @Nullable String version, final String versionPrefix) {
         if (version == null) {
             return false;
         }
@@ -1673,7 +1676,7 @@ public class SystemUtils {
      * @param osVersionPrefix the prefix for the expected OS version
      * @return true if matches, or false if not or can't determine
      */
-    static boolean isOSMatch(final String osName, final String osVersion, final String osNamePrefix, final String osVersionPrefix) {
+    static boolean isOSMatch(final @Nullable String osName, final @Nullable String osVersion, final String osNamePrefix, final String osVersionPrefix) {
         if (osName == null || osVersion == null) {
             return false;
         }
@@ -1690,7 +1693,7 @@ public class SystemUtils {
      * @param osNamePrefix the prefix for the expected OS name
      * @return true if matches, or false if not or can't determine
      */
-    static boolean isOSNameMatch(final String osName, final String osNamePrefix) {
+    static boolean isOSNameMatch(final @Nullable String osName, final String osNamePrefix) {
         if (osName == null) {
             return false;
         }

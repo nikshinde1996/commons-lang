@@ -16,6 +16,8 @@
  */
 package org.apache.commons.lang3;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 /**
  * <p>Operations on {@link CharSequence} that are
  * {@code null} safe.</p>
@@ -23,6 +25,7 @@ package org.apache.commons.lang3;
  * @see CharSequence
  * @since 3.0
  */
+@AnnotatedFor({"nullness"}) 
 public class CharSequenceUtils {
 
     private static final int NOT_FOUND = -1;
@@ -53,7 +56,7 @@ public class CharSequenceUtils {
      * @throws IndexOutOfBoundsException if {@code start} is negative or if
      *  {@code start} is greater than {@code length()}
      */
-    public static CharSequence subSequence(final CharSequence cs, final int start) {
+    public static @Nullable CharSequence subSequence(final @Nullable CharSequence cs, final int start) {
         return cs == null ? null : cs.subSequence(start, cs.length());
     }
 

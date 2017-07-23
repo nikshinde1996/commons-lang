@@ -27,6 +27,8 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>Assists with the serialization process and performs additional functionality based
@@ -44,6 +46,7 @@ import java.util.Map;
  * <p>#ThreadSafe#</p>
  * @since 1.0
  */
+@AnnotatedFor({"nullness"}) 
 public class SerializationUtils {
 
     /**
@@ -74,7 +77,7 @@ public class SerializationUtils {
      * @return the cloned object
      * @throws SerializationException (runtime) if the serialization fails
      */
-    public static <T extends Serializable> T clone(final T object) {
+    public static <T extends Serializable> @Nullable T clone(final @Nullable T object) {
         if (object == null) {
             return null;
         }
@@ -132,7 +135,7 @@ public class SerializationUtils {
      * @throws IllegalArgumentException if {@code outputStream} is {@code null}
      * @throws SerializationException (runtime) if the serialization fails
      */
-    public static void serialize(final Serializable obj, final OutputStream outputStream) {
+    public static void serialize(final @Nullable Serializable obj, final OutputStream outputStream) {
         Validate.isTrue(outputStream != null, "The OutputStream must not be null");
         try (ObjectOutputStream out = new ObjectOutputStream(outputStream)){
             out.writeObject(obj);

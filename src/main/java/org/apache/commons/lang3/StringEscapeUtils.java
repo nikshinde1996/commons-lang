@@ -29,6 +29,8 @@ import org.apache.commons.lang3.text.translate.NumericEntityUnescaper;
 import org.apache.commons.lang3.text.translate.OctalUnescaper;
 import org.apache.commons.lang3.text.translate.UnicodeUnescaper;
 import org.apache.commons.lang3.text.translate.UnicodeUnpairedSurrogateRemover;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>Escapes and unescapes {@code String}s for
@@ -41,6 +43,7 @@ import org.apache.commons.lang3.text.translate.UnicodeUnpairedSurrogateRemover;
  * StringEscapeUtils</a> instead
  */
 @Deprecated
+@AnnotatedFor({"nullness"})
 public class StringEscapeUtils {
 
     /* ESCAPE TRANSLATORS */
@@ -455,7 +458,7 @@ public class StringEscapeUtils {
      * @param input  String to escape values in, may be null
      * @return String with escaped values, {@code null} if null string input
      */
-    public static final String escapeJava(final String input) {
+    public static final @Nullable String escapeJava(final @Nullable String input) {
         return ESCAPE_JAVA.translate(input);
     }
 
@@ -483,7 +486,7 @@ public class StringEscapeUtils {
      *
      * @since 3.0
      */
-    public static final String escapeEcmaScript(final String input) {
+    public static final @Nullable String escapeEcmaScript(final @Nullable String input) {
         return ESCAPE_ECMASCRIPT.translate(input);
     }
 
@@ -511,7 +514,7 @@ public class StringEscapeUtils {
      *
      * @since 3.2
      */
-    public static final String escapeJson(final String input) {
+    public static final @Nullable String escapeJson(final @Nullable String input) {
         return ESCAPE_JSON.translate(input);
     }
 
@@ -524,7 +527,7 @@ public class StringEscapeUtils {
      * @param input  the {@code String} to unescape, may be null
      * @return a new unescaped {@code String}, {@code null} if null string input
      */
-    public static final String unescapeJava(final String input) {
+    public static final @Nullable String unescapeJava(final @Nullable String input) {
         return UNESCAPE_JAVA.translate(input);
     }
 
@@ -541,7 +544,7 @@ public class StringEscapeUtils {
      *
      * @since 3.0
      */
-    public static final String unescapeEcmaScript(final String input) {
+    public static final @Nullable String unescapeEcmaScript(final @Nullable String input) {
         return UNESCAPE_ECMASCRIPT.translate(input);
     }
 
@@ -558,7 +561,7 @@ public class StringEscapeUtils {
      *
      * @since 3.2
      */
-    public static final String unescapeJson(final String input) {
+    public static final @Nullable String unescapeJson(final @Nullable String input) {
         return UNESCAPE_JSON.translate(input);
     }
 
@@ -591,7 +594,7 @@ public class StringEscapeUtils {
      *
      * @since 3.0
      */
-    public static final String escapeHtml4(final String input) {
+    public static final @Nullable String escapeHtml4(final @Nullable String input) {
         return ESCAPE_HTML4.translate(input);
     }
 
@@ -604,7 +607,7 @@ public class StringEscapeUtils {
      *
      * @since 3.0
      */
-    public static final String escapeHtml3(final String input) {
+    public static final @Nullable String escapeHtml3(final @Nullable String input) {
         return ESCAPE_HTML3.translate(input);
     }
 
@@ -626,7 +629,7 @@ public class StringEscapeUtils {
      *
      * @since 3.0
      */
-    public static final String unescapeHtml4(final String input) {
+    public static final @Nullable String unescapeHtml4(final @Nullable String input) {
         return UNESCAPE_HTML4.translate(input);
     }
 
@@ -640,7 +643,7 @@ public class StringEscapeUtils {
      *
      * @since 3.0
      */
-    public static final String unescapeHtml3(final String input) {
+    public static final @Nullable String unescapeHtml3(final @Nullable String input) {
         return UNESCAPE_HTML3.translate(input);
     }
 
@@ -666,7 +669,7 @@ public class StringEscapeUtils {
      * @deprecated use {@link #escapeXml10(java.lang.String)} or {@link #escapeXml11(java.lang.String)} instead.
      */
     @Deprecated
-    public static final String escapeXml(final String input) {
+    public static final @Nullable String escapeXml(final @Nullable String input) {
         return ESCAPE_XML.translate(input);
     }
 
@@ -698,7 +701,7 @@ public class StringEscapeUtils {
      * @see #unescapeXml(java.lang.String)
      * @since 3.3
      */
-    public static String escapeXml10(final String input) {
+    public static @Nullable String escapeXml10(final @Nullable String input) {
         return ESCAPE_XML10.translate(input);
     }
 
@@ -728,7 +731,7 @@ public class StringEscapeUtils {
      * @see #unescapeXml(java.lang.String)
      * @since 3.3
      */
-    public static String escapeXml11(final String input) {
+    public static @Nullable String escapeXml11(final @Nullable String input) {
         return ESCAPE_XML11.translate(input);
     }
 
@@ -750,7 +753,7 @@ public class StringEscapeUtils {
      * @see #escapeXml10(String)
      * @see #escapeXml11(String)
      */
-    public static final String unescapeXml(final String input) {
+    public static final @Nullable String unescapeXml(final @Nullable String input) {
         return UNESCAPE_XML.translate(input);
     }
 
@@ -776,7 +779,7 @@ public class StringEscapeUtils {
      * newline or double quote, {@code null} if null string input
      * @since 2.4
      */
-    public static final String escapeCsv(final String input) {
+    public static final @Nullable String escapeCsv(final @Nullable String input) {
         return ESCAPE_CSV.translate(input);
     }
 
@@ -801,7 +804,7 @@ public class StringEscapeUtils {
      * quotes unescaped, {@code null} if null string input
      * @since 2.4
      */
-    public static final String unescapeCsv(final String input) {
+    public static final @Nullable String unescapeCsv(final @Nullable String input) {
         return UNESCAPE_CSV.translate(input);
     }
 

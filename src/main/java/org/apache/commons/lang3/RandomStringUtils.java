@@ -17,6 +17,8 @@
 package org.apache.commons.lang3;
 
 import java.util.Random;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>Operations for random {@code String}s.</p>
@@ -36,6 +38,7 @@ import java.util.Random;
  * RandomStringGenerator</a> instead
  */
 @Deprecated
+@AnnotatedFor({"nullness"})
 public class RandomStringUtils {
 
     /**
@@ -308,7 +311,7 @@ public class RandomStringUtils {
      * @throws ArrayIndexOutOfBoundsException if there are not
      *  {@code (end - start) + 1} characters in the set array.
      */
-    public static String random(final int count, final int start, final int end, final boolean letters, final boolean numbers, final char... chars) {
+    public static String random(final int count, final int start, final int end, final boolean letters, final boolean numbers, final @Nullable char... chars) {
         return random(count, start, end, letters, numbers, chars, RANDOM);
     }
 
@@ -346,7 +349,7 @@ public class RandomStringUtils {
      * @since 2.0
      */
     public static String random(int count, int start, int end, final boolean letters, final boolean numbers,
-                                final char[] chars, final Random random) {
+                                final @Nullable char[] chars, final Random random) {
         if (count == 0) {
             return StringUtils.EMPTY;
         } else if (count < 0) {
@@ -439,7 +442,7 @@ public class RandomStringUtils {
      * @return the random string
      * @throws IllegalArgumentException if {@code count} &lt; 0 or the string is empty.
      */
-    public static String random(final int count, final String chars) {
+    public static String random(final int count, final @Nullable String chars) {
         if (chars == null) {
             return random(count, 0, 0, false, false, null, RANDOM);
         }
@@ -458,7 +461,7 @@ public class RandomStringUtils {
      * @return the random string
      * @throws IllegalArgumentException if {@code count} &lt; 0.
      */
-    public static String random(final int count, final char... chars) {
+    public static String random(final int count, final @Nullable char... chars) {
         if (chars == null) {
             return random(count, 0, 0, false, false, null, RANDOM);
         }

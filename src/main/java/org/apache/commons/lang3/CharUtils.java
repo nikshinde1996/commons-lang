@@ -16,6 +16,9 @@
  */
 package org.apache.commons.lang3;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
+
 /**
  * <p>Operations on char primitives and Character objects.</p>
  *
@@ -26,6 +29,7 @@ package org.apache.commons.lang3;
  * <p>#ThreadSafe#</p>
  * @since 2.1
  */
+@AnnotatedFor({"nullness"}) 
 public class CharUtils {
 
     private static final String[] CHAR_STRING_ARRAY = new String[128];
@@ -112,7 +116,7 @@ public class CharUtils {
      * @param str  the character to convert
      * @return the Character value of the first letter of the String
      */
-    public static Character toCharacterObject(final String str) {
+    public static @Nullable Character toCharacterObject(final @Nullable String str) {
         if (StringUtils.isEmpty(str)) {
             return null;
         }
@@ -151,7 +155,7 @@ public class CharUtils {
      * @param defaultValue  the value to use if the  Character is null
      * @return the char value of the Character or the default if null
      */
-    public static char toChar(final Character ch, final char defaultValue) {
+    public static char toChar(final @Nullable Character ch, final char defaultValue) {
         if (ch == null) {
             return defaultValue;
         }
@@ -283,7 +287,7 @@ public class CharUtils {
      * @param defaultValue  the default value to use if the character is not numeric
      * @return the int value of the character
      */
-    public static int toIntValue(final Character ch, final int defaultValue) {
+    public static int toIntValue(final @Nullable Character ch, final int defaultValue) {
         if (ch == null) {
             return defaultValue;
         }
@@ -329,7 +333,7 @@ public class CharUtils {
      * @param ch  the character to convert
      * @return a String containing the one specified character
      */
-    public static String toString(final Character ch) {
+    public static @Nullable String toString(final @Nullable Character ch) {
         if (ch == null) {
             return null;
         }
@@ -374,7 +378,7 @@ public class CharUtils {
      * @param ch  the character to convert, may be null
      * @return the escaped Unicode string, null if null input
      */
-    public static String unicodeEscaped(final Character ch) {
+    public static @Nullable String unicodeEscaped(final @Nullable Character ch) {
         if (ch == null) {
             return null;
         }

@@ -16,6 +16,9 @@
  */
 package org.apache.commons.lang3;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
+
 /**
  * <p>Operations on {@code CharSet} instances.</p>
  *
@@ -27,6 +30,7 @@ package org.apache.commons.lang3;
  * @see CharSet
  * @since 1.0
  */
+@AnnotatedFor({"nullness"}) 
 public class CharSetUtils {
 
     /**
@@ -60,7 +64,7 @@ public class CharSetUtils {
      * @param set  the character set to use for manipulation, may be null
      * @return the modified String, {@code null} if null string input
      */
-    public static String squeeze(final String str, final String... set) {
+    public static @Nullable String squeeze(final @Nullable String str, final String @Nullable ... set) {
         if (StringUtils.isEmpty(str) || deepEmpty(set)) {
             return str;
         }
@@ -114,7 +118,7 @@ public class CharSetUtils {
      * @return whether or not the characters in the set are in the primary string
      * @since 3.2
      */
-    public static boolean containsAny(final String str, final String... set) {
+    public static boolean containsAny(final @Nullable String str, final String @Nullable ... set) {
         if (StringUtils.isEmpty(str) || deepEmpty(set)) {
             return false;
         }
@@ -147,7 +151,7 @@ public class CharSetUtils {
      * @param set  String[] set of characters to count, may be null
      * @return the character count, zero if null string input
      */
-    public static int count(final String str, final String... set) {
+    public static int count(final @Nullable String str, final String @Nullable ... set) {
         if (StringUtils.isEmpty(str) || deepEmpty(set)) {
             return 0;
         }
@@ -182,7 +186,7 @@ public class CharSetUtils {
      * @return the modified String, {@code null} if null string input
      * @since 2.0
      */
-    public static String keep(final String str, final String... set) {
+    public static @Nullable String keep(final @Nullable String str, final String @Nullable ... set) {
         if (str == null) {
             return null;
         }
@@ -212,7 +216,7 @@ public class CharSetUtils {
      * @param set  String[] set of characters to delete, may be null
      * @return the modified String, {@code null} if null string input
      */
-    public static String delete(final String str, final String... set) {
+    public static @Nullable String delete(final @Nullable String str, final String @Nullable ... set) {
         if (StringUtils.isEmpty(str) || deepEmpty(set)) {
             return str;
         }
@@ -228,7 +232,7 @@ public class CharSetUtils {
      * @param expect whether to evaluate on match, or non-match
      * @return the modified String, not null
      */
-    private static String modify(final String str, final String[] set, final boolean expect) {
+    private static String modify(final String str, final String @Nullable [] set, final boolean expect) {
         final CharSet chars = CharSet.getInstance(set);
         final StringBuilder buffer = new StringBuilder(str.length());
         final char[] chrs = str.toCharArray();

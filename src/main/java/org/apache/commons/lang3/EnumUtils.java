@@ -23,6 +23,8 @@ import java.util.EnumSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>Utility library to provide helper methods for Java enums.</p>
@@ -31,6 +33,7 @@ import java.util.Map;
  *
  * @since 3.0
  */
+@AnnotatedFor({"nullness"}) 
 public class EnumUtils {
 
     private static final String NULL_ELEMENTS_NOT_PERMITTED = "null elements not permitted";
@@ -86,7 +89,7 @@ public class EnumUtils {
      * @param enumName   the enum name, null returns false
      * @return true if the enum name is valid, otherwise false
      */
-    public static <E extends Enum<E>> boolean isValidEnum(final Class<E> enumClass, final String enumName) {
+    public static <E extends Enum<E>> boolean isValidEnum(final Class<E> enumClass, final @Nullable String enumName) {
         if (enumName == null) {
             return false;
         }
@@ -109,7 +112,7 @@ public class EnumUtils {
      * @param enumName   the enum name, null returns null
      * @return the enum, null if not found
      */
-    public static <E extends Enum<E>> E getEnum(final Class<E> enumClass, final String enumName) {
+    public static @Nullable <E extends Enum<E>> E getEnum(final Class<E> enumClass, final @Nullable String enumName) {
         if (enumName == null) {
             return null;
         }

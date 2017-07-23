@@ -22,6 +22,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>A set of characters.</p>
@@ -31,6 +33,7 @@ import java.util.Set;
  * <p>#ThreadSafe#</p>
  * @since 1.0
  */
+@AnnotatedFor({"nullness"}) 
 public class CharSet implements Serializable {
 
     /**
@@ -152,7 +155,7 @@ public class CharSet implements Serializable {
      * @return a CharSet instance
      * @since 2.4
      */
-    public static CharSet getInstance(final String... setStrs) {
+    public static @Nullable CharSet getInstance(final String @Nullable ... setStrs) {
         if (setStrs == null) {
             return null;
         }

@@ -20,6 +20,8 @@ import org.apache.commons.lang3.arch.Processor;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * An utility class for the os.arch System Property. The class defines methods for
@@ -30,6 +32,7 @@ import java.util.Map;
  * </p>
  * @since 3.6
  */
+@AnnotatedFor({"nullness"}) 
 public class ArchUtils {
 
     private static final Map<String, Processor> ARCH_TO_PROCESSOR;
@@ -117,7 +120,7 @@ public class ArchUtils {
      *
      * @return A {@link Processor} when supported, else <code>null</code>.
      */
-    public static Processor getProcessor() {
+    public static @Nullable Processor getProcessor() {
         return getProcessor(SystemUtils.OS_ARCH);
     }
 
@@ -128,7 +131,7 @@ public class ArchUtils {
      * @param value A {@link String} like a value returned by the os.arch System Property.
      * @return A {@link Processor} when it exists, else <code>null</code>.
      */
-    public static Processor getProcessor(String value) {
+    public static @Nullable Processor getProcessor(@Nullable String value) {
         return ARCH_TO_PROCESSOR.get(value);
     }
 

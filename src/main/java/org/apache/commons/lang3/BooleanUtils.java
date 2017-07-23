@@ -17,6 +17,8 @@
 package org.apache.commons.lang3;
 
 import org.apache.commons.lang3.math.NumberUtils;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>Operations on boolean primitives and Boolean objects.</p>
@@ -28,6 +30,7 @@ import org.apache.commons.lang3.math.NumberUtils;
  * <p>#ThreadSafe#</p>
  * @since 2.0
  */
+@AnnotatedFor({"nullness"}) 
 public class BooleanUtils {
 
     /**
@@ -59,7 +62,7 @@ public class BooleanUtils {
      * @param bool  the Boolean to negate, may be null
      * @return the negated Boolean, or {@code null} if {@code null} input
      */
-    public static Boolean negate(final Boolean bool) {
+    public static @Nullable Boolean negate(final @Nullable Boolean bool) {
         if (bool == null) {
             return null;
         }
@@ -82,7 +85,7 @@ public class BooleanUtils {
      * @return {@code true} only if the input is non-null and true
      * @since 2.1
      */
-    public static boolean isTrue(final Boolean bool) {
+    public static boolean isTrue(final @Nullable Boolean bool) {
         return Boolean.TRUE.equals(bool);
     }
 
@@ -100,7 +103,7 @@ public class BooleanUtils {
      * @return {@code true} if the input is null or false
      * @since 2.3
      */
-    public static boolean isNotTrue(final Boolean bool) {
+    public static boolean isNotTrue(final @Nullable Boolean bool) {
         return !isTrue(bool);
     }
 
@@ -118,7 +121,7 @@ public class BooleanUtils {
      * @return {@code true} only if the input is non-null and false
      * @since 2.1
      */
-    public static boolean isFalse(final Boolean bool) {
+    public static boolean isFalse(final @Nullable Boolean bool) {
         return Boolean.FALSE.equals(bool);
     }
 
@@ -136,7 +139,7 @@ public class BooleanUtils {
      * @return {@code true} if the input is null or true
      * @since 2.3
      */
-    public static boolean isNotFalse(final Boolean bool) {
+    public static boolean isNotFalse(final @Nullable Boolean bool) {
         return !isFalse(bool);
     }
 
@@ -154,7 +157,7 @@ public class BooleanUtils {
      * @param bool  the boolean to convert
      * @return {@code true} or {@code false}, {@code null} returns {@code false}
      */
-    public static boolean toBoolean(final Boolean bool) {
+    public static boolean toBoolean(final @Nullable Boolean bool) {
         return bool != null && bool.booleanValue();
     }
 
@@ -171,7 +174,7 @@ public class BooleanUtils {
      * @param valueIfNull  the boolean value to return if {@code null}
      * @return {@code true} or {@code false}
      */
-    public static boolean toBooleanDefaultIfNull(final Boolean bool, final boolean valueIfNull) {
+    public static boolean toBooleanDefaultIfNull(final @Nullable Boolean bool, final boolean valueIfNull) {
         if (bool == null) {
             return valueIfNull;
         }
@@ -212,7 +215,7 @@ public class BooleanUtils {
      * @return Boolean.TRUE if non-zero, Boolean.FALSE if zero,
      *  {@code null} if {@code null}
      */
-    public static Boolean toBooleanObject(final int value) {
+    public static @Nullable Boolean toBooleanObject(final int value) {
         return value == 0 ? Boolean.FALSE : Boolean.TRUE;
     }
 
@@ -234,7 +237,7 @@ public class BooleanUtils {
      * @return Boolean.TRUE if non-zero, Boolean.FALSE if zero,
      *  {@code null} if {@code null} input
      */
-    public static Boolean toBooleanObject(final Integer value) {
+    public static @Nullable Boolean toBooleanObject(final @Nullable Integer value) {
         if (value == null) {
             return null;
         }
@@ -285,7 +288,7 @@ public class BooleanUtils {
      * @return {@code true} or {@code false}
      * @throws IllegalArgumentException if no match
      */
-    public static boolean toBoolean(final Integer value, final Integer trueValue, final Integer falseValue) {
+    public static boolean toBoolean(final Integer value, final @Nullable Integer trueValue, final @Nullable Integer falseValue) {
         if (value == null) {
             if (trueValue == null) {
                 return true;
@@ -320,7 +323,7 @@ public class BooleanUtils {
      * @return Boolean.TRUE, Boolean.FALSE, or {@code null}
      * @throws IllegalArgumentException if no match
      */
-    public static Boolean toBooleanObject(final int value, final int trueValue, final int falseValue, final int nullValue) {
+    public static @Nullable Boolean toBooleanObject(final int value, final int trueValue, final int falseValue, final int nullValue) {
         if (value == trueValue) {
             return Boolean.TRUE;
         }
@@ -352,7 +355,7 @@ public class BooleanUtils {
      * @return Boolean.TRUE, Boolean.FALSE, or {@code null}
      * @throws IllegalArgumentException if no match
      */
-    public static Boolean toBooleanObject(final Integer value, final Integer trueValue, final Integer falseValue, final Integer nullValue) {
+    public static @Nullable Boolean toBooleanObject(final Integer value, final @Nullable Integer trueValue, final @Nullable Integer falseValue, final @Nullable Integer nullValue) {
         if (value == null) {
             if (trueValue == null) {
                 return Boolean.TRUE;
@@ -422,7 +425,7 @@ public class BooleanUtils {
      * @param bool  the Boolean to convert
      * @return one if Boolean.TRUE, zero if Boolean.FALSE, {@code null} if {@code null}
      */
-    public static Integer toIntegerObject(final Boolean bool) {
+    public static @Nullable Integer toIntegerObject(final @Nullable Boolean bool) {
         if (bool == null) {
             return null;
         }
@@ -461,7 +464,7 @@ public class BooleanUtils {
      * @param nullValue  the value to return if {@code null}
      * @return the appropriate value
      */
-    public static int toInteger(final Boolean bool, final int trueValue, final int falseValue, final int nullValue) {
+    public static int toInteger(final @Nullable Boolean bool, final int trueValue, final int falseValue, final int nullValue) {
         if (bool == null) {
             return nullValue;
         }
@@ -481,7 +484,7 @@ public class BooleanUtils {
      * @param falseValue  the value to return if {@code false}, may be {@code null}
      * @return the appropriate value
      */
-    public static Integer toIntegerObject(final boolean bool, final Integer trueValue, final Integer falseValue) {
+    public static @Nullable Integer toIntegerObject(final boolean bool, final @Nullable Integer trueValue, final @Nullable Integer falseValue) {
         return bool ? trueValue : falseValue;
     }
 
@@ -494,13 +497,13 @@ public class BooleanUtils {
      *   BooleanUtils.toIntegerObject(null, Integer.valueOf(1), Integer.valueOf(0), Integer.valueOf(2))          = Integer.valueOf(2)
      * </pre>
      *
-     * @param bool  the Boolean to convert
+     * @param bool  the Boolean to convert, may be {@code null}
      * @param trueValue  the value to return if {@code true}, may be {@code null}
      * @param falseValue  the value to return if {@code false}, may be {@code null}
      * @param nullValue  the value to return if {@code null}, may be {@code null}
      * @return the appropriate value
      */
-    public static Integer toIntegerObject(final Boolean bool, final Integer trueValue, final Integer falseValue, final Integer nullValue) {
+    public static @Nullable Integer toIntegerObject(final @Nullable Boolean bool, final @Nullable Integer trueValue, final @Nullable Integer falseValue, final @Nullable Integer nullValue) {
         if (bool == null) {
             return nullValue;
         }
@@ -543,7 +546,7 @@ public class BooleanUtils {
      * @param str  the String to check; upper and lower case are treated as the same
      * @return the Boolean value of the string, {@code null} if no match or {@code null} input
      */
-    public static Boolean toBooleanObject(final String str) {
+    public static @Nullable Boolean toBooleanObject(final @Nullable String str) {
         // Previously used equalsIgnoreCase, which was fast for interned 'true'.
         // Non interned 'true' matched 15 times slower.
         //
@@ -652,7 +655,7 @@ public class BooleanUtils {
      *  or if {@code null} input and {@code nullString} is {@code null}
      * @throws IllegalArgumentException if the String doesn't match
      */
-    public static Boolean toBooleanObject(final String str, final String trueString, final String falseString, final String nullString) {
+    public static @Nullable Boolean toBooleanObject(final String str, final @Nullable String trueString, final @Nullable String falseString, final @Nullable String nullString) {
         if (str == null) {
             if (trueString == null) {
                 return Boolean.TRUE;
@@ -705,7 +708,7 @@ public class BooleanUtils {
      * @param str  the String to check
      * @return the boolean value of the string, {@code false} if no match or the String is null
      */
-    public static boolean toBoolean(final String str) {
+    public static boolean toBoolean(final @Nullable String str) {
         return toBooleanObject(str) == Boolean.TRUE;
     }
 
@@ -723,7 +726,7 @@ public class BooleanUtils {
      * @return the boolean value of the string
      * @throws IllegalArgumentException if the String doesn't match
      */
-    public static boolean toBoolean(final String str, final String trueString, final String falseString) {
+    public static boolean toBoolean(final String str, final @Nullable String trueString, final @Nullable String falseString) {
         if (str == trueString) {
             return true;
         } else if (str == falseString) {
@@ -754,7 +757,7 @@ public class BooleanUtils {
      * @param bool  the Boolean to check
      * @return {@code 'true'}, {@code 'false'}, or {@code null}
      */
-    public static String toStringTrueFalse(final Boolean bool) {
+    public static @Nullable String toStringTrueFalse(final @Nullable Boolean bool) {
         return toString(bool, "true", "false", null);
     }
 
@@ -771,7 +774,7 @@ public class BooleanUtils {
      * @param bool  the Boolean to check
      * @return {@code 'on'}, {@code 'off'}, or {@code null}
      */
-    public static String toStringOnOff(final Boolean bool) {
+    public static @Nullable String toStringOnOff(final @Nullable Boolean bool) {
         return toString(bool, "on", "off", null);
     }
 
@@ -788,7 +791,7 @@ public class BooleanUtils {
      * @param bool  the Boolean to check
      * @return {@code 'yes'}, {@code 'no'}, or {@code null}
      */
-    public static String toStringYesNo(final Boolean bool) {
+    public static @Nullable String toStringYesNo(final @Nullable Boolean bool) {
         return toString(bool, "yes", "no", null);
     }
 
@@ -807,7 +810,7 @@ public class BooleanUtils {
      * @param nullString  the String to return if {@code null}, may be {@code null}
      * @return one of the three input Strings
      */
-    public static String toString(final Boolean bool, final String trueString, final String falseString, final String nullString) {
+    public static @Nullable String toString(final @Nullable Boolean bool, final @Nullable String trueString, final @Nullable String falseString, final @Nullable String nullString) {
         if (bool == null) {
             return nullString;
         }
@@ -828,7 +831,7 @@ public class BooleanUtils {
      * @param bool  the Boolean to check
      * @return {@code 'true'}, {@code 'false'}, or {@code null}
      */
-    public static String toStringTrueFalse(final boolean bool) {
+    public static @Nullable String toStringTrueFalse(final boolean bool) {
         return toString(bool, "true", "false");
     }
 
@@ -844,7 +847,7 @@ public class BooleanUtils {
      * @param bool  the Boolean to check
      * @return {@code 'on'}, {@code 'off'}, or {@code null}
      */
-    public static String toStringOnOff(final boolean bool) {
+    public static @Nullable String toStringOnOff(final boolean bool) {
         return toString(bool, "on", "off");
     }
 
@@ -860,7 +863,7 @@ public class BooleanUtils {
      * @param bool  the Boolean to check
      * @return {@code 'yes'}, {@code 'no'}, or {@code null}
      */
-    public static String toStringYesNo(final boolean bool) {
+    public static @Nullable String toStringYesNo(final boolean bool) {
         return toString(bool, "yes", "no");
     }
 
@@ -877,7 +880,7 @@ public class BooleanUtils {
      * @param falseString  the String to return if {@code false}, may be {@code null}
      * @return one of the two input Strings
      */
-    public static String toString(final boolean bool, final String trueString, final String falseString) {
+    public static @Nullable String toString(final boolean bool, final @Nullable String trueString, final @Nullable String falseString) {
         return bool ? trueString : falseString;
     }
 
