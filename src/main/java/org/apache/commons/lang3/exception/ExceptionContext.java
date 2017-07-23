@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * Allows the storage and retrieval of contextual information based on label-value
@@ -33,6 +35,7 @@ import org.apache.commons.lang3.tuple.Pair;
  * @see ContextedRuntimeException
  * @since 3.0
  */
+@AnnotatedFor({"nullness"}) 
 public interface ExceptionContext {
 
     /**
@@ -46,7 +49,7 @@ public interface ExceptionContext {
      * @param value  the value of item to add, may be {@code null}
      * @return {@code this}, for method chaining, not {@code null}
      */
-    ExceptionContext addContextValue(String label, Object value);
+    ExceptionContext addContextValue(String label,@Nullable Object value);
 
     /**
      * Sets a contextual label-value pair into this context.
@@ -59,7 +62,7 @@ public interface ExceptionContext {
      * @param value  the value of item to add, may be {@code null}
      * @return {@code this}, for method chaining, not {@code null}
      */
-    ExceptionContext setContextValue(String label, Object value);
+    ExceptionContext setContextValue(String label,@Nullable Object value);
 
     /**
      * Retrieves all the contextual data values associated with the label.
@@ -67,7 +70,7 @@ public interface ExceptionContext {
      * @param label  the label to get the contextual values for, may be {@code null}
      * @return the contextual values associated with the label, never {@code null}
      */
-    List<Object> getContextValues(String label);
+    List<Object> getContextValues(@Nullable String label);
 
     /**
      * Retrieves the first available contextual data value associated with the label.
@@ -75,7 +78,7 @@ public interface ExceptionContext {
      * @param label  the label to get the contextual value for, may be {@code null}
      * @return the first contextual value associated with the label, may be {@code null}
      */
-    Object getFirstContextValue(String label);
+    Object getFirstContextValue(@Nullable String label);
 
     /**
      * Retrieves the full set of labels defined in the contextual data.

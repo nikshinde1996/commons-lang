@@ -21,6 +21,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang3.Validate;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>
@@ -35,6 +37,7 @@ import org.apache.commons.lang3.Validate;
  *
  * @since 3.3
  */
+@AnnotatedFor({"nullness"}) 
 public class DiffResult implements Iterable<Diff<?>> {
 
     /**
@@ -72,7 +75,7 @@ public class DiffResult implements Iterable<Diff<?>> {
      *             if {@code lhs}, {@code rhs} or {@code diffs} is {@code null}
      */
     DiffResult(final Object lhs, final Object rhs, final List<Diff<?>> diffs,
-            final ToStringStyle style) {
+            final @Nullable ToStringStyle style) {
         Validate.isTrue(lhs != null, "Left hand object cannot be null");
         Validate.isTrue(rhs != null, "Right hand object cannot be null");
         Validate.isTrue(diffs != null, "List of differences cannot be null");

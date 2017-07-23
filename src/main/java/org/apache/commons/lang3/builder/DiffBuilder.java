@@ -22,6 +22,8 @@ import java.util.List;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.Validate;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>
@@ -64,6 +66,7 @@ import org.apache.commons.lang3.Validate;
  * @see DiffResult
  * @see ToStringStyle
  */
+@AnnotatedFor({"nullness"}) 
 public class DiffBuilder implements Builder<DiffResult> {
 
     private final List<Diff<?>> diffs;
@@ -101,7 +104,7 @@ public class DiffBuilder implements Builder<DiffResult> {
      * @since 3.4
      */
     public DiffBuilder(final Object lhs, final Object rhs,
-            final ToStringStyle style, final boolean testTriviallyEqual) {
+            final @Nullable ToStringStyle style, final boolean testTriviallyEqual) {
 
         Validate.isTrue(lhs != null, "lhs cannot be null");
         Validate.isTrue(rhs != null, "rhs cannot be null");
@@ -142,7 +145,7 @@ public class DiffBuilder implements Builder<DiffResult> {
      *             if {@code lhs} or {@code rhs} is {@code null}
      */
     public DiffBuilder(final Object lhs, final Object rhs,
-            final ToStringStyle style) {
+            final @Nullable ToStringStyle style) {
 
             this(lhs, rhs, style, true);
     }

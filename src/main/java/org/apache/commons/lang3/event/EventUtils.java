@@ -26,12 +26,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.lang3.reflect.MethodUtils;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * Provides some useful event-based utility methods.
  *
  * @since 3.0
  */
+@AnnotatedFor({"nullness"}) 
 public class EventUtils {
 
     /**
@@ -106,7 +109,7 @@ public class EventUtils {
          * @throws Throwable if an error occurs
          */
         @Override
-        public Object invoke(final Object proxy, final Method method, final Object[] parameters) throws Throwable {
+        public @Nullable Object invoke(final Object proxy, final Method method, final Object[] parameters) throws Throwable {
             if (eventTypes.isEmpty() || eventTypes.contains(method.getName())) {
                 if (hasMatchingParametersMethod(method)) {
                     return MethodUtils.invokeMethod(target, methodName, parameters);

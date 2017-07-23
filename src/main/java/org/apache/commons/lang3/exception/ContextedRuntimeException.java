@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>
@@ -84,6 +86,7 @@ import org.apache.commons.lang3.tuple.Pair;
  * @see ContextedException
  * @since 3.0
  */
+@AnnotatedFor({"nullness"}) 
 public class ContextedRuntimeException extends RuntimeException implements ExceptionContext {
 
     /** The serialization version. */
@@ -108,7 +111,7 @@ public class ContextedRuntimeException extends RuntimeException implements Excep
      *
      * @param message  the exception message, may be null
      */
-    public ContextedRuntimeException(final String message) {
+    public ContextedRuntimeException(final @Nullable String message) {
         super(message);
         exceptionContext = new DefaultExceptionContext();
     }
@@ -120,7 +123,7 @@ public class ContextedRuntimeException extends RuntimeException implements Excep
      *
      * @param cause  the underlying cause of the exception, may be null
      */
-    public ContextedRuntimeException(final Throwable cause) {
+    public ContextedRuntimeException(final @Nullable Throwable cause) {
         super(cause);
         exceptionContext = new DefaultExceptionContext();
     }
@@ -133,7 +136,7 @@ public class ContextedRuntimeException extends RuntimeException implements Excep
      * @param message  the exception message, may be null
      * @param cause  the underlying cause of the exception, may be null
      */
-    public ContextedRuntimeException(final String message, final Throwable cause) {
+    public ContextedRuntimeException(final @Nullable String message, final @Nullable Throwable cause) {
         super(message, cause);
         exceptionContext = new DefaultExceptionContext();
     }
@@ -145,7 +148,7 @@ public class ContextedRuntimeException extends RuntimeException implements Excep
      * @param cause  the underlying cause of the exception, may be null
      * @param context  the context used to store the additional information, null uses default implementation
      */
-    public ContextedRuntimeException(final String message, final Throwable cause, ExceptionContext context) {
+    public ContextedRuntimeException(final @Nullable String message, final @Nullable Throwable cause,@Nullable ExceptionContext context) {
         super(message, cause);
         if (context == null) {
             context = new DefaultExceptionContext();
@@ -168,7 +171,7 @@ public class ContextedRuntimeException extends RuntimeException implements Excep
      * @return {@code this}, for method chaining, not {@code null}
      */
     @Override
-    public ContextedRuntimeException addContextValue(final String label, final Object value) {
+    public ContextedRuntimeException addContextValue(final String label, final @Nullable Object value) {
         exceptionContext.addContextValue(label, value);
         return this;
     }
@@ -187,7 +190,7 @@ public class ContextedRuntimeException extends RuntimeException implements Excep
      * @return {@code this}, for method chaining, not {@code null}
      */
     @Override
-    public ContextedRuntimeException setContextValue(final String label, final Object value) {
+    public ContextedRuntimeException setContextValue(final String label, final @Nullable Object value) {
         exceptionContext.setContextValue(label, value);
         return this;
     }

@@ -16,6 +16,9 @@
  */
 package org.apache.commons.lang3.builder;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
+
 /**
  * <p>{@code Diffable} classes can be compared with other objects
  * for differences. The {@link DiffResult} object retrieved can be queried
@@ -39,6 +42,7 @@ package org.apache.commons.lang3.builder;
  * @param <T> the type of objects that this object may be differentiated against
  * @since 3.3
  */
+@AnnotatedFor({"nullness"}) 
 public interface Diffable<T> {
 
     /**
@@ -49,5 +53,5 @@ public interface Diffable<T> {
      * @return a list of differences
      * @throws NullPointerException if the specified object is {@code null}
      */
-    DiffResult diff(T obj);
+    DiffResult diff(@Nullable T obj);
 }

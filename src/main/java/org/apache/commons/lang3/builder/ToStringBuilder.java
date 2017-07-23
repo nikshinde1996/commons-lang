@@ -18,6 +18,8 @@ package org.apache.commons.lang3.builder;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.Validate;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>Assists in implementing {@link Object#toString()} methods.</p>
@@ -86,6 +88,7 @@ import org.apache.commons.lang3.Validate;
  *
  * @since 1.0
  */
+@AnnotatedFor({"nullness"}) 
 public class ToStringBuilder implements Builder<String> {
 
     /**
@@ -159,7 +162,7 @@ public class ToStringBuilder implements Builder<String> {
      * @return the String result
      * @see ReflectionToStringBuilder#toString(Object,ToStringStyle)
      */
-    public static String reflectionToString(final Object object, final ToStringStyle style) {
+    public static String reflectionToString(final Object object, final @Nullable ToStringStyle style) {
         return ReflectionToStringBuilder.toString(object, style);
     }
 
@@ -173,7 +176,7 @@ public class ToStringBuilder implements Builder<String> {
      * @return the String result
      * @see ReflectionToStringBuilder#toString(Object,ToStringStyle,boolean)
      */
-    public static String reflectionToString(final Object object, final ToStringStyle style, final boolean outputTransients) {
+    public static String reflectionToString(final Object object, final @Nullable ToStringStyle style, final boolean outputTransients) {
         return ReflectionToStringBuilder.toString(object, style, outputTransients, false, null);
     }
 
@@ -192,9 +195,9 @@ public class ToStringBuilder implements Builder<String> {
      */
     public static <T> String reflectionToString(
         final T object,
-        final ToStringStyle style,
+        final @Nullable ToStringStyle style,
         final boolean outputTransients,
-        final Class<? super T> reflectUpToClass) {
+        final @Nullable Class<? super T> reflectUpToClass) {
         return ReflectionToStringBuilder.toString(object, style, outputTransients, false, reflectUpToClass);
     }
 
@@ -207,7 +210,7 @@ public class ToStringBuilder implements Builder<String> {
     /**
      * The object being output, may be null.
      */
-    private final Object object;
+    private @Nullable final Object object;
     /**
      * The style of output to use, not null.
      */
@@ -232,7 +235,7 @@ public class ToStringBuilder implements Builder<String> {
      * @param object  the Object to build a <code>toString</code> for, not recommended to be null
      * @param style  the style of the <code>toString</code> to create, null uses the default style
      */
-    public ToStringBuilder(final Object object, final ToStringStyle style) {
+    public ToStringBuilder(final Object object, final @Nullable ToStringStyle style) {
         this(object, style, null);
     }
 
@@ -247,7 +250,7 @@ public class ToStringBuilder implements Builder<String> {
      * @param style  the style of the <code>toString</code> to create, null uses the default style
      * @param buffer  the <code>StringBuffer</code> to populate, may be null
      */
-    public ToStringBuilder(final Object object, ToStringStyle style, StringBuffer buffer) {
+    public ToStringBuilder(final Object object,@Nullable ToStringStyle style,@Nullable StringBuffer buffer) {
         if (style == null) {
             style = getDefaultStyle();
         }
@@ -1003,7 +1006,7 @@ public class ToStringBuilder implements Builder<String> {
      * @return this
      * @since 2.0
      */
-    public ToStringBuilder appendToString(final String toString) {
+    public ToStringBuilder appendToString(final @Nullable String toString) {
         if (toString != null) {
             style.appendToString(buffer, toString);
         }

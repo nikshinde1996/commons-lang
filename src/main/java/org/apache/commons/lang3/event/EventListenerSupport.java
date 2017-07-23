@@ -31,6 +31,8 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.apache.commons.lang3.Validate;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>An EventListenerSupport object can be used to manage a list of event
@@ -66,6 +68,7 @@ import org.apache.commons.lang3.Validate;
  *
  * @since 3.0
  */
+@AnnotatedFor({"nullness"}) 
 public class EventListenerSupport<L> implements Serializable {
 
     /** Serialization version */
@@ -330,7 +333,7 @@ public class EventListenerSupport<L> implements Serializable {
          * @throws Throwable if an error occurs
          */
         @Override
-        public Object invoke(final Object unusedProxy, final Method method, final Object[] args) throws Throwable {
+        public @Nullable Object invoke(final Object unusedProxy, final Method method, final Object[] args) throws Throwable {
             for (final L listener : listeners) {
                 method.invoke(listener, args);
             }

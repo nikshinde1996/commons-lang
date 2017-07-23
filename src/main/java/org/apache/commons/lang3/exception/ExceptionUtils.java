@@ -30,6 +30,8 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>Provides utilities for manipulating and examining
@@ -37,6 +39,7 @@ import org.apache.commons.lang3.Validate;
  *
  * @since 1.0
  */
+@AnnotatedFor({"nullness"}) 
 public class ExceptionUtils {
 
     /**
@@ -120,7 +123,7 @@ public class ExceptionUtils {
      * @deprecated This feature will be removed in Lang 4.0, use {@link Throwable#getCause} instead
      */
     @Deprecated
-    public static Throwable getCause(final Throwable throwable) {
+    public static Throwable getCause(final @Nullable Throwable throwable) {
         return getCause(throwable, null);
     }
 
@@ -138,7 +141,7 @@ public class ExceptionUtils {
      * @deprecated This feature will be removed in Lang 4.0, use {@link Throwable#getCause} instead
      */
     @Deprecated
-    public static Throwable getCause(final Throwable throwable, String[] methodNames) {
+    public static @Nullable Throwable getCause(final @Nullable Throwable throwable, String @Nullable [] methodNames) {
         if (throwable == null) {
             return null;
         }
@@ -181,7 +184,7 @@ public class ExceptionUtils {
      * @return the root cause of the <code>Throwable</code>,
      *  <code>null</code> if none found or null throwable input
      */
-    public static Throwable getRootCause(final Throwable throwable) {
+    public static @Nullable Throwable getRootCause(final @Nullable Throwable throwable) {
         final List<Throwable> list = getThrowableList(throwable);
         return list.size() < 2 ? null : list.get(list.size() - 1);
     }
@@ -194,7 +197,7 @@ public class ExceptionUtils {
      * @return the wrapped exception, or <code>null</code> if not found
      */
     // TODO: Remove in Lang 4.0
-    private static Throwable getCauseUsingMethodName(final Throwable throwable, final String methodName) {
+    private static @Nullable Throwable getCauseUsingMethodName(final Throwable throwable, final String methodName) {
         Method method = null;
         try {
             method = throwable.getClass().getMethod(methodName);
@@ -229,7 +232,7 @@ public class ExceptionUtils {
      * @param throwable  the throwable to inspect, may be null
      * @return the count of throwables, zero if null input
      */
-    public static int getThrowableCount(final Throwable throwable) {
+    public static int getThrowableCount(final @Nullable Throwable throwable) {
         return getThrowableList(throwable).size();
     }
 
@@ -252,7 +255,7 @@ public class ExceptionUtils {
      * @param throwable  the throwable to inspect, may be null
      * @return the array of throwables, never null
      */
-    public static Throwable[] getThrowables(final Throwable throwable) {
+    public static Throwable[] getThrowables(final @Nullable Throwable throwable) {
         final List<Throwable> list = getThrowableList(throwable);
         return list.toArray(new Throwable[list.size()]);
     }
@@ -276,7 +279,7 @@ public class ExceptionUtils {
      * @return the list of throwables, never null
      * @since Commons Lang 2.2
      */
-    public static List<Throwable> getThrowableList(Throwable throwable) {
+    public static List<Throwable> getThrowableList(@Nullable Throwable throwable) {
         final List<Throwable> list = new ArrayList<>();
         while (throwable != null && !list.contains(throwable)) {
             list.add(throwable);
@@ -300,7 +303,7 @@ public class ExceptionUtils {
      * @param clazz  the class to search for, subclasses do not match, null returns -1
      * @return the index into the throwable chain, -1 if no match or null input
      */
-    public static int indexOfThrowable(final Throwable throwable, final Class<?> clazz) {
+    public static int indexOfThrowable(final @Nullable Throwable throwable, final @Nullable Class<?> clazz) {
         return indexOf(throwable, clazz, 0, false);
     }
 
@@ -323,7 +326,7 @@ public class ExceptionUtils {
      *  negative treated as zero, larger than chain size returns -1
      * @return the index into the throwable chain, -1 if no match or null input
      */
-    public static int indexOfThrowable(final Throwable throwable, final Class<?> clazz, final int fromIndex) {
+    public static int indexOfThrowable(final @Nullable Throwable throwable, final @Nullable Class<?> clazz, final int fromIndex) {
         return indexOf(throwable, clazz, fromIndex, false);
     }
 
@@ -343,7 +346,7 @@ public class ExceptionUtils {
      * @return the index into the throwable chain, -1 if no match or null input
      * @since 2.1
      */
-    public static int indexOfType(final Throwable throwable, final Class<?> type) {
+    public static int indexOfType(final @Nullable Throwable throwable, final @Nullable Class<?> type) {
         return indexOf(throwable, type, 0, true);
     }
 
@@ -367,7 +370,7 @@ public class ExceptionUtils {
      * @return the index into the throwable chain, -1 if no match or null input
      * @since 2.1
      */
-    public static int indexOfType(final Throwable throwable, final Class<?> type, final int fromIndex) {
+    public static int indexOfType(final @Nullable Throwable throwable, final @Nullable Class<?> type, final int fromIndex) {
         return indexOf(throwable, type, fromIndex, true);
     }
 
@@ -382,7 +385,7 @@ public class ExceptionUtils {
      * using references
      * @return index of the <code>type</code> within throwables nested within the specified <code>throwable</code>
      */
-    private static int indexOf(final Throwable throwable, final Class<?> type, int fromIndex, final boolean subclass) {
+    private static int indexOf(final @Nullable Throwable throwable, final @Nullable Class<?> type, int fromIndex, final boolean subclass) {
         if (throwable == null || type == null) {
             return -1;
         }
@@ -428,7 +431,7 @@ public class ExceptionUtils {
      * @param throwable  the throwable to output
      * @since 2.0
      */
-    public static void printRootCauseStackTrace(final Throwable throwable) {
+    public static void printRootCauseStackTrace(final @Nullable Throwable throwable) {
         printRootCauseStackTrace(throwable, System.err);
     }
 
@@ -451,7 +454,7 @@ public class ExceptionUtils {
      * @throws IllegalArgumentException if the stream is <code>null</code>
      * @since 2.0
      */
-    public static void printRootCauseStackTrace(final Throwable throwable, final PrintStream stream) {
+    public static void printRootCauseStackTrace(final @Nullable Throwable throwable, final PrintStream stream) {
         if (throwable == null) {
             return;
         }
@@ -482,7 +485,7 @@ public class ExceptionUtils {
      * @throws IllegalArgumentException if the writer is <code>null</code>
      * @since 2.0
      */
-    public static void printRootCauseStackTrace(final Throwable throwable, final PrintWriter writer) {
+    public static void printRootCauseStackTrace(final @Nullable Throwable throwable, final PrintWriter writer) {
         if (throwable == null) {
             return;
         }
@@ -508,7 +511,7 @@ public class ExceptionUtils {
      * @return an array of stack trace frames, never null
      * @since 2.0
      */
-    public static String[] getRootCauseStackTrace(final Throwable throwable) {
+    public static String[] getRootCauseStackTrace(final @Nullable Throwable throwable) {
         if (throwable == null) {
             return ArrayUtils.EMPTY_STRING_ARRAY;
         }
@@ -592,7 +595,7 @@ public class ExceptionUtils {
      * @param throwable  the <code>Throwable</code> to examine, may be null
      * @return an array of strings describing each stack frame, never null
      */
-    public static String[] getStackFrames(final Throwable throwable) {
+    public static String[] getStackFrames(final @Nullable Throwable throwable) {
         if (throwable == null) {
             return ArrayUtils.EMPTY_STRING_ARRAY;
         }
@@ -661,7 +664,7 @@ public class ExceptionUtils {
      * @return the message, non-null
      * @since Commons Lang 2.2
      */
-    public static String getMessage(final Throwable th) {
+    public static String getMessage(final @Nullable Throwable th) {
         if (th == null) {
             return StringUtils.EMPTY;
         }
@@ -681,7 +684,7 @@ public class ExceptionUtils {
      * @return the message, non-null
      * @since Commons Lang 2.2
      */
-    public static String getRootCauseMessage(final Throwable th) {
+    public static String getRootCauseMessage(final @Nullable Throwable th) {
         Throwable root = ExceptionUtils.getRootCause(th);
         root = root == null ? th : root;
         return getMessage(root);
