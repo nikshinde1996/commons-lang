@@ -23,6 +23,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 import org.apache.commons.lang3.ClassUtils;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * Contains common code for working with {@link java.lang.reflect.Method Methods}/{@link java.lang.reflect.Constructor Constructors},
@@ -30,6 +32,7 @@ import org.apache.commons.lang3.ClassUtils;
  *
  * @since 2.5
  */
+@AnnotatedFor({"nullness"}) 
 abstract class MemberUtils {
     // TODO extract an interface to implement compareParameterSets(...)?
 
@@ -52,7 +55,7 @@ abstract class MemberUtils {
      * @param o the AccessibleObject to set as accessible
      * @return a boolean indicating whether the accessibility of the object was set to true.
      */
-    static boolean setAccessibleWorkaround(final AccessibleObject o) {
+    static boolean setAccessibleWorkaround(final @Nullable AccessibleObject o) {
         if (o == null || o.isAccessible()) {
             return false;
         }
@@ -82,7 +85,7 @@ abstract class MemberUtils {
      * @param m Member to check
      * @return {@code true} if <code>m</code> is accessible
      */
-    static boolean isAccessible(final Member m) {
+    static boolean isAccessible(final @Nullable Member m) {
         return m != null && Modifier.isPublic(m.getModifiers()) && !m.isSynthetic();
     }
 

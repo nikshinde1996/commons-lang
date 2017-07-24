@@ -16,6 +16,9 @@
  */
 package org.apache.commons.lang3.tuple;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
+
 /**
  * <p>An immutable pair consisting of two {@code Object} elements.</p>
  *
@@ -31,6 +34,7 @@ package org.apache.commons.lang3.tuple;
  *
  * @since Lang 3.0
  */
+@AnnotatedFor({"nullness"}) 
 public final class ImmutablePair<L, R> extends Pair<L, R> {
 
     /**
@@ -73,7 +77,7 @@ public final class ImmutablePair<L, R> extends Pair<L, R> {
      * @param right  the right element, may be null
      * @return a pair formed from the two parameters, not null
      */
-    public static <L, R> ImmutablePair<L, R> of(final L left, final R right) {
+    public static <L, R> ImmutablePair<L, R> of(final @Nullable L left, final @Nullable R right) {
         return new ImmutablePair<>(left, right);
     }
 
@@ -83,7 +87,7 @@ public final class ImmutablePair<L, R> extends Pair<L, R> {
      * @param left  the left value, may be null
      * @param right  the right value, may be null
      */
-    public ImmutablePair(final L left, final R right) {
+    public ImmutablePair(final @Nullable L left, final @Nullable R right) {
         super();
         this.left = left;
         this.right = right;

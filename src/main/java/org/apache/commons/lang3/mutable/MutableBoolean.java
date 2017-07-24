@@ -20,6 +20,8 @@ package org.apache.commons.lang3.mutable;
 import java.io.Serializable;
 
 import org.apache.commons.lang3.BooleanUtils;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * A mutable <code>boolean</code> wrapper.
@@ -29,6 +31,7 @@ import org.apache.commons.lang3.BooleanUtils;
  * @see Boolean
  * @since 2.2
  */
+@AnnotatedFor({"nullness"}) 
 public class MutableBoolean implements Mutable<Boolean>, Serializable, Comparable<MutableBoolean> {
 
     /**
@@ -170,7 +173,7 @@ public class MutableBoolean implements Mutable<Boolean>, Serializable, Comparabl
      * @return <code>true</code> if the objects are the same; <code>false</code> otherwise.
      */
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(final @Nullable Object obj) {
         if (obj instanceof MutableBoolean) {
             return value == ((MutableBoolean) obj).booleanValue();
         }

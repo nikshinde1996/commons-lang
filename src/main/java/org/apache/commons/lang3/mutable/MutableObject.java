@@ -18,6 +18,8 @@
 package org.apache.commons.lang3.mutable;
 
 import java.io.Serializable;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * A mutable <code>Object</code> wrapper.
@@ -25,6 +27,7 @@ import java.io.Serializable;
  * @param <T> the type to set and get
  * @since 2.1
  */
+@AnnotatedFor({"nullness"}) 
 public class MutableObject<T> implements Mutable<T>, Serializable {
 
     /**
@@ -35,7 +38,7 @@ public class MutableObject<T> implements Mutable<T>, Serializable {
     private static final long serialVersionUID = 86241875189L;
 
     /** The mutable value. */
-    private T value;
+    private @Nullable T value;
 
     /**
      * Constructs a new MutableObject with the default value of <code>null</code>.
@@ -49,7 +52,7 @@ public class MutableObject<T> implements Mutable<T>, Serializable {
      *
      * @param value  the initial value to store
      */
-    public MutableObject(final T value) {
+    public MutableObject(final @Nullable T value) {
         super();
         this.value = value;
     }
@@ -61,7 +64,7 @@ public class MutableObject<T> implements Mutable<T>, Serializable {
      * @return the value, may be null
      */
     @Override
-    public T getValue() {
+    public @Nullable T getValue() {
         return this.value;
     }
 
@@ -71,7 +74,7 @@ public class MutableObject<T> implements Mutable<T>, Serializable {
      * @param value  the value to set
      */
     @Override
-    public void setValue(final T value) {
+    public void setValue(final @Nullable T value) {
         this.value = value;
     }
 
@@ -89,7 +92,7 @@ public class MutableObject<T> implements Mutable<T>, Serializable {
      *          <code>false</code> otherwise.
      */
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(final @Nullable Object obj) {
         if (obj == null) {
             return false;
         }

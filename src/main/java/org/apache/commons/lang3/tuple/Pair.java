@@ -21,6 +21,8 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>A pair consisting of two elements.</p>
@@ -38,6 +40,7 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
  *
  * @since Lang 3.0
  */
+@AnnotatedFor({"nullness"}) 
 public abstract class Pair<L, R> implements Map.Entry<L, R>, Comparable<Pair<L, R>>, Serializable {
 
     /** Serialization version */
@@ -55,7 +58,7 @@ public abstract class Pair<L, R> implements Map.Entry<L, R>, Comparable<Pair<L, 
      * @param right  the right element, may be null
      * @return a pair formed from the two parameters, not null
      */
-    public static <L, R> Pair<L, R> of(final L left, final R right) {
+    public static <L, R> Pair<L, R> of(final @Nullable L left, final @Nullable R right) {
         return new ImmutablePair<>(left, right);
     }
 
@@ -67,7 +70,7 @@ public abstract class Pair<L, R> implements Map.Entry<L, R>, Comparable<Pair<L, 
      *
      * @return the left element, may be null
      */
-    public abstract L getLeft();
+    public abstract @Nullable L getLeft();
 
     /**
      * <p>Gets the right element from this pair.</p>
@@ -76,7 +79,7 @@ public abstract class Pair<L, R> implements Map.Entry<L, R>, Comparable<Pair<L, 
      *
      * @return the right element, may be null
      */
-    public abstract R getRight();
+    public abstract @Nullable R getRight();
 
     /**
      * <p>Gets the key from this pair.</p>
@@ -87,7 +90,7 @@ public abstract class Pair<L, R> implements Map.Entry<L, R>, Comparable<Pair<L, 
      * @return the left element as the key, may be null
      */
     @Override
-    public final L getKey() {
+    public final @Nullable L getKey() {
         return getLeft();
     }
 
@@ -100,7 +103,7 @@ public abstract class Pair<L, R> implements Map.Entry<L, R>, Comparable<Pair<L, 
      * @return the right element as the value, may be null
      */
     @Override
-    public R getValue() {
+    public @Nullable R getValue() {
         return getRight();
     }
 
@@ -125,7 +128,7 @@ public abstract class Pair<L, R> implements Map.Entry<L, R>, Comparable<Pair<L, 
      * @return true if the elements of the pair are equal
      */
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(final @Nullable Object obj) {
         if (obj == this) {
             return true;
         }

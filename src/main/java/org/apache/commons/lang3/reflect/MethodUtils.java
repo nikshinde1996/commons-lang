@@ -36,6 +36,8 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.ClassUtils.Interfaces;
 import org.apache.commons.lang3.Validate;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>Utility reflection methods focused on {@link Method}s, originally from Commons BeanUtils.
@@ -57,6 +59,7 @@ import org.apache.commons.lang3.Validate;
  *
  * @since 2.5
  */
+@AnnotatedFor({"nullness"}) 
 public class MethodUtils {
 
     /**
@@ -141,7 +144,7 @@ public class MethodUtils {
      * @throws IllegalAccessException if the requested method is not accessible via reflection
      */
     public static Object invokeMethod(final Object object, final String methodName,
-            Object... args) throws NoSuchMethodException,
+            Object @Nullable ... args) throws NoSuchMethodException,
             IllegalAccessException, InvocationTargetException {
         args = ArrayUtils.nullToEmpty(args);
         final Class<?>[] parameterTypes = ClassUtils.toClass(args);
@@ -172,7 +175,7 @@ public class MethodUtils {
      * @since 3.5
      */
     public static Object invokeMethod(final Object object, final boolean forceAccess, final String methodName,
-            Object... args) throws NoSuchMethodException,
+            Object @Nullable ... args) throws NoSuchMethodException,
             IllegalAccessException, InvocationTargetException {
         args = ArrayUtils.nullToEmpty(args);
         final Class<?>[] parameterTypes = ClassUtils.toClass(args);
@@ -199,7 +202,7 @@ public class MethodUtils {
      * @since 3.5
      */
     public static Object invokeMethod(final Object object, final boolean forceAccess, final String methodName,
-            Object[] args, Class<?>[] parameterTypes)
+            Object @Nullable [] args, Class<?> @Nullable [] parameterTypes)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         parameterTypes = ArrayUtils.nullToEmpty(parameterTypes);
         args = ArrayUtils.nullToEmpty(args);
@@ -250,7 +253,7 @@ public class MethodUtils {
      * @throws IllegalAccessException if the requested method is not accessible via reflection
      */
     public static Object invokeMethod(final Object object, final String methodName,
-            final Object[] args, final Class<?>[] parameterTypes)
+            final Object @Nullable [] args, final Class<?> @Nullable [] parameterTypes)
             throws NoSuchMethodException, IllegalAccessException,
             InvocationTargetException {
         return invokeMethod(object, false, methodName, args, parameterTypes);
@@ -298,7 +301,7 @@ public class MethodUtils {
      *  via reflection
      */
     public static Object invokeExactMethod(final Object object, final String methodName,
-            Object... args) throws NoSuchMethodException,
+            Object @Nullable ... args) throws NoSuchMethodException,
             IllegalAccessException, InvocationTargetException {
         args = ArrayUtils.nullToEmpty(args);
         final Class<?>[] parameterTypes = ClassUtils.toClass(args);
@@ -325,7 +328,7 @@ public class MethodUtils {
      *  via reflection
      */
     public static Object invokeExactMethod(final Object object, final String methodName,
-            Object[] args, Class<?>[] parameterTypes)
+            Object @Nullable [] args, Class<?> @Nullable [] parameterTypes)
             throws NoSuchMethodException, IllegalAccessException,
             InvocationTargetException {
         args = ArrayUtils.nullToEmpty(args);
@@ -360,7 +363,7 @@ public class MethodUtils {
      *  via reflection
      */
     public static Object invokeExactStaticMethod(final Class<?> cls, final String methodName,
-            Object[] args, Class<?>[] parameterTypes)
+            Object @Nullable [] args, Class<?> @Nullable [] parameterTypes)
             throws NoSuchMethodException, IllegalAccessException,
             InvocationTargetException {
         args = ArrayUtils.nullToEmpty(args);
@@ -398,7 +401,7 @@ public class MethodUtils {
      *  via reflection
      */
     public static Object invokeStaticMethod(final Class<?> cls, final String methodName,
-            Object... args) throws NoSuchMethodException,
+            Object @Nullable ... args) throws NoSuchMethodException,
             IllegalAccessException, InvocationTargetException {
         args = ArrayUtils.nullToEmpty(args);
         final Class<?>[] parameterTypes = ClassUtils.toClass(args);
@@ -428,7 +431,7 @@ public class MethodUtils {
      *  via reflection
      */
     public static Object invokeStaticMethod(final Class<?> cls, final String methodName,
-            Object[] args, Class<?>[] parameterTypes)
+            Object @Nullable [] args, Class<?> @Nullable [] parameterTypes)
             throws NoSuchMethodException, IllegalAccessException,
             InvocationTargetException {
         args = ArrayUtils.nullToEmpty(args);
@@ -513,7 +516,7 @@ public class MethodUtils {
      *  via reflection
      */
     public static Object invokeExactStaticMethod(final Class<?> cls, final String methodName,
-            Object... args) throws NoSuchMethodException,
+            Object @Nullable ... args) throws NoSuchMethodException,
             IllegalAccessException, InvocationTargetException {
         args = ArrayUtils.nullToEmpty(args);
         final Class<?>[] parameterTypes = ClassUtils.toClass(args);
@@ -532,7 +535,7 @@ public class MethodUtils {
      * @param parameterTypes with these parameters types
      * @return The accessible method
      */
-    public static Method getAccessibleMethod(final Class<?> cls, final String methodName,
+    public static @Nullable  Method getAccessibleMethod(final Class<?> cls, final String methodName,
             final Class<?>... parameterTypes) {
         try {
             return getAccessibleMethod(cls.getMethod(methodName,
@@ -550,7 +553,7 @@ public class MethodUtils {
      * @param method The method that we wish to call
      * @return The accessible method
      */
-    public static Method getAccessibleMethod(Method method) {
+    public static @Nullable Method getAccessibleMethod(Method method) {
         if (!MemberUtils.isAccessible(method)) {
             return null;
         }
@@ -584,7 +587,7 @@ public class MethodUtils {
      * @param parameterTypes The parameter type signatures
      * @return the accessible method or {@code null} if not found
      */
-    private static Method getAccessibleMethodFromSuperclass(final Class<?> cls,
+    private static @Nullable Method getAccessibleMethodFromSuperclass(final Class<?> cls,
             final String methodName, final Class<?>... parameterTypes) {
         Class<?> parentClass = cls.getSuperclass();
         while (parentClass != null) {
@@ -615,7 +618,7 @@ public class MethodUtils {
      * @param parameterTypes The parameter type signatures
      * @return the accessible method or {@code null} if not found
      */
-    private static Method getAccessibleMethodFromInterfaceNest(Class<?> cls,
+    private static @Nullable Method getAccessibleMethodFromInterfaceNest(Class<?> cls,
             final String methodName, final Class<?>... parameterTypes) {
         // Search up the superclass chain
         for (; cls != null; cls = cls.getSuperclass()) {
@@ -670,7 +673,7 @@ public class MethodUtils {
      * @param parameterTypes find method with most compatible parameters
      * @return The accessible method
      */
-    public static Method getMatchingAccessibleMethod(final Class<?> cls,
+    public static @Nullable Method getMatchingAccessibleMethod(final Class<?> cls,
             final String methodName, final Class<?>... parameterTypes) {
         try {
             final Method method = cls.getMethod(methodName, parameterTypes);
@@ -725,7 +728,7 @@ public class MethodUtils {
      *
      * @since 3.5
      */
-    public static Method getMatchingMethod(final Class<?> cls, final String methodName,
+    public static @Nullable Method getMatchingMethod(final Class<?> cls, final String methodName,
             final Class<?>... parameterTypes) {
         Validate.notNull(cls, "Null class not allowed.");
         Validate.notEmpty(methodName, "Null or blank methodName not allowed.");
@@ -792,7 +795,7 @@ public class MethodUtils {
      * @throws NullPointerException if the specified method is {@code null}
      * @since 3.2
      */
-    public static Set<Method> getOverrideHierarchy(final Method method, final Interfaces interfacesBehavior) {
+    public static Set<Method> getOverrideHierarchy(final Method method, final @Nullable Interfaces interfacesBehavior) {
         Validate.notNull(method);
         final Set<Method> result = new LinkedHashSet<>();
         result.add(method);
@@ -940,7 +943,7 @@ public class MethodUtils {
      *            if the method or annotation are {@code null}
      * @since 3.6
      */
-    public static <A extends Annotation> A getAnnotation(final Method method, final Class<A> annotationCls,
+    public static <A extends Annotation> @Nullable A getAnnotation(final Method method, final Class<A> annotationCls,
                                                          boolean searchSupers, boolean ignoreAccess) {
 
         Validate.isTrue(method != null, "The method must not be null");
@@ -983,7 +986,7 @@ public class MethodUtils {
      * going up from this one
      *  {@code null} if null input
      */
-    private static List<Class<?>> getAllSuperclassesAndInterfaces(final Class<?> cls) {
+    private static @Nullable List<Class<?>> getAllSuperclassesAndInterfaces(final @Nullable Class<?> cls) {
         if (cls == null) {
             return null;
         }

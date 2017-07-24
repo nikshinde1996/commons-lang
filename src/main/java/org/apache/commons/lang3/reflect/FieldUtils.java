@@ -26,6 +26,8 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * Utilities for working with {@link Field}s by reflection. Adapted and refactored from the dormant [reflect] Commons
@@ -396,7 +398,7 @@ public class FieldUtils {
      * @throws IllegalAccessException
      *             if the field is not accessible
      */
-    public static Object readField(final Field field, final Object target) throws IllegalAccessException {
+    public static Object readField(final Field field, final @Nullable Object target) throws IllegalAccessException {
         return readField(field, target, false);
     }
 
@@ -416,7 +418,7 @@ public class FieldUtils {
      * @throws IllegalAccessException
      *             if the field is not made accessible
      */
-    public static Object readField(final Field field, final Object target, final boolean forceAccess) throws IllegalAccessException {
+    public static Object readField(final Field field, final @Nullable Object target, final boolean forceAccess) throws IllegalAccessException {
         Validate.isTrue(field != null, "The field must not be null");
         if (forceAccess && !field.isAccessible()) {
             field.setAccessible(true);
@@ -655,7 +657,7 @@ public class FieldUtils {
      *             if the field or target is {@code null}, the field is not accessible or is {@code final}, or
      *             {@code value} is not assignable
      */
-    public static void writeField(final Field field, final Object target, final Object value) throws IllegalAccessException {
+    public static void writeField(final Field field, final @Nullable Object target, final Object value) throws IllegalAccessException {
         writeField(field, target, value, false);
     }
 
@@ -677,7 +679,7 @@ public class FieldUtils {
      * @throws IllegalAccessException
      *             if the field is not made accessible or is {@code final}
      */
-    public static void writeField(final Field field, final Object target, final Object value, final boolean forceAccess)
+    public static void writeField(final Field field, final @Nullable Object target, final Object value, final boolean forceAccess)
             throws IllegalAccessException {
         Validate.isTrue(field != null, "The field must not be null");
         if (forceAccess && !field.isAccessible()) {

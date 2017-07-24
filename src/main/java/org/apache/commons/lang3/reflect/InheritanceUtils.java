@@ -17,12 +17,15 @@
 package org.apache.commons.lang3.reflect;
 
 import org.apache.commons.lang3.BooleanUtils;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>Utility methods focusing on inheritance.</p>
  *
  * @since 3.2
  */
+@AnnotatedFor({"nullness"}) 
 public class InheritanceUtils {
 
     /**
@@ -46,7 +49,7 @@ public class InheritanceUtils {
      * -1 if the classes are not related as child and parent (includes where either class is null)
      * @since 3.2
      */
-    public static int distance(final Class<?> child, final Class<?> parent) {
+    public static int distance(final @Nullable Class<?> child, final @Nullable Class<?> parent) {
         if (child == null || parent == null) {
             return -1;
         }

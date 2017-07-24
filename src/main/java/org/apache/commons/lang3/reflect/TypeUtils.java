@@ -37,6 +37,8 @@ import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.builder.Builder;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p> Utility methods focusing on type inspection, particularly with regard to
@@ -44,6 +46,7 @@ import org.apache.commons.lang3.builder.Builder;
  *
  * @since 3.0
  */
+@AnnotatedFor({"nullness"}) 
 public class TypeUtils {
 
     /**
@@ -222,15 +225,15 @@ public class TypeUtils {
     private static final class WildcardTypeImpl implements WildcardType {
         private static final Type[] EMPTY_BOUNDS = new Type[0];
 
-        private final Type[] upperBounds;
-        private final Type[] lowerBounds;
+        private final Type @Nullable [] upperBounds;
+        private final Type @Nullable [] lowerBounds;
 
         /**
          * Constructor
          * @param upperBounds of this type
          * @param lowerBounds of this type
          */
-        private WildcardTypeImpl(final Type[] upperBounds, final Type[] lowerBounds) {
+        private WildcardTypeImpl(final Type @Nullable [] upperBounds, final Type @Nullable [] lowerBounds) {
             this.upperBounds = ObjectUtils.defaultIfNull(upperBounds, EMPTY_BOUNDS);
             this.lowerBounds = ObjectUtils.defaultIfNull(lowerBounds, EMPTY_BOUNDS);
         }
@@ -239,7 +242,7 @@ public class TypeUtils {
          * {@inheritDoc}
          */
         @Override
-        public Type[] getUpperBounds() {
+        public Type @Nullable [] getUpperBounds() {
             return upperBounds.clone();
         }
 
@@ -247,7 +250,7 @@ public class TypeUtils {
          * {@inheritDoc}
          */
         @Override
-        public Type[] getLowerBounds() {
+        public Type @Nullable [] getLowerBounds() {
             return lowerBounds.clone();
         }
 
@@ -489,7 +492,7 @@ public class TypeUtils {
      * @return Type or {@code null} if some variable was not in the map
      * @since 3.2
      */
-    private static Type unrollVariableAssignments(TypeVariable<?> var, final Map<TypeVariable<?>, Type> typeVarAssigns) {
+    private static @Nullable Type unrollVariableAssignments(TypeVariable<?> var, final Map<TypeVariable<?>, Type> typeVarAssigns) {
         Type result;
         do {
             result = typeVarAssigns.get(var);
@@ -1266,7 +1269,7 @@ public class TypeUtils {
      * @return the resolved {@link Class} object or {@code null} if
      * the type could not be resolved
      */
-    public static Class<?> getRawType(final Type type, final Type assigningType) {
+    public static @Nullable Class<?> getRawType(final Type type, final Type assigningType) {
         if (type instanceof Class<?>) {
             // it is raw, no problem
             return (Class<?>) type;
@@ -1344,7 +1347,7 @@ public class TypeUtils {
      * @param type the type to be checked
      * @return component type or null if type is not an array type
      */
-    public static Type getArrayComponentType(final Type type) {
+    public static @Nullable Type getArrayComponentType(final Type type) {
         if (type instanceof Class<?>) {
             final Class<?> clazz = (Class<?>) type;
             return clazz.isArray() ? clazz.getComponentType() : null;

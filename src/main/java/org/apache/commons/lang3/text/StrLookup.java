@@ -17,6 +17,8 @@
 package org.apache.commons.lang3.text;
 
 import java.util.Map;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * Lookup a String key to a String value.
@@ -36,6 +38,7 @@ import java.util.Map;
  * <a href="https://commons.apache.org/proper/commons-text/javadocs/api-release/org/apache/commons/text/StrLookup.html">
  * StrLookup</a> instead
  */
+@AnnotatedFor({"nullness"}) 
 @Deprecated
 public abstract class StrLookup<V> {
 
@@ -84,7 +87,7 @@ public abstract class StrLookup<V> {
      * @param map  the map of keys to values, may be null
      * @return a lookup using the map, not null
      */
-    public static <V> StrLookup<V> mapLookup(final Map<String, V> map) {
+    public static <V> StrLookup<V> mapLookup(final @Nullable Map<String, V> map) {
         return new MapStrLookup<>(map);
     }
 
@@ -119,7 +122,7 @@ public abstract class StrLookup<V> {
      * @param key  the key to be looked up, may be null
      * @return the matching value, null if no match
      */
-    public abstract String lookup(String key);
+    public abstract @Nullable String lookup(@Nullable String key);
 
     //-----------------------------------------------------------------------
     /**
@@ -135,7 +138,7 @@ public abstract class StrLookup<V> {
          *
          * @param map  the map of keys to values, may be null
          */
-        MapStrLookup(final Map<String, V> map) {
+        MapStrLookup(final @Nullable Map<String, V> map) {
             this.map = map;
         }
 
@@ -149,7 +152,7 @@ public abstract class StrLookup<V> {
          * @return the matching value, null if no match
          */
         @Override
-        public String lookup(final String key) {
+        public @Nullable String lookup(final @Nullable String key) {
             if (map == null) {
                 return null;
             }
@@ -170,7 +173,7 @@ public abstract class StrLookup<V> {
          * {@inheritDoc} This implementation directly accesses system properties.
          */
         @Override
-        public String lookup(final String key) {
+        public @Nullable String lookup(final String key) {
             if (key.length() > 0) {
                 try {
                     return System.getProperty(key);

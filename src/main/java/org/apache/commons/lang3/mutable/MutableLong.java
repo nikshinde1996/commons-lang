@@ -17,6 +17,8 @@
 package org.apache.commons.lang3.mutable;
 
 import org.apache.commons.lang3.math.NumberUtils;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * A mutable <code>long</code> wrapper.
@@ -26,6 +28,7 @@ import org.apache.commons.lang3.math.NumberUtils;
  * @see Long
  * @since 2.1
  */
+@AnnotatedFor({"nullness"}) 
 public class MutableLong extends Number implements Comparable<MutableLong>, Mutable<Number> {
 
     /**
@@ -339,7 +342,7 @@ public class MutableLong extends Number implements Comparable<MutableLong>, Muta
      * @return <code>true</code> if the objects are the same; <code>false</code> otherwise.
      */
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(final @Nullable Object obj) {
         if (obj instanceof MutableLong) {
             return value == ((MutableLong) obj).longValue();
         }

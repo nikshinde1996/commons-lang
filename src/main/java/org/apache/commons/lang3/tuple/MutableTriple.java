@@ -16,6 +16,9 @@
  */
 package org.apache.commons.lang3.tuple;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
+
 /**
  * <p>A mutable triple consisting of three {@code Object} elements.</p>
  *
@@ -27,6 +30,7 @@ package org.apache.commons.lang3.tuple;
  *
  * @since 3.2
  */
+@AnnotatedFor({"nullness"}) 
 public class MutableTriple<L, M, R> extends Triple<L, M, R> {
 
     /** Serialization version */
@@ -53,7 +57,7 @@ public class MutableTriple<L, M, R> extends Triple<L, M, R> {
      * @param right  the right element, may be null
      * @return a triple formed from the three parameters, not null
      */
-    public static <L, M, R> MutableTriple<L, M, R> of(final L left, final M middle, final R right) {
+    public static <L, M, R> MutableTriple<L, M, R> of(final @Nullable L left, final @Nullable M middle, final @Nullable R right) {
         return new MutableTriple<>(left, middle, right);
     }
 
@@ -71,7 +75,7 @@ public class MutableTriple<L, M, R> extends Triple<L, M, R> {
      * @param middle  the middle value, may be null
      * @param right  the right value, may be null
      */
-    public MutableTriple(final L left, final M middle, final R right) {
+    public MutableTriple(final @Nullable L left, final @Nullable M middle, final @Nullable R right) {
         super();
         this.left = left;
         this.middle = middle;
@@ -92,7 +96,7 @@ public class MutableTriple<L, M, R> extends Triple<L, M, R> {
      *
      * @param left  the new value of the left element, may be null
      */
-    public void setLeft(final L left) {
+    public void setLeft(final @Nullable L left) {
         this.left = left;
     }
 
@@ -109,7 +113,7 @@ public class MutableTriple<L, M, R> extends Triple<L, M, R> {
      *
      * @param middle  the new value of the middle element, may be null
      */
-    public void setMiddle(final M middle) {
+    public void setMiddle(final @Nullable M middle) {
         this.middle = middle;
     }
 
@@ -126,7 +130,7 @@ public class MutableTriple<L, M, R> extends Triple<L, M, R> {
      *
      * @param right  the new value of the right element, may be null
      */
-    public void setRight(final R right) {
+    public void setRight(final @Nullable R right) {
         this.right = right;
     }
 }
