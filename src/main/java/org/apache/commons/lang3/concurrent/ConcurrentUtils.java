@@ -22,6 +22,8 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.Validate;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>
@@ -31,6 +33,7 @@ import org.apache.commons.lang3.Validate;
  *
  * @since 3.0
  */
+@AnnotatedFor({"nullness"}) 
 public class ConcurrentUtils {
 
     /**
@@ -58,7 +61,7 @@ public class ConcurrentUtils {
      * @param ex the exception to be processed
      * @return a {@code ConcurrentException} with the checked cause
      */
-    public static ConcurrentException extractCause(final ExecutionException ex) {
+    public static @Nullable ConcurrentException extractCause(final @Nullable ExecutionException ex) {
         if (ex == null || ex.getCause() == null) {
             return null;
         }
@@ -79,8 +82,8 @@ public class ConcurrentUtils {
      * @param ex the exception to be processed
      * @return a {@code ConcurrentRuntimeException} with the checked cause
      */
-    public static ConcurrentRuntimeException extractCauseUnchecked(
-            final ExecutionException ex) {
+    public static @Nullable ConcurrentRuntimeException extractCauseUnchecked(
+            final @Nullable ExecutionException ex) {
         if (ex == null || ex.getCause() == null) {
             return null;
         }
@@ -102,7 +105,7 @@ public class ConcurrentUtils {
      * @throws ConcurrentException if the cause of the {@code
      * ExecutionException} is a checked exception
      */
-    public static void handleCause(final ExecutionException ex)
+    public static void handleCause(final @Nullable ExecutionException ex)
             throws ConcurrentException {
         final ConcurrentException cex = extractCause(ex);
 
@@ -178,7 +181,7 @@ public class ConcurrentUtils {
      * @throws ConcurrentException if the {@code ConcurrentInitializer} throws
      * an exception
      */
-    public static <T> T initialize(final ConcurrentInitializer<T> initializer)
+    public static <T> @Nullable T initialize(final @Nullable ConcurrentInitializer<T> initializer)
             throws ConcurrentException {
         return initializer != null ? initializer.get() : null;
     }
@@ -239,7 +242,7 @@ public class ConcurrentUtils {
      * @param value the value to be added
      * @return the value stored in the map after this operation
      */
-    public static <K, V> V putIfAbsent(final ConcurrentMap<K, V> map, final K key, final V value) {
+    public static <K, V> @Nullable V putIfAbsent(final @Nullable ConcurrentMap<K, V> map, final K key, final V value) {
         if (map == null) {
             return null;
         }
@@ -268,8 +271,8 @@ public class ConcurrentUtils {
      * not be the object created by the {@link ConcurrentInitializer}
      * @throws ConcurrentException if the initializer throws an exception
      */
-    public static <K, V> V createIfAbsent(final ConcurrentMap<K, V> map, final K key,
-            final ConcurrentInitializer<V> init) throws ConcurrentException {
+    public static <K, V> @Nullable V createIfAbsent(final @Nullable ConcurrentMap<K, V> map, final K key,
+            final @Nullable ConcurrentInitializer<V> init) throws ConcurrentException {
         if (map == null || init == null) {
             return null;
         }
@@ -321,7 +324,7 @@ public class ConcurrentUtils {
      * @param value  the constant value to return, may be null
      * @return an instance of Future that will return the value, never null
      */
-    public static <T> Future<T> constantFuture(final T value) {
+    public static <T> Future<T> constantFuture(final @Nullable T value) {
         return new ConstantFuture<>(value);
     }
 
@@ -339,7 +342,7 @@ public class ConcurrentUtils {
          *
          * @param value the value (may be <b>null</b>)
          */
-        ConstantFuture(final T value) {
+        ConstantFuture(final @Nullable T value) {
             this.value = value;
         }
 

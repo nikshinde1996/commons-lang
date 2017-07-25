@@ -17,6 +17,8 @@
 package org.apache.commons.lang3.concurrent;
 
 import java.util.Objects;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>
@@ -37,6 +39,7 @@ import java.util.Objects;
  * @since 3.0
  * @param <T> the type of the object managed by this initializer
  */
+@AnnotatedFor({"nullness"}) 
 public class ConstantInitializer<T> implements ConcurrentInitializer<T> {
     /** Constant for the format of the string representation. */
     private static final String FMT_TO_STRING = "ConstantInitializer@%d [ object = %s ]";
@@ -53,7 +56,7 @@ public class ConstantInitializer<T> implements ConcurrentInitializer<T> {
      *
      * @param obj the object to be managed by this initializer
      */
-    public ConstantInitializer(final T obj) {
+    public ConstantInitializer(final @Nullable T obj) {
         object = obj;
     }
 

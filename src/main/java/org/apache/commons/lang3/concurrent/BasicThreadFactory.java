@@ -21,6 +21,8 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.apache.commons.lang3.Validate;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>
@@ -88,6 +90,7 @@ import org.apache.commons.lang3.Validate;
  *
  * @since 3.0
  */
+@AnnotatedFor({"nullness"}) 
 public class BasicThreadFactory implements ThreadFactory {
     /** A counter for the threads created by this factory. */
     private final AtomicLong threadCounter;
@@ -136,7 +139,7 @@ public class BasicThreadFactory implements ThreadFactory {
      *
      * @return the wrapped {@code ThreadFactory}
      */
-    public final ThreadFactory getWrappedFactory() {
+    public final @Nullable ThreadFactory getWrappedFactory() {
         return wrappedFactory;
     }
 
@@ -146,7 +149,7 @@ public class BasicThreadFactory implements ThreadFactory {
      *
      * @return the naming pattern
      */
-    public final String getNamingPattern() {
+    public final @Nullable String getNamingPattern() {
         return namingPattern;
     }
 
@@ -158,7 +161,7 @@ public class BasicThreadFactory implements ThreadFactory {
      *
      * @return the daemon flag
      */
-    public final Boolean getDaemonFlag() {
+    public final @Nullable Boolean getDaemonFlag() {
         return daemonFlag;
     }
 
@@ -168,7 +171,7 @@ public class BasicThreadFactory implements ThreadFactory {
      *
      * @return the priority for newly created threads
      */
-    public final Integer getPriority() {
+    public final @Nullable Integer getPriority() {
         return priority;
     }
 
@@ -178,7 +181,7 @@ public class BasicThreadFactory implements ThreadFactory {
      *
      * @return the {@code UncaughtExceptionHandler}
      */
-    public final Thread.UncaughtExceptionHandler getUncaughtExceptionHandler() {
+    public final @Nullable Thread.UncaughtExceptionHandler getUncaughtExceptionHandler() {
         return uncaughtExceptionHandler;
     }
 

@@ -19,6 +19,8 @@ package org.apache.commons.lang3.concurrent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.concurrent.atomic.AtomicReference;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * Base class for circuit breakers.
@@ -26,6 +28,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * @param <T> the type of the value monitored by this circuit breaker
  * @since 3.5
  */
+@AnnotatedFor({"nullness"}) 
 public abstract class AbstractCircuitBreaker<T> implements CircuitBreaker<T> {
     /**
      * The name of the <em>open</em> property as it is passed to registered
@@ -119,7 +122,7 @@ public abstract class AbstractCircuitBreaker<T> implements CircuitBreaker<T> {
      *
      * @param listener the listener to be added
      */
-    public void addChangeListener(final PropertyChangeListener listener) {
+    public void addChangeListener(final @Nullable PropertyChangeListener listener) {
         changeSupport.addPropertyChangeListener(listener);
     }
 

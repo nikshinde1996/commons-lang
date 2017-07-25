@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Locale;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * An API for translating text.
@@ -31,6 +33,7 @@ import java.util.Locale;
  * <a href="https://commons.apache.org/proper/commons-text/javadocs/api-release/org/apache/commons/text/translate/CharSequenceTranslator.html">
  * CharSequenceTranslator</a> instead
  */
+@AnnotatedFor({"nullness"}) 
 @Deprecated
 public abstract class CharSequenceTranslator {
 
@@ -55,7 +58,7 @@ public abstract class CharSequenceTranslator {
      * @param input CharSequence to be translated
      * @return String output of translation
      */
-    public final String translate(final CharSequence input) {
+    public final @Nullable String translate(final @Nullable CharSequence input) {
         if (input == null) {
             return null;
         }
@@ -77,7 +80,7 @@ public abstract class CharSequenceTranslator {
      * @param out Writer to translate the text to
      * @throws IOException if and only if the Writer produces an IOException
      */
-    public final void translate(final CharSequence input, final Writer out) throws IOException {
+    public final void translate(final @Nullable CharSequence input, final Writer out) throws IOException {
         if (out == null) {
             throw new IllegalArgumentException("The Writer must not be null");
         }

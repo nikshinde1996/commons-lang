@@ -21,6 +21,8 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>Operations on Strings that contain words.</p>
@@ -34,6 +36,7 @@ import org.apache.commons.lang3.StringUtils;
  * <a href="https://commons.apache.org/proper/commons-text/javadocs/api-release/org/apache/commons/text/WordUtils.html">
  * WordUtils</a> instead
  */
+@AnnotatedFor({"nullness"}) 
 @Deprecated
 public class WordUtils {
 
@@ -99,7 +102,7 @@ public class WordUtils {
      * @param wrapLength  the column to wrap the words at, less than 1 is treated as 1
      * @return a line with newlines inserted, <code>null</code> if null input
      */
-    public static String wrap(final String str, final int wrapLength) {
+    public static @Nullable String wrap(final @Nullable String str, final int wrapLength) {
         return wrap(str, wrapLength, null, false);
     }
 
@@ -175,7 +178,7 @@ public class WordUtils {
      * @param wrapLongWords  true if long words (such as URLs) should be wrapped
      * @return a line with newlines inserted, <code>null</code> if null input
      */
-    public static String wrap(final String str, final int wrapLength, final String newLineStr, final boolean wrapLongWords) {
+    public static @Nullable String wrap(final @Nullable String str, final int wrapLength, final @Nullable String newLineStr, final boolean wrapLongWords) {
         return wrap(str, wrapLength, newLineStr, wrapLongWords, " ");
     }
 
@@ -268,7 +271,7 @@ public class WordUtils {
      *               if blank string is provided a space character will be used
      * @return a line with newlines inserted, <code>null</code> if null input
      */
-    public static String wrap(final String str, int wrapLength, String newLineStr, final boolean wrapLongWords, String wrapOn) {
+    public static @Nullable String wrap(final @Nullable String str, int wrapLength,@Nullable String newLineStr, final boolean wrapLongWords, String wrapOn) {
         if (str == null) {
             return null;
         }
@@ -368,7 +371,7 @@ public class WordUtils {
      * @see #uncapitalize(String)
      * @see #capitalizeFully(String)
      */
-    public static String capitalize(final String str) {
+    public static @Nullable String capitalize(final @Nullable String str) {
         return capitalize(str, null);
     }
 
@@ -401,7 +404,7 @@ public class WordUtils {
      * @see #capitalizeFully(String)
      * @since 2.1
      */
-    public static String capitalize(final String str, final char... delimiters) {
+    public static @Nullable String capitalize(final @Nullable String str, final char @Nullable... delimiters) {
         final int delimLen = delimiters == null ? -1 : delimiters.length;
         if (StringUtils.isEmpty(str) || delimLen == 0) {
             return str;
@@ -440,7 +443,7 @@ public class WordUtils {
      * @param str  the String to capitalize, may be null
      * @return capitalized String, <code>null</code> if null String input
      */
-    public static String capitalizeFully(final String str) {
+    public static @Nullable String capitalizeFully(final @Nullable String str) {
         return capitalizeFully(str, null);
     }
 
@@ -470,7 +473,7 @@ public class WordUtils {
      * @return capitalized String, <code>null</code> if null String input
      * @since 2.1
      */
-    public static String capitalizeFully(String str, final char... delimiters) {
+    public static @Nullable String capitalizeFully(@Nullable String str, final char @Nullable ... delimiters) {
         final int delimLen = delimiters == null ? -1 : delimiters.length;
         if (StringUtils.isEmpty(str) || delimLen == 0) {
             return str;
@@ -497,7 +500,7 @@ public class WordUtils {
      * @return uncapitalized String, <code>null</code> if null String input
      * @see #capitalize(String)
      */
-    public static String uncapitalize(final String str) {
+    public static @Nullable String uncapitalize(final @Nullable String str) {
         return uncapitalize(str, null);
     }
 
@@ -526,7 +529,7 @@ public class WordUtils {
      * @see #capitalize(String)
      * @since 2.1
      */
-    public static String uncapitalize(final String str, final char... delimiters) {
+    public static @Nullable String uncapitalize(final @Nullable String str, final char @Nullable ... delimiters) {
         final int delimLen = delimiters == null ? -1 : delimiters.length;
         if (StringUtils.isEmpty(str) || delimLen == 0) {
             return str;
@@ -568,7 +571,7 @@ public class WordUtils {
      * @param str  the String to swap case, may be null
      * @return the changed String, <code>null</code> if null String input
      */
-    public static String swapCase(final String str) {
+    public static @Nullable String swapCase(final @Nullable String str) {
         if (StringUtils.isEmpty(str)) {
             return str;
         }
@@ -620,7 +623,7 @@ public class WordUtils {
      * @see #initials(String,char[])
      * @since 2.2
      */
-    public static String initials(final String str) {
+    public static @Nullable String initials(final @Nullable String str) {
         return initials(str, null);
     }
 
@@ -650,7 +653,7 @@ public class WordUtils {
      * @see #initials(String)
      * @since 2.2
      */
-    public static String initials(final String str, final char... delimiters) {
+    public static @Nullable String initials(final @Nullable String str, final char @Nullable ... delimiters) {
         if (StringUtils.isEmpty(str)) {
             return str;
         }
@@ -700,7 +703,7 @@ public class WordUtils {
      * @return {@code true} if all search words are found, {@code false} otherwise
      * @since 3.5
      */
-    public static boolean containsAllWords(final CharSequence word, final CharSequence... words) {
+    public static boolean containsAllWords(final @Nullable CharSequence word, final CharSequence @Nullable ... words) {
         if (StringUtils.isEmpty(word) || ArrayUtils.isEmpty(words)) {
             return false;
         }

@@ -21,6 +21,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>
@@ -82,6 +84,7 @@ import java.util.concurrent.Future;
  * @since 3.0
  * @param <T> the type of the object managed by this initializer class
  */
+@AnnotatedFor({"nullness"}) 
 public abstract class BackgroundInitializer<T> implements
         ConcurrentInitializer<T> {
     /** The external executor service for executing tasks. */
@@ -111,7 +114,7 @@ public abstract class BackgroundInitializer<T> implements
      * @param exec an external {@code ExecutorService} to be used for task
      * execution
      */
-    protected BackgroundInitializer(final ExecutorService exec) {
+    protected BackgroundInitializer(final @Nullable ExecutorService exec) {
         setExternalExecutor(exec);
     }
 
@@ -244,7 +247,7 @@ public abstract class BackgroundInitializer<T> implements
      *
      * @return the {@code ExecutorService} for executing the background task
      */
-    protected final synchronized ExecutorService getActiveExecutor() {
+    protected final synchronized @Nullable ExecutorService getActiveExecutor() {
         return executor;
     }
 

@@ -25,6 +25,8 @@ import java.util.NoSuchElementException;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * Tokenizes a string based based on delimiters (separators)
@@ -88,6 +90,7 @@ import org.apache.commons.lang3.StringUtils;
  * <a href="https://commons.apache.org/proper/commons-text/javadocs/api-release/org/apache/commons/text/StrTokenizer.html">
  * StrTokenizer</a> instead
  */
+@AnnotatedFor({"nullness"}) 
 @Deprecated
 public class StrTokenizer implements ListIterator<String>, Cloneable {
 
@@ -409,7 +412,7 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      *
      * @return the next sequential token, or null when no more tokens are found
      */
-    public String nextToken() {
+    public @Nullable String nextToken() {
         if (hasNext()) {
             return tokens[tokenPos++];
         }
@@ -421,7 +424,7 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      *
      * @return the previous sequential token, or null when no more tokens are found
      */
-    public String previousToken() {
+    public @Nullable String previousToken() {
         if (hasPrevious()) {
             return tokens[--tokenPos];
         }
@@ -471,7 +474,7 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      * @param input  the new string to tokenize, null sets no text to parse
      * @return this, to enable chaining
      */
-    public StrTokenizer reset(final String input) {
+    public StrTokenizer reset(final @Nullable String input) {
         reset();
         if (input != null) {
             this.chars = input.toCharArray();
@@ -489,7 +492,7 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      * @param input  the new character array to tokenize, not cloned, null sets no text to parse
      * @return this, to enable chaining
      */
-    public StrTokenizer reset(final char[] input) {
+    public StrTokenizer reset(final @Nullable char[] input) {
         reset();
         this.chars = ArrayUtils.clone(input);
         return this;
@@ -634,7 +637,7 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      * @param count  the number of characters to tokenize, must be valid
      * @return the modifiable list of String tokens, unmodifiable if null array or zero count
      */
-    protected List<String> tokenize(final char[] srcChars, final int offset, final int count) {
+    protected List<String> tokenize(final @Nullable char[] srcChars, final int offset, final int count) {
         if (srcChars == null || count == 0) {
             return Collections.emptyList();
         }
@@ -858,7 +861,7 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      * @param delim  the delimiter matcher to use
      * @return this, to enable chaining
      */
-    public StrTokenizer setDelimiterMatcher(final StrMatcher delim) {
+    public StrTokenizer setDelimiterMatcher(final @Nullable StrMatcher delim) {
         if (delim == null) {
             this.delimMatcher = StrMatcher.noneMatcher();
         } else {
@@ -1058,7 +1061,7 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      *
      * @return the string content being parsed
      */
-    public String getContent() {
+    public @Nullable String getContent() {
         if (chars == null) {
             return null;
         }
@@ -1074,7 +1077,7 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      * @return a new instance of this Tokenizer which has been reset.
      */
     @Override
-    public Object clone() {
+    public @Nullable Object clone() {
         try {
             return cloneReset();
         } catch (final CloneNotSupportedException ex) {
