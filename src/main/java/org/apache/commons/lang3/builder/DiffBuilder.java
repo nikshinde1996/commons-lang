@@ -73,7 +73,7 @@ public class DiffBuilder implements Builder<DiffResult> {
     private final boolean objectsTriviallyEqual;
     private final Object left;
     private final Object right;
-    private final ToStringStyle style;
+    private final @Nullable ToStringStyle style;
 
     /**
      * <p>

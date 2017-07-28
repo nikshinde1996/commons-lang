@@ -1508,7 +1508,7 @@ public class SystemUtils {
      * @return the host name.
      * @since 3.6
      */
-    public static String getHostName() {
+    public static @Nullable String getHostName() {
         return SystemUtils.IS_OS_WINDOWS ? System.getenv("COMPUTERNAME") : System.getenv("HOSTNAME");
     }
 

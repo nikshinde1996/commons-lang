@@ -393,7 +393,7 @@ public class StringUtils {
      * @return {@code true} if any of the CharSequences are empty or null or whitespace only
      * @since 3.2
      */
-    public static boolean isAnyBlank(final @Nullable CharSequence... css) {
+    public static boolean isAnyBlank(final CharSequence  @Nullable ... css) {
       if (ArrayUtils.isEmpty(css)) {
         return false;
       }
@@ -427,7 +427,7 @@ public class StringUtils {
      * @return {@code true} if none of the CharSequences are empty or null or whitespace only
      * @since 3.2
      */
-    public static boolean isNoneBlank(final @Nullable CharSequence... css) {
+    public static boolean isNoneBlank(final CharSequence @Nullable ... css) {
       return !isAnyBlank(css);
     }
 
@@ -452,7 +452,7 @@ public class StringUtils {
      * @return {@code true} if all of the CharSequences are empty or null or whitespace only
      * @since 3.6
      */
-    public static boolean isAllBlank(final @Nullable CharSequence... css) {
+    public static boolean isAllBlank(final CharSequence @Nullable ... css) {
         if (ArrayUtils.isEmpty(css)) {
             return true;
         }
@@ -888,7 +888,7 @@ public class StringUtils {
      * @param strs  the array to remove whitespace from, may be null
      * @return the stripped Strings, {@code null} if null array input
      */
-    public static @Nullable String[] stripAll(final @Nullable String... strs) {
+    public static String @Nullable [] stripAll(final String @Nullable ... strs) {
         return stripAll(strs, null);
     }
 
@@ -917,7 +917,7 @@ public class StringUtils {
      * @param stripChars  the characters to remove, null treated as whitespace
      * @return the stripped Strings, {@code null} if null array input
      */
-    public static @Nullable String[] stripAll(final @Nullable String[] strs, final @Nullable String stripChars) {
+    public static String @Nullable [] stripAll(final String @Nullable [] strs, final @Nullable String stripChars) {
         int strsLen;
         if (strs == null || (strsLen = strs.length) == 0) {
             return strs;
@@ -2069,7 +2069,7 @@ public class StringUtils {
      * @since 2.0
      * @since 3.0 Changed signature from indexOfAny(String, char[]) to indexOfAny(CharSequence, char...)
      */
-    public static int indexOfAny(final @Nullable CharSequence cs, final @Nullable char... searchChars) {
+    public static int indexOfAny(final @Nullable CharSequence cs, final char @Nullable ... searchChars) {
         if (isEmpty(cs) || ArrayUtils.isEmpty(searchChars)) {
             return INDEX_NOT_FOUND;
         }
@@ -2152,7 +2152,7 @@ public class StringUtils {
      * @since 2.4
      * @since 3.0 Changed signature from containsAny(String, char[]) to containsAny(CharSequence, char...)
      */
-    public static boolean containsAny(final @Nullable CharSequence cs, final @Nullable char... searchChars) {
+    public static boolean containsAny(final @Nullable CharSequence cs, final char @Nullable ... searchChars) {
         if (isEmpty(cs) || ArrayUtils.isEmpty(searchChars)) {
             return false;
         }
@@ -2245,7 +2245,7 @@ public class StringUtils {
      * @return {@code true} if any of the search CharSequences are found, {@code false} otherwise
      * @since 3.4
      */
-    public static boolean containsAny(final @Nullable CharSequence cs, final @Nullable CharSequence... searchCharSequences) {
+    public static boolean containsAny(final @Nullable CharSequence cs, final CharSequence @Nullable ... searchCharSequences) {
         if (isEmpty(cs) || ArrayUtils.isEmpty(searchCharSequences)) {
             return false;
         }
@@ -2283,7 +2283,7 @@ public class StringUtils {
      * @since 2.0
      * @since 3.0 Changed signature from indexOfAnyBut(String, char[]) to indexOfAnyBut(CharSequence, char...)
      */
-    public static int indexOfAnyBut(final @Nullable CharSequence cs, final @Nullable char... searchChars) {
+    public static int indexOfAnyBut(final @Nullable CharSequence cs, final char @Nullable ... searchChars) {
         if (isEmpty(cs) || ArrayUtils.isEmpty(searchChars)) {
             return INDEX_NOT_FOUND;
         }
@@ -2379,7 +2379,7 @@ public class StringUtils {
      * @return true if it only contains valid chars and is non-null
      * @since 3.0 Changed signature from containsOnly(String, char[]) to containsOnly(CharSequence, char...)
      */
-    public static boolean containsOnly(final @Nullable CharSequence cs, final @Nullable char... valid) {
+    public static boolean containsOnly(final @Nullable CharSequence cs, final char @Nullable ... valid) {
         // All these pre-checks are to maintain API with an older version
         if (valid == null || cs == null) {
             return false;
@@ -2448,7 +2448,7 @@ public class StringUtils {
      * @since 2.0
      * @since 3.0 Changed signature from containsNone(String, char[]) to containsNone(CharSequence, char...)
      */
-    public static boolean containsNone(final @Nullable CharSequence cs, final @Nullable char... searchChars) {
+    public static boolean containsNone(final @Nullable CharSequence cs, final char @Nullable ... searchChars) {
         if (cs == null || searchChars == null) {
             return true;
         }
@@ -3086,7 +3086,7 @@ public class StringUtils {
      * @return a String Array of substrings, or {@code null} if no match
      * @since 2.3
      */
-    public static @Nullable String[] substringsBetween(final @Nullable String str, final String open, final String close) {
+    public static String @Nullable [] substringsBetween(final @Nullable String str, final String open, final String close) {
         if (str == null || isEmpty(open) || isEmpty(close)) {
             return null;
         }
@@ -3144,7 +3144,7 @@ public class StringUtils {
      * @param str  the String to parse, may be null
      * @return an array of parsed Strings, {@code null} if null String input
      */
-    public static @Nullable String[] split(final @Nullable String str) {
+    public static String @Nullable [] split(final @Nullable String str) {
         return split(str, null, -1);
     }
 
@@ -3172,7 +3172,7 @@ public class StringUtils {
      * @return an array of parsed Strings, {@code null} if null String input
      * @since 2.0
      */
-    public static @Nullable String[] split(final @Nullable String str, final char separatorChar) {
+    public static String @Nullable [] split(final @Nullable String str, final char separatorChar) {
         return splitWorker(str, separatorChar, false);
     }
 
@@ -3201,7 +3201,7 @@ public class StringUtils {
      *  {@code null} splits on whitespace
      * @return an array of parsed Strings, {@code null} if null String input
      */
-    public static @Nullable String[] split(final @Nullable String str, final @Nullable String separatorChars) {
+    public static String @Nullable [] split(final @Nullable String str, final @Nullable String separatorChars) {
         return splitWorker(str, separatorChars, -1, false);
     }
 
@@ -3235,7 +3235,7 @@ public class StringUtils {
      *  array. A zero or negative value implies no limit
      * @return an array of parsed Strings, {@code null} if null String input
      */
-    public static @Nullable String[] split(final @Nullable String str, final @Nullable String separatorChars, final int max) {
+    public static String @Nullable [] split(final @Nullable String str, final @Nullable String separatorChars, final int max) {
         return splitWorker(str, separatorChars, max, false);
     }
 
@@ -3262,7 +3262,7 @@ public class StringUtils {
      *  {@code null} splits on whitespace
      * @return an array of parsed Strings, {@code null} if null String was input
      */
-    public static @Nullable String[] splitByWholeSeparator(final @Nullable String str, final @Nullable String separator) {
+    public static String @Nullable [] splitByWholeSeparator(final @Nullable String str, final @Nullable String separator) {
         return splitByWholeSeparatorWorker( str, separator, -1, false ) ;
     }
 
@@ -3293,7 +3293,7 @@ public class StringUtils {
      *  array. A zero or negative value implies no limit.
      * @return an array of parsed Strings, {@code null} if null String was input
      */
-    public static @Nullable String[] splitByWholeSeparator( final @Nullable String str, final @Nullable String separator, final int max) {
+    public static String @Nullable [] splitByWholeSeparator( final @Nullable String str, final @Nullable String separator, final int max) {
         return splitByWholeSeparatorWorker(str, separator, max, false);
     }
 
@@ -3322,7 +3322,7 @@ public class StringUtils {
      * @return an array of parsed Strings, {@code null} if null String was input
      * @since 2.4
      */
-    public static @Nullable String[] splitByWholeSeparatorPreserveAllTokens(final @Nullable String str, final @Nullable String separator) {
+    public static String @Nullable [] splitByWholeSeparatorPreserveAllTokens(final @Nullable String str, final @Nullable String separator) {
         return splitByWholeSeparatorWorker(str, separator, -1, true);
     }
 
@@ -3355,7 +3355,7 @@ public class StringUtils {
      * @return an array of parsed Strings, {@code null} if null String was input
      * @since 2.4
      */
-    public static @Nullable String[] splitByWholeSeparatorPreserveAllTokens(final @Nullable String str, final @Nullable String separator, final int max) {
+    public static String @Nullable [] splitByWholeSeparatorPreserveAllTokens(final @Nullable String str, final @Nullable String separator, final int max) {
         return splitByWholeSeparatorWorker(str, separator, max, true);
     }
 
@@ -3373,7 +3373,7 @@ public class StringUtils {
      * @return an array of parsed Strings, {@code null} if null String input
      * @since 2.4
      */
-    private static @Nullable String[] splitByWholeSeparatorWorker(
+    private static String @Nullable [] splitByWholeSeparatorWorker(
             final @Nullable String str, final @Nullable String separator, final int max, final boolean preserveAllTokens) {
         if (str == null) {
             return null;
@@ -3464,7 +3464,7 @@ public class StringUtils {
      * @return an array of parsed Strings, {@code null} if null String input
      * @since 2.1
      */
-    public static @Nullable String[] splitPreserveAllTokens(final @Nullable String str) {
+    public static String @Nullable [] splitPreserveAllTokens(final @Nullable String str) {
         return splitWorker(str, null, -1, true);
     }
 
@@ -3500,7 +3500,7 @@ public class StringUtils {
      * @return an array of parsed Strings, {@code null} if null String input
      * @since 2.1
      */
-    public static @Nullable String[] splitPreserveAllTokens(final @Nullable String str, final char separatorChar) {
+    public static String @Nullable [] splitPreserveAllTokens(final @Nullable String str, final char separatorChar) {
         return splitWorker(str, separatorChar, true);
     }
 
@@ -3516,7 +3516,7 @@ public class StringUtils {
      * separators are treated as one separator.
      * @return an array of parsed Strings, {@code null} if null String input
      */
-    private static @Nullable String[] splitWorker(final @Nullable String str, final char separatorChar, final boolean preserveAllTokens) {
+    private static String @Nullable [] splitWorker(final @Nullable String str, final char separatorChar, final boolean preserveAllTokens) {
         // Performance tuned for 2.0 (JDK1.4)
 
         if (str == null) {
@@ -3583,7 +3583,7 @@ public class StringUtils {
      * @return an array of parsed Strings, {@code null} if null String input
      * @since 2.1
      */
-    public static @Nullable String[] splitPreserveAllTokens(final @Nullable String str, final @Nullable String separatorChars) {
+    public static String @Nullable [] splitPreserveAllTokens(final @Nullable String str, final @Nullable String separatorChars) {
         return splitWorker(str, separatorChars, -1, true);
     }
 
@@ -3623,7 +3623,7 @@ public class StringUtils {
      * @return an array of parsed Strings, {@code null} if null String input
      * @since 2.1
      */
-    public static @Nullable String[] splitPreserveAllTokens(final @Nullable String str, final @Nullable String separatorChars, final int max) {
+    public static String @Nullable [] splitPreserveAllTokens(final @Nullable String str, final @Nullable String separatorChars, final int max) {
         return splitWorker(str, separatorChars, max, true);
     }
 
@@ -3641,7 +3641,7 @@ public class StringUtils {
      * separators are treated as one separator.
      * @return an array of parsed Strings, {@code null} if null String input
      */
-    private static @Nullable String[] splitWorker(final @Nullable String str, final String separatorChars, final int max, final boolean preserveAllTokens) {
+    private static String @Nullable [] splitWorker(final @Nullable String str, final String separatorChars, final int max, final boolean preserveAllTokens) {
         // Performance tuned for 2.0 (JDK1.4)
         // Direct code is quicker than StringTokenizer.
         // Also, StringTokenizer uses isSpace() not isWhitespace()
@@ -3745,7 +3745,7 @@ public class StringUtils {
      * @return an array of parsed Strings, {@code null} if null String input
      * @since 2.4
      */
-    public static @Nullable String[] splitByCharacterType(final @Nullable String str) {
+    public static String @Nullable [] splitByCharacterType(final @Nullable String str) {
         return splitByCharacterType(str, false);
     }
 
@@ -3773,7 +3773,7 @@ public class StringUtils {
      * @return an array of parsed Strings, {@code null} if null String input
      * @since 2.4
      */
-    public static @Nullable String[] splitByCharacterTypeCamelCase(final @Nullable String str) {
+    public static String @Nullable [] splitByCharacterTypeCamelCase(final @Nullable String str) {
         return splitByCharacterType(str, true);
     }
 
@@ -3791,7 +3791,7 @@ public class StringUtils {
      * @return an array of parsed Strings, {@code null} if null String input
      * @since 2.4
      */
-    private static @Nullable String[] splitByCharacterType(final @Nullable String str, final boolean camelCase) {
+    private static String @Nullable [] splitByCharacterType(final @Nullable String str, final boolean camelCase) {
         if (str == null) {
             return null;
         }
@@ -3848,7 +3848,7 @@ public class StringUtils {
      * @since 3.0 Changed signature to use varargs
      */
     @SafeVarargs
-    public static <T> @Nullable String join(final @Nullable T... elements) {
+    public static <T> @Nullable String join(final T @Nullable ... elements) {
         return join(elements, null);
     }
 
@@ -3874,7 +3874,7 @@ public class StringUtils {
      * @return the joined String, {@code null} if null array input
      * @since 2.0
      */
-    public static @Nullable String join(final @Nullable Object[] array, final char separator) {
+    public static @Nullable String join(final Object @Nullable [] array, final char separator) {
         if (array == null) {
             return null;
         }
@@ -4647,7 +4647,7 @@ public class StringUtils {
      * @param separator  the separator character to use, null treated as ""
      * @return the joined String, {@code null} if null iterator input
      */
-    public static @Nullable String join(final @Nullable Iterator<?> iterator, final String separator) {
+    public static @Nullable String join(final @Nullable Iterator<?> iterator, final @Nullable String separator) {
 
         // handle null, zero and one elements before building a buffer
         if (iterator == null) {
@@ -5268,7 +5268,7 @@ public class StringUtils {
      * @since 3.2
      * @since 3.5 Changed {@code null} reference passed to this method is a no-op.
      */
-    public static String removePattern(final String source, final String regex) {
+    public static @Nullable String removePattern(final String source, final String regex) {
         return replacePattern(source, regex, StringUtils.EMPTY);
     }
 
@@ -5854,7 +5854,7 @@ public class StringUtils {
      * @return modified String, {@code null} if null string input
      * @since 2.0
      */
-    public static @Nullable String replaceChars(final @Nullable String str, final @Nullable char searchChar, final @Nullable char replaceChar) {
+    public static @Nullable String replaceChars(final @Nullable String str, final char searchChar, final char replaceChar) {
         if (str == null) {
             return null;
         }

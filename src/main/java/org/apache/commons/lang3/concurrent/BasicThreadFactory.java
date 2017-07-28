@@ -181,7 +181,7 @@ public class BasicThreadFactory implements ThreadFactory {
      *
      * @return the {@code UncaughtExceptionHandler}
      */
-    public final @Nullable Thread.UncaughtExceptionHandler getUncaughtExceptionHandler() {
+    public final Thread.UncaughtExceptionHandler getUncaughtExceptionHandler() {
         return uncaughtExceptionHandler;
     }
 

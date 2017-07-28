@@ -21,6 +21,8 @@ import java.lang.reflect.Type;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.reflect.TypeUtils;
 import org.apache.commons.lang3.tuple.Pair;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>
@@ -40,11 +42,12 @@ import org.apache.commons.lang3.tuple.Pair;
  *            equivalent.
  * @since 3.3
  */
+@AnnotatedFor({"nullness"}) 
 public abstract class Diff<T> extends Pair<T, T> {
 
     private static final long serialVersionUID = 1L;
 
-    private final Type type;
+    private final @Nullable Type type;
     private final String fieldName;
 
     /**
@@ -69,7 +72,7 @@ public abstract class Diff<T> extends Pair<T, T> {
      *
      * @return the field type
      */
-    public final Type getType() {
+    public final @Nullable Type getType() {
         return type;
     }
 

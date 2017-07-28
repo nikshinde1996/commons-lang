@@ -938,6 +938,8 @@ public class BooleanUtils {
      * @throws IllegalArgumentException if {@code array} contains a {@code null}
      * @since 3.0.1
      */
+    @SuppressWarnings("nullness:argument.type.incompatible")
+    // null array is not passed as argument in ArrayUtils.toPrimitive method. 
     public static Boolean and(final Boolean... array) {
         if (array == null) {
             throw new IllegalArgumentException("The Array must not be null");
@@ -1007,6 +1009,8 @@ public class BooleanUtils {
      * @throws IllegalArgumentException if {@code array} contains a {@code null}
      * @since 3.0.1
      */
+    @SuppressWarnings("nullness:argument.type.incompatible")
+    // null array is not passed as argument in ArrayUtils.toPrimitive method.
     public static Boolean or(final Boolean... array) {
         if (array == null) {
             throw new IllegalArgumentException("The Array must not be null");
@@ -1069,6 +1073,8 @@ public class BooleanUtils {
      * @throws IllegalArgumentException if {@code array} is empty.
      * @throws IllegalArgumentException if {@code array} contains a {@code null}
      */
+    @SuppressWarnings("nullness:argument.type.incompatible")
+    // null array is not passed as argument in ArrayUtils.toPrimitive method.
     public static Boolean xor(final Boolean... array) {
         if (array == null) {
             throw new IllegalArgumentException("The Array must not be null");

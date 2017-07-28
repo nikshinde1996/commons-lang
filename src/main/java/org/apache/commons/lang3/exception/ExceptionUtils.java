@@ -90,7 +90,7 @@ public class ExceptionUtils {
      * @deprecated This feature will be removed in Lang 4.0
      */
     @Deprecated
-    public static String[] getDefaultCauseMethodNames() {
+    public static String @Nullable [] getDefaultCauseMethodNames() {
         return ArrayUtils.clone(CAUSE_METHOD_NAMES);
     }
 
@@ -123,7 +123,7 @@ public class ExceptionUtils {
      * @deprecated This feature will be removed in Lang 4.0, use {@link Throwable#getCause} instead
      */
     @Deprecated
-    public static Throwable getCause(final @Nullable Throwable throwable) {
+    public static @Nullable Throwable getCause(final @Nullable Throwable throwable) {
         return getCause(throwable, null);
     }
 
@@ -805,7 +805,7 @@ public class ExceptionUtils {
      * @since 3.5
      * @see #wrapAndThrow(Throwable)
      */
-    public static boolean hasCause(Throwable chain,
+    public static boolean hasCause(@Nullable Throwable chain,
             final Class<? extends Throwable> type) {
         if (chain instanceof UndeclaredThrowableException) {
             chain = chain.getCause();

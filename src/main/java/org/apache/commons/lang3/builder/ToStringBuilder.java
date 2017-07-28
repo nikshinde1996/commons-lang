@@ -1019,7 +1019,7 @@ public class ToStringBuilder implements Builder<String> {
      * @return The object being output.
      * @since 2.0
      */
-    public Object getObject() {
+    public @Nullable Object getObject() {
         return object;
     }
 

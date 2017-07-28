@@ -260,7 +260,7 @@ public class AnnotationUtils {
      * @param o2 the second object
      * @return a flag whether these objects are equal
      */
-    private static boolean memberEquals(final Class<?> type, final Object o1, final Object o2) {
+    private static boolean memberEquals(final Class<?> type, final @Nullable Object o1, final @Nullable Object o2) {
         if (o1 == o2) {
             return true;
         }

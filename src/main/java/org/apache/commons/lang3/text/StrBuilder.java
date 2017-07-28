@@ -178,7 +178,7 @@ public class StrBuilder implements CharSequence, Appendable, Serializable, Build
      * @param nullText  the null text, null means no append
      * @return this, to enable chaining
      */
-    public StrBuilder setNullText(String @Nullable nullText) {
+    public StrBuilder setNullText(@Nullable String nullText) {
         if (nullText != null && nullText.isEmpty()) {
             nullText = null;
         }

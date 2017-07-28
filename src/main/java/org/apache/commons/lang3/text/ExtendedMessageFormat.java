@@ -303,7 +303,7 @@ public class ExtendedMessageFormat extends MessageFormat {
      * @param desc String
      * @return Format
      */
-    private Format getFormat(final String desc) {
+    private @Nullable Format getFormat(final String desc) {
         if (registry != null) {
             String name = desc;
             String args = null;
@@ -475,8 +475,8 @@ public class ExtendedMessageFormat extends MessageFormat {
      * @param appendTo optional StringBuilder to append
      * @return <code>appendTo</code>
      */
-    private StringBuilder appendQuotedString(final String pattern, final ParsePosition pos,
-            final StringBuilder appendTo) {
+    private @Nullable StringBuilder appendQuotedString(final String pattern, final ParsePosition pos,
+            final @Nullable StringBuilder appendTo) {
         assert pattern.toCharArray()[pos.getIndex()] == QUOTE :
             "Quoted string must start with quote character";
 

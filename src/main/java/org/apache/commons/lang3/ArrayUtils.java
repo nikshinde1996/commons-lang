@@ -5352,7 +5352,7 @@ public class ArrayUtils {
      * @since 2.1
      * @throws IllegalArgumentException if both arguments are null
      */
-    public static <T> T @Nullable [] add(final T @Nullable [] array, final @Nullable T element) {
+    public static <T> T[] add(final T @Nullable [] array, final @Nullable T element) {
         Class<?> type;
         if (array != null) {
             type = array.getClass().getComponentType();
