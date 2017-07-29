@@ -292,7 +292,7 @@ public class LocaleUtils {
      * @param countryCode  the 2 letter country code, null returns empty
      * @return an unmodifiable List of Locale objects, not null
      */
-    public static List<Locale> languagesByCountry(final @Nullable String countryCode) {
+    public static @Nullable List<Locale> languagesByCountry(final @Nullable String countryCode) {
         if (countryCode == null) {
             return Collections.emptyList();
         }
@@ -323,7 +323,7 @@ public class LocaleUtils {
      * @param languageCode  the 2 letter language code, null returns empty
      * @return an unmodifiable List of Locale objects, not null
      */
-    public static List<Locale> countriesByLanguage(final @Nullable String languageCode) {
+    public static @Nullable List<Locale> countriesByLanguage(final @Nullable String languageCode) {
         if (languageCode == null) {
             return Collections.emptyList();
         }

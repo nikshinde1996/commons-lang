@@ -16,6 +16,9 @@
  */
 package org.apache.commons.lang3;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
+
 /**
  * <p>Thrown to indicate that a block of code has not been implemented.
  * This exception supplements <code>UnsupportedOperationException</code>
@@ -40,11 +43,12 @@ package org.apache.commons.lang3;
  *
  * @since 3.2
  */
+@AnnotatedFor({"nullness"}) 
 public class NotImplementedException extends UnsupportedOperationException {
 
     private static final long serialVersionUID = 20131021L;
 
-    private final String code;
+    private final @Nullable String code;
 
     /**
      * Constructs a NotImplementedException.
@@ -84,7 +88,7 @@ public class NotImplementedException extends UnsupportedOperationException {
      * @param code code indicating a resource for more information regarding the lack of implementation
      * @since 3.2
      */
-    public NotImplementedException(final String message, final String code) {
+    public NotImplementedException(final String message, final @Nullable String code) {
         super(message);
         this.code = code;
     }
@@ -96,7 +100,7 @@ public class NotImplementedException extends UnsupportedOperationException {
      * @param code code indicating a resource for more information regarding the lack of implementation
      * @since 3.2
      */
-    public NotImplementedException(final Throwable cause, final String code) {
+    public NotImplementedException(final Throwable cause, final @Nullable String code) {
         super(cause);
         this.code = code;
     }
@@ -109,7 +113,7 @@ public class NotImplementedException extends UnsupportedOperationException {
      * @param code code indicating a resource for more information regarding the lack of implementation
      * @since 3.2
      */
-    public NotImplementedException(final String message, final Throwable cause, final String code) {
+    public NotImplementedException(final String message, final Throwable cause, final @Nullable String code) {
         super(message, cause);
         this.code = code;
     }
@@ -121,7 +125,7 @@ public class NotImplementedException extends UnsupportedOperationException {
      *
      * @return a code indicating a resource for more information regarding the lack of implementation
      */
-    public String getCode() {
+    public @Nullable String getCode() {
         return this.code;
     }
 }

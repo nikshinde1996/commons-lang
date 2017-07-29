@@ -330,7 +330,7 @@ public class ObjectUtils {
      * @return the default toString text, or {@code null} if
      *  {@code null} passed in
      */
-    public static String identityToString(final @Nullable Object object) {
+    public static @Nullable String identityToString(final @Nullable Object object) {
         if (object == null) {
             return null;
         }

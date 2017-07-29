@@ -25,6 +25,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>FastDateFormat is a fast and thread-safe version of
@@ -394,7 +396,7 @@ public class FastDateFormat extends Format implements DateParser, DatePrinter {
      * @param centuryStart The start of the 100 year period to use as the "default century" for 2 digit year parsing.  If centuryStart is null, defaults to now - 80 years
      * @throws NullPointerException if pattern, timeZone, or locale is null.
      */
-    protected FastDateFormat(final String pattern, final TimeZone timeZone, final Locale locale, final Date centuryStart) {
+    protected FastDateFormat(final String pattern, final TimeZone timeZone, final Locale locale, final @Nullable Date centuryStart) {
         printer= new FastDatePrinter(pattern, timeZone, locale);
         parser= new FastDateParser(pattern, timeZone, locale, centuryStart);
     }

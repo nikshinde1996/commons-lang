@@ -258,19 +258,19 @@ public class BasicThreadFactory implements ThreadFactory {
         implements org.apache.commons.lang3.builder.Builder<BasicThreadFactory> {
 
         /** The wrapped factory. */
-        private ThreadFactory wrappedFactory;
+        private @Nullable ThreadFactory wrappedFactory;
 
         /** The uncaught exception handler. */
         private Thread.UncaughtExceptionHandler exceptionHandler;
 
         /** The naming pattern. */
-        private String namingPattern;
+        private @Nullable String namingPattern;
 
         /** The priority. */
-        private Integer priority;
+        private @Nullable Integer priority;
 
         /** The daemon flag. */
-        private Boolean daemonFlag;
+        private @Nullable Boolean daemonFlag;
 
         /**
          * Sets the {@code ThreadFactory} to be wrapped by the new {@code

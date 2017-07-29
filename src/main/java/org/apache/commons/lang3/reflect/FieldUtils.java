@@ -61,7 +61,7 @@ public class FieldUtils {
      * @throws IllegalArgumentException
      *             if the class is {@code null}, or the field name is blank or empty
      */
-    public static Field getField(final Class<?> cls, final String fieldName) {
+    public static @Nullable Field getField(final Class<?> cls, final String fieldName) {
         final Field field = getField(cls, fieldName, false);
         MemberUtils.setAccessibleWorkaround(field);
         return field;
@@ -84,7 +84,7 @@ public class FieldUtils {
      *             if the class is {@code null}, or the field name is blank or empty or is matched at multiple places
      *             in the inheritance hierarchy
      */
-    public static Field getField(final Class<?> cls, final String fieldName, final boolean forceAccess) {
+    public static @Nullable Field getField(final Class<?> cls, final String fieldName, final boolean forceAccess) {
         Validate.isTrue(cls != null, "The class must not be null");
         Validate.isTrue(StringUtils.isNotBlank(fieldName), "The field name must not be blank/empty");
         // FIXME is this workaround still needed? lang requires Java 6
@@ -147,7 +147,7 @@ public class FieldUtils {
      * @throws IllegalArgumentException
      *             if the class is {@code null}, or the field name is blank or empty
      */
-    public static Field getDeclaredField(final Class<?> cls, final String fieldName) {
+    public static @Nullable Field getDeclaredField(final Class<?> cls, final String fieldName) {
         return getDeclaredField(cls, fieldName, false);
     }
 
@@ -167,7 +167,7 @@ public class FieldUtils {
      * @throws IllegalArgumentException
      *             if the class is {@code null}, or the field name is blank or empty
      */
-    public static Field getDeclaredField(final Class<?> cls, final String fieldName, final boolean forceAccess) {
+    public static @Nullable Field getDeclaredField(final Class<?> cls, final String fieldName, final boolean forceAccess) {
         Validate.isTrue(cls != null, "The class must not be null");
         Validate.isTrue(StringUtils.isNotBlank(fieldName), "The field name must not be blank/empty");
         try {

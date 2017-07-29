@@ -45,7 +45,7 @@ public class ConstantInitializer<T> implements ConcurrentInitializer<T> {
     private static final String FMT_TO_STRING = "ConstantInitializer@%d [ object = %s ]";
 
     /** Stores the managed object. */
-    private final T object;
+    private final @Nullable T object;
 
     /**
      * Creates a new instance of {@code ConstantInitializer} and initializes it
@@ -67,7 +67,7 @@ public class ConstantInitializer<T> implements ConcurrentInitializer<T> {
      *
      * @return the object managed by this initializer
      */
-    public final T getObject() {
+    public final @Nullable T getObject() {
         return object;
     }
 
@@ -79,7 +79,7 @@ public class ConstantInitializer<T> implements ConcurrentInitializer<T> {
      * @throws ConcurrentException if an error occurs
      */
     @Override
-    public T get() throws ConcurrentException {
+    public @Nullable T get() throws ConcurrentException {
         return getObject();
     }
 
