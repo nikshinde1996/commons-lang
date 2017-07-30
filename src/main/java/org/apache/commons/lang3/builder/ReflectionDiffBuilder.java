@@ -23,6 +23,8 @@ import java.lang.reflect.Modifier;
 
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>
@@ -65,6 +67,7 @@ import org.apache.commons.lang3.reflect.FieldUtils;
  * @see ToStringStyle
  * @since 3.6
  */
+@AnnotatedFor({"nullness"}) 
 public class ReflectionDiffBuilder implements Builder<DiffResult> {
 
     private final Object left;
@@ -93,7 +96,7 @@ public class ReflectionDiffBuilder implements Builder<DiffResult> {
      * @throws IllegalArgumentException
      *             if {@code lhs} or {@code rhs} is {@code null}
      */
-    public <T> ReflectionDiffBuilder(final T lhs, final T rhs, final ToStringStyle style) {
+    public <T> ReflectionDiffBuilder(final T lhs, final T rhs, final @Nullable ToStringStyle style) {
         this.left = lhs;
         this.right = rhs;
         diffBuilder = new DiffBuilder(lhs, rhs, style);

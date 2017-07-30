@@ -417,7 +417,7 @@ public class StandardToStringStyle extends ToStringStyle {
      * @return the current text to output when <code>null</code> found
      */
     @Override
-    public @Nullable String getNullText() { // NOPMD as this is implementing the abstract class
+    public String getNullText() { // NOPMD as this is implementing the abstract class
         return super.getNullText();
     }
 

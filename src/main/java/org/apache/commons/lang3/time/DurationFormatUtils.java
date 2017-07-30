@@ -648,7 +648,7 @@ public class DurationFormatUtils {
          * @return boolean <code>true</code> if equal
          */
         @Override
-        public boolean equals(final Object obj2) {
+        public boolean equals(final @Nullable Object obj2) {
             if (obj2 instanceof Token) {
                 final Token tok2 = (Token) obj2;
                 if (this.value.getClass() != tok2.value.getClass()) {

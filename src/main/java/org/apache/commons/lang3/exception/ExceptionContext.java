@@ -78,7 +78,7 @@ public interface ExceptionContext {
      * @param label  the label to get the contextual value for, may be {@code null}
      * @return the first contextual value associated with the label, may be {@code null}
      */
-    Object getFirstContextValue(@Nullable String label);
+     @Nullable Object getFirstContextValue(@Nullable String label);
 
     /**
      * Retrieves the full set of labels defined in the contextual data.
@@ -101,6 +101,6 @@ public interface ExceptionContext {
      * @param baseMessage  the base exception message <b>without</b> context information appended
      * @return the exception message <b>with</b> context information appended, not {@code null}
      */
-    String getFormattedExceptionMessage(String baseMessage);
+    String getFormattedExceptionMessage( @Nullable String baseMessage);
 
 }

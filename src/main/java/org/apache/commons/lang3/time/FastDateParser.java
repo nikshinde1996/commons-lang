@@ -38,6 +38,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>FastDateParser is a fast and thread-safe version of
@@ -70,6 +72,7 @@ import java.util.regex.Pattern;
  * @since 3.2
  * @see FastDatePrinter
  */
+@AnnotatedFor({"nullness"}) 
 public class FastDateParser implements DateParser, Serializable {
 
     /**
@@ -295,7 +298,7 @@ public class FastDateParser implements DateParser, Serializable {
      * @return <code>true</code>if equal to this instance
      */
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(final @Nullable Object obj) {
         if (!(obj instanceof FastDateParser)) {
             return false;
         }

@@ -104,7 +104,7 @@ public class ConstantInitializer<T> implements ConcurrentInitializer<T> {
      * @return a flag whether the objects are equal
      */
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(final @Nullable Object obj) {
         if (this == obj) {
             return true;
         }

@@ -32,6 +32,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>FastDatePrinter is a fast and thread-safe version of
@@ -77,6 +79,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
  * @since 3.2
  * @see FastDateParser
  */
+@AnnotatedFor({"nullness"}) 
 public class FastDatePrinter implements DatePrinter, Serializable {
     // A lot of the speed in this class comes from caching, but some comes
     // from the special int to StringBuffer conversion.
@@ -626,7 +629,7 @@ public class FastDatePrinter implements DatePrinter, Serializable {
      * @return {@code true} if equal
      */
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(final @Nullable Object obj) {
         if (!(obj instanceof FastDatePrinter)) {
             return false;
         }
@@ -1557,7 +1560,7 @@ public class FastDatePrinter implements DatePrinter, Serializable {
          * {@inheritDoc}
          */
         @Override
-        public boolean equals(final Object obj) {
+        public boolean equals(final @Nullable Object obj) {
             if (this == obj) {
                 return true;
             }

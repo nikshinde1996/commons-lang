@@ -199,7 +199,7 @@ public class ContextedException extends Exception implements ExceptionContext {
      * {@inheritDoc}
      */
     @Override
-    public List<Object> getContextValues(final String label) {
+    public List<Object> getContextValues(final @Nullable String label) {
         return this.exceptionContext.getContextValues(label);
     }
 
@@ -207,7 +207,7 @@ public class ContextedException extends Exception implements ExceptionContext {
      * {@inheritDoc}
      */
     @Override
-    public Object getFirstContextValue(final String label) {
+    public @Nullable Object getFirstContextValue(final @Nullable String label) {
         return this.exceptionContext.getFirstContextValue(label);
     }
 
@@ -245,7 +245,7 @@ public class ContextedException extends Exception implements ExceptionContext {
      * @return the message
      * @since 3.0.1
      */
-    public String getRawMessage() {
+    public @Nullable String getRawMessage() {
         return super.getMessage();
     }
 
@@ -253,7 +253,7 @@ public class ContextedException extends Exception implements ExceptionContext {
      * {@inheritDoc}
      */
     @Override
-    public String getFormattedExceptionMessage(final String baseMessage) {
+    public String getFormattedExceptionMessage(final @Nullable String baseMessage) {
         return exceptionContext.getFormattedExceptionMessage(baseMessage);
     }
 }

@@ -262,7 +262,7 @@ public class CharSet implements Serializable {
      * @since 2.0
      */
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(final @Nullable Object obj) {
         if (obj == this) {
             return true;
         }

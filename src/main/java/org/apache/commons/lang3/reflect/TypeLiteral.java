@@ -98,7 +98,7 @@ public abstract class TypeLiteral<T> implements Typed<T> {
     }
 
     @Override
-    public final boolean equals(final Object obj) {
+    public final boolean equals(final @Nullable Object obj) {
         if (obj == this) {
             return true;
         }

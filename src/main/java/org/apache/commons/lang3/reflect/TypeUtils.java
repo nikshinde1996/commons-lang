@@ -127,7 +127,7 @@ public class TypeUtils {
          * {@inheritDoc}
          */
         @Override
-        public boolean equals(final Object obj) {
+        public boolean equals(final @Nullable Object obj) {
             return obj == this || obj instanceof GenericArrayType && TypeUtils.equals(this, (GenericArrayType) obj);
         }
 
@@ -199,7 +199,7 @@ public class TypeUtils {
          * {@inheritDoc}
          */
         @Override
-        public boolean equals(final Object obj) {
+        public boolean equals(final @Nullable Object obj) {
             return obj == this || obj instanceof ParameterizedType && TypeUtils.equals(this, ((ParameterizedType) obj));
         }
 
@@ -242,7 +242,7 @@ public class TypeUtils {
          * {@inheritDoc}
          */
         @Override
-        public Type @Nullable [] getUpperBounds() {
+        public Type[] getUpperBounds() {
             return upperBounds.clone();
         }
 
@@ -250,7 +250,7 @@ public class TypeUtils {
          * {@inheritDoc}
          */
         @Override
-        public Type @Nullable [] getLowerBounds() {
+        public Type[] getLowerBounds() {
             return lowerBounds.clone();
         }
 
@@ -266,7 +266,7 @@ public class TypeUtils {
          * {@inheritDoc}
          */
         @Override
-        public boolean equals(final Object obj) {
+        public boolean equals(final @Nullable Object obj) {
             return obj == this || obj instanceof WildcardType && TypeUtils.equals(this, (WildcardType) obj);
         }
 

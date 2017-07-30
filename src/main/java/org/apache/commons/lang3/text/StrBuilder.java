@@ -2938,7 +2938,7 @@ public class StrBuilder implements CharSequence, Appendable, Serializable, Build
 
         /** {@inheritDoc} */
         @Override
-        protected List<String> tokenize(final char[] chars, final int offset, final int count) {
+        protected List<String> tokenize(final char @Nullable [] chars, final int offset, final int count) {
             if (chars == null) {
                 return super.tokenize(StrBuilder.this.buffer, 0, StrBuilder.this.size());
             }

@@ -216,12 +216,12 @@ public class DiffBuilder implements Builder<DiffResult> {
                 private static final long serialVersionUID = 1L;
 
                 @Override
-                public Boolean[] getLeft() {
+                public Boolean @Nullable [] getLeft() {
                     return ArrayUtils.toObject(lhs);
                 }
 
                 @Override
-                public Boolean[] getRight() {
+                public Boolean @Nullable [] getRight() {
                     return ArrayUtils.toObject(rhs);
                 }
             });
@@ -295,12 +295,12 @@ public class DiffBuilder implements Builder<DiffResult> {
                 private static final long serialVersionUID = 1L;
 
                 @Override
-                public Byte[] getLeft() {
+                public Byte @Nullable [] getLeft() {
                     return ArrayUtils.toObject(lhs);
                 }
 
                 @Override
-                public Byte[] getRight() {
+                public Byte @Nullable [] getRight() {
                     return ArrayUtils.toObject(rhs);
                 }
             });
@@ -375,12 +375,12 @@ public class DiffBuilder implements Builder<DiffResult> {
                 private static final long serialVersionUID = 1L;
 
                 @Override
-                public Character[] getLeft() {
+                public Character @Nullable [] getLeft() {
                     return ArrayUtils.toObject(lhs);
                 }
 
                 @Override
-                public Character[] getRight() {
+                public Character @Nullable [] getRight() {
                     return ArrayUtils.toObject(rhs);
                 }
             });
@@ -455,12 +455,12 @@ public class DiffBuilder implements Builder<DiffResult> {
                 private static final long serialVersionUID = 1L;
 
                 @Override
-                public Double[] getLeft() {
+                public Double @Nullable [] getLeft() {
                     return ArrayUtils.toObject(lhs);
                 }
 
                 @Override
-                public Double[] getRight() {
+                public Double @Nullable [] getRight() {
                     return ArrayUtils.toObject(rhs);
                 }
             });
@@ -535,12 +535,12 @@ public class DiffBuilder implements Builder<DiffResult> {
                 private static final long serialVersionUID = 1L;
 
                 @Override
-                public Float[] getLeft() {
+                public Float @Nullable [] getLeft() {
                     return ArrayUtils.toObject(lhs);
                 }
 
                 @Override
-                public Float[] getRight() {
+                public Float @Nullable [] getRight() {
                     return ArrayUtils.toObject(rhs);
                 }
             });
@@ -615,12 +615,12 @@ public class DiffBuilder implements Builder<DiffResult> {
                 private static final long serialVersionUID = 1L;
 
                 @Override
-                public Integer[] getLeft() {
+                public Integer @Nullable [] getLeft() {
                     return ArrayUtils.toObject(lhs);
                 }
 
                 @Override
-                public Integer[] getRight() {
+                public Integer @Nullable [] getRight() {
                     return ArrayUtils.toObject(rhs);
                 }
             });
@@ -695,12 +695,12 @@ public class DiffBuilder implements Builder<DiffResult> {
                 private static final long serialVersionUID = 1L;
 
                 @Override
-                public Long[] getLeft() {
+                public Long @Nullable [] getLeft() {
                     return ArrayUtils.toObject(lhs);
                 }
 
                 @Override
-                public Long[] getRight() {
+                public Long @Nullable [] getRight() {
                     return ArrayUtils.toObject(rhs);
                 }
             });
@@ -775,12 +775,12 @@ public class DiffBuilder implements Builder<DiffResult> {
                 private static final long serialVersionUID = 1L;
 
                 @Override
-                public Short[] getLeft() {
+                public Short @Nullable [] getLeft() {
                     return ArrayUtils.toObject(lhs);
                 }
 
                 @Override
-                public Short[] getRight() {
+                public Short @Nullable [] getRight() {
                     return ArrayUtils.toObject(rhs);
                 }
             });

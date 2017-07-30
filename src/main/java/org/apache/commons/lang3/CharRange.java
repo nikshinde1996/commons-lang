@@ -19,6 +19,8 @@ package org.apache.commons.lang3;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>A contiguous range of characters, optionally negated.</p>
@@ -30,6 +32,7 @@ import java.util.NoSuchElementException;
  */
 // TODO: This is no longer public and will be removed later as CharSet is moved
 // to depend on Range.
+@AnnotatedFor({"nullness"})
 final class CharRange implements Iterable<Character>, Serializable {
 
     /**
@@ -202,7 +205,7 @@ final class CharRange implements Iterable<Character>, Serializable {
      * @return true if equal
      */
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(final @Nullable Object obj) {
         if (obj == this) {
             return true;
         }

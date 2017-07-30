@@ -155,7 +155,7 @@ public class Validate {
      * @see #isTrue(boolean, String, long)
      * @see #isTrue(boolean, String, double)
      */
-    public static void isTrue(final boolean expression, final String message, final Object... values) {
+    public static void isTrue(final boolean expression, final String message, final @Nullable Object... values) {
         if (!expression) {
             throw new IllegalArgumentException(String.format(message, values));
         }

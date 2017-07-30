@@ -492,7 +492,7 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      * @param input  the new character array to tokenize, not cloned, null sets no text to parse
      * @return this, to enable chaining
      */
-    public StrTokenizer reset(final @Nullable char[] input) {
+    public StrTokenizer reset(final char @Nullable [] input) {
         reset();
         this.chars = ArrayUtils.clone(input);
         return this;
@@ -637,7 +637,7 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      * @param count  the number of characters to tokenize, must be valid
      * @return the modifiable list of String tokens, unmodifiable if null array or zero count
      */
-    protected List<String> tokenize(final @Nullable char[] srcChars, final int offset, final int count) {
+    protected List<String> tokenize(final char @Nullable [] srcChars, final int offset, final int count) {
         if (srcChars == null || count == 0) {
             return Collections.emptyList();
         }

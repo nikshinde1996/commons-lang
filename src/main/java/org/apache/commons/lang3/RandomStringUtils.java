@@ -38,11 +38,8 @@ import org.checkerframework.framework.qual.AnnotatedFor;
  * <p>#ThreadSafe#</p>
  * @since 1.0
  */
-<<<<<<< HEAD
 @Deprecated
 @AnnotatedFor({"nullness"})
-=======
->>>>>>> master
 public class RandomStringUtils {
 
     /**

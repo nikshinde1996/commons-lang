@@ -480,7 +480,7 @@ public final class Range<T> implements Serializable {
          * @return negative, 0, positive comparison value
          */
         @Override
-        public int compare(final Object obj1, final Object obj2) {
+        public int compare(final @Nullable Object obj1, final @Nullable Object obj2) {
             return ((Comparable) obj1).compareTo(obj2);
         }
     }

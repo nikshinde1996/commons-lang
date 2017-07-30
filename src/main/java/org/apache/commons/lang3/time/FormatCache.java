@@ -239,7 +239,7 @@ abstract class FormatCache<F extends Format> {
          * {@inheritDoc}
          */
         @Override
-        public boolean equals(final Object obj) {
+        public boolean equals(final @Nullable Object obj) {
             // Eliminate the usual boilerplate because
             // this inner static class is only used in a generic ConcurrentHashMap
             // which will not compare against other Object types

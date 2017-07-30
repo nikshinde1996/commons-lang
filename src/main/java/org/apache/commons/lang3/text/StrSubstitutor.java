@@ -441,7 +441,7 @@ public class StrSubstitutor {
      * @param source  the character array to replace in, not altered, null returns null
      * @return the result of the replace operation
      */
-    public @Nullable String replace(final @Nullable char[] source) {
+    public @Nullable String replace(final char @Nullable [] source) {
         if (source == null) {
             return null;
         }
@@ -463,7 +463,7 @@ public class StrSubstitutor {
      * @param length  the length within the array to be processed, must be valid
      * @return the result of the replace operation
      */
-    public @Nullable String replace(final @Nullable char[] source, final int offset, final int length) {
+    public @Nullable String replace(final char @Nullable [] source, final int offset, final int length) {
         if (source == null) {
             return null;
         }

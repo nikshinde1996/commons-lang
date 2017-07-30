@@ -24,6 +24,8 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
 import org.apache.commons.lang3.Validate;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>
@@ -95,6 +97,7 @@ import org.apache.commons.lang3.Validate;
  *
  * @since 3.0
  */
+@AnnotatedFor({"nullness"}) 
 public class MultiBackgroundInitializer
         extends
         BackgroundInitializer<MultiBackgroundInitializer.MultiBackgroundInitializerResults> {
@@ -299,7 +302,7 @@ public class MultiBackgroundInitializer
          * @return the exception thrown by this initializer
          * @throws NoSuchElementException if the name cannot be resolved
          */
-        public ConcurrentException getException(final String name) {
+        public @Nullable ConcurrentException getException(final String name) {
             checkName(name);
             return exceptions.get(name);
         }
