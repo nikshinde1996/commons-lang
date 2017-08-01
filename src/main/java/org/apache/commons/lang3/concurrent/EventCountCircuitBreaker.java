@@ -20,6 +20,8 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>
@@ -135,6 +137,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * </ul>
  * @since 3.5
  */
+@AnnotatedFor({"nullness"}) 
 public class EventCountCircuitBreaker extends AbstractCircuitBreaker<Integer> {
 
     /** A map for accessing the strategy objects for the different states. */
@@ -404,7 +407,7 @@ public class EventCountCircuitBreaker extends AbstractCircuitBreaker<Integer> {
      * @return the corresponding {@code StateStrategy}
      * @throws CircuitBreakingException if the strategy cannot be resolved
      */
-    private static StateStrategy stateStrategy(final State state) {
+    private static @Nullable StateStrategy stateStrategy(final State state) {
         return STRATEGY_MAP.get(state);
     }
 

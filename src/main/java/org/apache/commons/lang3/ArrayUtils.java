@@ -31,6 +31,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.checker.nullness.qual.PolyNull;
 import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
@@ -239,7 +240,7 @@ public class ArrayUtils {
      * @throws IllegalArgumentException  if the array contains elements other
      *  than {@link java.util.Map.Entry} and an Array
      */
-    public static @Nullable Map<Object, Object> toMap(final @Nullable Object[] array) {
+    public static @PolyNull Map<Object, Object> toMap(final Object @PolyNull [] array) {
         if (array == null) {
             return null;
         }
@@ -324,7 +325,7 @@ public class ArrayUtils {
      * @param array  the array to shallow clone, may be {@code null}
      * @return the cloned array, {@code null} if {@code null} input
      */
-    public static <T> T @Nullable [] clone(final T @Nullable [] array) {
+    public static <T> T @PolyNull [] clone(final T @PolyNull [] array) {
         if (array == null) {
             return null;
         }
@@ -340,7 +341,7 @@ public class ArrayUtils {
      * @param array  the array to clone, may be {@code null}
      * @return the cloned array, {@code null} if {@code null} input
      */
-    public static long @Nullable [] clone(final long @Nullable [] array) {
+    public static long @PolyNull [] clone(final long @PolyNull [] array) {
         if (array == null) {
             return null;
         }
@@ -356,7 +357,7 @@ public class ArrayUtils {
      * @param array  the array to clone, may be {@code null}
      * @return the cloned array, {@code null} if {@code null} input
      */
-    public static int @Nullable [] clone(final int @Nullable [] array) {
+    public static int @PolyNull [] clone(final int @PolyNull [] array) {
         if (array == null) {
             return null;
         }
@@ -372,7 +373,7 @@ public class ArrayUtils {
      * @param array  the array to clone, may be {@code null}
      * @return the cloned array, {@code null} if {@code null} input
      */
-    public static short @Nullable [] clone(final short @Nullable [] array) {
+    public static short @PolyNull [] clone(final short @PolyNull [] array) {
         if (array == null) {
             return null;
         }
@@ -388,7 +389,7 @@ public class ArrayUtils {
      * @param array  the array to clone, may be {@code null}
      * @return the cloned array, {@code null} if {@code null} input
      */
-    public static char @Nullable [] clone(final char @Nullable [] array) {
+    public static char @PolyNull [] clone(final char @PolyNull [] array) {
         if (array == null) {
             return null;
         }
@@ -404,7 +405,7 @@ public class ArrayUtils {
      * @param array  the array to clone, may be {@code null}
      * @return the cloned array, {@code null} if {@code null} input
      */
-    public static byte @Nullable [] clone(final byte @Nullable [] array) {
+    public static byte @PolyNull [] clone(final byte @PolyNull [] array) {
         if (array == null) {
             return null;
         }
@@ -420,7 +421,7 @@ public class ArrayUtils {
      * @param array  the array to clone, may be {@code null}
      * @return the cloned array, {@code null} if {@code null} input
      */
-    public static double @Nullable [] clone(final double @Nullable [] array) {
+    public static double @PolyNull [] clone(final double @PolyNull [] array) {
         if (array == null) {
             return null;
         }
@@ -436,7 +437,7 @@ public class ArrayUtils {
      * @param array  the array to clone, may be {@code null}
      * @return the cloned array, {@code null} if {@code null} input
      */
-    public static float @Nullable [] clone(final float @Nullable [] array) {
+    public static float @PolyNull [] clone(final float @PolyNull [] array) {
         if (array == null) {
             return null;
         }
@@ -452,7 +453,7 @@ public class ArrayUtils {
      * @param array  the array to clone, may be {@code null}
      * @return the cloned array, {@code null} if {@code null} input
      */
-    public static boolean @Nullable [] clone(final boolean @Nullable [] array) {
+    public static boolean @PolyNull [] clone(final boolean @PolyNull [] array) {
         if (array == null) {
             return null;
         }

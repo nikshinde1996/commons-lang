@@ -674,7 +674,7 @@ public class MethodUtils {
      * @return The accessible method
      */
     public static @Nullable Method getMatchingAccessibleMethod(final Class<?> cls,
-            final String methodName, final Class<?>... parameterTypes) {
+            final String methodName, final Class<?> @Nullable ... parameterTypes) {
         try {
             final Method method = cls.getMethod(methodName, parameterTypes);
             MemberUtils.setAccessibleWorkaround(method);
@@ -729,7 +729,7 @@ public class MethodUtils {
      * @since 3.5
      */
     public static @Nullable Method getMatchingMethod(final Class<?> cls, final String methodName,
-            final Class<?>... parameterTypes) {
+            final Class<?> @Nullable ... parameterTypes) {
         Validate.notNull(cls, "Null class not allowed.");
         Validate.notEmpty(methodName, "Null or blank methodName not allowed.");
 

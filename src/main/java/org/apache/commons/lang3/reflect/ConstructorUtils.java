@@ -199,7 +199,7 @@ public class ConstructorUtils {
      * @see #getAccessibleConstructor(java.lang.reflect.Constructor)
      * @throws NullPointerException if {@code cls} is {@code null}
      */
-    public static <T> Constructor<T> getAccessibleConstructor(final Class<T> cls,
+    public static <T> @Nullable Constructor<T> getAccessibleConstructor(final Class<T> cls,
             final Class<?> @Nullable ... parameterTypes) {
         Validate.notNull(cls, "class cannot be null");
         try {

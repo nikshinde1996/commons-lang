@@ -279,7 +279,7 @@ public class CompareToBuilder implements Builder<Integer> {
         final @Nullable Object lhs,
         final @Nullable Object rhs,
         final boolean compareTransients,
-        final Class<?> reflectUpToClass,
+        final @Nullable Class<?> reflectUpToClass,
         final String... excludeFields) {
 
         if (lhs == rhs) {
@@ -405,7 +405,7 @@ public class CompareToBuilder implements Builder<Integer> {
      *  with <code>lhs</code>
      * @since 2.0
      */
-    public CompareToBuilder append(final @Nullable Object lhs, final @Nullable Object rhs, final Comparator<?> comparator) {
+    public CompareToBuilder append(final @Nullable Object lhs, final @Nullable Object rhs, final @Nullable Comparator<?> comparator) {
         if (comparison != 0) {
             return this;
         }
@@ -438,7 +438,7 @@ public class CompareToBuilder implements Builder<Integer> {
         return this;
     }
 
-    private void appendArray(final Object lhs, final Object rhs, final Comparator<?> comparator) {
+    private void appendArray(final Object lhs, final Object rhs, final @Nullable Comparator<?> comparator) {
         // switch on type of array, to dispatch to the correct handler
         // handles multi dimensional arrays
         // throws a ClassCastException if rhs is not the correct array type
@@ -659,7 +659,7 @@ public class CompareToBuilder implements Builder<Integer> {
      *  with <code>lhs</code>
      * @since 2.0
      */
-    public CompareToBuilder append(final Object @Nullable [] lhs, final Object @Nullable [] rhs, final Comparator<?> comparator) {
+    public CompareToBuilder append(final Object @Nullable [] lhs, final Object @Nullable [] rhs, final @Nullable Comparator<?> comparator) {
         if (comparison != 0) {
             return this;
         }

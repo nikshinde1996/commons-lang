@@ -727,7 +727,7 @@ public class WordUtils {
      * @param delimiters  the delimiters
      * @return true if it is a delimiter
      */
-    private static boolean isDelimiter(final char ch, final char[] delimiters) {
+    private static boolean isDelimiter(final char ch, final char @Nullable [] delimiters) {
         if (delimiters == null) {
             return Character.isWhitespace(ch);
         }

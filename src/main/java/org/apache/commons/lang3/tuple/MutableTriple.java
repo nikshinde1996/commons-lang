@@ -37,11 +37,11 @@ public class MutableTriple<L, M, R> extends Triple<L, M, R> {
     private static final long serialVersionUID = 1L;
 
     /** Left object */
-    public L left;
+    public @Nullable L left;
     /** Middle object */
-    public M middle;
+    public @Nullable M middle;
     /** Right object */
-    public R right;
+    public @Nullable R right;
 
     /**
      * <p>Obtains an mutable triple of three objects inferring the generic types.</p>
@@ -87,7 +87,7 @@ public class MutableTriple<L, M, R> extends Triple<L, M, R> {
      * {@inheritDoc}
      */
     @Override
-    public L getLeft() {
+    public @Nullable L getLeft() {
         return left;
     }
 
@@ -104,7 +104,7 @@ public class MutableTriple<L, M, R> extends Triple<L, M, R> {
      * {@inheritDoc}
      */
     @Override
-    public M getMiddle() {
+    public @Nullable M getMiddle() {
         return middle;
     }
 
@@ -121,7 +121,7 @@ public class MutableTriple<L, M, R> extends Triple<L, M, R> {
      * {@inheritDoc}
      */
     @Override
-    public R getRight() {
+    public @Nullable R getRight() {
         return right;
     }
 

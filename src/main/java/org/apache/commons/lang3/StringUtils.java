@@ -8546,7 +8546,7 @@ public class StringUtils {
      * @since 2.5
      * @since 3.0 Changed signature from startsWithAny(String, String[]) to startsWithAny(CharSequence, CharSequence...)
      */
-    public static boolean startsWithAny(final @Nullable CharSequence sequence, final @Nullable CharSequence... searchStrings) {
+    public static boolean startsWithAny(final @Nullable CharSequence sequence, final CharSequence @Nullable ... searchStrings) {
         if (isEmpty(sequence) || ArrayUtils.isEmpty(searchStrings)) {
             return false;
         }
@@ -8731,7 +8731,7 @@ public class StringUtils {
      *   the input {@code sequence} ends in any of the provided case-sensitive {@code searchStrings}.
      * @since 3.0
      */
-    public static boolean endsWithAny(final @Nullable CharSequence sequence, @Nullable final CharSequence... searchStrings) {
+    public static boolean endsWithAny(final @Nullable CharSequence sequence, final CharSequence @Nullable ... searchStrings) {
         if (isEmpty(sequence) || ArrayUtils.isEmpty(searchStrings)) {
             return false;
         }

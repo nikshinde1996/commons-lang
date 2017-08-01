@@ -31,6 +31,7 @@ import java.util.Set;
 import org.apache.commons.lang3.mutable.MutableObject;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.nullness.qual.PolyNull;
 
 /**
  * <p>Operates on classes without using reflection.</p>
@@ -520,7 +521,7 @@ public class ClassUtils {
      *  {@code null} if null input
      * @throws ClassCastException if {@code classes} contains a non-{@code Class} entry
      */
-    public static @Nullable List<String> convertClassesToClassNames(final @Nullable List<Class<?>> classes) {
+    public static @Nullable List<String> convertClassesToClassNames(final @Nullable List< @Nullable Class<?>> classes) {
         if (classes == null) {
             return null;
         }
@@ -573,7 +574,7 @@ public class ClassUtils {
      * @param toClassArray  the array of Classes to try to assign into, may be {@code null}
      * @return {@code true} if assignment possible
      */
-    public static boolean isAssignable(final @Nullable Class<?>[] classArray, final @Nullable Class<?>... toClassArray) {
+    public static boolean isAssignable(final Class<?> @Nullable [] classArray, final Class<?> @Nullable ... toClassArray) {
         return isAssignable(classArray, toClassArray, SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_5));
     }
 
@@ -609,7 +610,7 @@ public class ClassUtils {
      * @param autoboxing  whether to use implicit autoboxing/unboxing between primitives and wrappers
      * @return {@code true} if assignment possible
      */
-    public static boolean isAssignable(@Nullable Class<?>[] classArray,@Nullable Class<?>[] toClassArray, final boolean autoboxing) {
+    public static boolean isAssignable(Class<?> @Nullable [] classArray, Class<?> @Nullable [] toClassArray, final boolean autoboxing) {
         if (!ArrayUtils.isSameLength(classArray, toClassArray)) {
             return false;
         }
@@ -823,7 +824,7 @@ public class ClassUtils {
      * Empty array if an empty array passed in.
      * @since 2.1
      */
-    public static @Nullable Class<?>[] primitivesToWrappers(final @Nullable Class<?>... classes) {
+    public static Class<?> @Nullable [] primitivesToWrappers(final Class<?> @Nullable ... classes) {
         if (classes == null) {
             return null;
         }
@@ -873,7 +874,7 @@ public class ClassUtils {
      * @see #wrapperToPrimitive(Class)
      * @since 2.4
      */
-    public static @Nullable Class<?>[] wrappersToPrimitives(final @Nullable Class<?>... classes) {
+    public static Class<?> @Nullable [] wrappersToPrimitives(final Class<?> @Nullable ... classes) {
         if (classes == null) {
             return null;
         }
@@ -1084,7 +1085,7 @@ public class ClassUtils {
      * @return a {@code Class} array, {@code null} if null array input
      * @since 2.4
      */
-    public static @Nullable Class<?>[] toClass(final @Nullable Object @Nullable ... array) {
+    public static Class<?> @PolyNull [] toClass(final Object @PolyNull ... array) {
         if (array == null) {
             return null;
         } else if (array.length == 0) {

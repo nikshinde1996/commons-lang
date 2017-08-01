@@ -63,11 +63,11 @@ public final class ImmutableTriple<L, M, R> extends Triple<L, M, R> {
     }
 
     /** Left object */
-    public final L left;
+    public final @Nullable L left;
     /** Middle object */
-    public final M middle;
+    public final @Nullable M middle;
     /** Right object */
-    public final R right;
+    public final @Nullable R right;
 
     /**
      * <p>Obtains an immutable triple of from three objects inferring the generic types.</p>
@@ -106,7 +106,7 @@ public final class ImmutableTriple<L, M, R> extends Triple<L, M, R> {
      * {@inheritDoc}
      */
     @Override
-    public L getLeft() {
+    public @Nullable L getLeft() {
         return left;
     }
 
@@ -114,7 +114,7 @@ public final class ImmutableTriple<L, M, R> extends Triple<L, M, R> {
      * {@inheritDoc}
      */
     @Override
-    public M getMiddle() {
+    public @Nullable M getMiddle() {
         return middle;
     }
 
@@ -122,7 +122,7 @@ public final class ImmutableTriple<L, M, R> extends Triple<L, M, R> {
      * {@inheritDoc}
      */
     @Override
-    public R getRight() {
+    public @Nullable R getRight() {
         return right;
     }
 }

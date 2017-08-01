@@ -274,7 +274,7 @@ public class MultiBackgroundInitializer
          * BackgroundInitializer}
          * @throws NoSuchElementException if the name cannot be resolved
          */
-        public Object getResultObject(final String name) {
+        public @Nullable Object getResultObject(final String name) {
             checkName(name);
             return resultObjects.get(name);
         }

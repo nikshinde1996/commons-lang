@@ -153,7 +153,7 @@ public abstract class BackgroundInitializer<T> implements
      * started
      */
     public final synchronized void setExternalExecutor(
-            final ExecutorService externalExecutor) {
+            final @Nullable ExecutorService externalExecutor) {
         if (isStarted()) {
             throw new IllegalStateException(
                     "Cannot set ExecutorService after start()!");

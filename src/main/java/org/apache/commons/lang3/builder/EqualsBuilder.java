@@ -216,8 +216,8 @@ public class EqualsBuilder implements Builder<Boolean> {
 
     private boolean testTransients = false;
     private boolean testRecursive = false;
-    private Class<?> reflectUpToClass = null;
-    private String[] excludeFields = null;
+    private @Nullable Class<?> reflectUpToClass = null;
+    private String @Nullable [] excludeFields = null;
 
     /**
      * <p>Constructor for EqualsBuilder.</p>
@@ -259,7 +259,7 @@ public class EqualsBuilder implements Builder<Boolean> {
      * @return EqualsBuilder - used to chain calls.
      * @since 3.6
      */
-    public EqualsBuilder setReflectUpToClass(final Class<?> reflectUpToClass) {
+    public EqualsBuilder setReflectUpToClass(final @Nullable Class<?> reflectUpToClass) {
         this.reflectUpToClass = reflectUpToClass;
         return this;
     }

@@ -251,7 +251,7 @@ public class CharSetUtils {
      * @param strings String[] whose elements are being checked for emptiness
      * @return whether or not the String is empty
      */
-    private static boolean deepEmpty(final String[] strings) {
+    private static boolean deepEmpty(final String @Nullable [] strings) {
         if (strings != null) {
             for (final String s : strings) {
                 if (StringUtils.isNotEmpty(s)) {

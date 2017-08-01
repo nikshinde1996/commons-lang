@@ -1366,7 +1366,7 @@ public class TypeUtils {
      * @return Type
      * @since 3.2
      */
-    public static Type unrollVariables(Map<TypeVariable<?>, Type> typeArguments, final Type type) {
+    public static Type unrollVariables( @Nullable Map<TypeVariable<?>, Type> typeArguments, final Type type) {
         if (typeArguments == null) {
             typeArguments = Collections.emptyMap();
         }
