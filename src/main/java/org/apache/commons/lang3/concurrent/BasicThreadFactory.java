@@ -139,7 +139,7 @@ public class BasicThreadFactory implements ThreadFactory {
      *
      * @return the wrapped {@code ThreadFactory}
      */
-    public final @Nullable ThreadFactory getWrappedFactory() {
+    public final ThreadFactory getWrappedFactory() {
         return wrappedFactory;
     }
 
@@ -220,6 +220,7 @@ public class BasicThreadFactory implements ThreadFactory {
      *
      * @param t the thread to be initialized
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     private void initializeThread(final Thread t) {
 
         if (getNamingPattern() != null) {
@@ -232,10 +233,12 @@ public class BasicThreadFactory implements ThreadFactory {
         }
 
         if (getPriority() != null) {
+            // getPriority() is non null here
             t.setPriority(getPriority().intValue());
         }
 
         if (getDaemonFlag() != null) {
+            // getDaemonFlag() is non null here
             t.setDaemon(getDaemonFlag().booleanValue());
         }
     }

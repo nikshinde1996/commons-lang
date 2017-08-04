@@ -90,7 +90,9 @@ public abstract class Pair<L, R> implements Map.Entry<L, R>, Comparable<Pair<L, 
      * @return the left element as the key, may be null
      */
     @Override
+    @SuppressWarnings("nullness:override.return.invalid")
     public final @Nullable L getKey() {
+        // getLeft() may be null
         return getLeft();
     }
 
@@ -103,7 +105,9 @@ public abstract class Pair<L, R> implements Map.Entry<L, R>, Comparable<Pair<L, 
      * @return the right element as the value, may be null
      */
     @Override
+    @SuppressWarnings("nullness:override.return.invalid")
     public @Nullable R getValue() {
+        // getRight() may be null
         return getRight();
     }
 

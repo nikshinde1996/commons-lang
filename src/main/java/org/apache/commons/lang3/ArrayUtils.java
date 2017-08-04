@@ -475,11 +475,13 @@ public class ArrayUtils {
      * @throws IllegalArgumentException if the type argument is null
      * @since 3.5
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static <T> T @Nullable [] nullToEmpty(final T @Nullable [] array, final Class<T[]> type) {
         if (type == null) {
             throw new IllegalArgumentException("The type must not be null");
         }
-
+        
+        // Here type represent an array, hence Class.getComponentType() is not null 
         if (array == null) {
             return type.cast(Array.newInstance(type.getComponentType(), 0));
         }
@@ -898,6 +900,7 @@ public class ArrayUtils {
      * @since 2.1
      * @see Arrays#copyOfRange(Object[], int, int)
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static <T> T @Nullable [] subarray(final T @Nullable [] array, int startIndexInclusive, int endIndexExclusive) {
         if (array == null) {
             return null;
@@ -910,6 +913,7 @@ public class ArrayUtils {
         }
         final int newSize = endIndexExclusive - startIndexInclusive;
         final Class<?> type = array.getClass().getComponentType();
+        // type is not null as class represents array class. 
         if (newSize <= 0) {
             @SuppressWarnings("unchecked") // OK, because array is of type T
             final T[] emptyArray = (T[]) Array.newInstance(type, 0);
@@ -3268,6 +3272,7 @@ public class ArrayUtils {
      * @return the last index of the object within the array,
      *  {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static int lastIndexOf(final Object @Nullable [] array, final @Nullable Object objectToFind, int startIndex) {
         if (array == null) {
             return INDEX_NOT_FOUND;
@@ -3283,6 +3288,7 @@ public class ArrayUtils {
                     return i;
                 }
             }
+        // Here type represent an array, hence Class.getComponentType() is not null     
         } else if (array.getClass().getComponentType().isInstance(objectToFind)) {
             for (int i = startIndex; i >= 0; i--) {
                 if (objectToFind.equals(array[i])) {
@@ -3873,6 +3879,7 @@ public class ArrayUtils {
      * @return the index of the value within the array,
      *  {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static int indexOf(final double @Nullable [] array, final double valueToFind, int startIndex) {
         if (ArrayUtils.isEmpty(array)) {
             return INDEX_NOT_FOUND;
@@ -3880,6 +3887,7 @@ public class ArrayUtils {
         if (startIndex < 0) {
             startIndex = 0;
         }
+        // array is non-null here
         for (int i = startIndex; i < array.length; i++) {
             if (valueToFind == array[i]) {
                 return i;
@@ -3905,6 +3913,7 @@ public class ArrayUtils {
      * @return the index of the value within the array,
      *  {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static int indexOf(final double @Nullable [] array, final double valueToFind, int startIndex, final double tolerance) {
         if (ArrayUtils.isEmpty(array)) {
             return INDEX_NOT_FOUND;
@@ -3914,6 +3923,7 @@ public class ArrayUtils {
         }
         final double min = valueToFind - tolerance;
         final double max = valueToFind + tolerance;
+        // array is non-null here
         for (int i = startIndex; i < array.length; i++) {
             if (array[i] >= min && array[i] <= max) {
                 return i;
@@ -3967,12 +3977,14 @@ public class ArrayUtils {
      * @return the last index of the value within the array,
      *  {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static int lastIndexOf(final double @Nullable [] array, final double valueToFind, int startIndex) {
         if (ArrayUtils.isEmpty(array)) {
             return INDEX_NOT_FOUND;
         }
         if (startIndex < 0) {
             return INDEX_NOT_FOUND;
+        // array is non-null here    
         } else if (startIndex >= array.length) {
             startIndex = array.length - 1;
         }
@@ -4001,12 +4013,14 @@ public class ArrayUtils {
      * @return the last index of the value within the array,
      *  {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static int lastIndexOf(final double @Nullable [] array, final double valueToFind, int startIndex, final double tolerance) {
         if (ArrayUtils.isEmpty(array)) {
             return INDEX_NOT_FOUND;
         }
         if (startIndex < 0) {
             return INDEX_NOT_FOUND;
+        // array is non-null here    
         } else if (startIndex >= array.length) {
             startIndex = array.length - 1;
         }
@@ -4080,6 +4094,7 @@ public class ArrayUtils {
      * @return the index of the value within the array,
      *  {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static int indexOf(final float @Nullable [] array, final float valueToFind, int startIndex) {
         if (ArrayUtils.isEmpty(array)) {
             return INDEX_NOT_FOUND;
@@ -4087,6 +4102,7 @@ public class ArrayUtils {
         if (startIndex < 0) {
             startIndex = 0;
         }
+        // array is non-null here
         for (int i = startIndex; i < array.length; i++) {
             if (valueToFind == array[i]) {
                 return i;
@@ -4123,12 +4139,14 @@ public class ArrayUtils {
      * @return the last index of the value within the array,
      *  {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static int lastIndexOf(final float @Nullable [] array, final float valueToFind, int startIndex) {
         if (ArrayUtils.isEmpty(array)) {
             return INDEX_NOT_FOUND;
         }
         if (startIndex < 0) {
             return INDEX_NOT_FOUND;
+        // array is non-null here    
         } else if (startIndex >= array.length) {
             startIndex = array.length - 1;
         }
@@ -4184,6 +4202,7 @@ public class ArrayUtils {
      *  {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null}
      *  array input
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static int indexOf(final boolean @Nullable [] array, final boolean valueToFind, int startIndex) {
         if (ArrayUtils.isEmpty(array)) {
             return INDEX_NOT_FOUND;
@@ -4191,6 +4210,7 @@ public class ArrayUtils {
         if (startIndex < 0) {
             startIndex = 0;
         }
+        // array is non-null here
         for (int i = startIndex; i < array.length; i++) {
             if (valueToFind == array[i]) {
                 return i;
@@ -4228,12 +4248,14 @@ public class ArrayUtils {
      * @return the last index of the value within the array,
      *  {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static int lastIndexOf(final boolean @Nullable [] array, final boolean valueToFind, int startIndex) {
         if (ArrayUtils.isEmpty(array)) {
             return INDEX_NOT_FOUND;
         }
         if (startIndex < 0) {
             return INDEX_NOT_FOUND;
+        // array is non-null here    
         } else if (startIndex >= array.length) {
             startIndex = array.length - 1;
         }
@@ -4272,7 +4294,7 @@ public class ArrayUtils {
      * @return a {@code char} array, {@code null} if null array input
      * @throws NullPointerException if array content is {@code null}
      */
-    public static char @Nullable [] toPrimitive(final Character @Nullable [] array) {
+    public static char @PolyNull [] toPrimitive(final Character @PolyNull [] array) {
         if (array == null) {
             return null;
         } else if (array.length == 0) {
@@ -4294,7 +4316,7 @@ public class ArrayUtils {
      * @param valueForNull  the value to insert if {@code null} found
      * @return a {@code char} array, {@code null} if null array input
      */
-    public static char @Nullable [] toPrimitive(final Character @Nullable [] array, final char valueForNull) {
+    public static char @PolyNull [] toPrimitive(final Character @PolyNull [] array, final char valueForNull) {
         if (array == null) {
             return null;
         } else if (array.length == 0) {
@@ -4316,7 +4338,7 @@ public class ArrayUtils {
      * @param array a {@code char} array
      * @return a {@code Character} array, {@code null} if null array input
      */
-    public static Character @Nullable [] toObject(final char @Nullable [] array) {
+    public static Character @PolyNull [] toObject(final char @PolyNull [] array) {
         if (array == null) {
             return null;
         } else if (array.length == 0) {
@@ -4340,7 +4362,7 @@ public class ArrayUtils {
      * @return a {@code long} array, {@code null} if null array input
      * @throws NullPointerException if array content is {@code null}
      */
-    public static long @Nullable [] toPrimitive(final Long @Nullable [] array) {
+    public static long @PolyNull [] toPrimitive(final Long @PolyNull [] array) {
         if (array == null) {
             return null;
         } else if (array.length == 0) {
@@ -4362,7 +4384,7 @@ public class ArrayUtils {
      * @param valueForNull  the value to insert if {@code null} found
      * @return a {@code long} array, {@code null} if null array input
      */
-    public static long @Nullable [] toPrimitive(final Long @Nullable [] array, final long valueForNull) {
+    public static long @PolyNull [] toPrimitive(final Long @PolyNull [] array, final long valueForNull) {
         if (array == null) {
             return null;
         } else if (array.length == 0) {
@@ -4384,7 +4406,7 @@ public class ArrayUtils {
      * @param array  a {@code long} array
      * @return a {@code Long} array, {@code null} if null array input
      */
-    public static Long @Nullable [] toObject(final long @Nullable [] array) {
+    public static Long @PolyNull [] toObject(final long @PolyNull [] array) {
         if (array == null) {
             return null;
         } else if (array.length == 0) {
@@ -4408,7 +4430,7 @@ public class ArrayUtils {
      * @return an {@code int} array, {@code null} if null array input
      * @throws NullPointerException if array content is {@code null}
      */
-    public static int @Nullable [] toPrimitive(final Integer @Nullable [] array) {
+    public static int @PolyNull [] toPrimitive(final Integer @PolyNull [] array) {
         if (array == null) {
             return null;
         } else if (array.length == 0) {
@@ -4430,7 +4452,7 @@ public class ArrayUtils {
      * @param valueForNull  the value to insert if {@code null} found
      * @return an {@code int} array, {@code null} if null array input
      */
-    public static int @Nullable [] toPrimitive(final Integer @Nullable [] array, final int valueForNull) {
+    public static int @PolyNull [] toPrimitive(final Integer @PolyNull [] array, final int valueForNull) {
         if (array == null) {
             return null;
         } else if (array.length == 0) {
@@ -4452,7 +4474,7 @@ public class ArrayUtils {
      * @param array  an {@code int} array
      * @return an {@code Integer} array, {@code null} if null array input
      */
-    public static Integer @Nullable [] toObject(final int @Nullable [] array) {
+    public static Integer @PolyNull [] toObject(final int @PolyNull [] array) {
         if (array == null) {
             return null;
         } else if (array.length == 0) {
@@ -4476,7 +4498,7 @@ public class ArrayUtils {
      * @return a {@code byte} array, {@code null} if null array input
      * @throws NullPointerException if array content is {@code null}
      */
-    public static short @Nullable [] toPrimitive(final Short @Nullable [] array) {
+    public static short @PolyNull [] toPrimitive(final Short @PolyNull [] array) {
         if (array == null) {
             return null;
         } else if (array.length == 0) {
@@ -4498,7 +4520,7 @@ public class ArrayUtils {
      * @param valueForNull  the value to insert if {@code null} found
      * @return a {@code byte} array, {@code null} if null array input
      */
-    public static short @Nullable [] toPrimitive(final Short @Nullable [] array, final short valueForNull) {
+    public static short @PolyNull [] toPrimitive(final Short @PolyNull [] array, final short valueForNull) {
         if (array == null) {
             return null;
         } else if (array.length == 0) {
@@ -4520,7 +4542,7 @@ public class ArrayUtils {
      * @param array  a {@code short} array
      * @return a {@code Short} array, {@code null} if null array input
      */
-    public static Short @Nullable [] toObject(final short @Nullable [] array) {
+    public static Short @PolyNull [] toObject(final short @PolyNull [] array) {
         if (array == null) {
             return null;
         } else if (array.length == 0) {
@@ -4544,7 +4566,7 @@ public class ArrayUtils {
      * @return a {@code byte} array, {@code null} if null array input
      * @throws NullPointerException if array content is {@code null}
      */
-    public static byte @Nullable [] toPrimitive(final Byte @Nullable [] array) {
+    public static byte @PolyNull [] toPrimitive(final Byte @PolyNull [] array) {
         if (array == null) {
             return null;
         } else if (array.length == 0) {
@@ -4566,7 +4588,7 @@ public class ArrayUtils {
      * @param valueForNull  the value to insert if {@code null} found
      * @return a {@code byte} array, {@code null} if null array input
      */
-    public static byte @Nullable [] toPrimitive(final Byte @Nullable [] array, final byte valueForNull) {
+    public static byte @PolyNull [] toPrimitive(final Byte @PolyNull [] array, final byte valueForNull) {
         if (array == null) {
             return null;
         } else if (array.length == 0) {
@@ -4588,7 +4610,7 @@ public class ArrayUtils {
      * @param array  a {@code byte} array
      * @return a {@code Byte} array, {@code null} if null array input
      */
-    public static Byte @Nullable [] toObject(final byte @Nullable [] array) {
+    public static Byte @PolyNull [] toObject(final byte @PolyNull [] array) {
         if (array == null) {
             return null;
         } else if (array.length == 0) {
@@ -4612,7 +4634,7 @@ public class ArrayUtils {
      * @return a {@code double} array, {@code null} if null array input
      * @throws NullPointerException if array content is {@code null}
      */
-    public static double @Nullable [] toPrimitive(final Double @Nullable [] array) {
+    public static double @PolyNull [] toPrimitive(final Double @PolyNull [] array) {
         if (array == null) {
             return null;
         } else if (array.length == 0) {
@@ -4634,7 +4656,7 @@ public class ArrayUtils {
      * @param valueForNull  the value to insert if {@code null} found
      * @return a {@code double} array, {@code null} if null array input
      */
-    public static double @Nullable [] toPrimitive(final Double @Nullable [] array, final double valueForNull) {
+    public static double @PolyNull [] toPrimitive(final Double @PolyNull [] array, final double valueForNull) {
         if (array == null) {
             return null;
         } else if (array.length == 0) {
@@ -4656,7 +4678,7 @@ public class ArrayUtils {
      * @param array  a {@code double} array
      * @return a {@code Double} array, {@code null} if null array input
      */
-    public static Double @Nullable [] toObject(final double @Nullable [] array) {
+    public static Double @PolyNull [] toObject(final double @PolyNull [] array) {
         if (array == null) {
             return null;
         } else if (array.length == 0) {
@@ -4680,7 +4702,7 @@ public class ArrayUtils {
      * @return a {@code float} array, {@code null} if null array input
      * @throws NullPointerException if array content is {@code null}
      */
-    public static float @Nullable [] toPrimitive(final Float @Nullable [] array) {
+    public static float @PolyNull [] toPrimitive(final Float @PolyNull [] array) {
         if (array == null) {
             return null;
         } else if (array.length == 0) {
@@ -4702,7 +4724,7 @@ public class ArrayUtils {
      * @param valueForNull  the value to insert if {@code null} found
      * @return a {@code float} array, {@code null} if null array input
      */
-    public static float @Nullable [] toPrimitive(final Float @Nullable [] array, final float valueForNull) {
+    public static float @PolyNull [] toPrimitive(final Float @PolyNull [] array, final float valueForNull) {
         if (array == null) {
             return null;
         } else if (array.length == 0) {
@@ -4724,7 +4746,7 @@ public class ArrayUtils {
      * @param array  a {@code float} array
      * @return a {@code Float} array, {@code null} if null array input
      */
-    public static Float @Nullable [] toObject(final float @Nullable [] array) {
+    public static Float @PolyNull [] toObject(final float @PolyNull [] array) {
         if (array == null) {
             return null;
         } else if (array.length == 0) {
@@ -4746,7 +4768,7 @@ public class ArrayUtils {
      * @return an array of the corresponding primitive type, or the original array
      * @since 3.5
      */
-    public static @Nullable Object toPrimitive(final @Nullable Object array) {
+    public static @PolyNull Object toPrimitive(final @PolyNull Object array) {
         if (array == null) {
             return null;
         }
@@ -4781,7 +4803,7 @@ public class ArrayUtils {
      * @return a {@code boolean} array, {@code null} if null array input
      * @throws NullPointerException if array content is {@code null}
      */
-    public static boolean @Nullable [] toPrimitive(final Boolean @Nullable [] array) {
+    public static boolean @PolyNull [] toPrimitive(final Boolean @PolyNull [] array) {
         if (array == null) {
             return null;
         } else if (array.length == 0) {
@@ -4803,7 +4825,7 @@ public class ArrayUtils {
      * @param valueForNull  the value to insert if {@code null} found
      * @return a {@code boolean} array, {@code null} if null array input
      */
-    public static boolean @Nullable [] toPrimitive(final Boolean @Nullable [] array, final boolean valueForNull) {
+    public static boolean @PolyNull [] toPrimitive(final Boolean @PolyNull [] array, final boolean valueForNull) {
         if (array == null) {
             return null;
         } else if (array.length == 0) {
@@ -4825,7 +4847,7 @@ public class ArrayUtils {
      * @param array  a {@code boolean} array
      * @return a {@code Boolean} array, {@code null} if null array input
      */
-    public static Boolean @Nullable [] toObject(final boolean @Nullable [] array) {
+    public static Boolean @PolyNull [] toObject(final boolean @PolyNull [] array) {
         if (array == null) {
             return null;
         } else if (array.length == 0) {
@@ -4947,7 +4969,9 @@ public class ArrayUtils {
      * @return {@code true} if the array is not empty and not {@code null}
      * @since 2.5
      */
+     @SuppressWarnings("nullness:argument.type.incompatible")
      public static <T> boolean isNotEmpty(final T @Nullable [] array) {
+         // isEmpty(Object object) will be used here as there is no generic definition 
          return !isEmpty(array);
      }
 
@@ -5063,12 +5087,14 @@ public class ArrayUtils {
      * @since 2.1
      * @throws IllegalArgumentException if the array types are incompatible
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static <T> T @Nullable [] addAll(final T @Nullable [] array1, final T @Nullable ... array2) {
         if (array1 == null) {
             return clone(array2);
         } else if (array2 == null) {
             return clone(array1);
         }
+        // type1 is not null as class represents array class.
         final Class<?> type1 = array1.getClass().getComponentType();
         @SuppressWarnings("unchecked") // OK, because array is of type T
         final T[] joinedArray = (T[]) Array.newInstance(type1, array1.length + array2.length);
@@ -5082,6 +5108,7 @@ public class ArrayUtils {
              * - it would be a wasted check most of the time
              * - safer, in case check turns out to be too strict
              */
+            // type2 is not null as class represents array class. 
             final Class<?> type2 = array2.getClass().getComponentType();
             if (!type1.isAssignableFrom(type2)) {
                 throw new IllegalArgumentException("Cannot store " + type2.getName() + " in an array of "
@@ -5353,6 +5380,7 @@ public class ArrayUtils {
      * @since 2.1
      * @throws IllegalArgumentException if both arguments are null
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static <T> T[] add(final T @Nullable [] array, final @Nullable T element) {
         Class<?> type;
         if (array != null) {
@@ -5362,6 +5390,7 @@ public class ArrayUtils {
         } else {
             throw new IllegalArgumentException("Arguments cannot both be null");
         }
+        // type is not null as class represents array class.
         @SuppressWarnings("unchecked") // type must be T
         final
         T[] newArray = (T[]) copyArrayGrow1(array, type);
@@ -5594,9 +5623,11 @@ public class ArrayUtils {
      * size 1 array of this type.
      * @return A new copy of the array of size 1 greater than the input.
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     private static Object copyArrayGrow1(final @Nullable Object array, final Class<?> newArrayComponentType) {
         if (array != null) {
             final int arrayLength = Array.getLength(array);
+            // array.getClass().getComponentType() is not null as class represents array class.
             final Object newArray = Array.newInstance(array.getClass().getComponentType(), arrayLength + 1);
             System.arraycopy(array, 0, newArray, 0, arrayLength);
             return newArray;
@@ -5637,6 +5668,7 @@ public class ArrayUtils {
      * in the new method: inserting {@code X} into a {@code null} array results in {@code null} not {@code X}.
      */
     @Deprecated
+    @SuppressWarnings("nullness:argument.type.incompatible")
     public static <T> T[] add(final T @Nullable [] array, final int index, final T element) {
         Class<?> clss = null;
         if (array != null) {
@@ -5646,6 +5678,7 @@ public class ArrayUtils {
         } else {
             throw new IllegalArgumentException("Array and element cannot both be null");
         }
+        // clss is not null as class represents array class.
         @SuppressWarnings("unchecked") // the add method creates an array of type clss, which is type T
         final T[] newArray = (T[]) add(array, index, element, clss);
         return newArray;
@@ -6024,11 +6057,13 @@ public class ArrayUtils {
      *         occurrence of the specified element.
      * @since 2.1
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static <T> T @Nullable [] removeElement(final T @Nullable [] array, final Object element) {
         final int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
         }
+        // array is non null here
         return remove(array, index);
     }
 
@@ -6089,11 +6124,13 @@ public class ArrayUtils {
      *         occurrence of the specified element.
      * @since 2.1
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static boolean @Nullable [] removeElement(final boolean @Nullable [] array, final boolean element) {
         final int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
         }
+        // array is non null here
         return remove(array, index);
     }
 
@@ -6154,11 +6191,13 @@ public class ArrayUtils {
      *         occurrence of the specified element.
      * @since 2.1
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static byte @Nullable [] removeElement(final byte @Nullable [] array, final byte element) {
         final int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
         }
+        // array is non null here
         return remove(array, index);
     }
 
@@ -6219,11 +6258,13 @@ public class ArrayUtils {
      *         occurrence of the specified element.
      * @since 2.1
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static char @Nullable [] removeElement(final char @Nullable [] array, final char element) {
         final int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
         }
+        // array is non-null here
         return remove(array, index);
     }
 
@@ -6284,11 +6325,13 @@ public class ArrayUtils {
      *         occurrence of the specified element.
      * @since 2.1
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static double @Nullable [] removeElement(final double @Nullable [] array, final double element) {
         final int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
         }
+        // array is non-null here
         return remove(array, index);
     }
 
@@ -6349,11 +6392,13 @@ public class ArrayUtils {
      *         occurrence of the specified element.
      * @since 2.1
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static float @Nullable [] removeElement(final float @Nullable [] array, final float element) {
         final int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
         }
+        // array is non null here
         return remove(array, index);
     }
 
@@ -6414,11 +6459,13 @@ public class ArrayUtils {
      *         occurrence of the specified element.
      * @since 2.1
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static int @Nullable [] removeElement(final int @Nullable [] array, final int element) {
         final int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
         }
+        // array is non null here
         return remove(array, index);
     }
 
@@ -6479,11 +6526,13 @@ public class ArrayUtils {
      *         occurrence of the specified element.
      * @since 2.1
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static long @Nullable [] removeElement(final long @Nullable [] array, final long element) {
         final int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
         }
+        // array is non null here
         return remove(array, index);
     }
 
@@ -6544,11 +6593,13 @@ public class ArrayUtils {
      *         occurrence of the specified element.
      * @since 2.1
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static short @Nullable [] removeElement(final short @Nullable [] array, final short element) {
         final int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
         }
+        // array is non null here
         return remove(array, index);
     }
 
@@ -6573,12 +6624,13 @@ public class ArrayUtils {
      * (index &lt; 0 || index &gt;= array.length), or if the array is {@code null}.
      * @since 2.1
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     private static Object remove(final Object array, final int index) {
         final int length = getLength(array);
         if (index < 0 || index >= length) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Length: " + length);
         }
-
+        // array.getClass().getComponentType is non null as class represents array class.
         final Object result = Array.newInstance(array.getClass().getComponentType(), length - 1);
         System.arraycopy(array, 0, result, 0, index);
         if (index < length - 1) {
@@ -6648,10 +6700,12 @@ public class ArrayUtils {
      * @since 3.0.1
      */
     @SafeVarargs
+    @SuppressWarnings("nullness:dereference.of.nullable")
     public static <T> T @Nullable [] removeElements(final T @Nullable [] array, final T @Nullable ... values) {
         if (isEmpty(array) || isEmpty(values)) {
             return clone(array);
         }
+        // values is non null here
         final HashMap<T, MutableInt> occurrences = new HashMap<>(values.length);
         for (final T v : values) {
             final MutableInt count = occurrences.get(v);
@@ -6662,6 +6716,7 @@ public class ArrayUtils {
             }
         }
         final BitSet toRemove = new BitSet();
+        // arrays is non null here
         for (int i = 0; i < array.length; i++) {
             final T key = array[i];
             final MutableInt count = occurrences.get(key);
@@ -6737,6 +6792,7 @@ public class ArrayUtils {
      *         earliest-encountered occurrences of the specified elements.
      * @since 3.0.1
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static byte @Nullable [] removeElements(final byte @Nullable [] array, final byte... values) {
         if (isEmpty(array) || isEmpty(values)) {
             return clone(array);
@@ -6752,6 +6808,7 @@ public class ArrayUtils {
             }
         }
         final BitSet toRemove = new BitSet();
+        // array is non null here
         for (int i = 0; i < array.length; i++) {
             final byte key = array[i];
             final MutableInt count = occurrences.get(key);
@@ -6825,6 +6882,7 @@ public class ArrayUtils {
      *         earliest-encountered occurrences of the specified elements.
      * @since 3.0.1
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static short @Nullable [] removeElements(final short @Nullable [] array, final short... values) {
         if (isEmpty(array) || isEmpty(values)) {
             return clone(array);
@@ -6840,6 +6898,7 @@ public class ArrayUtils {
             }
         }
         final BitSet toRemove = new BitSet();
+        // array is non null here  
         for (int i = 0; i < array.length; i++) {
             final short key = array[i];
             final MutableInt count = occurrences.get(key);
@@ -6913,6 +6972,7 @@ public class ArrayUtils {
      *         earliest-encountered occurrences of the specified elements.
      * @since 3.0.1
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static int @Nullable [] removeElements(final int @Nullable [] array, final int... values) {
         if (isEmpty(array) || isEmpty(values)) {
             return clone(array);
@@ -6928,6 +6988,7 @@ public class ArrayUtils {
             }
         }
         final BitSet toRemove = new BitSet();
+        // array is non null here
         for (int i = 0; i < array.length; i++) {
             final int key = array[i];
             final MutableInt count = occurrences.get(key);
@@ -7001,6 +7062,7 @@ public class ArrayUtils {
      *         earliest-encountered occurrences of the specified elements.
      * @since 3.0.1
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static char @Nullable [] removeElements(final char @Nullable [] array, final char... values) {
         if (isEmpty(array) || isEmpty(values)) {
             return clone(array);
@@ -7016,6 +7078,7 @@ public class ArrayUtils {
             }
         }
         final BitSet toRemove = new BitSet();
+        // array is non null here
         for (int i = 0; i < array.length; i++) {
             final char key = array[i];
             final MutableInt count = occurrences.get(key);
@@ -7089,6 +7152,7 @@ public class ArrayUtils {
      *         earliest-encountered occurrences of the specified elements.
      * @since 3.0.1
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static long @Nullable [] removeElements(final long @Nullable [] array, final long... values) {
         if (isEmpty(array) || isEmpty(values)) {
             return clone(array);
@@ -7104,6 +7168,7 @@ public class ArrayUtils {
             }
         }
         final BitSet toRemove = new BitSet();
+        // array is non null here
         for (int i = 0; i < array.length; i++) {
             final long key = array[i];
             final MutableInt count = occurrences.get(key);
@@ -7177,6 +7242,7 @@ public class ArrayUtils {
      *         earliest-encountered occurrences of the specified elements.
      * @since 3.0.1
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static float @Nullable [] removeElements(final float @Nullable [] array, final float... values) {
         if (isEmpty(array) || isEmpty(values)) {
             return clone(array);
@@ -7192,6 +7258,7 @@ public class ArrayUtils {
             }
         }
         final BitSet toRemove = new BitSet();
+        // array is non null here
         for (int i = 0; i < array.length; i++) {
             final float key = array[i];
             final MutableInt count = occurrences.get(key);
@@ -7265,6 +7332,7 @@ public class ArrayUtils {
      *         earliest-encountered occurrences of the specified elements.
      * @since 3.0.1
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static double @Nullable [] removeElements(final double @Nullable [] array, final double... values) {
         if (isEmpty(array) || isEmpty(values)) {
             return clone(array);
@@ -7280,6 +7348,7 @@ public class ArrayUtils {
             }
         }
         final BitSet toRemove = new BitSet();
+        // array is non null here
         for (int i = 0; i < array.length; i++) {
             final double key = array[i];
             final MutableInt count = occurrences.get(key);
@@ -7349,6 +7418,7 @@ public class ArrayUtils {
      *         earliest-encountered occurrences of the specified elements.
      * @since 3.0.1
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static boolean @Nullable [] removeElements(final boolean @Nullable [] array, final boolean... values) {
         if (isEmpty(array) || isEmpty(values)) {
             return clone(array);
@@ -7364,6 +7434,7 @@ public class ArrayUtils {
             }
         }
         final BitSet toRemove = new BitSet();
+        // array is non null here
         for (int i = 0; i < array.length; i++) {
             final boolean key = array[i];
             final MutableInt count = occurrences.get(key);
@@ -7385,6 +7456,7 @@ public class ArrayUtils {
      * @since 3.0.1
      */
     // package protected for access by unit tests
+    @SuppressWarnings("nullness:argument.type.incompatible")
     static Object removeAll(final Object array, final int... indices) {
         final int length = getLength(array);
         int diff = 0; // number of distinct indexes, i.e. number of entries that will be removed
@@ -7409,6 +7481,7 @@ public class ArrayUtils {
         }
 
         // create result array
+        // array.getClass.getComponentType() does not return null as class represents array class
         final Object result = Array.newInstance(array.getClass().getComponentType(), length - diff);
         if (diff < length) {
             int end = length; // index just after last copy
@@ -7448,6 +7521,7 @@ public class ArrayUtils {
 //            throw new IndexOutOfBoundsException("Index: " + (maxIndex-1) + ", Length: " + srcLength);
 //        }
         final int removals = indices.cardinality(); // true bits are items to remove
+        // array.getClass.getComponentType() does not return null as class represents array class
         final Object result = Array.newInstance(array.getClass().getComponentType(), srcLength - removals);
         int srcIndex = 0;
         int destIndex = 0;
@@ -7734,12 +7808,14 @@ public class ArrayUtils {
      * @return A new array containing the existing elements except the occurrences of the specified element.
      * @since 3.5
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static boolean @Nullable [] removeAllOccurences(final boolean @Nullable [] array, final boolean element) {
         int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
         }
-
+        
+        // array is non null here
         final int[] indices = new int[array.length - index];
         indices[0] = index;
         int count = 1;
@@ -7766,12 +7842,14 @@ public class ArrayUtils {
      * @return A new array containing the existing elements except the occurrences of the specified element.
      * @since 3.5
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static char @Nullable [] removeAllOccurences(final char @Nullable [] array, final char element) {
         int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
         }
 
+        // array is non null here
         final int[] indices = new int[array.length - index];
         indices[0] = index;
         int count = 1;
@@ -7798,12 +7876,14 @@ public class ArrayUtils {
      * @return A new array containing the existing elements except the occurrences of the specified element.
      * @since 3.5
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static byte @Nullable [] removeAllOccurences(final byte @Nullable [] array, final byte element) {
         int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
         }
 
+        // array is non null here
         final int[] indices = new int[array.length - index];
         indices[0] = index;
         int count = 1;
@@ -7830,12 +7910,14 @@ public class ArrayUtils {
      * @return A new array containing the existing elements except the occurrences of the specified element.
      * @since 3.5
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static short @Nullable [] removeAllOccurences(final short @Nullable [] array, final short element) {
         int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
         }
 
+        // array is non null here
         final int[] indices = new int[array.length - index];
         indices[0] = index;
         int count = 1;
@@ -7862,12 +7944,14 @@ public class ArrayUtils {
      * @return A new array containing the existing elements except the occurrences of the specified element.
      * @since 3.5
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static int @Nullable [] removeAllOccurences(final int @Nullable [] array, final int element) {
         int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
         }
 
+        // array is non null here
         final int[] indices = new int[array.length - index];
         indices[0] = index;
         int count = 1;
@@ -7894,12 +7978,14 @@ public class ArrayUtils {
      * @return A new array containing the existing elements except the occurrences of the specified element.
      * @since 3.5
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static long @Nullable [] removeAllOccurences(final long @Nullable [] array, final long element) {
         int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
         }
 
+        // array is non null here
         final int[] indices = new int[array.length - index];
         indices[0] = index;
         int count = 1;
@@ -7926,12 +8012,14 @@ public class ArrayUtils {
      * @return A new array containing the existing elements except the occurrences of the specified element.
      * @since 3.5
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static float @Nullable [] removeAllOccurences(final float @Nullable [] array, final float element) {
         int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
         }
 
+        // array is non null here
         final int[] indices = new int[array.length - index];
         indices[0] = index;
         int count = 1;
@@ -7958,12 +8046,14 @@ public class ArrayUtils {
      * @return A new array containing the existing elements except the occurrences of the specified element.
      * @since 3.5
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static double @Nullable [] removeAllOccurences(final double @Nullable [] array, final double element) {
         int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
         }
 
+        // array is non null here
         final int[] indices = new int[array.length - index];
         indices[0] = index;
         int count = 1;
@@ -7991,12 +8081,14 @@ public class ArrayUtils {
      * @return A new array containing the existing elements except the occurrences of the specified element.
      * @since 3.5
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static <T> T @Nullable [] removeAllOccurences(final T @Nullable [] array, final @Nullable T element) {
         int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
         }
 
+        // array is non null here
         final int[] indices = new int[array.length - index];
         indices[0] = index;
         int count = 1;
@@ -8019,7 +8111,7 @@ public class ArrayUtils {
      * @throws NullPointerException if array contains {@code null}
      * @since 3.6
      */
-    public static String @Nullable [] toStringArray(final Object @Nullable [] array) {
+    public static String @PolyNull [] toStringArray(final Object @PolyNull [] array) {
         if (array == null) {
             return null;
         } else if (array.length == 0) {
@@ -8045,7 +8137,7 @@ public class ArrayUtils {
      * @return a {@code String} array, {@code null} if null array input
      * @since 3.6
      */
-    public static String @Nullable [] toStringArray(final Object @Nullable [] array, final String valueForNullElements) {
+    public static String @PolyNull [] toStringArray(final Object @PolyNull [] array, final String valueForNullElements) {
         if (null == array) {
             return null;
         } else if (array.length == 0) {
@@ -8418,6 +8510,7 @@ public class ArrayUtils {
      * @since 3.6
      */
     @SafeVarargs
+    @SuppressWarnings("nullness:argument.type.incompatible")
     public static <T> T @Nullable [] insert(final int index, final T @Nullable [] array, final T @Nullable ... values) {
         /*
          * Note on use of @SafeVarargs:
@@ -8436,7 +8529,8 @@ public class ArrayUtils {
         if (index < 0 || index > array.length) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Length: " + array.length);
         }
-
+        
+        // type is non null as class represents array class
         final Class<?> type = array.getClass().getComponentType();
         @SuppressWarnings("unchecked") // OK, because array and values are of type T
         T[] result = (T[]) Array.newInstance(type, array.length + values.length);

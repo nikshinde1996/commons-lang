@@ -50,7 +50,7 @@ final class CharRange implements Iterable<Character>, Serializable {
     private final boolean negated;
 
     /** Cached toString. */
-    private transient String iToString;
+    private transient @Nullable String iToString;
 
     /**
      * <p>Constructs a {@code CharRange} over a set of characters,
@@ -205,13 +205,15 @@ final class CharRange implements Iterable<Character>, Serializable {
      * @return true if equal
      */
     @Override
-    public boolean equals(final @Nullable Object obj) {
+    @SuppressWarnings("nullness:override.param.invalid")
+    public boolean equals(final Object obj) {
         if (obj == this) {
             return true;
         }
         if (obj instanceof CharRange == false) {
             return false;
         }
+        // obj is not null in this method
         final CharRange other = (CharRange) obj;
         return start == other.start && end == other.end && negated == other.negated;
     }

@@ -107,11 +107,13 @@ public class ConstructorUtils {
      * @throws InstantiationException if an error occurs on instantiation
      * @see Constructor#newInstance
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static <T> T invokeConstructor(final Class<T> cls, Object @Nullable [] args, Class<?> @Nullable [] parameterTypes)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException,
             InstantiationException {
         args = ArrayUtils.nullToEmpty(args);
         parameterTypes = ArrayUtils.nullToEmpty(parameterTypes);
+        // parameterTypes is non null here
         final Constructor<T> ctor = getMatchingAccessibleConstructor(cls, parameterTypes);
         if (ctor == null) {
             throw new NoSuchMethodException(
@@ -171,11 +173,13 @@ public class ConstructorUtils {
      * @throws InstantiationException if an error occurs on instantiation
      * @see Constructor#newInstance
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static <T> T invokeExactConstructor(final Class<T> cls, Object @Nullable [] args,
             Class<?> @Nullable [] parameterTypes) throws NoSuchMethodException, IllegalAccessException,
             InvocationTargetException, InstantiationException {
         args = ArrayUtils.nullToEmpty(args);
         parameterTypes = ArrayUtils.nullToEmpty(parameterTypes);
+        // parameterTypes is non null here
         final Constructor<T> ctor = getAccessibleConstructor(cls, parameterTypes);
         if (ctor == null) {
             throw new NoSuchMethodException(
@@ -199,6 +203,7 @@ public class ConstructorUtils {
      * @see #getAccessibleConstructor(java.lang.reflect.Constructor)
      * @throws NullPointerException if {@code cls} is {@code null}
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static <T> @Nullable Constructor<T> getAccessibleConstructor(final Class<T> cls,
             final Class<?> @Nullable ... parameterTypes) {
         Validate.notNull(cls, "class cannot be null");

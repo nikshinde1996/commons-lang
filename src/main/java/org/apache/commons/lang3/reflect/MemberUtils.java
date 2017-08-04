@@ -148,6 +148,7 @@ abstract class MemberUtils {
      * @param executable The executable to calculate transformation costs for
      * @return The total transformation cost
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     private static float getTotalTransformationCost(final Class<?>[] srcArgs, final Executable executable) {
         final Class<?>[] destArgs = executable.getParameterTypes();
         final boolean isVarArgs = executable.isVarArgs();
@@ -174,6 +175,8 @@ abstract class MemberUtils {
                 totalCost += getObjectTransformationCost(destClass, Object.class) + varArgsCost;
             } else if (explicitArrayForVarags) {
                 final Class<?> sourceClass = srcArgs[srcArgs.length-1].getComponentType();
+                // destClass and sourceClass is non null as getComponentType() returns non null
+                // as class represents array class
                 totalCost += getObjectTransformationCost(sourceClass, destClass) + varArgsCost;
             } else {
                 // This is typical varargs case.
@@ -194,7 +197,7 @@ abstract class MemberUtils {
      * @param destClass The destination class
      * @return The cost of transforming an object
      */
-    private static float getObjectTransformationCost(@Nullable Class<?> srcClass, final @Nullable Class<?> destClass) {
+    private static float getObjectTransformationCost(Class<?> srcClass, final Class<?> destClass) {
         if (destClass.isPrimitive()) {
             return getPrimitivePromotionCost(srcClass, destClass);
         }
@@ -229,7 +232,7 @@ abstract class MemberUtils {
      * @param destClass the (primitive) destination class
      * @return The cost of promoting the primitive
      */
-    private static float getPrimitivePromotionCost(final @Nullable Class<?> srcClass, final @Nullable Class<?> destClass) {
+    private static float getPrimitivePromotionCost(final Class<?> srcClass, final Class<?> destClass) {
         float cost = 0.0f;
         Class<?> cls = srcClass;
         if (!cls.isPrimitive()) {

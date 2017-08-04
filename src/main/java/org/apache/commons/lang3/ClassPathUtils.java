@@ -54,9 +54,11 @@ public class ClassPathUtils {
      * @return the fully qualified name of the resource with name {@code resourceName}.
      * @throws java.lang.NullPointerException if either {@code context} or {@code resourceName} is null.
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static String toFullyQualifiedName(final Class<?> context, final String resourceName) {
         Validate.notNull(context, "Parameter '%s' must not be null!", "context" );
         Validate.notNull(resourceName, "Parameter '%s' must not be null!", "resourceName");
+        // context is not null here    
         return toFullyQualifiedName(context.getPackage(), resourceName);
     }
 
@@ -98,9 +100,11 @@ public class ClassPathUtils {
      * @return the fully qualified path of the resource with name {@code resourceName}.
      * @throws java.lang.NullPointerException if either {@code context} or {@code resourceName} is null.
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static String toFullyQualifiedPath(final Class<?> context, final String resourceName) {
         Validate.notNull(context, "Parameter '%s' must not be null!", "context" );
         Validate.notNull(resourceName, "Parameter '%s' must not be null!", "resourceName");
+        // context is non null here
         return toFullyQualifiedPath(context.getPackage(), resourceName);
     }
 

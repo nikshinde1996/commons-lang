@@ -52,7 +52,7 @@ public class MutableObject<T> implements Mutable<T>, Serializable {
      *
      * @param value  the initial value to store
      */
-    public MutableObject(final @Nullable T value) {
+    public MutableObject(final T value) {
         super();
         this.value = value;
     }
@@ -64,7 +64,9 @@ public class MutableObject<T> implements Mutable<T>, Serializable {
      * @return the value, may be null
      */
     @Override
+    @SuppressWarnings("nullness:override.return.invalid")
     public @Nullable T getValue() {
+        // return type may be null
         return this.value;
     }
 
@@ -74,7 +76,7 @@ public class MutableObject<T> implements Mutable<T>, Serializable {
      * @param value  the value to set
      */
     @Override
-    public void setValue(final @Nullable T value) {
+    public void setValue(final T value) {
         this.value = value;
     }
 
@@ -91,6 +93,7 @@ public class MutableObject<T> implements Mutable<T>, Serializable {
      *          <code>true</code> if the objects have equivalent <code>value</code> fields;
      *          <code>false</code> otherwise.
      */
+    // BUG : this.value may be NULL. 
     @Override
     public boolean equals(final @Nullable Object obj) {
         if (obj == null) {

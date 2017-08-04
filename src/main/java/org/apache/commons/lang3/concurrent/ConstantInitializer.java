@@ -90,7 +90,9 @@ public class ConstantInitializer<T> implements ConcurrentInitializer<T> {
      * @return a hash code for this object
      */
     @Override
+    @SuppressWarnings("nullness:dereference.of.nullable")
     public int hashCode() {
+        // false positive warning due to type checking limitations in conditional statements
         return getObject() != null ? getObject().hashCode() : 0;
     }
 

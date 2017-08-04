@@ -157,7 +157,7 @@ public class TypeUtils {
          * @param useOwner owner type to use, if any
          * @param typeArguments formal type arguments
          */
-        private ParameterizedTypeImpl(final @Nullable Class<?> raw, final Type useOwner, final Type[] typeArguments) {
+        private ParameterizedTypeImpl(final Class<?> raw, final Type useOwner, final Type[] typeArguments) {
             this.raw = raw;
             this.useOwner = useOwner;
             this.typeArguments = typeArguments.clone();
@@ -225,8 +225,8 @@ public class TypeUtils {
     private static final class WildcardTypeImpl implements WildcardType {
         private static final Type[] EMPTY_BOUNDS = new Type[0];
 
-        private final Type @Nullable [] upperBounds;
-        private final Type @Nullable [] lowerBounds;
+        private final Type[] upperBounds;
+        private final Type[] lowerBounds;
 
         /**
          * Constructor
@@ -423,6 +423,7 @@ public class TypeUtils {
      * @param typeVarAssigns a map with type variables
      * @return {@code true} if {@code type} is assignable to {@code toType}.
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     private static boolean isAssignable(final @Nullable Type type, final @Nullable ParameterizedType toParameterizedType,
             final @Nullable Map<TypeVariable<?>, Type> typeVarAssigns) {
         if (type == null) {
@@ -463,6 +464,7 @@ public class TypeUtils {
                 toClass, typeVarAssigns);
 
         // now to check each type argument
+        // toTypeVarAssigns is non null here as argument toParameterizedType is not null
         for (final TypeVariable<?> var : toTypeVarAssigns.keySet()) {
             final Type toTypeArg = unrollVariableAssignments(var, toTypeVarAssigns);
             final Type fromTypeArg = unrollVariableAssignments(var, fromTypeVarAssigns);
@@ -591,6 +593,7 @@ public class TypeUtils {
      * @return {@code true} if {@code type} is assignable to
      * {@code toWildcardType}.
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     private static boolean isAssignable(final @Nullable Type type, final @Nullable WildcardType toWildcardType,
             final @Nullable Map<TypeVariable<?>, Type> typeVarAssigns) {
         if (type == null) {
@@ -631,6 +634,7 @@ public class TypeUtils {
                 }
             }
 
+            // toLowerBounds is non null here 
             for (Type toBound : toLowerBounds) {
                 // if there are assignments for unresolved type variables,
                 // now's the time to substitute them.
@@ -639,6 +643,7 @@ public class TypeUtils {
                 // each lower bound of the target type has to be assignable to
                 // each
                 // lower bound of the subject type
+                // lowerBounds is non null here
                 for (final Type bound : lowerBounds) {
                     if (!isAssignable(toBound, bound, typeVarAssigns)) {
                         return false;
@@ -657,6 +662,7 @@ public class TypeUtils {
             }
         }
 
+        // toLowerBounds is non null here
         for (final Type toBound : toLowerBounds) {
             // if there are assignments for unresolved type variables,
             // now's the time to substitute them.
@@ -925,6 +931,7 @@ public class TypeUtils {
                 : new HashMap<>(subtypeVarAssigns);
 
         // has target class been reached?
+        // toClass is non null here
         if (toClass.equals(cls)) {
             return typeVarAssigns;
         }
@@ -1004,7 +1011,7 @@ public class TypeUtils {
      * @param typeVarAssigns the map to be filled
      */
     private static <T> void mapTypeVariablesToArguments(final Class<T> cls,
-            final ParameterizedType parameterizedType, final @Nullable Map<TypeVariable<?>, Type> typeVarAssigns) {
+            final ParameterizedType parameterizedType, final Map<TypeVariable<?>, Type> typeVarAssigns) {
         // capture the type variables from the owner type that have assignments
         final Type ownerType = parameterizedType.getOwnerType();
 
@@ -1050,7 +1057,7 @@ public class TypeUtils {
      * @param superClass the super class
      * @return the closes parent type
      */
-    private static Type getClosestParentType(final @Nullable Class<?> cls, final Class<?> superClass) {
+    private static Type getClosestParentType(final Class<?> cls, final Class<?> superClass) {
         // only look at the interfaces if the super class is also an interface
         if (superClass.isInterface()) {
             // get the generic interfaces of the subject class
@@ -1197,7 +1204,7 @@ public class TypeUtils {
      * @return a non-empty array containing the lower bounds of the wildcard
      * type.
      */
-    public static @Nullable Type[] getImplicitLowerBounds(final WildcardType wildcardType) {
+    public static Type @Nullable [] getImplicitLowerBounds(final WildcardType wildcardType) {
         Validate.notNull(wildcardType, "wildcardType is null");
         final Type[] bounds = wildcardType.getLowerBounds();
 
@@ -1242,7 +1249,7 @@ public class TypeUtils {
      * @return the corresponding {@code Class} object
      * @throws IllegalStateException if the conversion fails
      */
-    private static Class<?> getRawType(final @Nullable ParameterizedType parameterizedType) {
+    private static Class<?> getRawType(final ParameterizedType parameterizedType) {
         final Type rawType = parameterizedType.getRawType();
 
         // check if raw type is a Class object
@@ -1687,6 +1694,7 @@ public class TypeUtils {
      * @return String
      * @since 3.2
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static String toLongString(final TypeVariable<?> var) {
         Validate.notNull(var, "var is null");
         final StringBuilder buf = new StringBuilder();
@@ -1694,6 +1702,7 @@ public class TypeUtils {
         if (d instanceof Class<?>) {
             Class<?> c = (Class<?>) d;
             while (true) {
+                // c is non null here
                 if (c.getEnclosingClass() == null) {
                     buf.insert(0, c.getName());
                     break;

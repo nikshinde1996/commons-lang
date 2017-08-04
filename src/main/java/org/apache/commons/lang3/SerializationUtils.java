@@ -77,6 +77,7 @@ public class SerializationUtils {
      * @return the cloned object
      * @throws SerializationException (runtime) if the serialization fails
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static <T extends Serializable> @Nullable T clone(final @Nullable T object) {
         if (object == null) {
             return null;

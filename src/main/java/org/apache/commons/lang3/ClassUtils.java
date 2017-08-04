@@ -449,7 +449,7 @@ public class ClassUtils {
      * @return the {@code List} of interfaces in order,
      *  {@code null} if null input
      */
-    public static @Nullable List<Class<?>> getAllInterfaces(final @Nullable Class<?> cls) {
+    public static @PolyNull List<Class<?>> getAllInterfaces(final @PolyNull Class<?> cls) {
         if (cls == null) {
             return null;
         }

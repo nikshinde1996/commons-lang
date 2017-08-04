@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.Set;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.nullness.qual.PolyNull;
 
 /**
  * <p>A set of characters.</p>
@@ -155,7 +156,7 @@ public class CharSet implements Serializable {
      * @return a CharSet instance
      * @since 2.4
      */
-    public static @Nullable CharSet getInstance(final String @Nullable ... setStrs) {
+    public static @PolyNull CharSet getInstance(final String @PolyNull ... setStrs) {
         if (setStrs == null) {
             return null;
         }

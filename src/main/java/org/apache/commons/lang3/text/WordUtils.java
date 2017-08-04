@@ -371,7 +371,9 @@ public class WordUtils {
      * @see #uncapitalize(String)
      * @see #capitalizeFully(String)
      */
+    @SuppressWarnings("nullness:unboxing.of.nullable") 
     public static @Nullable String capitalize(final @Nullable String str) {
+        // null argument allowed
         return capitalize(str, null);
     }
 
@@ -404,11 +406,13 @@ public class WordUtils {
      * @see #capitalizeFully(String)
      * @since 2.1
      */
-    public static @Nullable String capitalize(final @Nullable String str, final char @Nullable... delimiters) {
+    @SuppressWarnings("nullness:dereference.of.nullable")
+    public static @Nullable String capitalize(final @Nullable String str, final char @Nullable ... delimiters) {
         final int delimLen = delimiters == null ? -1 : delimiters.length;
         if (StringUtils.isEmpty(str) || delimLen == 0) {
             return str;
         }
+        // str is non-null here
         final char[] buffer = str.toCharArray();
         boolean capitalizeNext = true;
         for (int i = 0; i < buffer.length; i++) {
@@ -443,7 +447,9 @@ public class WordUtils {
      * @param str  the String to capitalize, may be null
      * @return capitalized String, <code>null</code> if null String input
      */
+    @SuppressWarnings("nullness:unboxing.of.nullable") 
     public static @Nullable String capitalizeFully(final @Nullable String str) {
+        // null argument allowed
         return capitalizeFully(str, null);
     }
 
@@ -473,11 +479,13 @@ public class WordUtils {
      * @return capitalized String, <code>null</code> if null String input
      * @since 2.1
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static @Nullable String capitalizeFully(@Nullable String str, final char @Nullable ... delimiters) {
         final int delimLen = delimiters == null ? -1 : delimiters.length;
         if (StringUtils.isEmpty(str) || delimLen == 0) {
             return str;
         }
+        // str is non-null here
         str = str.toLowerCase();
         return capitalize(str, delimiters);
     }
@@ -500,7 +508,9 @@ public class WordUtils {
      * @return uncapitalized String, <code>null</code> if null String input
      * @see #capitalize(String)
      */
+    @SuppressWarnings("nullness:unboxing.of.nullable") 
     public static @Nullable String uncapitalize(final @Nullable String str) {
+        // null argument allowed
         return uncapitalize(str, null);
     }
 
@@ -529,11 +539,13 @@ public class WordUtils {
      * @see #capitalize(String)
      * @since 2.1
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static @Nullable String uncapitalize(final @Nullable String str, final char @Nullable ... delimiters) {
         final int delimLen = delimiters == null ? -1 : delimiters.length;
         if (StringUtils.isEmpty(str) || delimLen == 0) {
             return str;
         }
+        // str is non-null here
         final char[] buffer = str.toCharArray();
         boolean uncapitalizeNext = true;
         for (int i = 0; i < buffer.length; i++) {
@@ -571,10 +583,12 @@ public class WordUtils {
      * @param str  the String to swap case, may be null
      * @return the changed String, <code>null</code> if null String input
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static @Nullable String swapCase(final @Nullable String str) {
         if (StringUtils.isEmpty(str)) {
             return str;
         }
+        // str is non-null here
         final char[] buffer = str.toCharArray();
 
         boolean whitespace = true;
@@ -623,7 +637,9 @@ public class WordUtils {
      * @see #initials(String,char[])
      * @since 2.2
      */
+    @SuppressWarnings("nullness:unboxing.of.nullable") 
     public static @Nullable String initials(final @Nullable String str) {
+        // null argument allowed
         return initials(str, null);
     }
 
@@ -653,6 +669,7 @@ public class WordUtils {
      * @see #initials(String)
      * @since 2.2
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static @Nullable String initials(final @Nullable String str, final char @Nullable ... delimiters) {
         if (StringUtils.isEmpty(str)) {
             return str;
@@ -660,6 +677,7 @@ public class WordUtils {
         if (delimiters != null && delimiters.length == 0) {
             return StringUtils.EMPTY;
         }
+        // str is non-null here
         final int strLen = str.length();
         final char[] buf = new char[strLen / 2 + 1];
         int count = 0;
@@ -703,14 +721,17 @@ public class WordUtils {
      * @return {@code true} if all search words are found, {@code false} otherwise
      * @since 3.5
      */
+    @SuppressWarnings({"nullness:argument.type.incompatible","nullness:iterating.over.nullable"})
     public static boolean containsAllWords(final @Nullable CharSequence word, final CharSequence @Nullable ... words) {
         if (StringUtils.isEmpty(word) || ArrayUtils.isEmpty(words)) {
             return false;
         }
+        // words is non-null here
         for (final CharSequence w : words) {
             if (StringUtils.isBlank(w)) {
                 return false;
             }
+            // word is non-null here
             final Pattern p = Pattern.compile(".*\\b" + w + "\\b.*");
             if (!p.matcher(word).matches()) {
                 return false;

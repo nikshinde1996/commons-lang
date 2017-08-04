@@ -18,6 +18,7 @@ package org.apache.commons.lang3;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.nullness.qual.PolyNull;
 
 /**
  * <p>Operations on char primitives and Character objects.</p>
@@ -116,10 +117,12 @@ public class CharUtils {
      * @param str  the character to convert
      * @return the Character value of the first letter of the String
      */
+    @SuppressWarnings("nullness:dereference.of.nullable")
     public static @Nullable Character toCharacterObject(final @Nullable String str) {
         if (StringUtils.isEmpty(str)) {
             return null;
         }
+        // str is non null here
         return Character.valueOf(str.charAt(0));
     }
 

@@ -111,11 +111,11 @@ public final class Fraction extends Number implements Comparable<Fraction> {
     /**
      * Cached output toString (class is immutable).
      */
-    private transient String toString = null;
+    private transient @Nullable String toString = null;
     /**
      * Cached output toProperString (class is immutable).
      */
-    private transient String toProperString = null;
+    private transient @Nullable String toProperString = null;
 
     /**
      * <p>Constructs a <code>Fraction</code> instance with the 2 parts

@@ -201,6 +201,7 @@ public class MethodUtils {
      * @throws IllegalAccessException if the requested method is not accessible via reflection
      * @since 3.5
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static Object invokeMethod(final Object object, final boolean forceAccess, final String methodName,
             Object @Nullable [] args, Class<?> @Nullable [] parameterTypes)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
@@ -228,6 +229,7 @@ public class MethodUtils {
                     + methodName + "() on object: "
                     + object.getClass().getName());
         }
+        // method is not null here, exception occurs earlier
         args = toVarArgs(method, args);
 
         return method.invoke(object, args);
@@ -327,12 +329,14 @@ public class MethodUtils {
      * @throws IllegalAccessException if the requested method is not accessible
      *  via reflection
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static Object invokeExactMethod(final Object object, final String methodName,
             Object @Nullable [] args, Class<?> @Nullable [] parameterTypes)
             throws NoSuchMethodException, IllegalAccessException,
             InvocationTargetException {
         args = ArrayUtils.nullToEmpty(args);
         parameterTypes = ArrayUtils.nullToEmpty(parameterTypes);
+        // parameterTypes is non null
         final Method method = getAccessibleMethod(object.getClass(), methodName,
                 parameterTypes);
         if (method == null) {
@@ -362,12 +366,14 @@ public class MethodUtils {
      * @throws IllegalAccessException if the requested method is not accessible
      *  via reflection
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static Object invokeExactStaticMethod(final Class<?> cls, final String methodName,
             Object @Nullable [] args, Class<?> @Nullable [] parameterTypes)
             throws NoSuchMethodException, IllegalAccessException,
             InvocationTargetException {
         args = ArrayUtils.nullToEmpty(args);
         parameterTypes = ArrayUtils.nullToEmpty(parameterTypes);
+        // parameterTypes is non null here
         final Method method = getAccessibleMethod(cls, methodName, parameterTypes);
         if (method == null) {
             throw new NoSuchMethodException("No such accessible method: "
@@ -430,12 +436,14 @@ public class MethodUtils {
      * @throws IllegalAccessException if the requested method is not accessible
      *  via reflection
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static Object invokeStaticMethod(final Class<?> cls, final String methodName,
             Object @Nullable [] args, Class<?> @Nullable [] parameterTypes)
             throws NoSuchMethodException, IllegalAccessException,
             InvocationTargetException {
         args = ArrayUtils.nullToEmpty(args);
         parameterTypes = ArrayUtils.nullToEmpty(parameterTypes);
+        // parameterTypes is non null here
         final Method method = getMatchingAccessibleMethod(cls, methodName,
                 parameterTypes);
         if (method == null) {
@@ -464,6 +472,7 @@ public class MethodUtils {
      * @return an array of the variadic arguments passed to the method
      * @since 3.5
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     static Object[] getVarArgs(final Object[] args, final Class<?>[] methodParameterTypes) {
         if (args.length == methodParameterTypes.length
                 && args[args.length - 1].getClass().equals(methodParameterTypes[methodParameterTypes.length - 1])) {
@@ -481,6 +490,7 @@ public class MethodUtils {
         final Class<?> varArgComponentType = methodParameterTypes[methodParameterTypes.length - 1].getComponentType();
         final int varArgLength = args.length - methodParameterTypes.length + 1;
 
+        // varArgComponentType is non null as class representing is non null
         Object varArgsArray = Array.newInstance(ClassUtils.primitiveToWrapper(varArgComponentType), varArgLength);
         // Copy the variadic arguments into the varargs array.
         System.arraycopy(args, methodParameterTypes.length - 1, varArgsArray, 0, varArgLength);
@@ -535,7 +545,7 @@ public class MethodUtils {
      * @param parameterTypes with these parameters types
      * @return The accessible method
      */
-    public static @Nullable  Method getAccessibleMethod(final Class<?> cls, final String methodName,
+    public static @Nullable Method getAccessibleMethod(final Class<?> cls, final String methodName,
             final Class<?>... parameterTypes) {
         try {
             return getAccessibleMethod(cls.getMethod(methodName,
@@ -674,7 +684,7 @@ public class MethodUtils {
      * @return The accessible method
      */
     public static @Nullable Method getMatchingAccessibleMethod(final Class<?> cls,
-            final String methodName, final Class<?> @Nullable ... parameterTypes) {
+            final String methodName, final Class<?>  ... parameterTypes) {
         try {
             final Method method = cls.getMethod(methodName, parameterTypes);
             MemberUtils.setAccessibleWorkaround(method);

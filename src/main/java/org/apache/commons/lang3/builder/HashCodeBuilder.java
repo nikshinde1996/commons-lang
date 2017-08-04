@@ -355,10 +355,12 @@ public class HashCodeBuilder implements Builder<Integer> {
      * @see HashCodeExclude
      * @since 2.0
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static <T> int reflectionHashCode(final int initialNonZeroOddNumber, final int multiplierNonZeroOddNumber, final T object,
             final boolean testTransients, final @Nullable Class<? super T> reflectUpToClass, final String... excludeFields) {
         Validate.isTrue(object != null, "The object to build a hash code for must not be null");
         final HashCodeBuilder builder = new HashCodeBuilder(initialNonZeroOddNumber, multiplierNonZeroOddNumber);
+        // object is non-null here
         Class<?> clazz = object.getClass();
         reflectionAppend(object, clazz, builder, testTransients, excludeFields);
         while (clazz.getSuperclass() != null && clazz != reflectUpToClass) {

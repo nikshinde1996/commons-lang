@@ -192,10 +192,12 @@ public abstract class StrMatcher {
      * @param chars  the characters to match, null or empty matches nothing
      * @return a new Matcher for the given characters
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static StrMatcher charSetMatcher(final @Nullable String chars) {
         if (StringUtils.isEmpty(chars)) {
             return NONE_MATCHER;
         }
+        // chars is non-null here
         if (chars.length() == 1) {
             return new CharMatcher(chars.charAt(0));
         }
@@ -208,10 +210,12 @@ public abstract class StrMatcher {
      * @param str  the string to match, null or empty matches nothing
      * @return a new Matcher for the given String
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static StrMatcher stringMatcher(final @Nullable String str) {
         if (StringUtils.isEmpty(str)) {
             return NONE_MATCHER;
         }
+        // str is non-null here
         return new StringMatcher(str);
     }
 
