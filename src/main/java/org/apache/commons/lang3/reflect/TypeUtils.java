@@ -233,7 +233,7 @@ public class TypeUtils {
          * @param upperBounds of this type
          * @param lowerBounds of this type
          */
-        private WildcardTypeImpl(final Type @Nullable [] upperBounds, final Type @Nullable [] lowerBounds) {
+        private WildcardTypeImpl(final Type[] upperBounds, final Type[] lowerBounds) {
             this.upperBounds = ObjectUtils.defaultIfNull(upperBounds, EMPTY_BOUNDS);
             this.lowerBounds = ObjectUtils.defaultIfNull(lowerBounds, EMPTY_BOUNDS);
         }
@@ -853,6 +853,7 @@ public class TypeUtils {
      * @param subtypeVarAssigns a map with type variables
      * @return the {@code Map} with type arguments
      */
+    @SuppressWarnings("nullness:dereference.of.nullable") 
     private static @Nullable Map<TypeVariable<?>, Type> getTypeArguments(
             final @Nullable ParameterizedType parameterizedType, final @Nullable Class<?> toClass,
             final @Nullable Map<TypeVariable<?>, Type> subtypeVarAssigns) {
@@ -889,12 +890,14 @@ public class TypeUtils {
                     .get(typeArg) : typeArg);
         }
 
+        // toClass is non null here
         if (toClass.equals(cls)) {
             // target class has been reached. Done.
             return typeVarAssigns;
         }
 
         // walk the inheritance hierarchy until the target class is reached
+        // toClass, cls is non null here
         return getTypeArguments(getClosestParentType(cls, toClass), toClass, typeVarAssigns);
     }
 
@@ -906,6 +909,7 @@ public class TypeUtils {
      * @param subtypeVarAssigns a map with type variables
      * @return the {@code Map} with type arguments
      */
+    @SuppressWarnings({"nullness:dereference.of.nullable","argument.type.incompatible"}) 
     private static @Nullable Map<TypeVariable<?>, Type> getTypeArguments(@Nullable Class<?> cls, final @Nullable Class<?> toClass,
             final @Nullable Map<TypeVariable<?>, Type> subtypeVarAssigns) {
         // make sure they're assignable
@@ -937,6 +941,7 @@ public class TypeUtils {
         }
 
         // walk the inheritance hierarchy until the target class is reached
+        // toClass, cls is non null here
         return getTypeArguments(getClosestParentType(cls, toClass), toClass, typeVarAssigns);
     }
 
@@ -1057,6 +1062,7 @@ public class TypeUtils {
      * @param superClass the super class
      * @return the closes parent type
      */
+    @SuppressWarnings("nullness:return.type.incompatible") 
     private static Type getClosestParentType(final Class<?> cls, final Class<?> superClass) {
         // only look at the interfaces if the super class is also an interface
         if (superClass.isInterface()) {
@@ -1373,12 +1379,14 @@ public class TypeUtils {
      * @return Type
      * @since 3.2
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static Type unrollVariables( @Nullable Map<TypeVariable<?>, Type> typeArguments, final Type type) {
         if (typeArguments == null) {
             typeArguments = Collections.emptyMap();
         }
         if (containsTypeVariables(type)) {
             if (type instanceof TypeVariable<?>) {
+                // typeArguments is non null here
                 return unrollVariables(typeArguments, typeArguments.get(type));
             }
             if (type instanceof ParameterizedType) {
@@ -1497,6 +1505,7 @@ public class TypeUtils {
      * @return {@link ParameterizedType}
      * @since 3.2
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static final ParameterizedType parameterizeWithOwner(final @Nullable Type owner, final Class<?> raw,
         final Type... typeArguments) {
         Validate.notNull(raw, "raw class is null");
@@ -1515,7 +1524,8 @@ public class TypeUtils {
         Validate.isTrue(raw.getTypeParameters().length == typeArguments.length,
             "invalid number of type parameters specified: expected %d, got %d", raw.getTypeParameters().length,
             typeArguments.length);
-
+    
+        // typeArguments is non null here
         return new ParameterizedTypeImpl(raw, useOwner, typeArguments);
     }
 
@@ -1541,11 +1551,13 @@ public class TypeUtils {
      * @param variables expected map keys
      * @return array of map values corresponding to specified keys
      */
+    @SuppressWarnings("nullness:assignment.type.incompatible") 
     private static Type[] extractTypeArgumentsFrom(final Map<TypeVariable<?>, Type> mappings, final TypeVariable<?>[] variables) {
         final Type[] result = new Type[variables.length];
         int index = 0;
         for (final TypeVariable<?> var : variables) {
             Validate.isTrue(mappings.containsKey(var), "missing argument mapping for %s", toString(var));
+            // mappings.get(var) is non null here, validated in previous step
             result[index++] = mappings.get(var);
         }
         return result;
@@ -1632,9 +1644,11 @@ public class TypeUtils {
      * @return boolean
      * @since 3.2
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     private static boolean equals(final WildcardType w, final Type t) {
         if (t instanceof WildcardType) {
             final WildcardType other = (WildcardType) t;
+            // w and other are non null here
             return equals(getImplicitLowerBounds(w), getImplicitLowerBounds(other))
                 && equals(getImplicitUpperBounds(w), getImplicitUpperBounds(other));
         }
@@ -1753,6 +1767,7 @@ public class TypeUtils {
      * @return String
      * @since 3.2
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     private static String classToString(final Class<?> c) {
         if (c.isArray()) {
             return toString(c.getComponentType()) + "[]";
@@ -1761,6 +1776,7 @@ public class TypeUtils {
         final StringBuilder buf = new StringBuilder();
 
         if (c.getEnclosingClass() != null) {
+            // c.getEnclosingClass() is non null here
             buf.append(classToString(c.getEnclosingClass())).append('.').append(c.getSimpleName());
         } else {
             buf.append(c.getName());

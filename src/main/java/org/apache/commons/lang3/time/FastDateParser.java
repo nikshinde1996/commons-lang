@@ -376,7 +376,7 @@ public class FastDateParser implements DateParser, Serializable {
      * @see org.apache.commons.lang3.time.DateParser#parseObject(java.lang.String, java.text.ParsePosition)
      */
     @Override
-    public @Nullable Object parseObject(final String source, final ParsePosition pos) {
+    public Object parseObject(final String source, final ParsePosition pos) {
         return parse(source, pos);
     }
 
@@ -544,7 +544,7 @@ public class FastDateParser implements DateParser, Serializable {
             return true;
         }
 
-        abstract void setCalendar(FastDateParser parser, Calendar cal,@Nullable String value);
+        abstract void setCalendar(FastDateParser parser, Calendar cal, String value);
     }
 
     /**

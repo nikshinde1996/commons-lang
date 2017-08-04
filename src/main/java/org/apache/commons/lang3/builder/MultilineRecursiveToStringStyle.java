@@ -18,6 +18,8 @@
 package org.apache.commons.lang3.builder;
 
 import org.apache.commons.lang3.ClassUtils;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>Works with {@link ToStringBuilder} to create a "deep" <code>toString</code>.
@@ -61,6 +63,7 @@ import org.apache.commons.lang3.ClassUtils;
  *
  * @since 3.4
  */
+@AnnotatedFor({"nullness"}) 
 public class MultilineRecursiveToStringStyle extends RecursiveToStringStyle {
 
     /**
@@ -112,7 +115,7 @@ public class MultilineRecursiveToStringStyle extends RecursiveToStringStyle {
     }
 
     @Override
-    public void appendDetail(final StringBuffer buffer, final String fieldName, final Object value) {
+    public void appendDetail(final StringBuffer buffer, final @Nullable String fieldName, final Object value) {
         if (!ClassUtils.isPrimitiveWrapper(value.getClass()) && !String.class.equals(value.getClass())
                 && accept(value.getClass())) {
             spaces += INDENT;
@@ -126,7 +129,7 @@ public class MultilineRecursiveToStringStyle extends RecursiveToStringStyle {
     }
 
     @Override
-    protected void appendDetail(final StringBuffer buffer, final String fieldName, final Object[] array) {
+    protected void appendDetail(final StringBuffer buffer, final @Nullable String fieldName, final Object[] array) {
         spaces += INDENT;
         resetIndent();
         super.appendDetail(buffer, fieldName, array);
@@ -135,7 +138,7 @@ public class MultilineRecursiveToStringStyle extends RecursiveToStringStyle {
     }
 
     @Override
-    protected void reflectionAppendArrayDetail(final StringBuffer buffer, final String fieldName, final Object array) {
+    protected void reflectionAppendArrayDetail(final StringBuffer buffer, final @Nullable String fieldName, final Object array) {
         spaces += INDENT;
         resetIndent();
         super.reflectionAppendArrayDetail(buffer, fieldName, array);
@@ -144,7 +147,7 @@ public class MultilineRecursiveToStringStyle extends RecursiveToStringStyle {
     }
 
     @Override
-    protected void appendDetail(final StringBuffer buffer, final String fieldName, final long[] array) {
+    protected void appendDetail(final StringBuffer buffer, final @Nullable String fieldName, final long[] array) {
         spaces += INDENT;
         resetIndent();
         super.appendDetail(buffer, fieldName, array);
@@ -153,7 +156,7 @@ public class MultilineRecursiveToStringStyle extends RecursiveToStringStyle {
     }
 
     @Override
-    protected void appendDetail(final StringBuffer buffer, final String fieldName, final int[] array) {
+    protected void appendDetail(final StringBuffer buffer, final @Nullable String fieldName, final int[] array) {
         spaces += INDENT;
         resetIndent();
         super.appendDetail(buffer, fieldName, array);
@@ -162,7 +165,7 @@ public class MultilineRecursiveToStringStyle extends RecursiveToStringStyle {
     }
 
     @Override
-    protected void appendDetail(final StringBuffer buffer, final String fieldName, final short[] array) {
+    protected void appendDetail(final StringBuffer buffer, final @Nullable String fieldName, final short[] array) {
         spaces += INDENT;
         resetIndent();
         super.appendDetail(buffer, fieldName, array);
@@ -171,7 +174,7 @@ public class MultilineRecursiveToStringStyle extends RecursiveToStringStyle {
     }
 
     @Override
-    protected void appendDetail(final StringBuffer buffer, final String fieldName, final byte[] array) {
+    protected void appendDetail(final StringBuffer buffer, final @Nullable String fieldName, final byte[] array) {
         spaces += INDENT;
         resetIndent();
         super.appendDetail(buffer, fieldName, array);
@@ -180,7 +183,7 @@ public class MultilineRecursiveToStringStyle extends RecursiveToStringStyle {
     }
 
     @Override
-    protected void appendDetail(final StringBuffer buffer, final String fieldName, final char[] array) {
+    protected void appendDetail(final StringBuffer buffer, final @Nullable String fieldName, final char[] array) {
         spaces += INDENT;
         resetIndent();
         super.appendDetail(buffer, fieldName, array);
@@ -189,7 +192,7 @@ public class MultilineRecursiveToStringStyle extends RecursiveToStringStyle {
     }
 
     @Override
-    protected void appendDetail(final StringBuffer buffer, final String fieldName, final double[] array) {
+    protected void appendDetail(final StringBuffer buffer, final @Nullable String fieldName, final double[] array) {
         spaces += INDENT;
         resetIndent();
         super.appendDetail(buffer, fieldName, array);
@@ -198,7 +201,7 @@ public class MultilineRecursiveToStringStyle extends RecursiveToStringStyle {
     }
 
     @Override
-    protected void appendDetail(final StringBuffer buffer, final String fieldName, final float[] array) {
+    protected void appendDetail(final StringBuffer buffer, final @Nullable String fieldName, final float[] array) {
         spaces += INDENT;
         resetIndent();
         super.appendDetail(buffer, fieldName, array);
@@ -207,7 +210,7 @@ public class MultilineRecursiveToStringStyle extends RecursiveToStringStyle {
     }
 
     @Override
-    protected void appendDetail(final StringBuffer buffer, final String fieldName, final boolean[] array) {
+    protected void appendDetail(final StringBuffer buffer, final @Nullable String fieldName, final boolean[] array) {
         spaces += INDENT;
         resetIndent();
         super.appendDetail(buffer, fieldName, array);

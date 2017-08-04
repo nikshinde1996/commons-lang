@@ -88,10 +88,10 @@ import org.checkerframework.framework.qual.AnnotatedFor;
 public abstract class BackgroundInitializer<T> implements
         ConcurrentInitializer<T> {
     /** The external executor service for executing tasks. */
-    private ExecutorService externalExecutor; // @GuardedBy("this")
+    private @Nullable ExecutorService externalExecutor; // @GuardedBy("this")
 
     /** A reference to the executor service that is actually used. */
-    private ExecutorService executor; // @GuardedBy("this")
+    private @Nullable ExecutorService executor; // @GuardedBy("this")
 
     /** Stores the handle to the background task. */
     private Future<T> future;  // @GuardedBy("this")
@@ -123,7 +123,7 @@ public abstract class BackgroundInitializer<T> implements
      *
      * @return the {@code ExecutorService}
      */
-    public final synchronized ExecutorService getExternalExecutor() {
+    public final synchronized @Nullable ExecutorService getExternalExecutor() {
         return externalExecutor;
     }
 
@@ -209,7 +209,7 @@ public abstract class BackgroundInitializer<T> implements
      * @throws IllegalStateException if {@link #start()} has not been called
      */
     @Override
-    public T get() throws ConcurrentException {
+    public @Nullable T get() throws ConcurrentException {
         try {
             return getFuture().get();
         } catch (final ExecutionException execex) {
@@ -289,7 +289,7 @@ public abstract class BackgroundInitializer<T> implements
      * task
      * @return a task for the background initialization
      */
-    private Callable<T> createTask(final ExecutorService execDestroy) {
+    private Callable<T> createTask(final @Nullable ExecutorService execDestroy) {
         return new InitializationTask(execDestroy);
     }
 
@@ -305,7 +305,7 @@ public abstract class BackgroundInitializer<T> implements
 
     private class InitializationTask implements Callable<T> {
         /** Stores the executor service to be destroyed at the end. */
-        private final ExecutorService execFinally;
+        private final @Nullable ExecutorService execFinally;
 
         /**
          * Creates a new instance of {@code InitializationTask} and initializes
@@ -313,7 +313,7 @@ public abstract class BackgroundInitializer<T> implements
          *
          * @param exec the {@code ExecutorService}
          */
-        InitializationTask(final ExecutorService exec) {
+        InitializationTask(final @Nullable ExecutorService exec) {
             execFinally = exec;
         }
 

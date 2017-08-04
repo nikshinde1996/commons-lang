@@ -334,10 +334,12 @@ public class FieldUtils {
      * @throws IllegalAccessException
      *             if the field is not made accessible
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static Object readStaticField(final Class<?> cls, final String fieldName, final boolean forceAccess) throws IllegalAccessException {
         final Field field = getField(cls, fieldName, forceAccess);
         Validate.isTrue(field != null, "Cannot locate field '%s' on %s", fieldName, cls);
         // already forced access above, don't repeat it here:
+        // field is non null here
         return readStaticField(field, false);
     }
 
@@ -378,10 +380,12 @@ public class FieldUtils {
      * @throws IllegalAccessException
      *             if the field is not made accessible
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static Object readDeclaredStaticField(final Class<?> cls, final String fieldName, final boolean forceAccess) throws IllegalAccessException {
         final Field field = getDeclaredField(cls, fieldName, forceAccess);
         Validate.isTrue(field != null, "Cannot locate declared field %s.%s", cls.getName(), fieldName);
         // already forced access above, don't repeat it here:
+        // field is non null here
         return readStaticField(field, false);
     }
 
@@ -418,8 +422,10 @@ public class FieldUtils {
      * @throws IllegalAccessException
      *             if the field is not made accessible
      */
+    @SuppressWarnings("nullness:return.type.incompatible") 
     public static Object readField(final Field field, final @Nullable Object target, final boolean forceAccess) throws IllegalAccessException {
         Validate.isTrue(field != null, "The field must not be null");
+        // field is non null here
         if (forceAccess && !field.isAccessible()) {
             field.setAccessible(true);
         } else {
@@ -462,12 +468,14 @@ public class FieldUtils {
      * @throws IllegalAccessException
      *             if the named field is not made accessible
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static Object readField(final Object target, final String fieldName, final boolean forceAccess) throws IllegalAccessException {
         Validate.isTrue(target != null, "target object must not be null");
         final Class<?> cls = target.getClass();
         final Field field = getField(cls, fieldName, forceAccess);
         Validate.isTrue(field != null, "Cannot locate field %s on %s", fieldName, cls);
         // already forced access above, don't repeat it here:
+        // field is non null here
         return readField(field, target, false);
     }
 
@@ -505,12 +513,14 @@ public class FieldUtils {
      * @throws IllegalAccessException
      *             if the field is not made accessible
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static Object readDeclaredField(final Object target, final String fieldName, final boolean forceAccess) throws IllegalAccessException {
         Validate.isTrue(target != null, "target object must not be null");
         final Class<?> cls = target.getClass();
         final Field field = getDeclaredField(cls, fieldName, forceAccess);
         Validate.isTrue(field != null, "Cannot locate declared field %s.%s", cls, fieldName);
         // already forced access above, don't repeat it here:
+        // field is non null here
         return readField(field, target, false);
     }
 
@@ -591,11 +601,13 @@ public class FieldUtils {
      * @throws IllegalAccessException
      *             if the field is not made accessible or is {@code final}
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static void writeStaticField(final Class<?> cls, final String fieldName, final Object value, final boolean forceAccess)
             throws IllegalAccessException {
         final Field field = getField(cls, fieldName, forceAccess);
         Validate.isTrue(field != null, "Cannot locate field %s on %s", fieldName, cls);
         // already forced access above, don't repeat it here:
+        // field is non null here
         writeStaticField(field, value, false);
     }
 
@@ -636,11 +648,13 @@ public class FieldUtils {
      * @throws IllegalAccessException
      *             if the field is not made accessible or is {@code final}
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static void writeDeclaredStaticField(final Class<?> cls, final String fieldName, final Object value, final boolean forceAccess)
             throws IllegalAccessException {
         final Field field = getDeclaredField(cls, fieldName, forceAccess);
         Validate.isTrue(field != null, "Cannot locate declared field %s.%s", cls.getName(), fieldName);
         // already forced access above, don't repeat it here:
+        // field is non null here
         writeField(field, (Object) null, value, false);
     }
 
@@ -780,6 +794,7 @@ public class FieldUtils {
      * @throws IllegalAccessException
      *             if the field is not made accessible
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static void writeField(final Object target, final String fieldName, final Object value, final boolean forceAccess)
             throws IllegalAccessException {
         Validate.isTrue(target != null, "target object must not be null");
@@ -787,6 +802,7 @@ public class FieldUtils {
         final Field field = getField(cls, fieldName, forceAccess);
         Validate.isTrue(field != null, "Cannot locate declared field %s.%s", cls.getName(), fieldName);
         // already forced access above, don't repeat it here:
+        // field is non null here
         writeField(field, target, value, false);
     }
 
@@ -828,6 +844,7 @@ public class FieldUtils {
      * @throws IllegalAccessException
      *             if the field is not made accessible
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static void writeDeclaredField(final Object target, final String fieldName, final Object value, final boolean forceAccess)
             throws IllegalAccessException {
         Validate.isTrue(target != null, "target object must not be null");
@@ -835,6 +852,7 @@ public class FieldUtils {
         final Field field = getDeclaredField(cls, fieldName, forceAccess);
         Validate.isTrue(field != null, "Cannot locate declared field %s.%s", cls.getName(), fieldName);
         // already forced access above, don't repeat it here:
+        // field is non null here
         writeField(field, target, value, false);
     }
 }

@@ -480,8 +480,10 @@ public class DurationFormatUtils {
      * @param count the size to pad to (ignored if {@code padWithZeros} is false)
      * @return the string result
      */
+    @SuppressWarnings("nullness:return.type.incompatible") 
     private static String paddedValue(final long value, final boolean padWithZeros, final int count) {
         final String longString = Long.toString(value);
+        // longString is non null
         return padWithZeros ? StringUtils.leftPad(longString, count, '0') : longString;
     }
 
@@ -690,6 +692,7 @@ public class DurationFormatUtils {
          * @return String representation of the token
          */
         @Override
+        @SuppressWarnings("nullness:return.type.incompatible")
         public String toString() {
             return StringUtils.repeat(this.value.toString(), this.count);
         }
