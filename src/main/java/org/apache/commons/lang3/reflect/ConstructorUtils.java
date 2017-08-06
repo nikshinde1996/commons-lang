@@ -79,10 +79,13 @@ public class ConstructorUtils {
      * @throws InstantiationException if an error occurs on instantiation
      * @see #invokeConstructor(java.lang.Class, java.lang.Object[], java.lang.Class[])
      */
+    @SuppressWarnings("nullness:assignment.type.incompatible") 
     public static <T> T invokeConstructor(final Class<T> cls, Object @Nullable ... args)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException,
             InstantiationException {
         args = ArrayUtils.nullToEmpty(args);
+        // args is non null here, ClassUtils.toClass() returns null if argument passed is null
+        // checker warning is false positive.
         final Class<?> parameterTypes[] = ClassUtils.toClass(args);
         return invokeConstructor(cls, args, parameterTypes);
     }
@@ -145,10 +148,13 @@ public class ConstructorUtils {
      * @throws InstantiationException if an error occurs on instantiation
      * @see #invokeExactConstructor(java.lang.Class, java.lang.Object[], java.lang.Class[])
      */
+    @SuppressWarnings("nullness:assignment.type.incompatible") 
     public static <T> T invokeExactConstructor(final Class<T> cls, Object @Nullable ... args)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException,
             InstantiationException {
         args = ArrayUtils.nullToEmpty(args);
+        // args is non null here, ClassUtils.toClass() returns null if argument passed is null
+        // checker warning is false positive.        
         final Class<?> parameterTypes[] = ClassUtils.toClass(args);
         return invokeExactConstructor(cls, args, parameterTypes);
     }

@@ -61,9 +61,9 @@ public final class ImmutablePair<L, R> extends Pair<L, R> {
     }
 
     /** Left object */
-    public final L left;
+    public final @Nullable L left;
     /** Right object */
-    public final R right;
+    public final @Nullable R right;
 
     /**
      * <p>Obtains an immutable pair of from two objects inferring the generic types.</p>
@@ -98,7 +98,7 @@ public final class ImmutablePair<L, R> extends Pair<L, R> {
      * {@inheritDoc}
      */
     @Override
-    public L getLeft() {
+    public @Nullable L getLeft() {
         return left;
     }
 
@@ -106,7 +106,7 @@ public final class ImmutablePair<L, R> extends Pair<L, R> {
      * {@inheritDoc}
      */
     @Override
-    public R getRight() {
+    public @Nullable R getRight() {
         return right;
     }
 

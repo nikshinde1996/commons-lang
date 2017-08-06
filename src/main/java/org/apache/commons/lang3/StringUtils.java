@@ -7615,7 +7615,7 @@ public class StringUtils {
      * @return the reversed String, {@code null} if null String input
      * @since 2.0
      */
-    public static @Nullable String reverseDelimited(final @Nullable String str, final char separatorChar) {
+    public static @PolyNull String reverseDelimited(final @PolyNull String str, final char separatorChar) {
         if (str == null) {
             return null;
         }

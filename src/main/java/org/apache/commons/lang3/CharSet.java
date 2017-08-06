@@ -25,6 +25,7 @@ import java.util.Set;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.AnnotatedFor;
 import org.checkerframework.checker.nullness.qual.PolyNull;
+import org.checkerframework.checker.initialization.qual.UnderInitialization;
 
 /**
  * <p>A set of characters.</p>
@@ -190,7 +191,7 @@ public class CharSet implements Serializable {
      *
      * @param str  set definition string
      */
-    protected void add(final String str) {
+    protected void add(@UnderInitialization(org.apache.commons.lang3.CharSet.class) CharSet this, final String str) {
         if (str == null) {
             return;
         }

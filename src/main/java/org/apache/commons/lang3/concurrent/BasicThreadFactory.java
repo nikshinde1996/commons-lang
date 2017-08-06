@@ -102,13 +102,13 @@ public class BasicThreadFactory implements ThreadFactory {
     private final Thread.UncaughtExceptionHandler uncaughtExceptionHandler;
 
     /** Stores the naming pattern for newly created threads. */
-    private final String namingPattern;
+    private final @Nullable String namingPattern;
 
     /** Stores the priority. */
-    private final Integer priority;
+    private final @Nullable Integer priority;
 
     /** Stores the daemon status flag. */
-    private final Boolean daemonFlag;
+    private final @Nullable Boolean daemonFlag;
 
     /**
      * Creates a new instance of {@code ThreadFactoryImpl} and configures it
@@ -220,11 +220,12 @@ public class BasicThreadFactory implements ThreadFactory {
      *
      * @param t the thread to be initialized
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
+    @SuppressWarnings({"nullness:dereference.of.nullable","nullness:argument.type.incompatible"}) 
     private void initializeThread(final Thread t) {
 
         if (getNamingPattern() != null) {
             final Long count = Long.valueOf(threadCounter.incrementAndGet());
+            // getNamingPattern() is non null here, checker issues false positive warning.
             t.setName(String.format(getNamingPattern(), count));
         }
 

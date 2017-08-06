@@ -7512,6 +7512,7 @@ public class ArrayUtils {
      * @since 3.2
      */
     // package protected for access by unit tests
+    @SuppressWarnings("nullness:argument.type.incompatible")
     static Object removeAll(final Object array, final BitSet indices) {
         final int srcLength = ArrayUtils.getLength(array);
         // No need to check maxIndex here, because method only currently called from removeElements()

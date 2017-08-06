@@ -27,6 +27,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.initialization.qual.UnknownInitialization;
 
 /**
  * <p>Controls <code>String</code> formatting for {@link ToStringBuilder}.
@@ -1769,7 +1770,7 @@ public abstract class ToStringStyle implements Serializable {
      *
      * @param arrayStart  the new array start text
      */
-    protected void setArrayStart(@Nullable String arrayStart) {
+    protected void setArrayStart(@UnknownInitialization(org.apache.commons.lang3.builder.ToStringStyle.class) ToStringStyle this, @Nullable String arrayStart) {
         if (arrayStart == null) {
             arrayStart = StringUtils.EMPTY;
         }

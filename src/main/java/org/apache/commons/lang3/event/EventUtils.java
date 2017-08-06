@@ -109,6 +109,9 @@ public class EventUtils {
          * @throws Throwable if an error occurs
          */
         @Override
+        @SuppressWarnings("nullness:override.return.invalid")
+        // This overridden method returns null, when eventTypes is not empty or it does not contain
+        // the specified method name in it.  
         public @Nullable Object invoke(final Object proxy, final Method method, final Object[] parameters) throws Throwable {
             if (eventTypes.isEmpty() || eventTypes.contains(method.getName())) {
                 if (hasMatchingParametersMethod(method)) {

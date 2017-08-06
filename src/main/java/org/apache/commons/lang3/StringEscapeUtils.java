@@ -262,6 +262,7 @@ public class StringEscapeUtils {
             new char[] {CSV_DELIMITER, CSV_QUOTE, CharUtils.CR, CharUtils.LF};
 
         @Override
+        @SuppressWarnings("nullness:argument.type.incompatible")
         public int translate(final CharSequence input, final int index, final Writer out) throws IOException {
 
             if(index != 0) {
@@ -272,6 +273,8 @@ public class StringEscapeUtils {
                 out.write(input.toString());
             } else {
                 out.write(CSV_QUOTE);
+                // StringUtils.replace() returns null if any of the arguments is non null, here
+                // input, CSV_QUOTE_STR are non null, hence checker warning is false positive
                 out.write(StringUtils.replace(input.toString(), CSV_QUOTE_STR, CSV_QUOTE_STR + CSV_QUOTE_STR));
                 out.write(CSV_QUOTE);
             }
@@ -396,6 +399,7 @@ public class StringEscapeUtils {
             new char[] {CSV_DELIMITER, CSV_QUOTE, CharUtils.CR, CharUtils.LF};
 
         @Override
+        @SuppressWarnings("nullness:argument.type.incompatible")
         public int translate(final CharSequence input, final int index, final Writer out) throws IOException {
 
             if(index != 0) {
@@ -408,10 +412,13 @@ public class StringEscapeUtils {
             }
 
             // strip quotes
+            // input is non null, hence quoteless is non null here
             final String quoteless = input.subSequence(1, input.length() - 1).toString();
 
             if ( StringUtils.containsAny(quoteless, CSV_SEARCH_CHARS) ) {
                 // deal with escaped quotes; ie) ""
+                // StringUtils.replace() returns non null if any of arguments is non null
+                // quoteless, CSV_QUOTE_STR are non null here, checker warning is false positive
                 out.write(StringUtils.replace(quoteless, CSV_QUOTE_STR + CSV_QUOTE_STR, CSV_QUOTE_STR));
             } else {
                 out.write(input.toString());

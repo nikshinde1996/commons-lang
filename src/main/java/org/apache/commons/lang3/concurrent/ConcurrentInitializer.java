@@ -53,5 +53,5 @@ public interface ConcurrentInitializer<T> {
      * @throws ConcurrentException if an error occurred during initialization of
      * the object
      */
-   @Nullable T get() throws ConcurrentException;
+    T get() throws ConcurrentException;
 }

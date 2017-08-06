@@ -24,6 +24,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.initialization.qual.UnderInitialization;
 
 /**
  * <p>
@@ -164,7 +165,7 @@ public class TimedSemaphore {
     private final boolean ownExecutor;
 
     /** A future object representing the timer task. */
-    private ScheduledFuture<?> task; // @GuardedBy("this")
+    private @Nullable ScheduledFuture<?> task; // @GuardedBy("this")
 
     /** Stores the total number of invocations of the acquire() method. */
     private long totalAcquireCount; // @GuardedBy("this")
@@ -255,7 +256,7 @@ public class TimedSemaphore {
      *
      * @param limit the limit
      */
-    public final synchronized void setLimit(final int limit) {
+    public final synchronized void setLimit(@UnderInitialization(java.lang.Object.class) TimedSemaphore this, final int limit) {
         this.limit = limit;
     }
 

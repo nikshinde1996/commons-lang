@@ -2771,7 +2771,7 @@ public class StrBuilder implements CharSequence, Appendable, Serializable, Build
      * @param other  the object to check, null returns false
      * @return true if the builders contain the same characters in the same order
      */
-    public boolean equalsIgnoreCase(final @Nullable StrBuilder other) {
+    public boolean equalsIgnoreCase(final StrBuilder other) {
         if (this == other) {
             return true;
         }

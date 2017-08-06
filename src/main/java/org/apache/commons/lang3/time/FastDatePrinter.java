@@ -34,6 +34,9 @@ import java.util.concurrent.ConcurrentMap;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.initialization.qual.UnderInitialization;
+import org.checkerframework.checker.nullness.qual.EnsuresNonNull;
+import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 
 /**
  * <p>FastDatePrinter is a fast and thread-safe version of
@@ -132,7 +135,7 @@ public class FastDatePrinter implements DatePrinter, Serializable {
     /**
      * The parsed rules.
      */
-    private transient Rule[] mRules;
+    private transient Rule @MonotonicNonNull [] mRules;
     /**
      * The estimated maximum length.
      */
@@ -161,6 +164,7 @@ public class FastDatePrinter implements DatePrinter, Serializable {
     /**
      * <p>Initializes the instance for first use.</p>
      */
+    @EnsuresNonNull("mRules") 
     private void init() {
         final List<Rule> rulesList = parsePattern();
         mRules = rulesList.toArray(new Rule[rulesList.size()]);

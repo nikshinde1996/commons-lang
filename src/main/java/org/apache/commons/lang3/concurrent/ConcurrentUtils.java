@@ -201,8 +201,11 @@ public class ConcurrentUtils {
      * @return the object managed by the {@code ConcurrentInitializer}
      * @throws ConcurrentRuntimeException if the initializer throws an exception
      */
+    @SuppressWarnings("nullness:return.type.incompatible") 
     public static <T> T initializeUnchecked(final ConcurrentInitializer<T> initializer) {
         try {
+            // initialize(ConcurrentInitializer) returns null when ConcurrentInitializer argument
+            // is non null, here initializer is non null. checker warning is false positive
             return initialize(initializer);
         } catch (final ConcurrentException cex) {
             throw new ConcurrentRuntimeException(cex.getCause());
@@ -301,9 +304,12 @@ public class ConcurrentUtils {
      * not be the object created by the {@link ConcurrentInitializer}
      * @throws ConcurrentRuntimeException if the initializer throws an exception
      */
+    @SuppressWarnings("nullness:return.type.incompatible") 
     public static <K, V> V createIfAbsentUnchecked(final ConcurrentMap<K, V> map,
             final K key, final ConcurrentInitializer<V> init) {
         try {
+            // createIfAbsent() returns null if map or key is null here both map and key is non null,
+            // hence this method does not return null value, checker issue false postive warning. 
             return createIfAbsent(map, key, init);
         } catch (final ConcurrentException cex) {
             throw new ConcurrentRuntimeException(cex.getCause());
@@ -336,7 +342,7 @@ public class ConcurrentUtils {
      */
     static final class ConstantFuture<T> implements Future<T> {
         /** The constant value. */
-        private final T value;
+        private final @Nullable T value;
 
         /**
          * Creates a new instance of {@code ConstantFuture} and initializes it
@@ -362,7 +368,9 @@ public class ConcurrentUtils {
          * {@inheritDoc} This implementation just returns the constant value.
          */
         @Override
-        public T get() {
+        @SuppressWarnings("nullness:override.return.invalid")
+        // the constant value may be null for class ConstantFuture (from documentation) 
+        public @Nullable T get() {
             return value;
         }
 
@@ -371,7 +379,9 @@ public class ConcurrentUtils {
          * does not block, therefore the timeout has no meaning.
          */
         @Override
-        public T get(final long timeout, final TimeUnit unit) {
+        @SuppressWarnings("nullness:override.return.invalid")
+        // the constant value may be null for class ConstantFuture (from documentation)
+        public @Nullable T get(final long timeout, final TimeUnit unit) {
             return value;
         }
 

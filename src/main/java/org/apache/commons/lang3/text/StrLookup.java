@@ -131,7 +131,7 @@ public abstract class StrLookup<V> {
     static class MapStrLookup<V> extends StrLookup<V> {
 
         /** Map keys are variable names and value. */
-        private final Map<String, V> map;
+        private final @Nullable Map<String, V> map;
 
         /**
          * Creates a new instance backed by a Map.
@@ -168,6 +168,8 @@ public abstract class StrLookup<V> {
     /**
      * Lookup implementation based on system properties.
      */
+    // BUG : key may be null, this may lead to NPE in if block in this method.
+    // adding null check (key != null) in "if block" will resolve this bug.  
     private static class SystemPropertiesStrLookup extends StrLookup<String> {
         /**
          * {@inheritDoc} This implementation directly accesses system properties.

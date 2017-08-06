@@ -224,20 +224,21 @@ abstract class FormatCache<F extends Format> {
      * <p>Helper class to hold multi-part Map keys</p>
      */
     private static class MultipartKey {
-        private final Object[] keys;
+        private final @Nullable Object[] keys;
         private int hashCode;
 
         /**
          * Constructs an instance of <code>MultipartKey</code> to hold the specified objects.
          * @param keys the set of objects that make up the key.  Each key may be null.
          */
-        MultipartKey(final Object... keys) {
+        MultipartKey(final @Nullable Object... keys) {
             this.keys = keys;
         }
 
         /**
          * {@inheritDoc}
          */
+        // BUG : obj requires null check 
         @Override
         public boolean equals(final @Nullable Object obj) {
             // Eliminate the usual boilerplate because

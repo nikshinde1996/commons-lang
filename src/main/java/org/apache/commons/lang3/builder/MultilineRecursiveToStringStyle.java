@@ -20,6 +20,8 @@ package org.apache.commons.lang3.builder;
 import org.apache.commons.lang3.ClassUtils;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.initialization.qual.UnderInitialization;
+import org.checkerframework.checker.initialization.qual.UnknownInitialization;
 
 /**
  * <p>Works with {@link ToStringBuilder} to create a "deep" <code>toString</code>.
@@ -90,7 +92,7 @@ public class MultilineRecursiveToStringStyle extends RecursiveToStringStyle {
      * Resets the fields responsible for the line breaks and indenting.
      * Must be invoked after changing the {@link #spaces} value.
      */
-    private void resetIndent() {
+    private void resetIndent(@UnknownInitialization(org.apache.commons.lang3.builder.ToStringStyle.class) MultilineRecursiveToStringStyle this) {
         setArrayStart("{" + System.lineSeparator() + spacer(spaces));
         setArraySeparator("," + System.lineSeparator() + spacer(spaces));
         setArrayEnd(System.lineSeparator() + spacer(spaces - INDENT) + "}");

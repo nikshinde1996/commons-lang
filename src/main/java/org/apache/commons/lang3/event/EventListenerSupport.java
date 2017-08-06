@@ -333,6 +333,9 @@ public class EventListenerSupport<L> implements Serializable {
          * @throws Throwable if an error occurs
          */
         @Override
+        @SuppressWarnings("nullness:override.return.invalid")        
+        // This method returns null after invoking all listeners.
+        // TODO : Ask reason for returning null
         public @Nullable Object invoke(final Object unusedProxy, final Method method, final Object[] args) throws Throwable {
             for (final L listener : listeners) {
                 method.invoke(listener, args);

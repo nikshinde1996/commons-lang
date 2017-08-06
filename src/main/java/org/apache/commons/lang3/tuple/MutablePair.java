@@ -36,9 +36,9 @@ public class MutablePair<L, R> extends Pair<L, R> {
     private static final long serialVersionUID = 4954918890077093841L;
 
     /** Left object */
-    public L left;
+    public @Nullable L left;
     /** Right object */
-    public R right;
+    public @Nullable R right;
 
     /**
      * <p>Obtains an immutable pair of from two objects inferring the generic types.</p>
@@ -80,7 +80,7 @@ public class MutablePair<L, R> extends Pair<L, R> {
      * {@inheritDoc}
      */
     @Override
-    public L getLeft() {
+    public @Nullable L getLeft() {
         return left;
     }
 
@@ -97,7 +97,7 @@ public class MutablePair<L, R> extends Pair<L, R> {
      * {@inheritDoc}
      */
     @Override
-    public R getRight() {
+    public @Nullable R getRight() {
         return right;
     }
 
@@ -118,7 +118,9 @@ public class MutablePair<L, R> extends Pair<L, R> {
      * @return the old value for the right element
      */
     @Override
-    public R setValue(final R value) {
+    @SuppressWarnings("nullness:override.return.invalid")
+    // getRight() may return null in Pair and MutablePair pair.
+    public @Nullable R setValue(final R value) {
         final R result = getRight();
         setRight(value);
         return result;

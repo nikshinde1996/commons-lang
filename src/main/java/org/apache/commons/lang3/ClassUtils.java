@@ -379,7 +379,7 @@ public class ClassUtils {
      * @throws IllegalArgumentException if len &lt;= 0
      * @since 3.4
      */
-    @SuppressWarnings("nullness:argument.type.incompatible") 
+    @SuppressWarnings({"nullness:argument.type.incompatible","return.type.incompatible"}) 
     public static String getAbbreviatedName(final @Nullable String className, final int len) {
       if (len <= 0) {
         throw new IllegalArgumentException("len must be > 0");
@@ -414,7 +414,7 @@ public class ClassUtils {
         endIndex = startIndex - 1;
       }
 
-      // output, className is non null here
+      // output, className is non null here, StringUtils.join returns non null value
       return StringUtils.join(output, '.');
     }
 
@@ -1101,7 +1101,7 @@ public class ClassUtils {
      * @return a {@code Class} array, {@code null} if null array input
      * @since 2.4
      */
-    public static Class<?> @PolyNull [] toClass(final Object @PolyNull ... array) {
+    public static @Nullable Class<?> @PolyNull [] toClass(final @Nullable Object @PolyNull ... array) {
         if (array == null) {
             return null;
         } else if (array.length == 0) {

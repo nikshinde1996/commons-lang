@@ -143,10 +143,13 @@ public class MethodUtils {
      * @throws InvocationTargetException wraps an exception thrown by the method invoked
      * @throws IllegalAccessException if the requested method is not accessible via reflection
      */
+    @SuppressWarnings("nullness:assignment.type.incompatible") 
     public static Object invokeMethod(final Object object, final String methodName,
             Object @Nullable ... args) throws NoSuchMethodException,
             IllegalAccessException, InvocationTargetException {
         args = ArrayUtils.nullToEmpty(args);
+        // args is non null here, ClassUtils.toClass() returns null if argument passed is null
+        // checker warning is false positive.
         final Class<?>[] parameterTypes = ClassUtils.toClass(args);
         return invokeMethod(object, methodName, args, parameterTypes);
     }
@@ -174,10 +177,13 @@ public class MethodUtils {
      *
      * @since 3.5
      */
+    @SuppressWarnings("nullness:assignment.type.incompatible") 
     public static Object invokeMethod(final Object object, final boolean forceAccess, final String methodName,
             Object @Nullable ... args) throws NoSuchMethodException,
             IllegalAccessException, InvocationTargetException {
         args = ArrayUtils.nullToEmpty(args);
+        // args is non null here, ClassUtils.toClass() returns null if argument passed is null
+        // checker warning is false positive.        
         final Class<?>[] parameterTypes = ClassUtils.toClass(args);
         return invokeMethod(object, forceAccess, methodName, args, parameterTypes);
     }
@@ -229,7 +235,7 @@ public class MethodUtils {
                     + methodName + "() on object: "
                     + object.getClass().getName());
         }
-        // method is not null here, exception occurs earlier
+        // method,args are non null here. If null, exception occurs earlier
         args = toVarArgs(method, args);
 
         return method.invoke(object, args);
@@ -302,10 +308,13 @@ public class MethodUtils {
      * @throws IllegalAccessException if the requested method is not accessible
      *  via reflection
      */
+    @SuppressWarnings("nullness:assignment.type.incompatible") 
     public static Object invokeExactMethod(final Object object, final String methodName,
             Object @Nullable ... args) throws NoSuchMethodException,
             IllegalAccessException, InvocationTargetException {
         args = ArrayUtils.nullToEmpty(args);
+        // args is non null here, ClassUtils.toClass() returns null if argument passed is null
+        // checker warning is false positive.        
         final Class<?>[] parameterTypes = ClassUtils.toClass(args);
         return invokeExactMethod(object, methodName, args, parameterTypes);
     }
@@ -406,10 +415,13 @@ public class MethodUtils {
      * @throws IllegalAccessException if the requested method is not accessible
      *  via reflection
      */
+    @SuppressWarnings("nullness:assignment.type.incompatible") 
     public static Object invokeStaticMethod(final Class<?> cls, final String methodName,
             Object @Nullable ... args) throws NoSuchMethodException,
             IllegalAccessException, InvocationTargetException {
         args = ArrayUtils.nullToEmpty(args);
+        // args is non null here, ClassUtils.toClass() returns null if argument passed is null
+        // checker warning is false positive.        
         final Class<?>[] parameterTypes = ClassUtils.toClass(args);
         return invokeStaticMethod(cls, methodName, args, parameterTypes);
     }
@@ -472,7 +484,7 @@ public class MethodUtils {
      * @return an array of the variadic arguments passed to the method
      * @since 3.5
      */
-    @SuppressWarnings("nullness:argument.type.incompatible") 
+    @SuppressWarnings({"nullness:argument.type.incompatible","nullness:dereference.of.nullable"}) 
     static Object[] getVarArgs(final Object[] args, final Class<?>[] methodParameterTypes) {
         if (args.length == methodParameterTypes.length
                 && args[args.length - 1].getClass().equals(methodParameterTypes[methodParameterTypes.length - 1])) {
@@ -488,6 +500,7 @@ public class MethodUtils {
 
         // Construct a new array for the variadic parameters
         final Class<?> varArgComponentType = methodParameterTypes[methodParameterTypes.length - 1].getComponentType();
+        // varArgComponentType is non null as, the invoking object refers to the array class.
         final int varArgLength = args.length - methodParameterTypes.length + 1;
 
         // varArgComponentType is non null as class representing is non null
@@ -525,10 +538,13 @@ public class MethodUtils {
      * @throws IllegalAccessException if the requested method is not accessible
      *  via reflection
      */
+    @SuppressWarnings("nullness:assignment.type.incompatible") 
     public static Object invokeExactStaticMethod(final Class<?> cls, final String methodName,
             Object @Nullable ... args) throws NoSuchMethodException,
             IllegalAccessException, InvocationTargetException {
         args = ArrayUtils.nullToEmpty(args);
+        // args is non null here, ClassUtils.toClass() returns null if argument passed is null
+        // checker warning is false positive.        
         final Class<?>[] parameterTypes = ClassUtils.toClass(args);
         return invokeExactStaticMethod(cls, methodName, args, parameterTypes);
     }
@@ -776,7 +792,7 @@ public class MethodUtils {
      * @param toClassArray
      * @return the aggregate number of inheritance hops between assignable argument class types.
      */
-    private static int distance(final Class<?>[] classArray, final Class<?>[] toClassArray) {
+    private static int distance(final Class<?> @Nullable [] classArray, final Class<?> @Nullable [] toClassArray) {
         int answer = 0;
 
         if (!ClassUtils.isAssignable(classArray, toClassArray, true)) {
@@ -909,12 +925,15 @@ public class MethodUtils {
      *            if the class or annotation are {@code null}
      * @since 3.6
      */
+    @SuppressWarnings({"nullness:dereference.of.nullable","iterating.over.nullable"}) 
     public static List<Method> getMethodsListWithAnnotation(final Class<?> cls,
                                                             final Class<? extends Annotation> annotationCls,
                                                             boolean searchSupers, boolean ignoreAccess) {
 
         Validate.isTrue(cls != null, "The class must not be null");
         Validate.isTrue(annotationCls != null, "The annotation class must not be null");
+        // cls is non null here, getAllSuperclassesAndInterfaces() returns null when argument 
+        // passed is null, checker warning is false positive. classes is non null in this method.
         List<Class<?>> classes = (searchSupers ? getAllSuperclassesAndInterfaces(cls)
                 : new ArrayList<Class<?>>());
         classes.add(0, cls);
@@ -953,6 +972,7 @@ public class MethodUtils {
      *            if the method or annotation are {@code null}
      * @since 3.6
      */
+    @SuppressWarnings("nullness:iterating.over.nullable") 
     public static <A extends Annotation> @Nullable A getAnnotation(final Method method, final Class<A> annotationCls,
                                                          boolean searchSupers, boolean ignoreAccess) {
 
@@ -966,6 +986,8 @@ public class MethodUtils {
 
         if (annotation == null && searchSupers) {
             Class<?> mcls = method.getDeclaringClass();
+            // cls is non null here, getAllSuperclassesAndInterfaces() returns null when argument 
+            // passed is null, checker warning is false positive. classes is non null in this method.
             List<Class<?>> classes = getAllSuperclassesAndInterfaces(mcls);
             for (Class<?> acls : classes) {
                 Method equivalentMethod;

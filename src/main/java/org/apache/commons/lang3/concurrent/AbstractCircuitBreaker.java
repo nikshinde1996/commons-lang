@@ -122,7 +122,7 @@ public abstract class AbstractCircuitBreaker<T> implements CircuitBreaker<T> {
      *
      * @param listener the listener to be added
      */
-    public void addChangeListener(final @Nullable PropertyChangeListener listener) {
+    public void addChangeListener(final PropertyChangeListener listener) {
         changeSupport.addPropertyChangeListener(listener);
     }
 

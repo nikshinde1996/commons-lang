@@ -79,6 +79,8 @@ public class ConstantInitializer<T> implements ConcurrentInitializer<T> {
      * @throws ConcurrentException if an error occurs
      */
     @Override
+    @SuppressWarnings("nullness:override.return.invalid")
+    // object may be null for ConstantInitializer class (from documentation)
     public @Nullable T get() throws ConcurrentException {
         return getObject();
     }

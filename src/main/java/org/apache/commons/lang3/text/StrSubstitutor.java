@@ -26,6 +26,10 @@ import java.util.Properties;
 import org.apache.commons.lang3.StringUtils;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.initialization.qual.UnderInitialization;
+import org.checkerframework.checker.initialization.qual.UnknownInitialization;
+import org.checkerframework.checker.nullness.qual.EnsuresNonNull;
+import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 
 /**
  * Substitutes variables within a string by values.
@@ -164,11 +168,11 @@ public class StrSubstitutor {
     /**
      * Stores the default variable value delimiter
      */
-    private StrMatcher valueDelimiterMatcher;
+    private @Nullable StrMatcher valueDelimiterMatcher;
     /**
      * Variable resolution is delegated to an implementor of VariableResolver.
      */
-    private StrLookup<?> variableResolver;
+    private @Nullable StrLookup<?> variableResolver;
     /**
      * The flag whether substitution in variable names is enabled.
      */
@@ -217,14 +221,17 @@ public class StrSubstitutor {
      * @param valueProperties the properties with values, may be null
      * @return the result of the replace operation
      */
+    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static @Nullable String replace(final @Nullable Object source, final @Nullable Properties valueProperties) {
         if (valueProperties == null) {
             return source.toString();
         }
+        // valueProperties is non null here
         final Map<String,String> valueMap = new HashMap<>();
         final Enumeration<?> propNames = valueProperties.propertyNames();
         while (propNames.hasMoreElements()) {
             final String propName = (String)propNames.nextElement();
+            // propName is non null here, checker warning is false positive
             final String propValue = valueProperties.getProperty(propName);
             valueMap.put(propName, propValue);
         }
@@ -955,7 +962,7 @@ public class StrSubstitutor {
      *
      * @param escapeCharacter  the escape character (0 for disabling escaping)
      */
-    public void setEscapeChar(final char escapeCharacter) {
+    public void setEscapeChar(@UnknownInitialization(java.lang.Object.class) StrSubstitutor this, final char escapeCharacter) {
         this.escapeChar = escapeCharacter;
     }
 
@@ -985,7 +992,7 @@ public class StrSubstitutor {
      * @return this, to enable chaining
      * @throws IllegalArgumentException if the prefix matcher is null
      */
-    public StrSubstitutor setVariablePrefixMatcher(final StrMatcher prefixMatcher) {
+    public StrSubstitutor setVariablePrefixMatcher(@UnknownInitialization(java.lang.Object.class) StrSubstitutor this, final StrMatcher prefixMatcher) {
         if (prefixMatcher == null) {
             throw new IllegalArgumentException("Variable prefix matcher must not be null!");
         }
@@ -1017,7 +1024,7 @@ public class StrSubstitutor {
      * @return this, to enable chaining
      * @throws IllegalArgumentException if the prefix is null
      */
-    public StrSubstitutor setVariablePrefix(final String prefix) {
+    public StrSubstitutor setVariablePrefix(@UnknownInitialization(java.lang.Object.class) StrSubstitutor this, final String prefix) {
        if (prefix == null) {
             throw new IllegalArgumentException("Variable prefix must not be null!");
         }
@@ -1050,7 +1057,7 @@ public class StrSubstitutor {
      * @return this, to enable chaining
      * @throws IllegalArgumentException if the suffix matcher is null
      */
-    public StrSubstitutor setVariableSuffixMatcher(final StrMatcher suffixMatcher) {
+    public StrSubstitutor setVariableSuffixMatcher(@UnknownInitialization(java.lang.Object.class) StrSubstitutor this, final StrMatcher suffixMatcher) {
         if (suffixMatcher == null) {
             throw new IllegalArgumentException("Variable suffix matcher must not be null!");
         }
@@ -1082,7 +1089,7 @@ public class StrSubstitutor {
      * @return this, to enable chaining
      * @throws IllegalArgumentException if the suffix is null
      */
-    public StrSubstitutor setVariableSuffix(final String suffix) {
+    public StrSubstitutor setVariableSuffix(@UnknownInitialization(java.lang.Object.class) StrSubstitutor this, final String suffix) {
        if (suffix == null) {
             throw new IllegalArgumentException("Variable suffix must not be null!");
         }
@@ -1121,7 +1128,7 @@ public class StrSubstitutor {
      * @return this, to enable chaining
      * @since 3.2
      */
-    public StrSubstitutor setValueDelimiterMatcher(final @Nullable StrMatcher valueDelimiterMatcher) {
+    public StrSubstitutor setValueDelimiterMatcher(@UnknownInitialization(java.lang.Object.class) StrSubstitutor this, final @Nullable StrMatcher valueDelimiterMatcher) {
         this.valueDelimiterMatcher = valueDelimiterMatcher;
         return this;
     }
@@ -1155,7 +1162,7 @@ public class StrSubstitutor {
      * @return this, to enable chaining
      * @since 3.2
      */
-    public StrSubstitutor setValueDelimiter(final @Nullable String valueDelimiter) {
+    public StrSubstitutor setValueDelimiter(@UnknownInitialization(java.lang.Object.class) StrSubstitutor this, final @Nullable String valueDelimiter) {
         if (StringUtils.isEmpty(valueDelimiter)) {
             setValueDelimiterMatcher(null);
             return this;
@@ -1170,7 +1177,7 @@ public class StrSubstitutor {
      *
      * @return the VariableResolver
      */
-    public StrLookup<?> getVariableResolver() {
+    public @Nullable StrLookup<?> getVariableResolver() {
         return this.variableResolver;
     }
 
@@ -1179,7 +1186,7 @@ public class StrSubstitutor {
      *
      * @param variableResolver  the VariableResolver
      */
-    public void setVariableResolver(final StrLookup<?> variableResolver) {
+    public void setVariableResolver(@UnknownInitialization(java.lang.Object.class) StrSubstitutor this, final @Nullable StrLookup<?> variableResolver) {
         this.variableResolver = variableResolver;
     }
 

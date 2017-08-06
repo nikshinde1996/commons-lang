@@ -76,9 +76,12 @@ public class DefaultExceptionContext implements ExceptionContext, Serializable {
      * {@inheritDoc}
      */
     @Override
+    @SuppressWarnings("nullness:argument.type.incompatible")
     public List<Object> getContextValues(final @Nullable String label) {
         final List<Object> values = new ArrayList<>();
         for (final Pair<String, Object> pair : contextValues) {
+            // StringUtils.equals() returns false if either of arguments is null, hence
+            // no null argument is passed in values.add()
             if (StringUtils.equals(label, pair.getKey())) {
                 values.add(pair.getValue());
             }
@@ -103,8 +106,10 @@ public class DefaultExceptionContext implements ExceptionContext, Serializable {
      * {@inheritDoc}
      */
     @Override
+    @SuppressWarnings("nullness:argument.type.incompatible")
     public Set<String> getContextLabels() {
         final Set<String> labels = new HashSet<>();
+        // Key in contextValues is NonNull in this class.
         for (final Pair<String, Object> pair : contextValues) {
             labels.add(pair.getKey());
         }
