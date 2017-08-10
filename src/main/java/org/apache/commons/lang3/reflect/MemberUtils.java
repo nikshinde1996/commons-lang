@@ -148,7 +148,6 @@ abstract class MemberUtils {
      * @param executable The executable to calculate transformation costs for
      * @return The total transformation cost
      */
-    @SuppressWarnings("nullness:argument.type.incompatible") 
     private static float getTotalTransformationCost(final Class<?>[] srcArgs, final Executable executable) {
         final Class<?>[] destArgs = executable.getParameterTypes();
         final boolean isVarArgs = executable.isVarArgs();
@@ -175,8 +174,6 @@ abstract class MemberUtils {
                 totalCost += getObjectTransformationCost(destClass, Object.class) + varArgsCost;
             } else if (explicitArrayForVarags) {
                 final Class<?> sourceClass = srcArgs[srcArgs.length-1].getComponentType();
-                // destClass and sourceClass is non null as getComponentType() returns non null
-                // as class represents array class
                 totalCost += getObjectTransformationCost(sourceClass, destClass) + varArgsCost;
             } else {
                 // This is typical varargs case.

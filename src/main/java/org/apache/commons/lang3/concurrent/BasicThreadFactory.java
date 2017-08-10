@@ -220,12 +220,10 @@ public class BasicThreadFactory implements ThreadFactory {
      *
      * @param t the thread to be initialized
      */
-    @SuppressWarnings({"nullness:dereference.of.nullable","nullness:argument.type.incompatible"}) 
     private void initializeThread(final Thread t) {
 
         if (getNamingPattern() != null) {
             final Long count = Long.valueOf(threadCounter.incrementAndGet());
-            // getNamingPattern() is non null here, checker issues false positive warning.
             t.setName(String.format(getNamingPattern(), count));
         }
 
@@ -234,12 +232,10 @@ public class BasicThreadFactory implements ThreadFactory {
         }
 
         if (getPriority() != null) {
-            // getPriority() is non null here
             t.setPriority(getPriority().intValue());
         }
 
         if (getDaemonFlag() != null) {
-            // getDaemonFlag() is non null here
             t.setDaemon(getDaemonFlag().booleanValue());
         }
     }

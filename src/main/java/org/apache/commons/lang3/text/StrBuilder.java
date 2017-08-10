@@ -1933,7 +1933,6 @@ public class StrBuilder implements CharSequence, Appendable, Serializable, Build
      * @param insertLen  the length of the insert string, must be valid
      * @throws IndexOutOfBoundsException if any index is invalid
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     private void replaceImpl(final int startIndex, final int endIndex, final int removeLen, final @Nullable String insertStr, final int insertLen) {
         final int newSize = size - removeLen + insertLen;
         if (insertLen != removeLen) {
@@ -1941,8 +1940,6 @@ public class StrBuilder implements CharSequence, Appendable, Serializable, Build
             System.arraycopy(buffer, endIndex, buffer, startIndex + insertLen, size - endIndex);
             size = newSize;
         }
-        // In function calling this method, insertStr is non null, If its non null then insertLen = 0
-        // hence in any condition, NPE does not occur here 
         if (insertLen > 0) {
             insertStr.getChars(0, insertLen, buffer, startIndex);
         }

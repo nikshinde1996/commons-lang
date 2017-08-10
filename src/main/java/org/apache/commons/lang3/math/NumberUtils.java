@@ -452,7 +452,6 @@ public class NumberUtils {
      * @return Number created from the string (or null if the input is null)
      * @throws NumberFormatException if the value cannot be converted
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static @Nullable Number createNumber(final @Nullable String str) throws NumberFormatException {
         if (str == null) {
             return null;
@@ -545,7 +544,6 @@ public class NumberUtils {
                 case 'f' :
                 case 'F' :
                     try {
-                        // str is non null here, hence Float f is not null
                         final Float f = NumberUtils.createFloat(str);
                         if (!(f.isInfinite() || f.floatValue() == 0.0F && !allZeros)) {
                             //If it's too big for a float or the float value = 0 and the string
@@ -560,7 +558,6 @@ public class NumberUtils {
                 case 'd' :
                 case 'D' :
                     try {
-                        // str is non null here, hence Double d is not null
                         final Double d = NumberUtils.createDouble(str);
                         if (!(d.isInfinite() || d.floatValue() == 0.0D && !allZeros)) {
                             return d;
@@ -604,7 +601,6 @@ public class NumberUtils {
         //Must be a Float, Double, BigDecimal
         final boolean allZeros = isAllZeros(mant) && isAllZeros(exp);
         try {
-            // str is non null here, hence Float f and Double d is not null
             final Float f = createFloat(str);
             final Double d = createDouble(str);
             if (!f.isInfinite()
@@ -1404,12 +1400,10 @@ public class NumberUtils {
      * @return <code>true</code> if the string is a correctly formatted number
      * @since 3.5 the code supports the "+" suffix on numbers except for integers in Java 1.6
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static boolean isCreatable(final @Nullable String str) {
         if (StringUtils.isEmpty(str)) {
             return false;
         }
-        // str is non null here
         final char[] chars = str.toCharArray();
         int sz = chars.length;
         boolean hasExp = false;
@@ -1540,12 +1534,10 @@ public class NumberUtils {
      * @return {@code true} if the string is a parsable number.
      * @since 3.4
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static boolean isParsable(final @Nullable String str) {
         if (StringUtils.isEmpty(str)) {
             return false;
         }
-        // str is non null here
         if (str.charAt(str.length() - 1) == '.') {
             return false;
         }

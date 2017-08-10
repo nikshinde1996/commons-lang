@@ -137,7 +137,6 @@ public class FormattableUtils {
      *  empty causes a hard truncation
      * @return the {@code formatter} instance, not null
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static Formatter append(final CharSequence seq, final Formatter formatter, final int flags, final int width,
             final int precision, final char padChar, final @Nullable CharSequence ellipsis) {
         Validate.isTrue(ellipsis == null || precision < 0 || ellipsis.length() <= precision,
@@ -145,7 +144,6 @@ public class FormattableUtils {
         final StringBuilder buf = new StringBuilder(seq);
         if (precision >= 0 && precision < seq.length()) {
             final CharSequence _ellipsis = ObjectUtils.defaultIfNull(ellipsis, StringUtils.EMPTY);
-            // _ellipsis is non null
             buf.replace(precision - _ellipsis.length(), seq.length(), _ellipsis.toString());
         }
         final boolean leftJustify = (flags & LEFT_JUSTIFY) == LEFT_JUSTIFY;

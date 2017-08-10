@@ -65,8 +65,8 @@ public class MutableObject<T> implements Mutable<T>, Serializable {
      */
     @Override
     @SuppressWarnings("nullness:override.return.invalid")
+    // return type may be null (as per documentation)
     public @Nullable T getValue() {
-        // return type may be null
         return this.value;
     }
 

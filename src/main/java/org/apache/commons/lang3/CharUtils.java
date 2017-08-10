@@ -117,12 +117,10 @@ public class CharUtils {
      * @param str  the character to convert
      * @return the Character value of the first letter of the String
      */
-    @SuppressWarnings("nullness:dereference.of.nullable")
     public static @Nullable Character toCharacterObject(final @Nullable String str) {
         if (StringUtils.isEmpty(str)) {
             return null;
         }
-        // str is non null here
         return Character.valueOf(str.charAt(0));
     }
 

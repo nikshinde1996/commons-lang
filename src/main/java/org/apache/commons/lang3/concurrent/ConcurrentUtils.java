@@ -61,12 +61,10 @@ public class ConcurrentUtils {
      * @param ex the exception to be processed
      * @return a {@code ConcurrentException} with the checked cause
      */
-    @SuppressWarnings("nullness:argument.type.incompatible")
     public static @Nullable ConcurrentException extractCause(final @Nullable ExecutionException ex) {
         if (ex == null || ex.getCause() == null) {
             return null;
         }
-        // ex is non null here
         throwCause(ex);
         return new ConcurrentException(ex.getMessage(), ex.getCause());
     }
@@ -83,13 +81,11 @@ public class ConcurrentUtils {
      * @param ex the exception to be processed
      * @return a {@code ConcurrentRuntimeException} with the checked cause
      */
-    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static @Nullable ConcurrentRuntimeException extractCauseUnchecked(
             final @Nullable ExecutionException ex) {
         if (ex == null || ex.getCause() == null) {
             return null;
         }
-        // ex is non null here
         throwCause(ex);
         return new ConcurrentRuntimeException(ex.getMessage(), ex.getCause());
     }

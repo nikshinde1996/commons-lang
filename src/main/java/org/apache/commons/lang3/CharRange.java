@@ -205,15 +205,13 @@ final class CharRange implements Iterable<Character>, Serializable {
      * @return true if equal
      */
     @Override
-    @SuppressWarnings("nullness:override.param.invalid")
-    public boolean equals(final Object obj) {
+    public boolean equals(final @Nullable Object obj) {
         if (obj == this) {
             return true;
         }
         if (obj instanceof CharRange == false) {
             return false;
         }
-        // obj is not null in this method
         final CharRange other = (CharRange) obj;
         return start == other.start && end == other.end && negated == other.negated;
     }

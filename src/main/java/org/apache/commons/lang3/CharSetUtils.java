@@ -63,14 +63,12 @@ public class CharSetUtils {
      * @param str  the string to squeeze, may be null
      * @param set  the character set to use for manipulation, may be null
      * @return the modified String, {@code null} if null string input
-     */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
+     */ 
     public static @Nullable String squeeze(final @Nullable String str, final String @Nullable ... set) {
         if (StringUtils.isEmpty(str) || deepEmpty(set)) {
             return str;
         }
         final CharSet chars = CharSet.getInstance(set);
-        // str is non-null here
         final StringBuilder buffer = new StringBuilder(str.length());
         final char[] chrs = str.toCharArray();
         final int sz = chrs.length;
@@ -120,12 +118,10 @@ public class CharSetUtils {
      * @return whether or not the characters in the set are in the primary string
      * @since 3.2
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static boolean containsAny(final @Nullable String str, final String @Nullable ... set) {
         if (StringUtils.isEmpty(str) || deepEmpty(set)) {
             return false;
         }
-        // set is non-null here
         final CharSet chars = CharSet.getInstance(set);
         for (final char c : str.toCharArray()) {
             if (chars.contains(c)) {
@@ -155,12 +151,10 @@ public class CharSetUtils {
      * @param set  String[] set of characters to count, may be null
      * @return the character count, zero if null string input
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static int count(final @Nullable String str, final String @Nullable ... set) {
         if (StringUtils.isEmpty(str) || deepEmpty(set)) {
             return 0;
         }
-        // set is non-null here
         final CharSet chars = CharSet.getInstance(set);
         int count = 0;
         for (final char c : str.toCharArray()) {
@@ -192,7 +186,6 @@ public class CharSetUtils {
      * @return the modified String, {@code null} if null string input
      * @since 2.0
      */
-    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static @Nullable String keep(final @Nullable String str, final String @Nullable ... set) {
         if (str == null) {
             return null;
@@ -200,7 +193,6 @@ public class CharSetUtils {
         if (str.isEmpty() || deepEmpty(set)) {
             return StringUtils.EMPTY;
         }
-        // str,set is non-null here
         return modify(str, set, true);
     }
 
@@ -224,12 +216,10 @@ public class CharSetUtils {
      * @param set  String[] set of characters to delete, may be null
      * @return the modified String, {@code null} if null string input
      */
-    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static @Nullable String delete(final @Nullable String str, final String @Nullable ... set) {
         if (StringUtils.isEmpty(str) || deepEmpty(set)) {
             return str;
         }
-        // str,set is non-null here
         return modify(str, set, false);
     }
 

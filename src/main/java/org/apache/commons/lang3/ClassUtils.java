@@ -311,14 +311,12 @@ public class ClassUtils {
      *
      * @param className  the className to get the package name for, may be {@code null}
      * @return the package name or an empty string
-     */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
+     */ 
     public static String getPackageName(@Nullable String className) {
         if (StringUtils.isEmpty(className)) {
             return StringUtils.EMPTY;
         }
 
-        // className is non null here
         // Strip array encoding
         while (className.charAt(0) == '[') {
             className = className.substring(1);
@@ -379,7 +377,6 @@ public class ClassUtils {
      * @throws IllegalArgumentException if len &lt;= 0
      * @since 3.4
      */
-    @SuppressWarnings({"nullness:argument.type.incompatible","return.type.incompatible"}) 
     public static String getAbbreviatedName(final @Nullable String className, final int len) {
       if (len <= 0) {
         throw new IllegalArgumentException("len must be > 0");
@@ -414,7 +411,6 @@ public class ClassUtils {
         endIndex = startIndex - 1;
       }
 
-      // output, className is non null here, StringUtils.join returns non null value
       return StringUtils.join(output, '.');
     }
 
@@ -498,12 +494,10 @@ public class ClassUtils {
      *  {@code null} if null input
      * @throws ClassCastException if classNames contains a non String entry
      */
-    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static @Nullable List<Class<?>> convertClassNamesToClasses(final @Nullable List<String> classNames) {
         if (classNames == null) {
             return null;
         }
-        // classNames is non null here
         final List<Class<?>> classes = new ArrayList<>(classNames.size());
         for (final String className : classNames) {
             try {
@@ -527,12 +521,10 @@ public class ClassUtils {
      *  {@code null} if null input
      * @throws ClassCastException if {@code classes} contains a non-{@code Class} entry
      */
-    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static @Nullable List<String> convertClassesToClassNames(final @Nullable List< @Nullable Class<?>> classes) {
         if (classes == null) {
             return null;
         }
-        // classes is non null here
         final List<String> classNames = new ArrayList<>(classes.size());
         for (final Class<?> cls : classes) {
             if (cls == null) {
@@ -832,13 +824,11 @@ public class ClassUtils {
      * Empty array if an empty array passed in.
      * @since 2.1
      */
-    @SuppressWarnings("nullness:assignment.type.incompatible") 
     public static Class<?> @Nullable [] primitivesToWrappers(final Class<?> @Nullable ... classes) {
         if (classes == null) {
             return null;
         }
 
-        // classes is non null here
         if (classes.length == 0) {
             return classes;
         }
@@ -884,13 +874,11 @@ public class ClassUtils {
      * @see #wrapperToPrimitive(Class)
      * @since 2.4
      */
-    @SuppressWarnings("nullness:assignment.type.incompatible") 
     public static Class<?> @Nullable [] wrappersToPrimitives(final Class<?> @Nullable ... classes) {
         if (classes == null) {
             return null;
         }
 
-        // classes is non null here
         if (classes.length == 0) {
             return classes;
         }
@@ -999,11 +987,9 @@ public class ClassUtils {
      * @return the class represented by {@code className} using the current thread's context class loader
      * @throws ClassNotFoundException if the class is not found
      */
-    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static Class<?> getClass(final String className, final boolean initialize) throws ClassNotFoundException {
         final ClassLoader contextCL = Thread.currentThread().getContextClassLoader();
         final ClassLoader loader = contextCL == null ? ClassUtils.class.getClassLoader() : contextCL;
-        // loader is non null here
         return getClass(loader, className, initialize);
     }
 
@@ -1069,9 +1055,7 @@ public class ClassUtils {
      * @param className  the class name
      * @return the converted name
      */
-    @SuppressWarnings("nullness:assignment.type.incompatible") 
     private static String toCanonicalName(String className) {
-        // className is non null here
         className = StringUtils.deleteWhitespace(className);
         Validate.notNull(className, "className must not be null.");
         if (className.endsWith("[]")) {
@@ -1219,13 +1203,11 @@ public class ClassUtils {
      * @return canonical form of class name
      * @since 2.4
      */
-    @SuppressWarnings({"nullness:assignment.type.incompatible","nullness:argument.type.incompatible"}) 
     private static @PolyNull String getCanonicalName(@PolyNull String className) {
         className = StringUtils.deleteWhitespace(className);
         if (className == null) {
             return null;
         }
-        // className is non null here
         int dim = 0;
         while (className.startsWith("[")) {
             dim++;
@@ -1242,7 +1224,6 @@ public class ClassUtils {
                     : className.length());
         } else {
             if (className.length() > 0) {
-                // className is non null here
                 className = reverseAbbreviationMap.get(className.substring(0, 1));
             }
         }

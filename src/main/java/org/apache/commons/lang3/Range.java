@@ -405,7 +405,6 @@ public final class Range<T> implements Serializable {
      * @return true if this object is equal
      */
     @Override
-    @SuppressWarnings("nullness:dereference.of.nullable")
     public boolean equals(final @Nullable Object obj) {
         if (obj == this) {
             return true;
@@ -415,7 +414,6 @@ public final class Range<T> implements Serializable {
             @SuppressWarnings("unchecked") // OK because we checked the class above
             final
             Range<T> range = (Range<T>) obj;
-            // minimum & maximum are initialised to non-null value
             return minimum.equals(range.minimum) &&
                    maximum.equals(range.maximum);
         }
@@ -427,7 +425,6 @@ public final class Range<T> implements Serializable {
      * @return a hash code value for this object
      */
     @Override
-    @SuppressWarnings("nullness:dereference.of.nullable")
     public int hashCode() {
         int result = hashCode;
         if (hashCode == 0) {
@@ -483,9 +480,7 @@ public final class Range<T> implements Serializable {
          * @return negative, 0, positive comparison value
          */
         @Override
-        @SuppressWarnings("nullness:override.param.invalid")
-        // null parameters not allowed
-        public int compare(final Object obj1, final Object obj2) {
+        public int compare(final @Nullable Object obj1, final @Nullable Object obj2) {
             return ((Comparable) obj1).compareTo(obj2);
         }
     }

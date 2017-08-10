@@ -57,10 +57,8 @@ public class EnumUtils {
      * @param enumClass  the class of the enum to query, not null
      * @return the modifiable map of enum names to enums, never null
      */
-    @SuppressWarnings("nullness:iterating.over.nullable") 
     public static <E extends Enum<E>> Map<String, E> getEnumMap(final Class<E> enumClass) {
         final Map<String, E> map = new LinkedHashMap<>();
-        // Class.getEnumConstants returns null if its not Enum. 
         for (final E e: enumClass.getEnumConstants()) {
             map.put(e.name(), e);
         }
@@ -76,9 +74,7 @@ public class EnumUtils {
      * @param enumClass  the class of the enum to query, not null
      * @return the modifiable list of enums, never null
      */
-    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static <E extends Enum<E>> List<E> getEnumList(final Class<E> enumClass) {
-        // Class.getEnumConstants returns null if its not Enum.
         return new ArrayList<>(Arrays.asList(enumClass.getEnumConstants()));
     }
 
@@ -172,7 +168,6 @@ public class EnumUtils {
      * @throws IllegalArgumentException if {@code enumClass} is not an enum class, or if any {@code values} {@code null}
      * @since 3.2
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static <E extends Enum<E>> long[] generateBitVectors(final Class<E> enumClass, final Iterable<? extends E> values) {
         asEnum(enumClass);
         Validate.notNull(values);
@@ -181,7 +176,6 @@ public class EnumUtils {
             Validate.isTrue(constant != null, NULL_ELEMENTS_NOT_PERMITTED);
             condensed.add(constant);
         }
-        // Class.getEnumConstants returns null if its not Enum.
         final long[] result = new long[(enumClass.getEnumConstants().length - 1) / Long.SIZE + 1];
         for (final E value : condensed) {
             result[value.ordinal() / Long.SIZE] |= 1L << (value.ordinal() % Long.SIZE);
@@ -230,13 +224,11 @@ public class EnumUtils {
      * @since 3.2
      */
     @SafeVarargs
-    @SuppressWarnings("nullness:dereference.of.nullable")
     public static <E extends Enum<E>> long[] generateBitVectors(final Class<E> enumClass, final E... values) {
         asEnum(enumClass);
         Validate.noNullElements(values);
         final EnumSet<E> condensed = EnumSet.noneOf(enumClass);
         Collections.addAll(condensed, values);
-        // Class.getEnumConstants returns null if its not Enum.
         final long[] result = new long[(enumClass.getEnumConstants().length - 1) / Long.SIZE + 1];
         for (final E value : condensed) {
             result[value.ordinal() / Long.SIZE] |= 1L << (value.ordinal() % Long.SIZE);
@@ -276,12 +268,10 @@ public class EnumUtils {
      * @throws IllegalArgumentException if {@code enumClass} is not an enum class
      * @since 3.2
      */
-    @SuppressWarnings("nullness:iterating.over.nullable") 
     public static <E extends Enum<E>> EnumSet<E> processBitVectors(final Class<E> enumClass, final long... values) {
         final EnumSet<E> results = EnumSet.noneOf(asEnum(enumClass));
         final long[] lvalues = ArrayUtils.clone(Validate.notNull(values));
         ArrayUtils.reverse(lvalues);
-        // Class.getEnumConstants returns null if its not Enum.
         for (final E constant : enumClass.getEnumConstants()) {
             final int block = constant.ordinal() / Long.SIZE;
             if (block < lvalues.length && (lvalues[block] & 1L << (constant.ordinal() % Long.SIZE)) != 0) {
@@ -300,9 +290,7 @@ public class EnumUtils {
      * @throws IllegalArgumentException if {@code enumClass} is not an enum class or has more than 64 values
      * @since 3.0.1
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     private static <E extends Enum<E>> Class<E> checkBitVectorable(final Class<E> enumClass) {
-        // Class.getEnumConstants returns null if its not Enum.
         final E[] constants = asEnum(enumClass).getEnumConstants();
         Validate.isTrue(constants.length <= Long.SIZE, CANNOT_STORE_S_S_VALUES_IN_S_BITS,
             Integer.valueOf(constants.length), enumClass.getSimpleName(), Integer.valueOf(Long.SIZE));

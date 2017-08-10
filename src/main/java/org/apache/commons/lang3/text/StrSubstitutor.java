@@ -221,17 +221,14 @@ public class StrSubstitutor {
      * @param valueProperties the properties with values, may be null
      * @return the result of the replace operation
      */
-    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static @Nullable String replace(final @Nullable Object source, final @Nullable Properties valueProperties) {
         if (valueProperties == null) {
             return source.toString();
         }
-        // valueProperties is non null here
         final Map<String,String> valueMap = new HashMap<>();
         final Enumeration<?> propNames = valueProperties.propertyNames();
         while (propNames.hasMoreElements()) {
             final String propName = (String)propNames.nextElement();
-            // propName is non null here, checker warning is false positive
             final String propValue = valueProperties.getProperty(propName);
             valueMap.put(propName, propValue);
         }

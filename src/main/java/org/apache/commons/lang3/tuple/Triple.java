@@ -128,9 +128,9 @@ public abstract class Triple<L, M, R> implements Comparable<Triple<L, M, R>>, Se
      */
     @Override
     @SuppressWarnings("nullness:dereference.of.nullable")
+    // false positive warning due to type checking limitations in conditional operator.
+    // getLeft().hashCode() is not executed when getLeft() is null.
     public int hashCode() {
-        // false positive warning due to type checking limitations in conditional operator.
-        // getLeft().hashCode() is not executed when getLeft() is null.
         return (getLeft() == null ? 0 : getLeft().hashCode()) ^
             (getMiddle() == null ? 0 : getMiddle().hashCode()) ^
             (getRight() == null ? 0 : getRight().hashCode());

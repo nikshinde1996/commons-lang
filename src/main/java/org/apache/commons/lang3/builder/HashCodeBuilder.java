@@ -121,7 +121,7 @@ public class HashCodeBuilder implements Builder<Integer> {
      *
      * @since 2.3
      */
-    private static final ThreadLocal<Set<IDKey>> REGISTRY = new ThreadLocal<>();
+    private static final ThreadLocal< @Nullable Set<IDKey>> REGISTRY = new ThreadLocal<>();
 
     /*
      * NOTE: we cannot store the actual objects in a HashSet, as that would use the very hashCode()
@@ -148,7 +148,7 @@ public class HashCodeBuilder implements Builder<Integer> {
      * @return Set the registry of objects being traversed
      * @since 2.3
      */
-    static Set<IDKey> getRegistry() {
+    static @Nullable Set<IDKey> getRegistry() {
         return REGISTRY.get();
     }
 
@@ -355,12 +355,10 @@ public class HashCodeBuilder implements Builder<Integer> {
      * @see HashCodeExclude
      * @since 2.0
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static <T> int reflectionHashCode(final int initialNonZeroOddNumber, final int multiplierNonZeroOddNumber, final T object,
             final boolean testTransients, final @Nullable Class<? super T> reflectUpToClass, final String... excludeFields) {
         Validate.isTrue(object != null, "The object to build a hash code for must not be null");
         final HashCodeBuilder builder = new HashCodeBuilder(initialNonZeroOddNumber, multiplierNonZeroOddNumber);
-        // object is non-null here
         Class<?> clazz = object.getClass();
         reflectionAppend(object, clazz, builder, testTransients, excludeFields);
         while (clazz.getSuperclass() != null && clazz != reflectUpToClass) {

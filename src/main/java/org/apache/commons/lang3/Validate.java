@@ -569,15 +569,12 @@ public class Validate {
      * @throws IllegalArgumentException if an element is {@code null}
      * @see #noNullElements(Iterable)
      */
-    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static <T extends Iterable<?>> T noNullElements(final T iterable, final String message, final Object... values) {
         Validate.notNull(iterable);
         int i = 0;
         for (final Iterator<?> it = iterable.iterator(); it.hasNext(); i++) {
             if (it.next() == null) {
                 final Object[] values2 = ArrayUtils.addAll(values, Integer.valueOf(i));
-                // values2 is non null as ArrayUtils.addAll() returns null when null argument is passed
-                // checker issues false positive warning
                 throw new IllegalArgumentException(String.format(message, values2));
             }
         }

@@ -142,9 +142,7 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      *
      * @return a clone of <code>CSV_TOKENIZER_PROTOTYPE</code>.
      */
-    @SuppressWarnings("nullness:return.type.incompatible") 
     private static StrTokenizer getCSVClone() {
-        // static block assings non null value to CSV_TOKENIZER_PROTOTYPE
         return (StrTokenizer) CSV_TOKENIZER_PROTOTYPE.clone();
     }
 
@@ -196,9 +194,7 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      *
      * @return a clone of <code>TSV_TOKENIZER_PROTOTYPE</code>.
      */
-    @SuppressWarnings("nullness:return.type.incompatible") 
     private static StrTokenizer getTSVClone() {
-        // static block assings non null value to TSV_TOKENIZER_PROTOTYPE
         return (StrTokenizer) TSV_TOKENIZER_PROTOTYPE.clone();
     }
 

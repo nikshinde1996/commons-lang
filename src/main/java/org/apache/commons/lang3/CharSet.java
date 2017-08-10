@@ -49,7 +49,7 @@ public class CharSet implements Serializable {
      * A CharSet defining no characters.
      * @since 2.0
      */
-    public static final CharSet EMPTY = new CharSet((String) null);
+    public static final @Nullable CharSet EMPTY = new CharSet((String) null);
 
     /**
      * A CharSet defining ASCII alphabetic characters "a-zA-Z".
@@ -80,7 +80,7 @@ public class CharSet implements Serializable {
      * Subclasses can add more common patterns if desired
      * @since 2.0
      */
-    protected static final Map<String, CharSet> COMMON = Collections.synchronizedMap(new HashMap<String, CharSet>());
+    protected static final Map< @Nullable String, CharSet> COMMON = Collections.synchronizedMap(new HashMap< @Nullable String, CharSet>());
 
     static {
         COMMON.put(null, EMPTY);

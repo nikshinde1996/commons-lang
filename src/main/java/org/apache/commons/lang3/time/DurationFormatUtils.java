@@ -172,7 +172,6 @@ public class DurationFormatUtils {
      * @return the formatted text in days/hours/minutes/seconds, not null
      * @throws java.lang.IllegalArgumentException if durationMillis is negative
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static String formatDurationWords(
         final long durationMillis,
         final boolean suppressLeadingZeroElements,
@@ -185,8 +184,6 @@ public class DurationFormatUtils {
         if (suppressLeadingZeroElements) {
             // this is a temporary marker on the front. Like ^ in regexp.
             duration = " " + duration;
-            // duration is non-null here, so tmp string is also non-null, suppress checker warning
-            // of dereferencing null reference
             String tmp = StringUtils.replaceOnce(duration, " 0 days", StringUtils.EMPTY);
             if (tmp.length() != duration.length()) {
                 duration = tmp;
@@ -480,10 +477,8 @@ public class DurationFormatUtils {
      * @param count the size to pad to (ignored if {@code padWithZeros} is false)
      * @return the string result
      */
-    @SuppressWarnings("nullness:return.type.incompatible") 
     private static String paddedValue(final long value, final boolean padWithZeros, final int count) {
         final String longString = Long.toString(value);
-        // longString is non null
         return padWithZeros ? StringUtils.leftPad(longString, count, '0') : longString;
     }
 
@@ -501,7 +496,6 @@ public class DurationFormatUtils {
      * @param format  the format to parse, not null
      * @return array of Token[]
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     static Token[] lexx(final String format) {
         final ArrayList<Token> list = new ArrayList<>(format.length());
 
@@ -692,7 +686,6 @@ public class DurationFormatUtils {
          * @return String representation of the token
          */
         @Override
-        @SuppressWarnings("nullness:return.type.incompatible")
         public String toString() {
             return StringUtils.repeat(this.value.toString(), this.count);
         }

@@ -1055,12 +1055,10 @@ public class ToStringBuilder implements Builder<String> {
      * @return the String <code>toString</code>
      */
     @Override
-    @SuppressWarnings("nullness:argument.type.incompatible")
     public String toString() {
         if (this.getObject() == null) {
             this.getStringBuffer().append(this.getStyle().getNullText());
         } else {
-            // this.getObject() is non null here
             style.appendEnd(this.getStringBuffer(), this.getObject());
         }
         return this.getStringBuffer().toString();

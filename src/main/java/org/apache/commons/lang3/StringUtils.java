@@ -252,12 +252,10 @@ public class StringUtils {
      * @return {@code true} if any of the CharSequences are empty or null
      * @since 3.2
      */
-    @SuppressWarnings("nullness:iterating.over.nullable") 
     public static boolean isAnyEmpty(final CharSequence @Nullable ... css) {
       if (ArrayUtils.isEmpty(css)) {
         return false;
       }
-      // css is non null here
       for (final CharSequence cs : css){
         if (isEmpty(cs)) {
           return true;
@@ -308,12 +306,10 @@ public class StringUtils {
      * @return {@code true} if all of the CharSequences are empty or null
      * @since 3.6
      */
-    @SuppressWarnings("nullness:iterating.over.nullable") 
     public static boolean isAllEmpty(final CharSequence @Nullable ... css) {
         if (ArrayUtils.isEmpty(css)) {
             return true;
         }
-        // css is non null here
         for (final CharSequence cs : css) {
             if (isNotEmpty(cs)) {
                 return false;
@@ -398,12 +394,10 @@ public class StringUtils {
      * @return {@code true} if any of the CharSequences are empty or null or whitespace only
      * @since 3.2
      */
-    @SuppressWarnings("nullness:iterating.over.nullable") 
     public static boolean isAnyBlank(final CharSequence  @Nullable ... css) {
       if (ArrayUtils.isEmpty(css)) {
         return false;
       }
-      // css is non null here
       for (final CharSequence cs : css){
         if (isBlank(cs)) {
           return true;
@@ -459,12 +453,10 @@ public class StringUtils {
      * @return {@code true} if all of the CharSequences are empty or null or whitespace only
      * @since 3.6
      */
-    @SuppressWarnings("nullness:iterating.over.nullable") 
     public static boolean isAllBlank(final CharSequence @Nullable ... css) {
         if (ArrayUtils.isEmpty(css)) {
             return true;
         }
-        // css is non null here
         for (final CharSequence cs : css) {
             if (isNotBlank(cs)) {
                return false;
@@ -719,12 +711,10 @@ public class StringUtils {
      *  {@code null} if whitespace, empty or null String input
      * @since 2.0
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static @Nullable String stripToNull(@Nullable String str) {
         if (str == null) {
             return null;
         }
-        // str is non null here
         str = strip(str, null);
         return str.isEmpty() ? null : str;
     }
@@ -928,13 +918,11 @@ public class StringUtils {
      * @param stripChars  the characters to remove, null treated as whitespace
      * @return the stripped Strings, {@code null} if null array input
      */
-    @SuppressWarnings("nullness:assignment.type.incompatible") 
     public static String @Nullable [] stripAll(final String @Nullable [] strs, final @Nullable String stripChars) {
         int strsLen;
         if (strs == null || (strsLen = strs.length) == 0) {
             return strs;
         }
-        // strs is non null here
         final String[] newArr = new String[strsLen];
         for (int i = 0; i < strsLen; i++) {
             newArr[i] = strip(strs[i], stripChars);
@@ -1333,12 +1321,10 @@ public class StringUtils {
      * @since 3.0 Changed signature from indexOf(String, int) to indexOf(CharSequence, int)
      * @since 3.6 Updated {@link CharSequenceUtils} call to behave more like <code>String</code>
      */
-    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static int indexOf(final @Nullable CharSequence seq, final int searchChar) {
         if (isEmpty(seq)) {
             return INDEX_NOT_FOUND;
         }
-        // seq is non null here
         return CharSequenceUtils.indexOf(seq, searchChar, 0);
     }
 
@@ -1395,12 +1381,10 @@ public class StringUtils {
      * @since 3.0 Changed signature from indexOf(String, int, int) to indexOf(CharSequence, int, int)
      * @since 3.6 Updated {@link CharSequenceUtils} call to behave more like <code>String</code>
      */
-    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static int indexOf(final @Nullable CharSequence seq, final int searchChar, final int startPos) {
         if (isEmpty(seq)) {
             return INDEX_NOT_FOUND;
         }
-        // seq is non null here
         return CharSequenceUtils.indexOf(seq, searchChar, startPos);
     }
 
@@ -1428,12 +1412,10 @@ public class StringUtils {
      * @since 2.0
      * @since 3.0 Changed signature from indexOf(String, String) to indexOf(CharSequence, CharSequence)
      */
-    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static int indexOf(final @Nullable CharSequence seq, final @Nullable CharSequence searchSeq) {
         if (seq == null || searchSeq == null) {
             return INDEX_NOT_FOUND;
         }
-        // seq is non null here
         return CharSequenceUtils.indexOf(seq, searchSeq, 0);
     }
 
@@ -1690,12 +1672,10 @@ public class StringUtils {
      * @since 3.0 Changed signature from lastIndexOf(String, int) to lastIndexOf(CharSequence, int)
      * @since 3.6 Updated {@link CharSequenceUtils} call to behave more like <code>String</code>
      */
-    @SuppressWarnings({"nullness:argument.type.incompatible","nullness:dereference.of.nullable"}) 
     public static int lastIndexOf(final @Nullable CharSequence seq, final int searchChar) {
         if (isEmpty(seq)) {
             return INDEX_NOT_FOUND;
         }
-        // seq is non null here
         return CharSequenceUtils.lastIndexOf(seq, searchChar, seq.length());
     }
 
@@ -1743,12 +1723,10 @@ public class StringUtils {
      * @since 2.0
      * @since 3.0 Changed signature from lastIndexOf(String, int, int) to lastIndexOf(CharSequence, int, int)
      */
-    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static int lastIndexOf(final @Nullable CharSequence seq, final int searchChar, final int startPos) {
         if (isEmpty(seq)) {
             return INDEX_NOT_FOUND;
         }
-        // seq is non null here
         return CharSequenceUtils.lastIndexOf(seq, searchChar, startPos);
     }
 
@@ -1969,12 +1947,10 @@ public class StringUtils {
      * @since 2.0
      * @since 3.0 Changed signature from contains(String, int) to contains(CharSequence, int)
      */
-    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static boolean contains(final @Nullable CharSequence seq, final int searchChar) {
         if (isEmpty(seq)) {
             return false;
         }
-        // seq is non null here
         return CharSequenceUtils.indexOf(seq, searchChar, 0) >= 0;
     }
 
@@ -2056,12 +2032,10 @@ public class StringUtils {
      * @since 3.0
      */
     // From org.springframework.util.StringUtils, under Apache License 2.0
-    @SuppressWarnings("nullness:dereference.of.nullable")
     public static boolean containsWhitespace(final @Nullable CharSequence seq) {
         if (isEmpty(seq)) {
             return false;
         }
-        // seq is non null here
         final int strLen = seq.length();
         for (int i = 0; i < strLen; i++) {
             if (Character.isWhitespace(seq.charAt(i))) {
@@ -2096,12 +2070,10 @@ public class StringUtils {
      * @since 2.0
      * @since 3.0 Changed signature from indexOfAny(String, char[]) to indexOfAny(CharSequence, char...)
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static int indexOfAny(final @Nullable CharSequence cs, final char @Nullable ... searchChars) {
         if (isEmpty(cs) || ArrayUtils.isEmpty(searchChars)) {
             return INDEX_NOT_FOUND;
         }
-        // cs and searchChars is non null here
         final int csLen = cs.length();
         final int csLast = csLen - 1;
         final int searchLen = searchChars.length;
@@ -2147,12 +2119,10 @@ public class StringUtils {
      * @since 2.0
      * @since 3.0 Changed signature from indexOfAny(String, String) to indexOfAny(CharSequence, String)
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static int indexOfAny(final @Nullable CharSequence cs, final @Nullable String searchChars) {
         if (isEmpty(cs) || isEmpty(searchChars)) {
             return INDEX_NOT_FOUND;
         }
-        // searchChars is non null here
         return indexOfAny(cs, searchChars.toCharArray());
     }
 
@@ -2183,12 +2153,10 @@ public class StringUtils {
      * @since 2.4
      * @since 3.0 Changed signature from containsAny(String, char[]) to containsAny(CharSequence, char...)
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static boolean containsAny(final @Nullable CharSequence cs, final char @Nullable ... searchChars) {
         if (isEmpty(cs) || ArrayUtils.isEmpty(searchChars)) {
             return false;
         }
-        // cs and searchChars is non null here
         final int csLength = cs.length();
         final int searchLength = searchChars.length;
         final int csLast = csLength - 1;
@@ -2278,12 +2246,10 @@ public class StringUtils {
      * @return {@code true} if any of the search CharSequences are found, {@code false} otherwise
      * @since 3.4
      */
-    @SuppressWarnings("nullness:iterating.over.nullable") 
     public static boolean containsAny(final @Nullable CharSequence cs, final CharSequence @Nullable ... searchCharSequences) {
         if (isEmpty(cs) || ArrayUtils.isEmpty(searchCharSequences)) {
             return false;
         }
-        // searchCharSequences is non null here
         for (final CharSequence searchCharSequence : searchCharSequences) {
             if (contains(cs, searchCharSequence)) {
                 return true;
@@ -2318,12 +2284,10 @@ public class StringUtils {
      * @since 2.0
      * @since 3.0 Changed signature from indexOfAnyBut(String, char[]) to indexOfAnyBut(CharSequence, char...)
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static int indexOfAnyBut(final @Nullable CharSequence cs, final char @Nullable ... searchChars) {
         if (isEmpty(cs) || ArrayUtils.isEmpty(searchChars)) {
             return INDEX_NOT_FOUND;
         }
-        // cs and searchChars is non null here
         final int csLen = cs.length();
         final int csLast = csLen - 1;
         final int searchLen = searchChars.length;
@@ -2370,12 +2334,10 @@ public class StringUtils {
      * @since 2.0
      * @since 3.0 Changed signature from indexOfAnyBut(String, String) to indexOfAnyBut(CharSequence, CharSequence)
      */
-    @SuppressWarnings({"nullness:dereference.of.nullable","nullness:argument.type.incompatible"}) 
     public static int indexOfAnyBut(final @Nullable CharSequence seq, final @Nullable CharSequence searchChars) {
         if (isEmpty(seq) || isEmpty(searchChars)) {
             return INDEX_NOT_FOUND;
         }
-        // seq is non null here
         final int strLen = seq.length();
         for (int i = 0; i < strLen; i++) {
             final char ch = seq.charAt(i);
@@ -2898,12 +2860,10 @@ public class StringUtils {
      *  {@code null} if null String input
      * @since 2.0
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static @Nullable String substringBefore(final @Nullable String str, final @Nullable String separator) {
         if (isEmpty(str) || separator == null) {
             return str;
         }
-        // seperator is non null here
         if (separator.isEmpty()) {
             return EMPTY;
         }
@@ -2942,7 +2902,6 @@ public class StringUtils {
      *  {@code null} if null String input
      * @since 2.0
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static @Nullable String substringAfter(final @Nullable String str, final @Nullable String separator) {
         if (isEmpty(str)) {
             return str;
@@ -2950,7 +2909,6 @@ public class StringUtils {
         if (separator == null) {
             return EMPTY;
         }
-        // str is non null here
         final int pos = str.indexOf(separator);
         if (pos == INDEX_NOT_FOUND) {
             return EMPTY;
@@ -2985,12 +2943,10 @@ public class StringUtils {
      *  {@code null} if null String input
      * @since 2.0
      */
-    @SuppressWarnings({"nullness:dereference.of.nullable","nullness:argument.type.incompatible"}) 
     public static @Nullable String substringBeforeLast(final @Nullable String str, final @Nullable String separator) {
         if (isEmpty(str) || isEmpty(separator)) {
             return str;
         }
-        // str and separator is non null here
         final int pos = str.lastIndexOf(separator);
         if (pos == INDEX_NOT_FOUND) {
             return str;
@@ -3027,7 +2983,6 @@ public class StringUtils {
      *  {@code null} if null String input
      * @since 2.0
      */
-    @SuppressWarnings({"nullness:dereference.of.nullable","nullness:argument.type.incompatible"}) 
     public static @Nullable String substringAfterLast(final @Nullable String str, final @Nullable String separator) {
         if (isEmpty(str)) {
             return str;
@@ -3035,7 +2990,6 @@ public class StringUtils {
         if (isEmpty(separator)) {
             return EMPTY;
         }
-        // str and seperator is non null here
         final int pos = str.lastIndexOf(separator);
         if (pos == INDEX_NOT_FOUND || pos == str.length() - separator.length()) {
             return EMPTY;
@@ -3895,7 +3849,7 @@ public class StringUtils {
      * @since 3.0 Changed signature to use varargs
      */
     @SafeVarargs
-    public static <T> @Nullable String join(final T @Nullable ... elements) {
+    public static <T> @PolyNull String join(final T @PolyNull ... elements) {
         return join(elements, null);
     }
 
@@ -3921,7 +3875,7 @@ public class StringUtils {
      * @return the joined String, {@code null} if null array input
      * @since 2.0
      */
-    public static @Nullable String join(final Object @Nullable [] array, final char separator) {
+    public static @PolyNull String join(final Object @PolyNull [] array, final char separator) {
         if (array == null) {
             return null;
         }
@@ -3953,7 +3907,7 @@ public class StringUtils {
      * @return the joined String, {@code null} if null array input
      * @since 3.2
      */
-    public static @Nullable String join(final long @Nullable [] array, final char separator) {
+    public static @PolyNull String join(final long @PolyNull [] array, final char separator) {
         if (array == null) {
             return null;
         }
@@ -3985,7 +3939,7 @@ public class StringUtils {
      * @return the joined String, {@code null} if null array input
      * @since 3.2
      */
-    public static @Nullable String join(final int @Nullable [] array, final char separator) {
+    public static @PolyNull String join(final int @PolyNull [] array, final char separator) {
         if (array == null) {
             return null;
         }
@@ -4017,7 +3971,7 @@ public class StringUtils {
      * @return the joined String, {@code null} if null array input
      * @since 3.2
      */
-    public static @Nullable String join(final short @Nullable [] array, final char separator) {
+    public static @PolyNull String join(final short @PolyNull [] array, final char separator) {
         if (array == null) {
             return null;
         }
@@ -4049,7 +4003,7 @@ public class StringUtils {
      * @return the joined String, {@code null} if null array input
      * @since 3.2
      */
-    public static @Nullable String join(final byte @Nullable [] array, final char separator) {
+    public static @PolyNull String join(final byte @PolyNull [] array, final char separator) {
         if (array == null) {
             return null;
         }
@@ -4113,7 +4067,7 @@ public class StringUtils {
      * @return the joined String, {@code null} if null array input
      * @since 3.2
      */
-    public static @Nullable String join(final float @Nullable [] array, final char separator) {
+    public static @PolyNull String join(final float @PolyNull [] array, final char separator) {
         if (array == null) {
             return null;
         }
@@ -4145,7 +4099,7 @@ public class StringUtils {
      * @return the joined String, {@code null} if null array input
      * @since 3.2
      */
-    public static @Nullable String join(final double @Nullable [] array, final char separator) {
+    public static @PolyNull String join(final double @PolyNull [] array, final char separator) {
         if (array == null) {
             return null;
         }
@@ -4179,7 +4133,7 @@ public class StringUtils {
      * @return the joined String, {@code null} if null array input
      * @since 2.0
      */
-    public static @Nullable String join(final Object @Nullable [] array, final char separator, final int startIndex, final int endIndex) {
+    public static @PolyNull String join(final Object @PolyNull [] array, final char separator, final int startIndex, final int endIndex) {
         if (array == null) {
             return null;
         }
@@ -4230,7 +4184,7 @@ public class StringUtils {
      * @return the joined String, {@code null} if null array input
      * @since 3.2
      */
-    public static @Nullable String join(final long @Nullable [] array, final char separator, final int startIndex, final int endIndex) {
+    public static @PolyNull String join(final long @PolyNull [] array, final char separator, final int startIndex, final int endIndex) {
         if (array == null) {
             return null;
         }
@@ -4279,7 +4233,7 @@ public class StringUtils {
      * @return the joined String, {@code null} if null array input
      * @since 3.2
      */
-    public static @Nullable String join(final int @Nullable [] array, final char separator, final int startIndex, final int endIndex) {
+    public static @PolyNull String join(final int @PolyNull [] array, final char separator, final int startIndex, final int endIndex) {
         if (array == null) {
             return null;
         }
@@ -4328,7 +4282,7 @@ public class StringUtils {
      * @return the joined String, {@code null} if null array input
      * @since 3.2
      */
-    public static @Nullable String join(final byte @Nullable [] array, final char separator, final int startIndex, final int endIndex) {
+    public static @PolyNull String join(final byte @PolyNull [] array, final char separator, final int startIndex, final int endIndex) {
         if (array == null) {
             return null;
         }
@@ -4377,7 +4331,7 @@ public class StringUtils {
      * @return the joined String, {@code null} if null array input
      * @since 3.2
      */
-    public static @Nullable String join(final short @Nullable [] array, final char separator, final int startIndex, final int endIndex) {
+    public static @PolyNull String join(final short @PolyNull [] array, final char separator, final int startIndex, final int endIndex) {
         if (array == null) {
             return null;
         }
@@ -4426,7 +4380,7 @@ public class StringUtils {
      * @return the joined String, {@code null} if null array input
      * @since 3.2
      */
-    public static @Nullable String join(final char @Nullable [] array, final char separator, final int startIndex, final int endIndex) {
+    public static @PolyNull String join(final char @PolyNull [] array, final char separator, final int startIndex, final int endIndex) {
         if (array == null) {
             return null;
         }
@@ -4475,7 +4429,7 @@ public class StringUtils {
      * @return the joined String, {@code null} if null array input
      * @since 3.2
      */
-    public static @Nullable String join(final double @Nullable [] array, final char separator, final int startIndex, final int endIndex) {
+    public static @PolyNull String join(final double @PolyNull [] array, final char separator, final int startIndex, final int endIndex) {
         if (array == null) {
             return null;
         }
@@ -4524,7 +4478,7 @@ public class StringUtils {
      * @return the joined String, {@code null} if null array input
      * @since 3.2
      */
-    public static @Nullable String join(final float @Nullable [] array, final char separator, final int startIndex, final int endIndex) {
+    public static @PolyNull String join(final float @PolyNull [] array, final char separator, final int startIndex, final int endIndex) {
         if (array == null) {
             return null;
         }
@@ -4566,7 +4520,7 @@ public class StringUtils {
      * @param separator  the separator character to use, null treated as ""
      * @return the joined String, {@code null} if null array input
      */
-    public static @Nullable String join(final Object @Nullable [] array, final @Nullable String separator) {
+    public static @PolyNull String join(final Object @PolyNull [] array, final @Nullable String separator) {
         if (array == null) {
             return null;
         }
@@ -4608,7 +4562,7 @@ public class StringUtils {
      * {@code endIndex < 0} or <br>
      * {@code endIndex > array.length()}
      */
-    public static @Nullable String join(final Object @Nullable [] array,@Nullable String separator, final int startIndex, final int endIndex) {
+    public static @PolyNull String join(final Object @PolyNull [] array,@Nullable String separator, final int startIndex, final int endIndex) {
         if (array == null) {
             return null;
         }
@@ -4650,7 +4604,7 @@ public class StringUtils {
      * @return the joined String, {@code null} if null iterator input
      * @since 2.0
      */
-    public static @Nullable String join(final @Nullable Iterator<?> iterator, final char separator) {
+    public static @PolyNull String join(final @PolyNull Iterator<?> iterator, final char separator) {
 
         // handle null, zero and one elements before building a buffer
         if (iterator == null) {
@@ -4694,7 +4648,7 @@ public class StringUtils {
      * @param separator  the separator character to use, null treated as ""
      * @return the joined String, {@code null} if null iterator input
      */
-    public static @Nullable String join(final @Nullable Iterator<?> iterator, final @Nullable String separator) {
+    public static @PolyNull String join(final @PolyNull Iterator<?> iterator, final @Nullable String separator) {
 
         // handle null, zero and one elements before building a buffer
         if (iterator == null) {
@@ -4740,7 +4694,7 @@ public class StringUtils {
      * @return the joined String, {@code null} if null iterator input
      * @since 2.3
      */
-    public static @Nullable String join(final @Nullable Iterable<?> iterable, final char separator) {
+    public static @PolyNull String join(final @PolyNull Iterable<?> iterable, final char separator) {
         if (iterable == null) {
             return null;
         }
@@ -4761,7 +4715,7 @@ public class StringUtils {
      * @return the joined String, {@code null} if null iterator input
      * @since 2.3
      */
-    public static @Nullable String join(final @Nullable Iterable<?> iterable, final @Nullable String separator) {
+    public static @PolyNull String join(final @PolyNull Iterable<?> iterable, final @Nullable String separator) {
         if (iterable == null) {
             return null;
         }
@@ -4826,12 +4780,10 @@ public class StringUtils {
      * @param str  the String to delete whitespace from, may be null
      * @return the String without whitespaces, {@code null} if null String input
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static @Nullable String deleteWhitespace(final @Nullable String str) {
         if (isEmpty(str)) {
             return str;
         }
-        // str is non null here
         final int sz = str.length();
         final char[] chs = new char[sz];
         int count = 0;
@@ -4872,12 +4824,10 @@ public class StringUtils {
      *  {@code null} if null String input
      * @since 2.1
      */
-    @SuppressWarnings({"nullness:dereference.of.nullable","argument.type.incompatible"}) 
     public static @Nullable String removeStart(final @Nullable String str, final @Nullable String remove) {
         if (isEmpty(str) || isEmpty(remove)) {
             return str;
         }
-        // str and remove is non null here
         if (str.startsWith(remove)){
             return str.substring(remove.length());
         }
@@ -4909,12 +4859,10 @@ public class StringUtils {
      *  {@code null} if null String input
      * @since 2.4
      */
-    @SuppressWarnings({"nullness:dereference.of.nullable","argument.type.incompatible"}) 
     public static @Nullable String removeStartIgnoreCase(final @Nullable String str, final @Nullable String remove) {
         if (isEmpty(str) || isEmpty(remove)) {
             return str;
         }
-        // str is non null here
         if (startsWithIgnoreCase(str, remove)) {
             return str.substring(remove.length());
         }
@@ -4945,12 +4893,10 @@ public class StringUtils {
      *  {@code null} if null String input
      * @since 2.1
      */
-    @SuppressWarnings({"nullness:dereference.of.nullable","argument.type.incompatible"}) 
     public static @Nullable String removeEnd(final @Nullable String str, final @Nullable String remove) {
         if (isEmpty(str) || isEmpty(remove)) {
             return str;
         }
-        // str and remove is non null here
         if (str.endsWith(remove)) {
             return str.substring(0, str.length() - remove.length());
         }
@@ -4983,12 +4929,10 @@ public class StringUtils {
      *  {@code null} if null String input
      * @since 2.4
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static @Nullable String removeEndIgnoreCase(final @Nullable String str, final @Nullable String remove) {
         if (isEmpty(str) || isEmpty(remove)) {
             return str;
         }
-        // str and remove are non null here
         if (endsWithIgnoreCase(str, remove)) {
             return str.substring(0, str.length() - remove.length());
         }
@@ -5084,12 +5028,10 @@ public class StringUtils {
      *  {@code null} if null String input
      * @since 2.1
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static @Nullable String remove(final @Nullable String str, final char remove) {
         if (isEmpty(str) || str.indexOf(remove) == INDEX_NOT_FOUND) {
             return str;
         }
-        // str is non null here
         final char[] chars = str.toCharArray();
         int pos = 0;
         for (int i = 0; i < chars.length; i++) {
@@ -5557,12 +5499,10 @@ public class StringUtils {
      * @return the text with any replacements processed,
      *  {@code null} if null String input
      */
-     @SuppressWarnings({"nullness:dereference.of.nullable","argument.type.incompatible"})
-     private static @Nullable String replace(final @Nullable String text,@Nullable String searchString, final @Nullable String replacement, int max, final boolean ignoreCase) {
+     private static @PolyNull String replace(final @PolyNull String text,@Nullable String searchString, final @Nullable String replacement, int max, final boolean ignoreCase) {
          if (isEmpty(text) || isEmpty(searchString) || replacement == null || max == 0) {
              return text;
          }
-         // text, searchString is non null here 
          String searchText = text;
          if (ignoreCase) {
              searchText = text.toLowerCase();
@@ -5959,7 +5899,6 @@ public class StringUtils {
      * @return modified String, {@code null} if null string input
      * @since 2.0
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static @Nullable String replaceChars(final @Nullable String str, final @Nullable String searchChars,@Nullable String replaceChars) {
         if (isEmpty(str) || isEmpty(searchChars)) {
             return str;
@@ -5967,7 +5906,6 @@ public class StringUtils {
         if (replaceChars == null) {
             replaceChars = EMPTY;
         }
-        // str, searchChars and replaceChars is non null here
         boolean modified = false;
         final int replaceCharsLength = replaceChars.length();
         final int strLength = str.length();
@@ -6078,13 +6016,11 @@ public class StringUtils {
      * @param str  the String to chomp a newline from, may be null
      * @return String without newline, {@code null} if null String input
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static @Nullable String chomp(final @Nullable String str) {
         if (isEmpty(str)) {
             return str;
         }
 
-        // str is non null here
         if (str.length() == 1) {
             final char ch = str.charAt(0);
             if (ch == CharUtils.CR || ch == CharUtils.LF) {
@@ -6870,12 +6806,10 @@ public class StringUtils {
      * @param str  the String to swap case, may be null
      * @return the changed String, {@code null} if null String input
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static @Nullable String swapCase(final @Nullable String str) {
         if (StringUtils.isEmpty(str)) {
             return str;
         }
-        // str is non null here
 
         final int strLen = str.length();
         final int newCodePoints[] = new int[strLen]; // cannot be longer than the char array
@@ -6920,12 +6854,10 @@ public class StringUtils {
      * @return the number of occurrences, 0 if either CharSequence is {@code null}
      * @since 3.0 Changed signature from countMatches(String, String) to countMatches(CharSequence, CharSequence)
      */
-    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static int countMatches(final @Nullable CharSequence str, final @Nullable CharSequence sub) {
         if (isEmpty(str) || isEmpty(sub)) {
             return 0;
         }
-        // str and sub are non null here
         int count = 0;
         int idx = 0;
         while ((idx = CharSequenceUtils.indexOf(str, sub, idx)) != INDEX_NOT_FOUND) {
@@ -6953,13 +6885,11 @@ public class StringUtils {
      * @param ch  the char to count
      * @return the number of occurrences, 0 if the CharSequence is {@code null}
      * @since 3.4
-     */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
+     */ 
     public static int countMatches(final @Nullable CharSequence str, final char ch) {
         if (isEmpty(str)) {
             return 0;
         }
-        // str is non null here
         int count = 0;
         // We could also call str.toCharArray() for faster look ups but that would generate more garbage.
         for (int i = 0; i < str.length(); i++) {
@@ -6992,12 +6922,10 @@ public class StringUtils {
      * @since 3.0 Changed signature from isAlpha(String) to isAlpha(CharSequence)
      * @since 3.0 Changed "" to return false and not true
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static boolean isAlpha(final @Nullable CharSequence cs) {
         if (isEmpty(cs)) {
             return false;
         }
-        // cs is non null here
         final int sz = cs.length();
         for (int i = 0; i < sz; i++) {
             if (!Character.isLetter(cs.charAt(i))) {
@@ -7029,12 +6957,10 @@ public class StringUtils {
      *  and is non-null
      * @since 3.0 Changed signature from isAlphaSpace(String) to isAlphaSpace(CharSequence)
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static boolean isAlphaSpace(final @Nullable CharSequence cs) {
         if (cs == null) {
             return false;
         }
-        // cs is non nul here
         final int sz = cs.length();
         for (int i = 0; i < sz; i++) {
             if (!Character.isLetter(cs.charAt(i)) && cs.charAt(i) != ' ') {
@@ -7066,12 +6992,10 @@ public class StringUtils {
      * @since 3.0 Changed signature from isAlphanumeric(String) to isAlphanumeric(CharSequence)
      * @since 3.0 Changed "" to return false and not true
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static boolean isAlphanumeric(final @Nullable CharSequence cs) {
         if (isEmpty(cs)) {
             return false;
         }
-        // cs is non null here
         final int sz = cs.length();
         for (int i = 0; i < sz; i++) {
             if (!Character.isLetterOrDigit(cs.charAt(i))) {
@@ -7103,12 +7027,10 @@ public class StringUtils {
      *  and is non-null
      * @since 3.0 Changed signature from isAlphanumericSpace(String) to isAlphanumericSpace(CharSequence)
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static boolean isAlphanumericSpace(final @Nullable CharSequence cs) {
         if (cs == null) {
             return false;
         }
-        // cs is non null here
         final int sz = cs.length();
         for (int i = 0; i < sz; i++) {
             if (!Character.isLetterOrDigit(cs.charAt(i)) && cs.charAt(i) != ' ') {
@@ -7144,12 +7066,10 @@ public class StringUtils {
      * @since 2.1
      * @since 3.0 Changed signature from isAsciiPrintable(String) to isAsciiPrintable(CharSequence)
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static boolean isAsciiPrintable(final @Nullable CharSequence cs) {
         if (cs == null) {
             return false;
         }
-        // cs is non null here
         final int sz = cs.length();
         for (int i = 0; i < sz; i++) {
             if (!CharUtils.isAsciiPrintable(cs.charAt(i))) {
@@ -7190,12 +7110,10 @@ public class StringUtils {
      * @since 3.0 Changed signature from isNumeric(String) to isNumeric(CharSequence)
      * @since 3.0 Changed "" to return false and not true
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static boolean isNumeric(final @Nullable CharSequence cs) {
         if (isEmpty(cs)) {
             return false;
         }
-        // cs is non null here
         final int sz = cs.length();
         for (int i = 0; i < sz; i++) {
             if (!Character.isDigit(cs.charAt(i))) {
@@ -7231,12 +7149,10 @@ public class StringUtils {
      *  and is non-null
      * @since 3.0 Changed signature from isNumericSpace(String) to isNumericSpace(CharSequence)
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static boolean isNumericSpace(final @Nullable CharSequence cs) {
         if (cs == null) {
             return false;
         }
-        // cs is non null here
         final int sz = cs.length();
         for (int i = 0; i < sz; i++) {
             if (!Character.isDigit(cs.charAt(i)) && cs.charAt(i) != ' ') {
@@ -7268,12 +7184,10 @@ public class StringUtils {
      *           or {@code null} String if {@code str} is null
      * @since 3.6
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static @Nullable String getDigits(final @Nullable String str) {
         if (isEmpty(str)) {
             return str;
         }
-        // str is non null here
         final int sz = str.length();
         final StringBuilder strDigits = new StringBuilder(sz);
         for (int i = 0; i < sz; i++) {
@@ -7307,12 +7221,10 @@ public class StringUtils {
      * @since 2.0
      * @since 3.0 Changed signature from isWhitespace(String) to isWhitespace(CharSequence)
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static boolean isWhitespace(final @Nullable CharSequence cs) {
         if (cs == null) {
             return false;
         }
-        // cs is non null here
         final int sz = cs.length();
         for (int i = 0; i < sz; i++) {
             if (!Character.isWhitespace(cs.charAt(i))) {
@@ -7344,12 +7256,10 @@ public class StringUtils {
      * @since 2.5
      * @since 3.0 Changed signature from isAllLowerCase(String) to isAllLowerCase(CharSequence)
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static boolean isAllLowerCase(final @Nullable CharSequence cs) {
         if (cs == null || isEmpty(cs)) {
             return false;
         }
-        // cs is non null here
         final int sz = cs.length();
         for (int i = 0; i < sz; i++) {
             if (!Character.isLowerCase(cs.charAt(i))) {
@@ -7381,12 +7291,10 @@ public class StringUtils {
      * @since 2.5
      * @since 3.0 Changed signature from isAllUpperCase(String) to isAllUpperCase(CharSequence)
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static boolean isAllUpperCase(final @Nullable CharSequence cs) {
         if (cs == null || isEmpty(cs)) {
             return false;
         }
-        // cs is non null here
         final int sz = cs.length();
         for (int i = 0; i < sz; i++) {
             if (!Character.isUpperCase(cs.charAt(i))) {
@@ -7418,12 +7326,10 @@ public class StringUtils {
      * @return {@code true} if the CharSequence contains both uppercase and lowercase characters
      * @since 3.5
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static boolean isMixedCase(final @Nullable CharSequence cs) {
         if (isEmpty(cs) || cs.length() == 1) {
             return false;
         }
-        // cs is non null here
         boolean containsUppercase = false;
         boolean containsLowercase = false;
         final int sz = cs.length();
@@ -7781,12 +7687,10 @@ public class StringUtils {
      * @throws IllegalArgumentException if the width is too small
      * @since 3.6
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static @Nullable String abbreviate(final @Nullable String str, final String abbrevMarker, int offset, final int maxWidth) {
         if (isEmpty(str) || isEmpty(abbrevMarker)) {
             return str;
         }
-        // str and abbrevMarker is non null here
 
         final int abbrevMarkerLength = abbrevMarker.length();
         final int minAbbrevWidth = abbrevMarkerLength + 1;
@@ -7845,12 +7749,10 @@ public class StringUtils {
      * @return the abbreviated String if the above criteria is met, or the original String supplied for abbreviation.
      * @since 2.5
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static @Nullable String abbreviateMiddle(final @Nullable String str, final @Nullable String middle, final int length) {
         if (isEmpty(str) || isEmpty(middle)) {
             return str;
         }
-        // str and middle are non null here
 
         if (length >= str.length() || length < middle.length()+2) {
             return str;
@@ -8076,7 +7978,6 @@ public class StringUtils {
      * or if there is no common prefix.
      * @since 2.4
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static String getCommonPrefix(final @Nullable String @Nullable ... strs) {
         if (strs == null || strs.length == 0) {
             return EMPTY;
@@ -8093,7 +7994,6 @@ public class StringUtils {
             return EMPTY;
         } else {
             // we found a common initial character sequence
-            // str[0] is non null here
             return strs[0].substring(0, smallestIndexOfDiff);
         }
     }
@@ -8648,12 +8548,10 @@ public class StringUtils {
      * @since 2.5
      * @since 3.0 Changed signature from startsWithAny(String, String[]) to startsWithAny(CharSequence, CharSequence...)
      */
-    @SuppressWarnings("nullness:iterating.over.nullable") 
     public static boolean startsWithAny(final @Nullable CharSequence sequence, final CharSequence @Nullable ... searchStrings) {
         if (isEmpty(sequence) || ArrayUtils.isEmpty(searchStrings)) {
             return false;
         }
-        // searchStrings is non null here
         for (final CharSequence searchString : searchStrings) {
             if (startsWith(sequence, searchString)) {
                 return true;
@@ -8783,14 +8681,12 @@ public class StringUtils {
      *
      * @since 3.0
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static @Nullable String normalizeSpace(final @Nullable String str) {
         // LANG-1020: Improved performance significantly by normalizing manually instead of using regex
         // See https://github.com/librucha/commons-lang-normalizespaces-benchmark for performance test
         if (isEmpty(str)) {
             return str;
         }
-        // str is non null here
         final int size = str.length();
         final char[] newChars = new char[size];
         int count = 0;
@@ -8837,12 +8733,10 @@ public class StringUtils {
      *   the input {@code sequence} ends in any of the provided case-sensitive {@code searchStrings}.
      * @since 3.0
      */
-    @SuppressWarnings("nullness:iterating.over.nullable")
     public static boolean endsWithAny(final @Nullable CharSequence sequence, final CharSequence @Nullable ... searchStrings) {
         if (isEmpty(sequence) || ArrayUtils.isEmpty(searchStrings)) {
             return false;
         }
-        // searchStrings is non null 
         for (final CharSequence searchString : searchStrings) {
             if (endsWith(sequence, searchString)) {
                 return true;
@@ -9149,13 +9043,11 @@ public class StringUtils {
      * @return wrapped String, {@code null} if null String input
      * @since 3.4
      */
-    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static @Nullable String wrap(final @Nullable String str, final String wrapWith) {
 
         if (isEmpty(str) || isEmpty(wrapWith)) {
             return str;
         }
-        // str and wrapWith are non null here 
         return wrapWith.concat(str).concat(wrapWith);
     }
 
@@ -9184,12 +9076,10 @@ public class StringUtils {
      * @return the wrapped string, or {@code null} if {@code str==null}
      * @since 3.5
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static @Nullable String wrapIfMissing(final @Nullable String str, final char wrapWith) {
         if (isEmpty(str) || wrapWith == CharUtils.NUL) {
             return str;
         }
-        // str is non null here
         final StringBuilder builder = new StringBuilder(str.length() + 2);
         if (str.charAt(0) != wrapWith) {
             builder.append(wrapWith);
@@ -9230,12 +9120,10 @@ public class StringUtils {
      * @return the wrapped string, or {@code null} if {@code str==null}
      * @since 3.5
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static @Nullable String wrapIfMissing(final @Nullable String str, final String wrapWith) {
         if (isEmpty(str) || isEmpty(wrapWith)) {
             return str;
         }
-        // str is non null here
         final StringBuilder builder = new StringBuilder(str.length() + wrapWith.length() + wrapWith.length());
         if (!str.startsWith(wrapWith)) {
             builder.append(wrapWith);
@@ -9272,12 +9160,10 @@ public class StringUtils {
      *          if it is not quoted properly with the wrapToken
      * @since 3.6
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static @Nullable String unwrap(final @Nullable String str, final String wrapToken) {
         if (isEmpty(str) || isEmpty(wrapToken)) {
             return str;
         }
-        // str is non null here
 
         if (startsWith(str, wrapToken) && endsWith(str, wrapToken)) {
             final int startIndex = str.indexOf(wrapToken);
@@ -9315,12 +9201,10 @@ public class StringUtils {
      *          if it is not quoted properly with the wrapChar
      * @since 3.6
      */
-    @SuppressWarnings("nullness:dereference.of.nullable") 
     public static @Nullable String unwrap(final @Nullable String str, final char wrapChar) {
         if (isEmpty(str) || wrapChar == CharUtils.NUL) {
             return str;
         }
-        // str is non null here
 
         if (str.charAt(0) == wrapChar && str.charAt(str.length() - 1) == wrapChar) {
             final int startIndex = 0;

@@ -192,7 +192,6 @@ public class AnnotationUtils {
      * @return the standard string representation of an annotation, not
      * {@code null}
      */
-    @SuppressWarnings("nullness:argument.type.incompatible") 
     public static String toString(final Annotation a) {
         final ToStringBuilder builder = new ToStringBuilder(a, TO_STRING_STYLE);
         for (final Method m : a.annotationType().getDeclaredMethods()) {
@@ -200,7 +199,6 @@ public class AnnotationUtils {
                 continue; //wtf?
             }
             try {
-                // Method.invoke returns null if argument is null, here (Annotation)a is non-null.
                 builder.append(m.getName(), m.invoke(a));
             } catch (final RuntimeException ex) {
                 throw ex;
