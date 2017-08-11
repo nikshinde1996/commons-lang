@@ -28,6 +28,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.AnnotatedFor;
 import org.checkerframework.checker.initialization.qual.UnknownInitialization;
+import org.checkerframework.checker.nullness.qual.AssertNonNullIfNonNull;
 
 /**
  * <p>Controls <code>String</code> formatting for {@link ToStringBuilder}.
@@ -187,6 +188,7 @@ public abstract class ToStringStyle implements Serializable {
      *
      * @return Set the registry of objects being traversed
      */
+    @AssertNonNullIfNonNull("REGISTRY.get()")
     static @Nullable Map<Object, Object> getRegistry() {
         return REGISTRY.get();
     }
@@ -222,7 +224,6 @@ public abstract class ToStringStyle implements Serializable {
             if (m == null) {
                 REGISTRY.set(new WeakHashMap<>());
             }
-            assert getRegistry() != null : "@AssumeAssertion(nullness)";
             getRegistry().put(value, null);
         }
     }

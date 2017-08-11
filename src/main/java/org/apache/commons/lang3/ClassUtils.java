@@ -1091,7 +1091,7 @@ public class ClassUtils {
         } else if (array.length == 0) {
             return ArrayUtils.EMPTY_CLASS_ARRAY;
         }
-        final Class<?>[] classes = new Class[array.length];
+        final @Nullable Class<?>[] classes = new Class[array.length];
         for (int i = 0; i < array.length; i++) {
             classes[i] = array[i] == null ? null : array[i].getClass();
         }

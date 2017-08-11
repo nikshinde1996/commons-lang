@@ -679,7 +679,7 @@ public class NumberUtils {
      * @return converted <code>Float</code> (or null if the input is null)
      * @throws NumberFormatException if the value cannot be converted
      */
-    public static @Nullable Float createFloat(final @Nullable String str) {
+    public static @PolyNull Float createFloat(final @PolyNull String str) {
         if (str == null) {
             return null;
         }
@@ -695,7 +695,7 @@ public class NumberUtils {
      * @return converted <code>Double</code> (or null if the input is null)
      * @throws NumberFormatException if the value cannot be converted
      */
-    public static @Nullable Double createDouble(final @Nullable String str) {
+    public static @PolyNull Double createDouble(final @PolyNull String str) {
         if (str == null) {
             return null;
         }
@@ -713,7 +713,7 @@ public class NumberUtils {
      * @return converted <code>Integer</code> (or null if the input is null)
      * @throws NumberFormatException if the value cannot be converted
      */
-    public static @Nullable Integer createInteger(final @Nullable String str) {
+    public static @PolyNull Integer createInteger(final @PolyNull String str) {
         if (str == null) {
             return null;
         }
@@ -732,7 +732,7 @@ public class NumberUtils {
      * @return converted <code>Long</code> (or null if the input is null)
      * @throws NumberFormatException if the value cannot be converted
      */
-    public static @Nullable Long createLong(final @Nullable String str) {
+    public static @PolyNull Long createLong(final @PolyNull String str) {
         if (str == null) {
             return null;
         }
@@ -749,7 +749,7 @@ public class NumberUtils {
      * @return converted <code>BigInteger</code> (or null if the input is null)
      * @throws NumberFormatException if the value cannot be converted
      */
-    public static @Nullable BigInteger createBigInteger(final @Nullable String str) {
+    public static @PolyNull BigInteger createBigInteger(final @PolyNull String str) {
         if (str == null) {
             return null;
         }
@@ -784,7 +784,7 @@ public class NumberUtils {
      * @return converted <code>BigDecimal</code> (or null if the input is null)
      * @throws NumberFormatException if the value cannot be converted
      */
-    public static @Nullable BigDecimal createBigDecimal(final @Nullable String str) {
+    public static @PolyNull BigDecimal createBigDecimal(final @PolyNull String str) {
         if (str == null) {
             return null;
         }

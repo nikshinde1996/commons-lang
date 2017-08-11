@@ -21,6 +21,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.regex.Pattern;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**

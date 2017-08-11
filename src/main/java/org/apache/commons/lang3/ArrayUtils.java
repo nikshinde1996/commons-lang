@@ -33,6 +33,7 @@ import org.apache.commons.lang3.mutable.MutableInt;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.checker.nullness.qual.PolyNull;
 import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.nullness.qual.EnsuresNonNullIf;
 
 /**
  * <p>Operations on arrays, primitive arrays (like {@code int[]}) and
@@ -475,7 +476,7 @@ public class ArrayUtils {
      * @throws IllegalArgumentException if the type argument is null
      * @since 3.5
      */
-    public static <T> T @Nullable [] nullToEmpty(final T @Nullable [] array, final Class<T[]> type) {
+    public static <T> T @Nullable [] nullToEmpty(final @Nullable T @Nullable [] array, final Class<T[]> type) {
         if (type == null) {
             throw new IllegalArgumentException("The type must not be null");
         }
@@ -500,7 +501,7 @@ public class ArrayUtils {
      * @return the same array, {@code public static} empty array if {@code null} or empty input
      * @since 2.5
      */
-    public static Object @Nullable [] nullToEmpty(final Object @Nullable [] array) {
+    public static Object @Nullable [] nullToEmpty(final @Nullable Object @Nullable [] array) {
         if (isEmpty(array)) {
             return EMPTY_OBJECT_ARRAY;
         }
@@ -520,7 +521,7 @@ public class ArrayUtils {
      * @return the same array, {@code public static} empty array if {@code null} or empty input
      * @since 3.2
      */
-    public static Class<?> @Nullable [] nullToEmpty(final Class<?> @Nullable [] array) {
+    public static Class<?> @Nullable [] nullToEmpty(final @Nullable Class<?> @Nullable [] array) {
         if (isEmpty(array)) {
             return EMPTY_CLASS_ARRAY;
         }
@@ -4846,6 +4847,7 @@ public class ArrayUtils {
      * @return {@code true} if the array is empty or {@code null}
      * @since 2.1
      */
+    @EnsuresNonNullIf(expression="#1", result=false) 
     public static boolean isEmpty(final Object @Nullable [] array) {
         return getLength(array) == 0;
     }
@@ -4857,6 +4859,7 @@ public class ArrayUtils {
      * @return {@code true} if the array is empty or {@code null}
      * @since 2.1
      */
+    @EnsuresNonNullIf(expression="#1", result=false) 
     public static boolean isEmpty(final long @Nullable [] array) {
         return getLength(array) == 0;
     }
@@ -4868,6 +4871,7 @@ public class ArrayUtils {
      * @return {@code true} if the array is empty or {@code null}
      * @since 2.1
      */
+    @EnsuresNonNullIf(expression="#1", result=false) 
     public static boolean isEmpty(final int @Nullable [] array) {
         return getLength(array) == 0;
     }
@@ -4879,6 +4883,7 @@ public class ArrayUtils {
      * @return {@code true} if the array is empty or {@code null}
      * @since 2.1
      */
+    @EnsuresNonNullIf(expression="#1", result=false) 
     public static boolean isEmpty(final short @Nullable [] array) {
         return getLength(array) == 0;
     }
@@ -4890,6 +4895,7 @@ public class ArrayUtils {
      * @return {@code true} if the array is empty or {@code null}
      * @since 2.1
      */
+    @EnsuresNonNullIf(expression="#1", result=false) 
     public static boolean isEmpty(final char @Nullable [] array) {
         return getLength(array) == 0;
     }
@@ -4901,6 +4907,7 @@ public class ArrayUtils {
      * @return {@code true} if the array is empty or {@code null}
      * @since 2.1
      */
+    @EnsuresNonNullIf(expression="#1", result=false) 
     public static boolean isEmpty(final byte @Nullable [] array) {
         return getLength(array) == 0;
     }
@@ -4912,6 +4919,7 @@ public class ArrayUtils {
      * @return {@code true} if the array is empty or {@code null}
      * @since 2.1
      */
+    @EnsuresNonNullIf(expression="#1", result=false) 
     public static boolean isEmpty(final double @Nullable [] array) {
         return getLength(array) == 0;
     }
@@ -4923,6 +4931,7 @@ public class ArrayUtils {
      * @return {@code true} if the array is empty or {@code null}
      * @since 2.1
      */
+    @EnsuresNonNullIf(expression="#1", result=false) 
     public static boolean isEmpty(final float @Nullable [] array) {
         return getLength(array) == 0;
     }
@@ -4934,6 +4943,7 @@ public class ArrayUtils {
      * @return {@code true} if the array is empty or {@code null}
      * @since 2.1
      */
+    @EnsuresNonNullIf(expression="#1", result=false) 
     public static boolean isEmpty(final boolean @Nullable [] array) {
         return getLength(array) == 0;
     }

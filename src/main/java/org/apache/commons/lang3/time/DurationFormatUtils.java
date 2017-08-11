@@ -507,6 +507,7 @@ public class DurationFormatUtils {
         for (int i = 0; i < format.length(); i++) {
             final char ch = format.charAt(i);
             if (inLiteral && ch != '\'') {
+                assert buffer != null : "@AssumeAssertion(nullness)";
                 buffer.append(ch); // buffer can't be null if inLiteral is true
                 continue;
             }

@@ -338,6 +338,7 @@ public class FieldUtils {
         final Field field = getField(cls, fieldName, forceAccess);
         Validate.isTrue(field != null, "Cannot locate field '%s' on %s", fieldName, cls);
         // already forced access above, don't repeat it here:
+        assert field != null : "@AssumeAssertion(nullness): Validate.isTrue() ensures that field is non-null";
         return readStaticField(field, false);
     }
 
@@ -382,6 +383,7 @@ public class FieldUtils {
         final Field field = getDeclaredField(cls, fieldName, forceAccess);
         Validate.isTrue(field != null, "Cannot locate declared field %s.%s", cls.getName(), fieldName);
         // already forced access above, don't repeat it here:
+        assert field != null : "@AssumeAssertion(nullness): Validate.isTrue() ensures that field is non-null";
         return readStaticField(field, false);
     }
 
@@ -468,6 +470,7 @@ public class FieldUtils {
         final Field field = getField(cls, fieldName, forceAccess);
         Validate.isTrue(field != null, "Cannot locate field %s on %s", fieldName, cls);
         // already forced access above, don't repeat it here:
+        assert field != null : "@AssumeAssertion(nullness): Validate.isTrue() ensures that field is non-null";
         return readField(field, target, false);
     }
 
@@ -511,6 +514,7 @@ public class FieldUtils {
         final Field field = getDeclaredField(cls, fieldName, forceAccess);
         Validate.isTrue(field != null, "Cannot locate declared field %s.%s", cls, fieldName);
         // already forced access above, don't repeat it here:
+        assert field != null : "@AssumeAssertion(nullness): Validate.isTrue() ensures that field is non-null";
         return readField(field, target, false);
     }
 
@@ -596,6 +600,7 @@ public class FieldUtils {
         final Field field = getField(cls, fieldName, forceAccess);
         Validate.isTrue(field != null, "Cannot locate field %s on %s", fieldName, cls);
         // already forced access above, don't repeat it here:
+        assert field != null : "@AssumeAssertion(nullness): Validate.isTrue() ensures that field is non-null";
         writeStaticField(field, value, false);
     }
 
@@ -641,6 +646,7 @@ public class FieldUtils {
         final Field field = getDeclaredField(cls, fieldName, forceAccess);
         Validate.isTrue(field != null, "Cannot locate declared field %s.%s", cls.getName(), fieldName);
         // already forced access above, don't repeat it here:
+        assert field != null : "@AssumeAssertion(nullness): Validate.isTrue() ensures that field is non-null";
         writeField(field, (Object) null, value, false);
     }
 
@@ -787,6 +793,7 @@ public class FieldUtils {
         final Field field = getField(cls, fieldName, forceAccess);
         Validate.isTrue(field != null, "Cannot locate declared field %s.%s", cls.getName(), fieldName);
         // already forced access above, don't repeat it here:
+        assert field != null : "@AssumeAssertion(nullness): Validate.isTrue() ensures that field is non-null";
         writeField(field, target, value, false);
     }
 
@@ -835,6 +842,7 @@ public class FieldUtils {
         final Field field = getDeclaredField(cls, fieldName, forceAccess);
         Validate.isTrue(field != null, "Cannot locate declared field %s.%s", cls.getName(), fieldName);
         // already forced access above, don't repeat it here:
+        assert field != null : "@AssumeAssertion(nullness): Validate.isTrue() ensures that field is non-null";
         writeField(field, target, value, false);
     }
 }

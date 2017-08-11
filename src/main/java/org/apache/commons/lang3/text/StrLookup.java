@@ -168,7 +168,7 @@ public abstract class StrLookup<V> {
     /**
      * Lookup implementation based on system properties.
      */
-    // BUG : key may be null, this may lead to NPE in if block in this method.
+    // BUG : key may be null, this may lead to NPE in SystemPropertiesStrLookup.lookup method.
     // adding null check (key != null) in "if block" will resolve this bug.  
     private static class SystemPropertiesStrLookup extends StrLookup<String> {
         /**

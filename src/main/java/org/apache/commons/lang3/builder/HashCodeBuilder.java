@@ -359,6 +359,7 @@ public class HashCodeBuilder implements Builder<Integer> {
             final boolean testTransients, final @Nullable Class<? super T> reflectUpToClass, final String... excludeFields) {
         Validate.isTrue(object != null, "The object to build a hash code for must not be null");
         final HashCodeBuilder builder = new HashCodeBuilder(initialNonZeroOddNumber, multiplierNonZeroOddNumber);
+        @SuppressWarnings("dereference.of.nullable") // Validate.isTrue() ensure that object is non null in this part
         Class<?> clazz = object.getClass();
         reflectionAppend(object, clazz, builder, testTransients, excludeFields);
         while (clazz.getSuperclass() != null && clazz != reflectUpToClass) {

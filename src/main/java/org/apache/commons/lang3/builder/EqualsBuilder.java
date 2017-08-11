@@ -96,7 +96,7 @@ public class EqualsBuilder implements Builder<Boolean> {
      *
      * @since 3.0
      */
-    private static final ThreadLocal<Set<Pair<IDKey, IDKey>>> REGISTRY = new ThreadLocal<>();
+    private static final ThreadLocal< @Nullable Set<Pair<IDKey, IDKey>>> REGISTRY = new ThreadLocal<>();
 
     /*
      * NOTE: we cannot store the actual objects in a HashSet, as that would use the very hashCode()
@@ -124,7 +124,7 @@ public class EqualsBuilder implements Builder<Boolean> {
      * @return Set the registry of objects being traversed
      * @since 3.0
      */
-    static Set<Pair<IDKey, IDKey>> getRegistry() {
+    static @Nullable Set<Pair<IDKey, IDKey>> getRegistry() {
         return REGISTRY.get();
     }
 
