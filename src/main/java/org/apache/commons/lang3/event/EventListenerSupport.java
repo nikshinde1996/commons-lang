@@ -276,7 +276,8 @@ public class EventListenerSupport<L> implements Serializable {
 
         this.listeners = new CopyOnWriteArrayList<>(srcListeners);
 
-        @SuppressWarnings("unchecked") // Will throw CCE here if not correct
+        @SuppressWarnings({"unchecked","argument.type.incompatible"}) // Will throw CCE here if not correct
+        // invoking class represents array class, hence listenerInterface is non null.
         final
         Class<L> listenerInterface = (Class<L>) srcListeners.getClass().getComponentType();
 

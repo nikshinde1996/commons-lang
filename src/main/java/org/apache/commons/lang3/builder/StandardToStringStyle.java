@@ -18,6 +18,7 @@ package org.apache.commons.lang3.builder;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.initialization.qual.UnknownInitialization;
 
 /**
  * <p>Works with {@link ToStringBuilder} to create a <code>toString</code>.</p>
@@ -203,7 +204,7 @@ public class StandardToStringStyle extends ToStringStyle {
      * @param arrayStart  the new array start text
      */
     @Override
-    public void setArrayStart(final @Nullable String arrayStart) { // NOPMD as this is implementing the abstract class
+    public void setArrayStart(@UnknownInitialization(org.apache.commons.lang3.builder.ToStringStyle.class) StandardToStringStyle this,final @Nullable String arrayStart) { // NOPMD as this is implementing the abstract class
         super.setArrayStart(arrayStart);
     }
 

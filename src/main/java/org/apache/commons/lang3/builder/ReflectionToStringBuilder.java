@@ -30,6 +30,8 @@ import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.Validate;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.initialization.qual.UnderInitialization;
+import org.checkerframework.checker.initialization.qual.UnknownInitialization;
 
 /**
  * <p>
@@ -401,7 +403,9 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      *            The array to check
      * @return The given array or a new array without null.
      */
-    static String[] toNoNullStringArray(final Object[] array) {
+    @SuppressWarnings("return.type.incompatible") 
+    // list does not contains null elements
+    static String[] toNoNullStringArray(final @Nullable Object[] array) {
         final List<String> list = new ArrayList<>(array.length);
         for (final Object e : array) {
             if (e != null) {
@@ -421,7 +425,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      *            The field names to exclude
      * @return The toString value.
      */
-    public static String toStringExclude(final Object object, final String... excludeFieldNames) {
+    public static String toStringExclude(final Object object, final @Nullable String... excludeFieldNames) {
         return new ReflectionToStringBuilder(object).setExcludeFieldNames(excludeFieldNames).toString();
     }
 
@@ -450,12 +454,12 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      *
      * @since 3.0 this is protected instead of private
      */
-    protected String[] excludeFieldNames;
+    protected String @Nullable [] excludeFieldNames;
 
     /**
      * The last super class to stop appending fields for.
      */
-    private Class<?> upToClass = null;
+    private @Nullable Class<?> upToClass = null;
 
     /**
      * <p>
@@ -658,7 +662,8 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
     /**
      * @return Returns the excludeFieldNames.
      */
-    public String[] getExcludeFieldNames() {
+    // BUG : this.getExcludeFieldNames may be null,   
+    public String @Nullable [] getExcludeFieldNames() {
         return this.excludeFieldNames.clone();
     }
 
@@ -669,7 +674,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      *
      * @return The last super class to stop appending fields for.
      */
-    public Class<?> getUpToClass() {
+    public @Nullable Class<?> getUpToClass() {
         return this.upToClass;
     }
 
@@ -751,7 +756,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      *            Whether or not to append static fields.
      * @since 2.1
      */
-    public void setAppendStatics(final boolean appendStatics) {
+    public void setAppendStatics(@UnderInitialization(org.apache.commons.lang3.builder.ReflectionToStringBuilder.class) ReflectionToStringBuilder this,final boolean appendStatics) {
         this.appendStatics = appendStatics;
     }
 
@@ -763,7 +768,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      * @param appendTransients
      *            Whether or not to append transient fields.
      */
-    public void setAppendTransients(final boolean appendTransients) {
+    public void setAppendTransients(@UnderInitialization(org.apache.commons.lang3.builder.ReflectionToStringBuilder.class) ReflectionToStringBuilder this,final boolean appendTransients) {
         this.appendTransients = appendTransients;
     }
 
@@ -776,7 +781,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      *            Whether or not to append fields whose values are null.
      * @since 3.6
      */
-    public void setExcludeNullValues(final boolean excludeNullValues) {
+    public void setExcludeNullValues(@UnderInitialization(org.apache.commons.lang3.builder.ReflectionToStringBuilder.class) ReflectionToStringBuilder this,final boolean excludeNullValues) {
         this.excludeNullValues = excludeNullValues;
     }
 
@@ -787,7 +792,10 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      *            The excludeFieldNames to excluding from toString or <code>null</code>.
      * @return <code>this</code>
      */
-    public ReflectionToStringBuilder setExcludeFieldNames(final String @Nullable ... excludeFieldNamesParam) {
+    @SuppressWarnings("argument.type.incompatible") 
+    // this.excludeFieldNames does not contain null elements, checker does not establish this correctness
+    // at runtime. toNoNullStringArray() returns array with removing null elements. 
+    public ReflectionToStringBuilder setExcludeFieldNames(final @Nullable String @Nullable ... excludeFieldNamesParam) {
         if (excludeFieldNamesParam == null) {
             this.excludeFieldNames = null;
         } else {
@@ -806,7 +814,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      * @param clazz
      *            The last super class to stop appending fields for.
      */
-    public void setUpToClass(final Class<?> clazz) {
+    public void setUpToClass(@UnderInitialization(org.apache.commons.lang3.builder.ReflectionToStringBuilder.class) ReflectionToStringBuilder this,final Class<?> clazz) {
         if (clazz != null) {
             final Object object = getObject();
             if (object != null && !clazz.isInstance(object)) {
@@ -824,10 +832,14 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      * @return the built string
      */
     @Override
+    @SuppressWarnings("argument.type.incompatible")
+    // class.getSuperclass() is non null in while loop
     public String toString() {
         if (this.getObject() == null) {
             return this.getStyle().getNullText();
         }
+        @SuppressWarnings("dereference.of.nullable")
+        // this.getObject() is non null here,this3 null check is performed at start of this method.
         Class<?> clazz = this.getObject().getClass();
         this.appendFieldsIn(clazz);
         while (clazz.getSuperclass() != null && clazz != this.getUpToClass()) {

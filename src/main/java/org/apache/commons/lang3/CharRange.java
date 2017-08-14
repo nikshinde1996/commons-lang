@@ -212,6 +212,8 @@ final class CharRange implements Iterable<Character>, Serializable {
         if (obj instanceof CharRange == false) {
             return false;
         }
+        assert obj != null : "@AssumeAssertion(nullness): This method returns false if obj is null.";
+        // in second IF block expression (obj instanceof CharRange) is false when obj is null.
         final CharRange other = (CharRange) obj;
         return start == other.start && end == other.end && negated == other.negated;
     }

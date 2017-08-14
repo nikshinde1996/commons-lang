@@ -168,7 +168,7 @@ public abstract class ToStringStyle implements Serializable {
      * to detect cyclical object references and avoid infinite loops.
      * </p>
      */
-    private static final ThreadLocal<@Nullable WeakHashMap<Object,Object>> REGISTRY =
+    private static final ThreadLocal<@Nullable WeakHashMap<Object,@Nullable Object>> REGISTRY =
         new ThreadLocal<>();
     /*
      * Note that objects of this class are generally shared between threads, so
@@ -189,7 +189,7 @@ public abstract class ToStringStyle implements Serializable {
      * @return Set the registry of objects being traversed
      */
     @AssertNonNullIfNonNull("REGISTRY.get()")
-    static @Nullable Map<Object, Object> getRegistry() {
+    static @Nullable Map<Object,@Nullable Object> getRegistry() {
         return REGISTRY.get();
     }
 
@@ -205,7 +205,7 @@ public abstract class ToStringStyle implements Serializable {
      *             object.
      */
     static boolean isRegistered(final Object value) {
-        final Map<Object, Object> m = getRegistry();
+        final Map<Object,@Nullable Object> m = getRegistry();
         return m != null && m.containsKey(value);
     }
 
@@ -218,9 +218,11 @@ public abstract class ToStringStyle implements Serializable {
      * @param value
      *                  The object to register.
      */
+    @SuppressWarnings("dereference.of.nullable")
+    // when getRegistry() is null, REGISTRY sets new WeakHashMap. 
     static void register(final Object value) {
         if (value != null) {
-            final Map<Object, Object> m = getRegistry();
+            final Map<Object,@Nullable Object> m = getRegistry();
             if (m == null) {
                 REGISTRY.set(new WeakHashMap<>());
             }
@@ -242,7 +244,7 @@ public abstract class ToStringStyle implements Serializable {
      */
     static void unregister(final Object value) {
         if (value != null) {
-            final Map<Object, Object> m = getRegistry();
+            final Map<Object,@Nullable Object> m = getRegistry();
             if (m != null) {
                 m.remove(value);
                 if (m.isEmpty()) {
@@ -957,7 +959,7 @@ public abstract class ToStringStyle implements Serializable {
      *  not <code>null</code>
      * @since 2.0
      */
-    protected void reflectionAppendArrayDetail(final StringBuffer buffer, final String fieldName, final Object array) {
+    protected void reflectionAppendArrayDetail(final StringBuffer buffer, final @Nullable String fieldName, final Object array) {
         buffer.append(arrayStart);
         final int length = Array.getLength(array);
         for (int i = 0; i < length; i++) {

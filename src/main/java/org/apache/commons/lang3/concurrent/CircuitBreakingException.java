@@ -16,6 +16,9 @@
  */
 package org.apache.commons.lang3.concurrent;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
+
 /**
  * <p>
  * An exception class used for reporting runtime error conditions related to
@@ -23,6 +26,7 @@ package org.apache.commons.lang3.concurrent;
  * </p>
  * @since 3.5
  */
+@AnnotatedFor({"nullness"}) 
 public class CircuitBreakingException extends RuntimeException {
     /**
      * The serial version UID.
@@ -42,7 +46,7 @@ public class CircuitBreakingException extends RuntimeException {
      * @param message the error message
      * @param cause the cause of this exception
      */
-    public CircuitBreakingException(final String message, final Throwable cause) {
+    public CircuitBreakingException(final @Nullable String message, final @Nullable Throwable cause) {
         super(message, cause);
     }
 
@@ -51,7 +55,7 @@ public class CircuitBreakingException extends RuntimeException {
      *
      * @param message the error message
      */
-    public CircuitBreakingException(final String message) {
+    public CircuitBreakingException(final @Nullable String message) {
         super(message);
     }
 
@@ -60,7 +64,7 @@ public class CircuitBreakingException extends RuntimeException {
      *
      * @param cause the cause of this exception
      */
-    public CircuitBreakingException(final Throwable cause) {
+    public CircuitBreakingException(final @Nullable Throwable cause) {
         super(cause);
     }
 

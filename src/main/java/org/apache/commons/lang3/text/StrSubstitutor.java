@@ -229,6 +229,7 @@ public class StrSubstitutor {
         final Enumeration<?> propNames = valueProperties.propertyNames();
         while (propNames.hasMoreElements()) {
             final String propName = (String)propNames.nextElement();
+            assert propName != null : "@AssumeAssertion(nullness)";
             final String propValue = valueProperties.getProperty(propName);
             valueMap.put(propName, propValue);
         }

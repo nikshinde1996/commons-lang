@@ -476,7 +476,9 @@ public class ArrayUtils {
      * @throws IllegalArgumentException if the type argument is null
      * @since 3.5
      */
-    public static <T> T @Nullable [] nullToEmpty(final @Nullable T @Nullable [] array, final Class<T[]> type) {
+    @SuppressWarnings("argument.type.incompatible")
+    // type represents Array class, hence type is non null    
+    public static <T> T[] nullToEmpty(final T @Nullable [] array, final Class<T[]> type) {
         if (type == null) {
             throw new IllegalArgumentException("The type must not be null");
         }
@@ -501,7 +503,7 @@ public class ArrayUtils {
      * @return the same array, {@code public static} empty array if {@code null} or empty input
      * @since 2.5
      */
-    public static Object @Nullable [] nullToEmpty(final @Nullable Object @Nullable [] array) {
+    public static Object[] nullToEmpty(final Object @Nullable [] array) {
         if (isEmpty(array)) {
             return EMPTY_OBJECT_ARRAY;
         }
@@ -521,7 +523,7 @@ public class ArrayUtils {
      * @return the same array, {@code public static} empty array if {@code null} or empty input
      * @since 3.2
      */
-    public static Class<?> @Nullable [] nullToEmpty(final @Nullable Class<?> @Nullable [] array) {
+    public static Class<?>[] nullToEmpty(final Class<?> @Nullable [] array) {
         if (isEmpty(array)) {
             return EMPTY_CLASS_ARRAY;
         }
@@ -541,7 +543,7 @@ public class ArrayUtils {
      * @return the same array, {@code public static} empty array if {@code null} or empty input
      * @since 2.5
      */
-    public static String @Nullable [] nullToEmpty(final String @Nullable [] array) {
+    public static String[] nullToEmpty(final String @Nullable [] array) {
         if (isEmpty(array)) {
             return EMPTY_STRING_ARRAY;
         }
@@ -561,7 +563,7 @@ public class ArrayUtils {
      * @return the same array, {@code public static} empty array if {@code null} or empty input
      * @since 2.5
      */
-    public static long @Nullable [] nullToEmpty(final long @Nullable [] array) {
+    public static long[] nullToEmpty(final long @Nullable [] array) {
         if (isEmpty(array)) {
             return EMPTY_LONG_ARRAY;
         }
@@ -581,7 +583,7 @@ public class ArrayUtils {
      * @return the same array, {@code public static} empty array if {@code null} or empty input
      * @since 2.5
      */
-    public static int @Nullable [] nullToEmpty(final int @Nullable [] array) {
+    public static int[] nullToEmpty(final int @Nullable [] array) {
         if (isEmpty(array)) {
             return EMPTY_INT_ARRAY;
         }
@@ -601,7 +603,7 @@ public class ArrayUtils {
      * @return the same array, {@code public static} empty array if {@code null} or empty input
      * @since 2.5
      */
-    public static short @Nullable [] nullToEmpty(final short @Nullable [] array) {
+    public static short[] nullToEmpty(final short @Nullable [] array) {
         if (isEmpty(array)) {
             return EMPTY_SHORT_ARRAY;
         }
@@ -621,7 +623,7 @@ public class ArrayUtils {
      * @return the same array, {@code public static} empty array if {@code null} or empty input
      * @since 2.5
      */
-    public static char @Nullable [] nullToEmpty(final char @Nullable [] array) {
+    public static char[] nullToEmpty(final char @Nullable [] array) {
         if (isEmpty(array)) {
             return EMPTY_CHAR_ARRAY;
         }
@@ -641,7 +643,7 @@ public class ArrayUtils {
      * @return the same array, {@code public static} empty array if {@code null} or empty input
      * @since 2.5
      */
-    public static byte @Nullable [] nullToEmpty(final byte @Nullable [] array) {
+    public static byte[] nullToEmpty(final byte @Nullable [] array) {
         if (isEmpty(array)) {
             return EMPTY_BYTE_ARRAY;
         }
@@ -661,7 +663,7 @@ public class ArrayUtils {
      * @return the same array, {@code public static} empty array if {@code null} or empty input
      * @since 2.5
      */
-    public static double @Nullable [] nullToEmpty(final double @Nullable [] array) {
+    public static double[] nullToEmpty(final double @Nullable [] array) {
         if (isEmpty(array)) {
             return EMPTY_DOUBLE_ARRAY;
         }
@@ -681,7 +683,7 @@ public class ArrayUtils {
      * @return the same array, {@code public static} empty array if {@code null} or empty input
      * @since 2.5
      */
-    public static float @Nullable [] nullToEmpty(final float @Nullable [] array) {
+    public static float[] nullToEmpty(final float @Nullable [] array) {
         if (isEmpty(array)) {
             return EMPTY_FLOAT_ARRAY;
         }
@@ -701,7 +703,7 @@ public class ArrayUtils {
      * @return the same array, {@code public static} empty array if {@code null} or empty input
      * @since 2.5
      */
-    public static boolean @Nullable [] nullToEmpty(final boolean @Nullable [] array) {
+    public static boolean[] nullToEmpty(final boolean @Nullable [] array) {
         if (isEmpty(array)) {
             return EMPTY_BOOLEAN_ARRAY;
         }
@@ -721,7 +723,7 @@ public class ArrayUtils {
      * @return the same array, {@code public static} empty array if {@code null} or empty input
      * @since 2.5
      */
-    public static Long @Nullable [] nullToEmpty(final Long @Nullable [] array) {
+    public static Long[] nullToEmpty(final Long @Nullable [] array) {
         if (isEmpty(array)) {
             return EMPTY_LONG_OBJECT_ARRAY;
         }
@@ -741,7 +743,7 @@ public class ArrayUtils {
      * @return the same array, {@code public static} empty array if {@code null} or empty input
      * @since 2.5
      */
-    public static Integer @Nullable [] nullToEmpty(final Integer @Nullable [] array) {
+    public static Integer[] nullToEmpty(final Integer @Nullable [] array) {
         if (isEmpty(array)) {
             return EMPTY_INTEGER_OBJECT_ARRAY;
         }
@@ -761,7 +763,7 @@ public class ArrayUtils {
      * @return the same array, {@code public static} empty array if {@code null} or empty input
      * @since 2.5
      */
-    public static Short @Nullable [] nullToEmpty(final Short @Nullable [] array) {
+    public static Short[] nullToEmpty(final Short @Nullable [] array) {
         if (isEmpty(array)) {
             return EMPTY_SHORT_OBJECT_ARRAY;
         }
@@ -781,7 +783,7 @@ public class ArrayUtils {
      * @return the same array, {@code public static} empty array if {@code null} or empty input
      * @since 2.5
      */
-    public static Character @Nullable [] nullToEmpty(final Character @Nullable [] array) {
+    public static Character[] nullToEmpty(final Character @Nullable [] array) {
         if (isEmpty(array)) {
             return EMPTY_CHARACTER_OBJECT_ARRAY;
         }
@@ -801,7 +803,7 @@ public class ArrayUtils {
      * @return the same array, {@code public static} empty array if {@code null} or empty input
      * @since 2.5
      */
-    public static Byte @Nullable [] nullToEmpty(final Byte @Nullable [] array) {
+    public static Byte[] nullToEmpty(final Byte @Nullable [] array) {
         if (isEmpty(array)) {
             return EMPTY_BYTE_OBJECT_ARRAY;
         }
@@ -821,7 +823,7 @@ public class ArrayUtils {
      * @return the same array, {@code public static} empty array if {@code null} or empty input
      * @since 2.5
      */
-    public static Double @Nullable [] nullToEmpty(final Double @Nullable [] array) {
+    public static Double[] nullToEmpty(final Double @Nullable [] array) {
         if (isEmpty(array)) {
             return EMPTY_DOUBLE_OBJECT_ARRAY;
         }
@@ -841,7 +843,7 @@ public class ArrayUtils {
      * @return the same array, {@code public static} empty array if {@code null} or empty input
      * @since 2.5
      */
-    public static Float @Nullable [] nullToEmpty(final Float @Nullable [] array) {
+    public static Float[] nullToEmpty(final Float @Nullable [] array) {
         if (isEmpty(array)) {
             return EMPTY_FLOAT_OBJECT_ARRAY;
         }
@@ -861,7 +863,7 @@ public class ArrayUtils {
      * @return the same array, {@code public static} empty array if {@code null} or empty input
      * @since 2.5
      */
-    public static Boolean @Nullable [] nullToEmpty(final Boolean @Nullable [] array) {
+    public static Boolean[] nullToEmpty(final Boolean @Nullable [] array) {
         if (isEmpty(array)) {
             return EMPTY_BOOLEAN_OBJECT_ARRAY;
         }
@@ -899,7 +901,7 @@ public class ArrayUtils {
      * @since 2.1
      * @see Arrays#copyOfRange(Object[], int, int)
      */
-    public static <T> T @Nullable [] subarray(final T @Nullable [] array, int startIndexInclusive, int endIndexExclusive) {
+    public static <T> T @PolyNull [] subarray(final T @PolyNull [] array, int startIndexInclusive, int endIndexExclusive) {
         if (array == null) {
             return null;
         }
@@ -912,13 +914,14 @@ public class ArrayUtils {
         final int newSize = endIndexExclusive - startIndexInclusive;
         final Class<?> type = array.getClass().getComponentType();
         if (newSize <= 0) {
-            @SuppressWarnings("unchecked") // OK, because array is of type T
+            @SuppressWarnings({"unchecked","argument.type.incompatible"}) // OK, because array is of type T
+            // invoking class represents Array class, hence type is non null
             final T[] emptyArray = (T[]) Array.newInstance(type, 0);
             return emptyArray;
         }
-        @SuppressWarnings("unchecked") // OK, because array is of type T
-        final
-        T[] subarray = (T[]) Array.newInstance(type, newSize);
+        @SuppressWarnings({"unchecked","argument.type.incompatible"}) // OK, because array is of type T
+        // invoking class represents Array class, hence type is non null
+        final T[] subarray = (T[]) Array.newInstance(type, newSize);
         System.arraycopy(array, startIndexInclusive, subarray, 0, newSize);
         return subarray;
     }
@@ -943,7 +946,7 @@ public class ArrayUtils {
      * @since 2.1
      * @see Arrays#copyOfRange(long[], int, int)
      */
-    public static long @Nullable [] subarray(final long @Nullable [] array, int startIndexInclusive, int endIndexExclusive) {
+    public static long @PolyNull [] subarray(final long @PolyNull [] array, int startIndexInclusive, int endIndexExclusive) {
         if (array == null) {
             return null;
         }
@@ -983,7 +986,7 @@ public class ArrayUtils {
      * @since 2.1
      * @see Arrays#copyOfRange(int[], int, int)
      */
-    public static int @Nullable [] subarray(final int @Nullable [] array, int startIndexInclusive, int endIndexExclusive) {
+    public static int @PolyNull [] subarray(final int @PolyNull [] array, int startIndexInclusive, int endIndexExclusive) {
         if (array == null) {
             return null;
         }
@@ -1023,7 +1026,7 @@ public class ArrayUtils {
      * @since 2.1
      * @see Arrays#copyOfRange(short[], int, int)
      */
-    public static short @Nullable [] subarray(final short @Nullable [] array, int startIndexInclusive, int endIndexExclusive) {
+    public static short @PolyNull [] subarray(final short @PolyNull [] array, int startIndexInclusive, int endIndexExclusive) {
         if (array == null) {
             return null;
         }
@@ -1063,7 +1066,7 @@ public class ArrayUtils {
      * @since 2.1
      * @see Arrays#copyOfRange(char[], int, int)
      */
-    public static char @Nullable [] subarray(final char @Nullable [] array, int startIndexInclusive, int endIndexExclusive) {
+    public static char @PolyNull [] subarray(final char @PolyNull [] array, int startIndexInclusive, int endIndexExclusive) {
         if (array == null) {
             return null;
         }
@@ -1103,7 +1106,7 @@ public class ArrayUtils {
      * @since 2.1
      * @see Arrays#copyOfRange(byte[], int, int)
      */
-    public static byte @Nullable [] subarray(final byte @Nullable [] array, int startIndexInclusive, int endIndexExclusive) {
+    public static byte @PolyNull [] subarray(final byte @PolyNull [] array, int startIndexInclusive, int endIndexExclusive) {
         if (array == null) {
             return null;
         }
@@ -1143,7 +1146,7 @@ public class ArrayUtils {
      * @since 2.1
      * @see Arrays#copyOfRange(double[], int, int)
      */
-    public static double @Nullable [] subarray(final double @Nullable [] array, int startIndexInclusive, int endIndexExclusive) {
+    public static double @PolyNull [] subarray(final double @PolyNull [] array, int startIndexInclusive, int endIndexExclusive) {
         if (array == null) {
             return null;
         }
@@ -1183,7 +1186,7 @@ public class ArrayUtils {
      * @since 2.1
      * @see Arrays#copyOfRange(float[], int, int)
      */
-    public static float @Nullable [] subarray(final float @Nullable [] array, int startIndexInclusive, int endIndexExclusive) {
+    public static float @PolyNull [] subarray(final float @PolyNull [] array, int startIndexInclusive, int endIndexExclusive) {
         if (array == null) {
             return null;
         }
@@ -1223,7 +1226,7 @@ public class ArrayUtils {
      * @since 2.1
      * @see Arrays#copyOfRange(boolean[], int, int)
      */
-    public static boolean @Nullable [] subarray(final boolean @Nullable [] array, int startIndexInclusive, int endIndexExclusive) {
+    public static boolean @PolyNull [] subarray(final boolean @PolyNull [] array, int startIndexInclusive, int endIndexExclusive) {
         if (array == null) {
             return null;
         }
@@ -3269,6 +3272,8 @@ public class ArrayUtils {
      * @return the last index of the object within the array,
      *  {@link #INDEX_NOT_FOUND} ({@code -1}) if not found or {@code null} array input
      */
+    @SuppressWarnings("dereference.of.nullable") 
+    // array.getClass().getComponentType() is non null as the invoking class represents array class. 
     public static int lastIndexOf(final Object @Nullable [] array, final @Nullable Object objectToFind, int startIndex) {
         if (array == null) {
             return INDEX_NOT_FOUND;
@@ -4847,7 +4852,11 @@ public class ArrayUtils {
      * @return {@code true} if the array is empty or {@code null}
      * @since 2.1
      */
-    @EnsuresNonNullIf(expression="#1", result=false) 
+    @SuppressWarnings("contracts.conditional.postcondition.not.satisfied")
+    // array is non null if this method returns false, checker fails to establish this
+    // correctness as null check does not directly reflect in this result. getLength() returns
+    // '0' when array is null or length is 0.
+    @EnsuresNonNullIf(expression="#1", result=false)
     public static boolean isEmpty(final Object @Nullable [] array) {
         return getLength(array) == 0;
     }
@@ -4859,7 +4868,11 @@ public class ArrayUtils {
      * @return {@code true} if the array is empty or {@code null}
      * @since 2.1
      */
-    @EnsuresNonNullIf(expression="#1", result=false) 
+    @SuppressWarnings("contracts.conditional.postcondition.not.satisfied")
+    // array is non null if this method returns false, checker fails to establish this
+    // correctness as null check does not directly reflect in this result. getLength() returns
+    // '0' when array is null or length is 0.     
+    @EnsuresNonNullIf(expression="#1", result=false)
     public static boolean isEmpty(final long @Nullable [] array) {
         return getLength(array) == 0;
     }
@@ -4871,7 +4884,11 @@ public class ArrayUtils {
      * @return {@code true} if the array is empty or {@code null}
      * @since 2.1
      */
-    @EnsuresNonNullIf(expression="#1", result=false) 
+    @SuppressWarnings("contracts.conditional.postcondition.not.satisfied")
+    // array is non null if this method returns false, checker fails to establish this
+    // correctness as null check does not directly reflect in this result. getLength() returns
+    // '0' when array is null or length is 0.     
+    @EnsuresNonNullIf(expression="#1", result=false)
     public static boolean isEmpty(final int @Nullable [] array) {
         return getLength(array) == 0;
     }
@@ -4883,7 +4900,11 @@ public class ArrayUtils {
      * @return {@code true} if the array is empty or {@code null}
      * @since 2.1
      */
-    @EnsuresNonNullIf(expression="#1", result=false) 
+    @SuppressWarnings("contracts.conditional.postcondition.not.satisfied")
+    // array is non null if this method returns false, checker fails to establish this
+    // correctness as null check does not directly reflect in this result. getLength() returns
+    // '0' when array is null or length is 0.     
+    @EnsuresNonNullIf(expression="#1", result=false)
     public static boolean isEmpty(final short @Nullable [] array) {
         return getLength(array) == 0;
     }
@@ -4895,7 +4916,11 @@ public class ArrayUtils {
      * @return {@code true} if the array is empty or {@code null}
      * @since 2.1
      */
-    @EnsuresNonNullIf(expression="#1", result=false) 
+    @SuppressWarnings("contracts.conditional.postcondition.not.satisfied")
+    // array is non null if this method returns false, checker fails to establish this
+    // correctness as null check does not directly reflect in this result. getLength() returns
+    // '0' when array is null or length is 0.     
+    @EnsuresNonNullIf(expression="#1", result=false)
     public static boolean isEmpty(final char @Nullable [] array) {
         return getLength(array) == 0;
     }
@@ -4907,7 +4932,11 @@ public class ArrayUtils {
      * @return {@code true} if the array is empty or {@code null}
      * @since 2.1
      */
-    @EnsuresNonNullIf(expression="#1", result=false) 
+    @SuppressWarnings("contracts.conditional.postcondition.not.satisfied")
+    // array is non null if this method returns false, checker fails to establish this
+    // correctness as null check does not directly reflect in this result. getLength() returns
+    // '0' when array is null or length is 0.     
+    @EnsuresNonNullIf(expression="#1", result=false)
     public static boolean isEmpty(final byte @Nullable [] array) {
         return getLength(array) == 0;
     }
@@ -4919,7 +4948,11 @@ public class ArrayUtils {
      * @return {@code true} if the array is empty or {@code null}
      * @since 2.1
      */
-    @EnsuresNonNullIf(expression="#1", result=false) 
+    @SuppressWarnings("contracts.conditional.postcondition.not.satisfied")
+    // array is non null if this method returns false, checker fails to establish this
+    // correctness as null check does not directly reflect in this result. getLength() returns
+    // '0' when array is null or length is 0.     
+    @EnsuresNonNullIf(expression="#1", result=false)
     public static boolean isEmpty(final double @Nullable [] array) {
         return getLength(array) == 0;
     }
@@ -4931,7 +4964,11 @@ public class ArrayUtils {
      * @return {@code true} if the array is empty or {@code null}
      * @since 2.1
      */
-    @EnsuresNonNullIf(expression="#1", result=false) 
+    @SuppressWarnings("contracts.conditional.postcondition.not.satisfied")
+    // array is non null if this method returns false, checker fails to establish this
+    // correctness as null check does not directly reflect in this result. getLength() returns
+    // '0' when array is null or length is 0.     
+    @EnsuresNonNullIf(expression="#1", result=false)
     public static boolean isEmpty(final float @Nullable [] array) {
         return getLength(array) == 0;
     }
@@ -4943,7 +4980,11 @@ public class ArrayUtils {
      * @return {@code true} if the array is empty or {@code null}
      * @since 2.1
      */
-    @EnsuresNonNullIf(expression="#1", result=false) 
+    @SuppressWarnings("contracts.conditional.postcondition.not.satisfied")
+    // array is non null if this method returns false, checker fails to establish this
+    // correctness as null check does not directly reflect in this result. getLength() returns
+    // '0' when array is null or length is 0.     
+    @EnsuresNonNullIf(expression="#1", result=false)
     public static boolean isEmpty(final boolean @Nullable [] array) {
         return getLength(array) == 0;
     }
@@ -5080,7 +5121,8 @@ public class ArrayUtils {
             return clone(array1);
         }
         final Class<?> type1 = array1.getClass().getComponentType();
-        @SuppressWarnings("unchecked") // OK, because array is of type T
+        @SuppressWarnings({"unchecked","argument.type.incompatible"}) // OK, because array is of type T
+        // invoking class represents Array class, hence type1 is non null
         final T[] joinedArray = (T[]) Array.newInstance(type1, array1.length + array2.length);
         System.arraycopy(array1, 0, joinedArray, 0, array1.length);
         try {
@@ -5093,6 +5135,7 @@ public class ArrayUtils {
              * - safer, in case check turns out to be too strict
              */
             final Class<?> type2 = array2.getClass().getComponentType();
+            assert type2 != null : "@AssumeAssertion(nullness): invoking class represents Array class, hence type2 is non null";
             if (!type1.isAssignableFrom(type2)) {
                 throw new IllegalArgumentException("Cannot store " + type2.getName() + " in an array of "
                         + type1.getName(), ase);
@@ -5372,9 +5415,9 @@ public class ArrayUtils {
         } else {
             throw new IllegalArgumentException("Arguments cannot both be null");
         }
-        @SuppressWarnings("unchecked") // type must be T
-        final
-        T[] newArray = (T[]) copyArrayGrow1(array, type);
+        @SuppressWarnings({"unchecked","argument.type.incompatible"}) // OK, because array is of type T
+        // invoking class represents Array class, hence type is non null
+        final T[] newArray = (T[]) copyArrayGrow1(array, type);
         newArray[newArray.length - 1] = element;
         return newArray;
     }
@@ -5607,6 +5650,8 @@ public class ArrayUtils {
     private static Object copyArrayGrow1(final @Nullable Object array, final Class<?> newArrayComponentType) {
         if (array != null) {
             final int arrayLength = Array.getLength(array);
+            @SuppressWarnings("argument.type.incompatible")
+            // invoking class represents Array class, hence type is non null
             final Object newArray = Array.newInstance(array.getClass().getComponentType(), arrayLength + 1);
             System.arraycopy(array, 0, newArray, 0, arrayLength);
             return newArray;
@@ -5656,7 +5701,8 @@ public class ArrayUtils {
         } else {
             throw new IllegalArgumentException("Array and element cannot both be null");
         }
-        @SuppressWarnings("unchecked") // the add method creates an array of type clss, which is type T
+        @SuppressWarnings({"unchecked","argument.type.incompatible"}) // the add method creates an array of type clss, which is type T
+        // invoking class represents Array class, hence type is non null
         final T[] newArray = (T[]) add(array, index, element, clss);
         return newArray;
     }
@@ -6104,6 +6150,7 @@ public class ArrayUtils {
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
         }
+        assert array != null : "@AssumeAssertion(nullness): At the beginning this method returns cloned array if array is null, hence array is non null in this part";
         return remove(array, index);
     }
 
@@ -6169,6 +6216,7 @@ public class ArrayUtils {
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
         }
+        assert array != null : "@AssumeAssertion(nullness): At the beginning this method returns cloned array if array is null, hence array is non null in this part";
         return remove(array, index);
     }
 
@@ -6234,6 +6282,7 @@ public class ArrayUtils {
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
         }
+        assert array != null : "@AssumeAssertion(nullness): At the beginning this method returns cloned array if array is null, hence array is non null in this part";
         return remove(array, index);
     }
 
@@ -6299,6 +6348,7 @@ public class ArrayUtils {
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
         }
+        assert array != null : "@AssumeAssertion(nullness): At the beginning this method returns cloned array if array is null, hence array is non null in this part";
         return remove(array, index);
     }
 
@@ -6364,6 +6414,7 @@ public class ArrayUtils {
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
         }
+        assert array != null : "@AssumeAssertion(nullness): At the beginning this method returns cloned array if array is null, hence array is non null in this part";
         return remove(array, index);
     }
 
@@ -6429,6 +6480,7 @@ public class ArrayUtils {
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
         }
+        assert array != null : "@AssumeAssertion(nullness): At the beginning this method returns cloned array if array is null, hence array is non null in this part";
         return remove(array, index);
     }
 
@@ -6494,6 +6546,7 @@ public class ArrayUtils {
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
         }
+        assert array != null : "@AssumeAssertion(nullness): At the beginning this method returns cloned array if array is null, hence array is non null in this part";
         return remove(array, index);
     }
 
@@ -6559,6 +6612,7 @@ public class ArrayUtils {
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
         }
+        assert array != null : "@AssumeAssertion(nullness): At the beginning this method returns cloned array if array is null, hence array is non null in this part";
         return remove(array, index);
     }
 
@@ -6588,6 +6642,8 @@ public class ArrayUtils {
         if (index < 0 || index >= length) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Length: " + length);
         }
+        @SuppressWarnings("argument.type.incompatible")
+        // invoking class represents Array class, hence type is non null        
         final Object result = Array.newInstance(array.getClass().getComponentType(), length - 1);
         System.arraycopy(array, 0, result, 0, index);
         if (index < length - 1) {
@@ -7418,6 +7474,8 @@ public class ArrayUtils {
         }
 
         // create result array
+        @SuppressWarnings("argument.type.incompatible")
+        // invoking class represents Array class, hence type is non null        
         final Object result = Array.newInstance(array.getClass().getComponentType(), length - diff);
         if (diff < length) {
             int end = length; // index just after last copy
@@ -7457,6 +7515,8 @@ public class ArrayUtils {
 //            throw new IndexOutOfBoundsException("Index: " + (maxIndex-1) + ", Length: " + srcLength);
 //        }
         final int removals = indices.cardinality(); // true bits are items to remove
+        @SuppressWarnings("argument.type.incompatible")
+        // invoking class represents Array class, hence type is non null
         final Object result = Array.newInstance(array.getClass().getComponentType(), srcLength - removals);
         int srcIndex = 0;
         int destIndex = 0;
@@ -7749,6 +7809,7 @@ public class ArrayUtils {
             return clone(array);
         }
         
+        assert array != null : "@AssumeAssertion(nullness): At the beginning this method returns cloned array if array is null, hence array is non null in this part";
         final int[] indices = new int[array.length - index];
         indices[0] = index;
         int count = 1;
@@ -7781,6 +7842,7 @@ public class ArrayUtils {
             return clone(array);
         }
 
+        assert array != null : "@AssumeAssertion(nullness): At the beginning this method returns cloned array if array is null, hence array is non null in this part";
         final int[] indices = new int[array.length - index];
         indices[0] = index;
         int count = 1;
@@ -7813,6 +7875,7 @@ public class ArrayUtils {
             return clone(array);
         }
 
+        assert array != null : "@AssumeAssertion(nullness): At the beginning this method returns cloned array if array is null, hence array is non null in this part";
         final int[] indices = new int[array.length - index];
         indices[0] = index;
         int count = 1;
@@ -7845,6 +7908,7 @@ public class ArrayUtils {
             return clone(array);
         }
 
+        assert array != null : "@AssumeAssertion(nullness): At the beginning this method returns cloned array if array is null, hence array is non null in this part";
         final int[] indices = new int[array.length - index];
         indices[0] = index;
         int count = 1;
@@ -7877,6 +7941,7 @@ public class ArrayUtils {
             return clone(array);
         }
 
+        assert array != null : "@AssumeAssertion(nullness): At the beginning this method returns cloned array if array is null, hence array is non null in this part";
         final int[] indices = new int[array.length - index];
         indices[0] = index;
         int count = 1;
@@ -7909,6 +7974,7 @@ public class ArrayUtils {
             return clone(array);
         }
 
+        assert array != null : "@AssumeAssertion(nullness): At the beginning this method returns cloned array if array is null, hence array is non null in this part";
         final int[] indices = new int[array.length - index];
         indices[0] = index;
         int count = 1;
@@ -7941,6 +8007,7 @@ public class ArrayUtils {
             return clone(array);
         }
 
+        assert array != null : "@AssumeAssertion(nullness): At the beginning this method returns cloned array if array is null, hence array is non null in this part";
         final int[] indices = new int[array.length - index];
         indices[0] = index;
         int count = 1;
@@ -7973,6 +8040,7 @@ public class ArrayUtils {
             return clone(array);
         }
 
+        assert array != null : "@AssumeAssertion(nullness): At the beginning this method returns cloned array if array is null, hence array is non null in this part"; 
         final int[] indices = new int[array.length - index];
         indices[0] = index;
         int count = 1;
@@ -8006,6 +8074,7 @@ public class ArrayUtils {
             return clone(array);
         }
 
+        assert array != null : "@AssumeAssertion(nullness): At the beginning this method returns cloned array if array is null, hence array is non null in this part";
         final int[] indices = new int[array.length - index];
         indices[0] = index;
         int count = 1;
@@ -8447,7 +8516,8 @@ public class ArrayUtils {
         }
         
         final Class<?> type = array.getClass().getComponentType();
-        @SuppressWarnings("unchecked") // OK, because array and values are of type T
+        @SuppressWarnings({"unchecked","argument.type.incompatible"}) // OK, because array and values are of type T
+        // invoking class represents Array class, hence type is non null
         T[] result = (T[]) Array.newInstance(type, array.length + values.length);
 
         System.arraycopy(values, 0, result, index, values.length);

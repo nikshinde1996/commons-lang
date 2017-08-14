@@ -147,7 +147,7 @@ public class MethodUtils {
             Object @Nullable ... args) throws NoSuchMethodException,
             IllegalAccessException, InvocationTargetException {
         args = ArrayUtils.nullToEmpty(args);
-        final Class<?>[] parameterTypes = ClassUtils.toClass(args);
+        final @Nullable Class<?>[] parameterTypes = ClassUtils.toClass(args);
         return invokeMethod(object, methodName, args, parameterTypes);
     }
 

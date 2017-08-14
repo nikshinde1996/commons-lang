@@ -18,6 +18,7 @@ package org.apache.commons.lang3;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.nullness.qual.EnsuresNonNullIf;
 
 /**
  * <p>Operations on {@code CharSet} instances.</p>
@@ -251,6 +252,7 @@ public class CharSetUtils {
      * @param strings String[] whose elements are being checked for emptiness
      * @return whether or not the String is empty
      */
+    @EnsuresNonNullIf(expression="#1", result=false)
     private static boolean deepEmpty(final String @Nullable [] strings) {
         if (strings != null) {
             for (final String s : strings) {

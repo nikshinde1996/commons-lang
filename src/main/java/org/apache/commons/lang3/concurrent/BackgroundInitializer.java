@@ -23,6 +23,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
+import org.checkerframework.checker.nullness.qual.EnsuresNonNullIf;
 
 /**
  * <p>
@@ -94,7 +96,7 @@ public abstract class BackgroundInitializer<T> implements
     private @Nullable ExecutorService executor; // @GuardedBy("this")
 
     /** Stores the handle to the background task. */
-    private Future<T> future;  // @GuardedBy("this")
+    private @MonotonicNonNull Future<T> future;  // @GuardedBy("this")
 
     /**
      * Creates a new instance of {@code BackgroundInitializer}. No external
@@ -134,6 +136,7 @@ public abstract class BackgroundInitializer<T> implements
      * @return a flag whether the {@link #start()} method has already been
      * called
      */
+    @EnsuresNonNullIf(expression="future", result=true) 
     public synchronized boolean isStarted() {
         return future != null;
     }

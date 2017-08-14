@@ -199,7 +199,7 @@ public class MultiBackgroundInitializer
         }
 
         // collect the results
-        final Map<String, Object> results = new HashMap<>();
+        final Map<String,@Nullable Object> results = new HashMap<>();
         final Map<String, ConcurrentException> excepts = new HashMap<>();
         for (final Map.Entry<String, BackgroundInitializer<?>> e : inits.entrySet()) {
             try {
@@ -227,7 +227,7 @@ public class MultiBackgroundInitializer
         private final Map<String, BackgroundInitializer<?>> initializers;
 
         /** A map with the result objects. */
-        private final Map<String, Object> resultObjects;
+        private final Map<String,@Nullable Object> resultObjects;
 
         /** A map with the exceptions. */
         private final Map<String, ConcurrentException> exceptions;
@@ -243,7 +243,7 @@ public class MultiBackgroundInitializer
          */
         private MultiBackgroundInitializerResults(
                 final Map<String, BackgroundInitializer<?>> inits,
-                final Map<String, Object> results,
+                final Map<String,@Nullable Object> results,
                 final Map<String, ConcurrentException> excepts) {
             initializers = inits;
             resultObjects = results;

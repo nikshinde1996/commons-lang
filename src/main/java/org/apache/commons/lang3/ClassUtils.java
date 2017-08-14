@@ -30,6 +30,7 @@ import java.util.Set;
 
 import org.apache.commons.lang3.mutable.MutableObject;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.framework.qual.AnnotatedFor;
 import org.checkerframework.checker.nullness.qual.PolyNull;
 
@@ -191,7 +192,7 @@ public class ClassUtils {
      * @param cls  the class to get the short name for.
      * @return the class name without the package name or an empty string
      */
-    public static String getShortClassName(final Class<?> cls) {
+    public static String getShortClassName(final @Nullable Class<?> cls) {
         if (cls == null) {
             return StringUtils.EMPTY;
         }
@@ -210,7 +211,7 @@ public class ClassUtils {
      * @param className  the className to get the short name for
      * @return the class name of the class without the package name or an empty string
      */
-    public static String getShortClassName(String className) {
+    public static String getShortClassName(@Nullable String className) {
         if (StringUtils.isEmpty(className)) {
             return StringUtils.EMPTY;
         }
@@ -494,11 +495,11 @@ public class ClassUtils {
      *  {@code null} if null input
      * @throws ClassCastException if classNames contains a non String entry
      */
-    public static @Nullable List<Class<?>> convertClassNamesToClasses(final @Nullable List<String> classNames) {
+    public static @PolyNull List<@Nullable Class<?>> convertClassNamesToClasses(final @PolyNull List<String> classNames) {
         if (classNames == null) {
             return null;
         }
-        final List<Class<?>> classes = new ArrayList<>(classNames.size());
+        final List<@Nullable Class<?>> classes = new ArrayList<>(classNames.size());
         for (final String className : classNames) {
             try {
                 classes.add(Class.forName(className));
@@ -521,11 +522,11 @@ public class ClassUtils {
      *  {@code null} if null input
      * @throws ClassCastException if {@code classes} contains a non-{@code Class} entry
      */
-    public static @Nullable List<String> convertClassesToClassNames(final @Nullable List< @Nullable Class<?>> classes) {
+    public static @PolyNull List<@Nullable String> convertClassesToClassNames(final @PolyNull List< @Nullable Class<?>> classes) {
         if (classes == null) {
             return null;
         }
-        final List<String> classNames = new ArrayList<>(classes.size());
+        final List<@Nullable String> classNames = new ArrayList<>(classes.size());
         for (final Class<?> cls : classes) {
             if (cls == null) {
                 classNames.add(null);
@@ -806,8 +807,8 @@ public class ClassUtils {
      * {@code cls} is not a primitive. {@code null} if null input.
      * @since 2.1
      */
-    public static @Nullable Class<?> primitiveToWrapper(final @Nullable Class<?> cls) {
-        Class<?> convertedClass = cls;
+    public static @PolyNull Class<?> primitiveToWrapper(final @PolyNull Class<?> cls) {
+        @PolyNull Class<?> convertedClass = cls;
         if (cls != null && cls.isPrimitive()) {
             convertedClass = primitiveWrapperMap.get(cls);
         }
@@ -824,7 +825,7 @@ public class ClassUtils {
      * Empty array if an empty array passed in.
      * @since 2.1
      */
-    public static Class<?> @Nullable [] primitivesToWrappers(final Class<?> @Nullable ... classes) {
+    public static Class<?> @PolyNull [] primitivesToWrappers(final Class<?> @PolyNull ... classes) {
         if (classes == null) {
             return null;
         }
@@ -874,16 +875,16 @@ public class ClassUtils {
      * @see #wrapperToPrimitive(Class)
      * @since 2.4
      */
-    public static Class<?> @Nullable [] wrappersToPrimitives(final Class<?> @Nullable ... classes) {
+    public static @Nullable Class<?> @Nullable [] wrappersToPrimitives(final @Nullable Class<?> @Nullable ... classes) {
         if (classes == null) {
             return null;
         }
-
+        assert classes != null : "@AssumeAssertion(nullness)";
         if (classes.length == 0) {
             return classes;
         }
 
-        final Class<?>[] convertedClasses = new Class[classes.length];
+        final @Nullable Class<?>[] convertedClasses = new Class[classes.length];
         for (int i = 0; i < classes.length; i++) {
             convertedClasses[i] = wrapperToPrimitive(classes[i]);
         }
@@ -987,6 +988,9 @@ public class ClassUtils {
      * @return the class represented by {@code className} using the current thread's context class loader
      * @throws ClassNotFoundException if the class is not found
      */
+    @SuppressWarnings("argument.type.incompatible") 
+    // loader is non null, checker does not establish correctness due to type cheker limitations
+    // in  conditional operators  
     public static Class<?> getClass(final String className, final boolean initialize) throws ClassNotFoundException {
         final ClassLoader contextCL = Thread.currentThread().getContextClassLoader();
         final ClassLoader loader = contextCL == null ? ClassUtils.class.getClassLoader() : contextCL;
@@ -1203,11 +1207,12 @@ public class ClassUtils {
      * @return canonical form of class name
      * @since 2.4
      */
-    private static @PolyNull String getCanonicalName(@PolyNull String className) {
+    private static @Nullable String getCanonicalName(@Nullable String className) {
         className = StringUtils.deleteWhitespace(className);
         if (className == null) {
             return null;
         }
+        assert className != null : "@AssumeAssertion(nullness)";
         int dim = 0;
         while (className.startsWith("[")) {
             dim++;
@@ -1227,6 +1232,7 @@ public class ClassUtils {
                 className = reverseAbbreviationMap.get(className.substring(0, 1));
             }
         }
+        // BUG : className may be null, if mentioned String(key) is not present in reverseAbbreviationMap. 
         final StringBuilder canonicalClassNameBuffer = new StringBuilder(className);
         for (int i = 0; i < dim; i++) {
             canonicalClassNameBuffer.append("[]");
@@ -1259,7 +1265,7 @@ public class ClassUtils {
 
             @Override
             public Iterator<Class<?>> iterator() {
-                final MutableObject<Class<?>> next = new MutableObject<Class<?>>(type);
+                final MutableObject<@Nullable Class<?>> next = new MutableObject<@Nullable Class<?>>(type);
                 return new Iterator<Class<?>>() {
 
                     @Override
@@ -1270,6 +1276,7 @@ public class ClassUtils {
                     @Override
                     public Class<?> next() {
                         final Class<?> result = next.getValue();
+                        // BUG : result may be null, can cause NPE
                         next.setValue(result.getSuperclass());
                         return result;
                     }

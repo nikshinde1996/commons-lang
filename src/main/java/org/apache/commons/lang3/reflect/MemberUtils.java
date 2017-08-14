@@ -169,11 +169,13 @@ abstract class MemberUtils {
 
             final float varArgsCost = 0.001f;
             final Class<?> destClass = destArgs[destArgs.length-1].getComponentType();
+            assert destClass != null : "@AssumeAssertion(nullness): invoking class object represents array class";
             if (noVarArgsPassed) {
                 // When no varargs passed, the best match is the most generic matching type, not the most specific.
                 totalCost += getObjectTransformationCost(destClass, Object.class) + varArgsCost;
             } else if (explicitArrayForVarags) {
                 final Class<?> sourceClass = srcArgs[srcArgs.length-1].getComponentType();
+                assert sourceClass != null : "@AssumeAssertion(nullness): invoking class object represents array class";
                 totalCost += getObjectTransformationCost(sourceClass, destClass) + varArgsCost;
             } else {
                 // This is typical varargs case.
