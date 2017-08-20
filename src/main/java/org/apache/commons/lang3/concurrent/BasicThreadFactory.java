@@ -99,7 +99,7 @@ public class BasicThreadFactory implements ThreadFactory {
     private final ThreadFactory wrappedFactory;
 
     /** Stores the uncaught exception handler. */
-    private final Thread.UncaughtExceptionHandler uncaughtExceptionHandler;
+    private final Thread. @Nullable UncaughtExceptionHandler uncaughtExceptionHandler;
 
     /** Stores the naming pattern for newly created threads. */
     private final @Nullable String namingPattern;
@@ -181,7 +181,7 @@ public class BasicThreadFactory implements ThreadFactory {
      *
      * @return the {@code UncaughtExceptionHandler}
      */
-    public final Thread.UncaughtExceptionHandler getUncaughtExceptionHandler() {
+    public final Thread. @Nullable UncaughtExceptionHandler getUncaughtExceptionHandler() {
         return uncaughtExceptionHandler;
     }
 
@@ -220,6 +220,9 @@ public class BasicThreadFactory implements ThreadFactory {
      *
      * @param t the thread to be initialized
      */
+    @SuppressWarnings({"argument.type.incompatible","dereference.of.nullable"})
+    // getNamingPattern(), getPriority(), getDaemonFlag() are all non-null when used in this method.
+    // The null checks in IF condition ensure this and no NPE occur at runtime. 
     private void initializeThread(final Thread t) {
 
         if (getNamingPattern() != null) {
@@ -261,7 +264,7 @@ public class BasicThreadFactory implements ThreadFactory {
         private @Nullable ThreadFactory wrappedFactory;
 
         /** The uncaught exception handler. */
-        private Thread.UncaughtExceptionHandler exceptionHandler;
+        private Thread. @Nullable UncaughtExceptionHandler exceptionHandler;
 
         /** The naming pattern. */
         private @Nullable String namingPattern;
