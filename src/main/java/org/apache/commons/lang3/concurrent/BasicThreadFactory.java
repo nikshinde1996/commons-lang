@@ -23,6 +23,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.apache.commons.lang3.Validate;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.dataflow.qual.Pure;
 
 /**
  * <p>
@@ -149,7 +150,7 @@ public class BasicThreadFactory implements ThreadFactory {
      *
      * @return the naming pattern
      */
-    public final @Nullable String getNamingPattern() {
+    @Pure public final @Nullable String getNamingPattern() {
         return namingPattern;
     }
 
@@ -161,7 +162,7 @@ public class BasicThreadFactory implements ThreadFactory {
      *
      * @return the daemon flag
      */
-    public final @Nullable Boolean getDaemonFlag() {
+    @Pure public final @Nullable Boolean getDaemonFlag() {
         return daemonFlag;
     }
 
@@ -171,7 +172,7 @@ public class BasicThreadFactory implements ThreadFactory {
      *
      * @return the priority for newly created threads
      */
-    public final @Nullable Integer getPriority() {
+    @Pure public final @Nullable Integer getPriority() {
         return priority;
     }
 
@@ -181,7 +182,7 @@ public class BasicThreadFactory implements ThreadFactory {
      *
      * @return the {@code UncaughtExceptionHandler}
      */
-    public final Thread. @Nullable UncaughtExceptionHandler getUncaughtExceptionHandler() {
+    @Pure public final Thread. @Nullable UncaughtExceptionHandler getUncaughtExceptionHandler() {
         return uncaughtExceptionHandler;
     }
 
@@ -220,9 +221,6 @@ public class BasicThreadFactory implements ThreadFactory {
      *
      * @param t the thread to be initialized
      */
-    @SuppressWarnings({"argument.type.incompatible","dereference.of.nullable"})
-    // getNamingPattern(), getPriority(), getDaemonFlag() are all non-null when used in this method.
-    // The null checks in IF condition ensure this and no NPE occur at runtime. 
     private void initializeThread(final Thread t) {
 
         if (getNamingPattern() != null) {

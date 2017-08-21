@@ -1933,6 +1933,9 @@ public class StrBuilder implements CharSequence, Appendable, Serializable, Build
      * @param insertLen  the length of the insert string, must be valid
      * @throws IndexOutOfBoundsException if any index is invalid
      */
+    @SuppressWarnings("dereference.of.nullable") 
+    // In all cases where this method is invoked, the insertLen is set to zero (0), when insertStr is null,
+    // checker does not track this assignment and issue false positve warning. 
     private void replaceImpl(final int startIndex, final int endIndex, final int removeLen, final @Nullable String insertStr, final int insertLen) {
         final int newSize = size - removeLen + insertLen;
         if (insertLen != removeLen) {
@@ -2938,7 +2941,7 @@ public class StrBuilder implements CharSequence, Appendable, Serializable, Build
 
         /** {@inheritDoc} */
         @Override
-        protected List<String> tokenize(final char @Nullable [] chars, final int offset, final int count) {
+        protected List<@Nullable String> tokenize(final char @Nullable [] chars, final int offset, final int count) {
             if (chars == null) {
                 return super.tokenize(StrBuilder.this.buffer, 0, StrBuilder.this.size());
             }

@@ -31,6 +31,7 @@ import org.apache.commons.lang3.exception.CloneFailedException;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.commons.lang3.text.StrBuilder;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.checker.nullness.qual.PolyNull;
 import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
@@ -96,7 +97,7 @@ public class ObjectUtils {
      * @param defaultValue  the default value to return, may be {@code null}
      * @return {@code object} if it is not {@code null}, defaultValue otherwise
      */
-    public static <T> @Nullable T defaultIfNull(final @Nullable T object, final @Nullable T defaultValue) {
+    public static <T> @PolyNull T defaultIfNull(final @Nullable T object, final @PolyNull T defaultValue) {
         return object != null ? object : defaultValue;
     }
 

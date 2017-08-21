@@ -27,6 +27,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.nullness.qual.EnsuresNonNull;
 
 /**
  * Tokenizes a string based based on delimiters (separators)
@@ -117,7 +118,7 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
     /** The text to work on. */
     private char chars @Nullable [];
     /** The parsed tokens */
-    private String tokens @Nullable [];
+    private @Nullable String tokens @Nullable [];
     /** The current iteration position */
     private int tokenPos;
 
@@ -436,7 +437,7 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      *
      * @return the tokens as a String array
      */
-    public String[] getTokenArray() {
+    public @Nullable String[] getTokenArray() {
         checkTokenized();
         return tokens.clone();
     }
@@ -446,9 +447,9 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      *
      * @return the tokens as a String array
      */
-    public List<String> getTokenList() {
+    public List<@Nullable String> getTokenList() {
         checkTokenized();
-        final List<String> list = new ArrayList<>(tokens.length);
+        final List<@Nullable String> list = new ArrayList<>(tokens.length);
         list.addAll(Arrays.asList(tokens));
         return list;
     }
@@ -518,7 +519,9 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      * @throws NoSuchElementException if there are no more elements
      */
     @Override
-    public String next() {
+    @SuppressWarnings("override.return.invalid")
+    // null value may be present in tokens array
+    public @Nullable String next() {
         if (hasNext()) {
             return tokens[tokenPos++];
         }
@@ -552,7 +555,9 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      * @return the previous token
      */
     @Override
-    public String previous() {
+    @SuppressWarnings("override.return.invalid")
+    // null value may be present in tokens array
+    public @Nullable String previous() {
         if (hasPrevious()) {
             return tokens[--tokenPos];
         }
@@ -604,14 +609,15 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
     /**
      * Checks if tokenization has been done, and if not then do it.
      */
+    @EnsuresNonNull("tokens")
     private void checkTokenized() {
         if (tokens == null) {
             if (chars == null) {
                 // still call tokenize as subclass may do some work
-                final List<String> split = tokenize(null, 0, 0);
+                final List<@Nullable String> split = tokenize(null, 0, 0);
                 tokens = split.toArray(new String[split.size()]);
             } else {
-                final List<String> split = tokenize(chars, 0, chars.length);
+                final List<@Nullable String> split = tokenize(chars, 0, chars.length);
                 tokens = split.toArray(new String[split.size()]);
             }
         }
@@ -637,12 +643,12 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      * @param count  the number of characters to tokenize, must be valid
      * @return the modifiable list of String tokens, unmodifiable if null array or zero count
      */
-    protected List<String> tokenize(final char @Nullable [] srcChars, final int offset, final int count) {
+    protected List<@Nullable String> tokenize(final char @Nullable [] srcChars, final int offset, final int count) {
         if (srcChars == null || count == 0) {
             return Collections.emptyList();
         }
         final StrBuilder buf = new StrBuilder();
-        final List<String> tokenList = new ArrayList<>();
+        final List<@Nullable String> tokenList = new ArrayList<>();
         int pos = offset;
 
         // loop around the entire buffer
@@ -664,7 +670,7 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      * @param list  the list to add to
      * @param tok  the token to add
      */
-    private void addToken(final List<String> list, String tok) {
+    private void addToken(final List<@Nullable String> list,@Nullable String tok) {
         if (StringUtils.isEmpty(tok)) {
             if (isIgnoreEmptyTokens()) {
                 return;
@@ -687,7 +693,7 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      * @return the starting position of the next field (the character
      *  immediately after the delimiter), or -1 if end of string found
      */
-    private int readNextToken(final char[] srcChars, int start, final int len, final StrBuilder workArea, final List<String> tokenList) {
+    private int readNextToken(final char[] srcChars, int start, final int len, final StrBuilder workArea, final List<@Nullable String> tokenList) {
         // skip all leading whitespace, unless it is the
         // field delimiter or the quote character
         while (start < len) {
@@ -738,7 +744,7 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      *  then the length of string
      */
     private int readWithQuotes(final char[] srcChars, final int start, final int len, final StrBuilder workArea,
-                               final List<String> tokenList, final int quoteStart, final int quoteLen) {
+                               final List<@Nullable String> tokenList, final int quoteStart, final int quoteLen) {
         // Loop until we've found the end of the quoted
         // string or the end of the input
         workArea.clear();
