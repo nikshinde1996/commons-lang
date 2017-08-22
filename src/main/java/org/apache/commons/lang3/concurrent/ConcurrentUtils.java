@@ -24,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang3.Validate;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * <p>
@@ -243,7 +244,7 @@ public class ConcurrentUtils {
      * @param value the value to be added
      * @return the value stored in the map after this operation
      */
-    public static <K, V> @Nullable V putIfAbsent(final @Nullable ConcurrentMap<K, V> map, final K key, final V value) {
+    public static <K extends @NonNull Object, V extends @NonNull Object> @Nullable V putIfAbsent(final @Nullable ConcurrentMap<K, V> map, final K key, final V value) {
         if (map == null) {
             return null;
         }
@@ -272,7 +273,7 @@ public class ConcurrentUtils {
      * not be the object created by the {@link ConcurrentInitializer}
      * @throws ConcurrentException if the initializer throws an exception
      */
-    public static <K, V> @Nullable V createIfAbsent(final @Nullable ConcurrentMap<K, V> map, final K key,
+    public static <K extends @NonNull Object, V extends @NonNull Object> @Nullable V createIfAbsent(final @Nullable ConcurrentMap<K, V> map, final K key,
             final @Nullable ConcurrentInitializer<V> init) throws ConcurrentException {
         if (map == null || init == null) {
             return null;
@@ -301,7 +302,7 @@ public class ConcurrentUtils {
      * @throws ConcurrentRuntimeException if the initializer throws an exception
      */
     @SuppressWarnings("nullness:return.type.incompatible") 
-    public static <K, V> V createIfAbsentUnchecked(final ConcurrentMap<K, V> map,
+    public static <K extends @NonNull Object, V extends @NonNull Object> V createIfAbsentUnchecked(final ConcurrentMap<K, V> map,
             final K key, final ConcurrentInitializer<V> init) {
         try {
             // createIfAbsent() returns null if map or key is null here both map and key is non null,

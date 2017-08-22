@@ -30,6 +30,7 @@ import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.Validate;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.initialization.qual.UnderInitialization;
 import org.checkerframework.checker.initialization.qual.UnknownInitialization;
 
@@ -300,7 +301,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      * @see ToStringExclude
      * @since 2.1
      */
-    public static <T> String toString(
+    public static <T extends @NonNull Object> String toString(
             final T object, final @Nullable ToStringStyle style, final boolean outputTransients,
             final boolean outputStatics, final @Nullable Class<? super T> reflectUpToClass) {
         return new ReflectionToStringBuilder(object, style, null, reflectUpToClass, outputTransients, outputStatics)
@@ -358,7 +359,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      * @see ToStringExclude
      * @since 3.6
      */
-    public static <T> String toString(
+    public static <T extends @NonNull Object> String toString(
             final T object, final @Nullable ToStringStyle style, final boolean outputTransients,
             final boolean outputStatics, boolean excludeNullValues, final @Nullable Class<? super T> reflectUpToClass) {
         return new ReflectionToStringBuilder(object, style, null, reflectUpToClass, outputTransients, outputStatics, excludeNullValues)
@@ -544,7 +545,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      *            whether to include static fields
      * @since 2.1
      */
-    public <T> ReflectionToStringBuilder(
+    public <T extends @NonNull Object> ReflectionToStringBuilder(
             final T object, final @Nullable ToStringStyle style, final @Nullable StringBuffer buffer,
             final @Nullable Class<? super T> reflectUpToClass, final boolean outputTransients, final boolean outputStatics) {
         super(checkNotNull(object), style, buffer);
@@ -574,7 +575,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      *            whether to exclude fields who value is null
      * @since 3.6
      */
-    public <T> ReflectionToStringBuilder(
+    public <T extends @NonNull Object> ReflectionToStringBuilder(
             final T object, final @Nullable ToStringStyle style, final @Nullable StringBuffer buffer,
             final @Nullable Class<? super T> reflectUpToClass, final boolean outputTransients, final boolean outputStatics,
             final boolean excludeNullValues) {

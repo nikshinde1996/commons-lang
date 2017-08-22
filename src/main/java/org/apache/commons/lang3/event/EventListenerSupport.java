@@ -33,6 +33,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import org.apache.commons.lang3.Validate;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * <p>An EventListenerSupport object can be used to manage a list of event
@@ -69,7 +70,7 @@ import org.checkerframework.framework.qual.AnnotatedFor;
  * @since 3.0
  */
 @AnnotatedFor({"nullness"}) 
-public class EventListenerSupport<L> implements Serializable {
+public class EventListenerSupport<L extends @NonNull Object> implements Serializable {
 
     /** Serialization version */
     private static final long serialVersionUID = 3593265990380473632L;

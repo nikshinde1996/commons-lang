@@ -30,6 +30,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.AnnotatedFor;
 import org.checkerframework.checker.nullness.qual.PolyNull;
 import org.checkerframework.checker.nullness.qual.EnsuresNonNullIf;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * <p>Operations on {@link java.lang.String} that are
@@ -3851,7 +3852,7 @@ public class StringUtils {
      * @since 3.0 Changed signature to use varargs
      */
     @SafeVarargs
-    public static <T> @PolyNull String join(final T @PolyNull ... elements) {
+    public static <T extends @NonNull Object> @PolyNull String join(final T @PolyNull ... elements) {
         return join(elements, null);
     }
 

@@ -25,6 +25,7 @@ import java.util.Properties;
 
 import org.apache.commons.lang3.StringUtils;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.checker.nullness.qual.PolyNull;
 import org.checkerframework.framework.qual.AnnotatedFor;
 import org.checkerframework.checker.initialization.qual.UnderInitialization;
 import org.checkerframework.checker.initialization.qual.UnknownInitialization;
@@ -192,7 +193,7 @@ public class StrSubstitutor {
      * @param valueMap  the map with the values, may be null
      * @return the result of the replace operation
      */
-    public static <V> @Nullable String replace(final @Nullable Object source, final @Nullable Map<String, V> valueMap) {
+    public static <V> @PolyNull String replace(final @PolyNull Object source, final @Nullable Map<String, V> valueMap) {
         return new StrSubstitutor(valueMap).replace(source);
     }
 
@@ -209,7 +210,7 @@ public class StrSubstitutor {
      * @return the result of the replace operation
      * @throws IllegalArgumentException if the prefix or suffix is null
      */
-    public static <V> @Nullable String replace(final @Nullable Object source, final @Nullable Map<String, V> valueMap, final String prefix, final String suffix) {
+    public static <V> @PolyNull String replace(final @PolyNull Object source, final @Nullable Map<String, V> valueMap, final String prefix, final String suffix) {
         return new StrSubstitutor(valueMap, prefix, suffix).replace(source);
     }
 
@@ -221,7 +222,7 @@ public class StrSubstitutor {
      * @param valueProperties the properties with values, may be null
      * @return the result of the replace operation
      */
-    public static @Nullable String replace(final @Nullable Object source, final @Nullable Properties valueProperties) {
+    public static @Nullable String replace(final Object source, final @Nullable Properties valueProperties) {
         if (valueProperties == null) {
             return source.toString();
         }
@@ -243,7 +244,7 @@ public class StrSubstitutor {
      * @param source  the source text containing the variables to substitute, null returns null
      * @return the result of the replace operation
      */
-    public static @Nullable String replaceSystemProperties(final @Nullable Object source) {
+    public static @PolyNull String replaceSystemProperties(final @PolyNull Object source) {
         return new StrSubstitutor(StrLookup.systemPropertiesLookup()).replace(source);
     }
 
@@ -403,7 +404,7 @@ public class StrSubstitutor {
      * @param source  the string to replace in, null returns null
      * @return the result of the replace operation
      */
-    public @Nullable String replace(final @Nullable String source) {
+    public @PolyNull String replace(final @PolyNull String source) {
         if (source == null) {
             return null;
         }
@@ -426,7 +427,7 @@ public class StrSubstitutor {
      * @param length  the length within the array to be processed, must be valid
      * @return the result of the replace operation
      */
-    public @Nullable String replace(final @Nullable String source, final int offset, final int length) {
+    public @PolyNull String replace(final @PolyNull String source, final int offset, final int length) {
         if (source == null) {
             return null;
         }
@@ -446,7 +447,7 @@ public class StrSubstitutor {
      * @param source  the character array to replace in, not altered, null returns null
      * @return the result of the replace operation
      */
-    public @Nullable String replace(final char @Nullable [] source) {
+    public @PolyNull String replace(final char @PolyNull [] source) {
         if (source == null) {
             return null;
         }
@@ -468,7 +469,7 @@ public class StrSubstitutor {
      * @param length  the length within the array to be processed, must be valid
      * @return the result of the replace operation
      */
-    public @Nullable String replace(final char @Nullable [] source, final int offset, final int length) {
+    public @PolyNull String replace(final char @PolyNull [] source, final int offset, final int length) {
         if (source == null) {
             return null;
         }
@@ -486,7 +487,7 @@ public class StrSubstitutor {
      * @param source  the buffer to use as a template, not changed, null returns null
      * @return the result of the replace operation
      */
-    public @Nullable String replace(final @Nullable StringBuffer source) {
+    public @PolyNull String replace(final @PolyNull StringBuffer source) {
         if (source == null) {
             return null;
         }
@@ -508,7 +509,7 @@ public class StrSubstitutor {
      * @param length  the length within the array to be processed, must be valid
      * @return the result of the replace operation
      */
-    public @Nullable String replace(final @Nullable StringBuffer source, final int offset, final int length) {
+    public @PolyNull String replace(final @PolyNull StringBuffer source, final int offset, final int length) {
         if (source == null) {
             return null;
         }
@@ -526,7 +527,7 @@ public class StrSubstitutor {
      * @return the result of the replace operation
      * @since 3.2
      */
-    public @Nullable String replace(final @Nullable CharSequence source) {
+    public @PolyNull String replace(final @PolyNull CharSequence source) {
         if (source == null) {
             return null;
         }
@@ -547,7 +548,7 @@ public class StrSubstitutor {
      * @return the result of the replace operation
      * @since 3.2
      */
-    public @Nullable String replace(final @Nullable CharSequence source, final int offset, final int length) {
+    public @PolyNull String replace(final @PolyNull CharSequence source, final int offset, final int length) {
         if (source == null) {
             return null;
         }
@@ -565,7 +566,7 @@ public class StrSubstitutor {
      * @param source  the builder to use as a template, not changed, null returns null
      * @return the result of the replace operation
      */
-    public @Nullable String replace(final @Nullable StrBuilder source) {
+    public @PolyNull String replace(final @PolyNull StrBuilder source) {
         if (source == null) {
             return null;
         }
@@ -587,7 +588,7 @@ public class StrSubstitutor {
      * @param length  the length within the array to be processed, must be valid
      * @return the result of the replace operation
      */
-    public @Nullable String replace(final @Nullable StrBuilder source, final int offset, final int length) {
+    public @PolyNull String replace(final @PolyNull StrBuilder source, final int offset, final int length) {
         if (source == null) {
             return null;
         }
@@ -605,7 +606,7 @@ public class StrSubstitutor {
      * @param source  the source to replace in, null returns null
      * @return the result of the replace operation
      */
-    public @Nullable String replace(final @Nullable Object source) {
+    public @PolyNull String replace(final @PolyNull Object source) {
         if (source == null) {
             return null;
         }

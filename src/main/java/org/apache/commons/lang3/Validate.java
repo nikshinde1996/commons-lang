@@ -983,7 +983,7 @@ public class Validate {
      *
      * @since 3.0
      */
-    public static <T> void inclusiveBetween(final T start, final T end, final Comparable<T> value) {
+    public static <T extends @NonNull Object> void inclusiveBetween(final T start, final T end, final Comparable<T> value) {
         // TODO when breaking BC, consider returning value
         if (value.compareTo(start) < 0 || value.compareTo(end) > 0) {
             throw new IllegalArgumentException(String.format(DEFAULT_INCLUSIVE_BETWEEN_EX_MESSAGE, value, start, end));
@@ -1008,7 +1008,7 @@ public class Validate {
      *
      * @since 3.0
      */
-    public static <T> void inclusiveBetween(final T start, final T end, final Comparable<T> value, final String message, final Object... values) {
+    public static <T extends @NonNull Object> void inclusiveBetween(final T start, final T end, final Comparable<T> value, final String message, final Object... values) {
         // TODO when breaking BC, consider returning value
         if (value.compareTo(start) < 0 || value.compareTo(end) > 0) {
             throw new IllegalArgumentException(String.format(message, values));
@@ -1121,7 +1121,7 @@ public class Validate {
      *
      * @since 3.0
      */
-    public static <T> void exclusiveBetween(final T start, final T end, final Comparable<T> value) {
+    public static <T extends @NonNull Object> void exclusiveBetween(final T start, final T end, final Comparable<T> value) {
         // TODO when breaking BC, consider returning value
         if (value.compareTo(start) <= 0 || value.compareTo(end) >= 0) {
             throw new IllegalArgumentException(String.format(DEFAULT_EXCLUSIVE_BETWEEN_EX_MESSAGE, value, start, end));
@@ -1146,7 +1146,7 @@ public class Validate {
      *
      * @since 3.0
      */
-    public static <T> void exclusiveBetween(final T start, final T end, final Comparable<T> value, final String message, final Object... values) {
+    public static <T extends @NonNull Object> void exclusiveBetween(final T start, final T end, final Comparable<T> value, final String message, final Object... values) {
         // TODO when breaking BC, consider returning value
         if (value.compareTo(start) <= 0 || value.compareTo(end) >= 0) {
             throw new IllegalArgumentException(String.format(message, values));

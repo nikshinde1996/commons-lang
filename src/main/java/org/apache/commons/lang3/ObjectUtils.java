@@ -33,6 +33,7 @@ import org.apache.commons.lang3.text.StrBuilder;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.checker.nullness.qual.PolyNull;
 import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * <p>Operations on {@code Object}.</p>
@@ -633,7 +634,7 @@ public class ObjectUtils {
      * @since 3.0.1
      */
     @SafeVarargs
-    public static <T> @Nullable T mode(final T... items) {
+    public static <T extends @NonNull Object> @Nullable T mode(final T... items) {
         if (ArrayUtils.isNotEmpty(items)) {
             final HashMap<T, MutableInt> occurrences = new HashMap<>(items.length);
             for (final T t : items) {

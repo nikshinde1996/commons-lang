@@ -34,6 +34,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.checker.nullness.qual.PolyNull;
 import org.checkerframework.framework.qual.AnnotatedFor;
 import org.checkerframework.checker.nullness.qual.EnsuresNonNullIf;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * <p>Operations on arrays, primitive arrays (like {@code int[]}) and
@@ -4998,7 +4999,7 @@ public class ArrayUtils {
      * @return {@code true} if the array is not empty and not {@code null}
      * @since 2.5
      */
-     public static <T> boolean isNotEmpty(final T @Nullable [] array) {
+     public static <T extends @NonNull Object> boolean isNotEmpty(final T @Nullable [] array) {
          return !isEmpty(array);
      }
 
@@ -6080,11 +6081,12 @@ public class ArrayUtils {
      *         occurrence of the specified element.
      * @since 2.1
      */
-    public static <T> T @Nullable [] removeElement(final T @Nullable [] array, final Object element) {
+    public static <T extends @NonNull Object> T @Nullable [] removeElement(final T @Nullable [] array, final Object element) {
         final int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
         }
+        assert array != null : "@AssumeAssertion(nullness): At the beginning this method returns cloned array if array is null, hence array is non null in this part";
         return remove(array, index);
     }
 
@@ -6713,7 +6715,7 @@ public class ArrayUtils {
      * @since 3.0.1
      */
     @SafeVarargs
-    public static <T> T @Nullable [] removeElements(final T @Nullable [] array, final T @Nullable ... values) {
+    public static <T extends @NonNull Object> T @Nullable [] removeElements(final T @Nullable [] array, final T @Nullable ... values) {
         if (isEmpty(array) || isEmpty(values)) {
             return clone(array);
         }
@@ -8068,7 +8070,7 @@ public class ArrayUtils {
      * @return A new array containing the existing elements except the occurrences of the specified element.
      * @since 3.5
      */
-    public static <T> T @Nullable [] removeAllOccurences(final T @Nullable [] array, final @Nullable T element) {
+    public static <T extends @NonNull Object> T @Nullable [] removeAllOccurences(final T @Nullable [] array, final @Nullable T element) {
         int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
