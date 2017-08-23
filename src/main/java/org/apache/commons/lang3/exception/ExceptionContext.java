@@ -70,7 +70,7 @@ public interface ExceptionContext {
      * @param label  the label to get the contextual values for, may be {@code null}
      * @return the contextual values associated with the label, never {@code null}
      */
-    List<Object> getContextValues(@Nullable String label);
+    List<@Nullable Object> getContextValues(@Nullable String label);
 
     /**
      * Retrieves the first available contextual data value associated with the label.

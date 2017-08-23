@@ -76,8 +76,8 @@ public class DefaultExceptionContext implements ExceptionContext, Serializable {
      * {@inheritDoc}
      */
     @Override
-    public List<Object> getContextValues(final @Nullable String label) {
-        final List<Object> values = new ArrayList<>();
+    public List<@Nullable Object> getContextValues(final @Nullable String label) {
+        final List<@Nullable Object> values = new ArrayList<>();
         for (final Pair<String, Object> pair : contextValues) {
             if (StringUtils.equals(label, pair.getKey())) {
                 values.add(pair.getValue());
@@ -103,6 +103,8 @@ public class DefaultExceptionContext implements ExceptionContext, Serializable {
      * {@inheritDoc}
      */
     @Override
+    @SuppressWarnings("argument.type.incompatible")
+    // Pair used to store contextValues does not allow null keys (left element).
     public Set<String> getContextLabels() {
         final Set<String> labels = new HashSet<>();
         for (final Pair<String, Object> pair : contextValues) {

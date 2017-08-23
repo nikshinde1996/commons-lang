@@ -1243,7 +1243,7 @@ public class StringUtils {
      * {@code false} if <code>searchStrings</code> is null or contains no matches.
      * @since 3.5
      */
-    public static boolean equalsAny(final @Nullable CharSequence string, final @Nullable CharSequence... searchStrings) {
+    public static boolean equalsAny(final @Nullable CharSequence string, final @Nullable CharSequence @Nullable ... searchStrings) {
         if (ArrayUtils.isNotEmpty(searchStrings)) {
             for (final CharSequence next : searchStrings) {
                 if (equals(string, next)) {

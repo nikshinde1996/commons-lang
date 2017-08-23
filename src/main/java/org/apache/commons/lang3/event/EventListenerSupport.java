@@ -277,10 +277,10 @@ public class EventListenerSupport<L extends @NonNull Object> implements Serializ
 
         this.listeners = new CopyOnWriteArrayList<>(srcListeners);
 
-        @SuppressWarnings({"unchecked","argument.type.incompatible"}) // Will throw CCE here if not correct
-        // invoking class represents array class, hence listenerInterface is non null.
+        @SuppressWarnings("unchecked") // Will throw CCE here if not correct
         final
         Class<L> listenerInterface = (Class<L>) srcListeners.getClass().getComponentType();
+        assert listenerInterface != null : "@AssumeAssertion(nullness): invoking class represents array class, hence listenerInterface is non null.";
 
         initializeTransientFields(listenerInterface, Thread.currentThread().getContextClassLoader());
     }

@@ -199,7 +199,7 @@ public class ContextedRuntimeException extends RuntimeException implements Excep
      * {@inheritDoc}
      */
     @Override
-    public List<Object> getContextValues(final @Nullable String label) {
+    public List<@Nullable Object> getContextValues(final @Nullable String label) {
         return this.exceptionContext.getContextValues(label);
     }
 

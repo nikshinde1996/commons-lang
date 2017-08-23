@@ -4858,7 +4858,7 @@ public class ArrayUtils {
     // correctness as null check does not directly reflect in this result. getLength() returns
     // '0' when array is null or length is 0.
     @EnsuresNonNullIf(expression="#1", result=false)
-    public static boolean isEmpty(final Object @Nullable [] array) {
+    public static boolean isEmpty(final @Nullable Object @Nullable [] array) {
         return getLength(array) == 0;
     }
 
@@ -4999,7 +4999,8 @@ public class ArrayUtils {
      * @return {@code true} if the array is not empty and not {@code null}
      * @since 2.5
      */
-     public static <T extends @NonNull Object> boolean isNotEmpty(final T @Nullable [] array) {
+     @EnsuresNonNullIf(expression="#1", result=true)
+     public static <T extends @NonNull Object> boolean isNotEmpty(final @Nullable T @Nullable [] array) {
          return !isEmpty(array);
      }
 
@@ -5010,6 +5011,7 @@ public class ArrayUtils {
      * @return {@code true} if the array is not empty and not {@code null}
      * @since 2.5
      */
+    @EnsuresNonNullIf(expression="#1", result=true) 
     public static boolean isNotEmpty(final long @Nullable [] array) {
         return !isEmpty(array);
     }
@@ -5021,6 +5023,7 @@ public class ArrayUtils {
      * @return {@code true} if the array is not empty and not {@code null}
      * @since 2.5
      */
+    @EnsuresNonNullIf(expression="#1", result=true) 
     public static boolean isNotEmpty(final int @Nullable [] array) {
         return !isEmpty(array);
     }
@@ -5032,6 +5035,7 @@ public class ArrayUtils {
      * @return {@code true} if the array is not empty and not {@code null}
      * @since 2.5
      */
+    @EnsuresNonNullIf(expression="#1", result=true) 
     public static boolean isNotEmpty(final short @Nullable [] array) {
         return !isEmpty(array);
     }
@@ -5043,6 +5047,7 @@ public class ArrayUtils {
      * @return {@code true} if the array is not empty and not {@code null}
      * @since 2.5
      */
+    @EnsuresNonNullIf(expression="#1", result=true) 
     public static boolean isNotEmpty(final char @Nullable [] array) {
         return !isEmpty(array);
     }
@@ -5054,6 +5059,7 @@ public class ArrayUtils {
      * @return {@code true} if the array is not empty and not {@code null}
      * @since 2.5
      */
+    @EnsuresNonNullIf(expression="#1", result=true) 
     public static boolean isNotEmpty(final byte @Nullable [] array) {
         return !isEmpty(array);
     }
@@ -5065,6 +5071,7 @@ public class ArrayUtils {
      * @return {@code true} if the array is not empty and not {@code null}
      * @since 2.5
      */
+    @EnsuresNonNullIf(expression="#1", result=true) 
     public static boolean isNotEmpty(final double @Nullable [] array) {
         return !isEmpty(array);
     }
@@ -5076,6 +5083,7 @@ public class ArrayUtils {
      * @return {@code true} if the array is not empty and not {@code null}
      * @since 2.5
      */
+    @EnsuresNonNullIf(expression="#1", result=true) 
     public static boolean isNotEmpty(final float @Nullable [] array) {
         return !isEmpty(array);
     }
@@ -5087,6 +5095,7 @@ public class ArrayUtils {
      * @return {@code true} if the array is not empty and not {@code null}
      * @since 2.5
      */
+    @EnsuresNonNullIf(expression="#1", result=true) 
     public static boolean isNotEmpty(final boolean @Nullable [] array) {
         return !isEmpty(array);
     }
@@ -6081,7 +6090,7 @@ public class ArrayUtils {
      *         occurrence of the specified element.
      * @since 2.1
      */
-    public static <T extends @NonNull Object> T @Nullable [] removeElement(final T @Nullable [] array, final Object element) {
+    public static <T extends @NonNull Object> T @PolyNull [] removeElement(final T @PolyNull [] array, final Object element) {
         final int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
@@ -6147,7 +6156,7 @@ public class ArrayUtils {
      *         occurrence of the specified element.
      * @since 2.1
      */
-    public static boolean @Nullable [] removeElement(final boolean @Nullable [] array, final boolean element) {
+    public static boolean @PolyNull [] removeElement(final boolean @PolyNull [] array, final boolean element) {
         final int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
@@ -6213,7 +6222,7 @@ public class ArrayUtils {
      *         occurrence of the specified element.
      * @since 2.1
      */
-    public static byte @Nullable [] removeElement(final byte @Nullable [] array, final byte element) {
+    public static byte @PolyNull [] removeElement(final byte @PolyNull [] array, final byte element) {
         final int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
@@ -6279,7 +6288,7 @@ public class ArrayUtils {
      *         occurrence of the specified element.
      * @since 2.1
      */
-    public static char @Nullable [] removeElement(final char @Nullable [] array, final char element) {
+    public static char @PolyNull [] removeElement(final char @PolyNull [] array, final char element) {
         final int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
@@ -6345,7 +6354,7 @@ public class ArrayUtils {
      *         occurrence of the specified element.
      * @since 2.1
      */
-    public static double @Nullable [] removeElement(final double @Nullable [] array, final double element) {
+    public static double @PolyNull [] removeElement(final double @PolyNull [] array, final double element) {
         final int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
@@ -6411,7 +6420,7 @@ public class ArrayUtils {
      *         occurrence of the specified element.
      * @since 2.1
      */
-    public static float @Nullable [] removeElement(final float @Nullable [] array, final float element) {
+    public static float @PolyNull [] removeElement(final float @PolyNull [] array, final float element) {
         final int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
@@ -6477,7 +6486,7 @@ public class ArrayUtils {
      *         occurrence of the specified element.
      * @since 2.1
      */
-    public static int @Nullable [] removeElement(final int @Nullable [] array, final int element) {
+    public static int @PolyNull [] removeElement(final int @PolyNull [] array, final int element) {
         final int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
@@ -6543,7 +6552,7 @@ public class ArrayUtils {
      *         occurrence of the specified element.
      * @since 2.1
      */
-    public static long @Nullable [] removeElement(final long @Nullable [] array, final long element) {
+    public static long @PolyNull [] removeElement(final long @PolyNull [] array, final long element) {
         final int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
@@ -6609,7 +6618,7 @@ public class ArrayUtils {
      *         occurrence of the specified element.
      * @since 2.1
      */
-    public static short @Nullable [] removeElement(final short @Nullable [] array, final short element) {
+    public static short @PolyNull [] removeElement(final short @PolyNull [] array, final short element) {
         final int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
@@ -6804,7 +6813,7 @@ public class ArrayUtils {
      *         earliest-encountered occurrences of the specified elements.
      * @since 3.0.1
      */
-    public static byte @Nullable [] removeElements(final byte @Nullable [] array, final byte... values) {
+    public static byte @PolyNull [] removeElements(final byte @PolyNull [] array, final byte... values) {
         if (isEmpty(array) || isEmpty(values)) {
             return clone(array);
         }
@@ -6892,7 +6901,7 @@ public class ArrayUtils {
      *         earliest-encountered occurrences of the specified elements.
      * @since 3.0.1
      */
-    public static short @Nullable [] removeElements(final short @Nullable [] array, final short... values) {
+    public static short @PolyNull [] removeElements(final short @PolyNull [] array, final short... values) {
         if (isEmpty(array) || isEmpty(values)) {
             return clone(array);
         }
@@ -6980,7 +6989,7 @@ public class ArrayUtils {
      *         earliest-encountered occurrences of the specified elements.
      * @since 3.0.1
      */
-    public static int @Nullable [] removeElements(final int @Nullable [] array, final int... values) {
+    public static int @PolyNull [] removeElements(final int @PolyNull [] array, final int... values) {
         if (isEmpty(array) || isEmpty(values)) {
             return clone(array);
         }
@@ -7068,7 +7077,7 @@ public class ArrayUtils {
      *         earliest-encountered occurrences of the specified elements.
      * @since 3.0.1
      */
-    public static char @Nullable [] removeElements(final char @Nullable [] array, final char... values) {
+    public static char @PolyNull [] removeElements(final char @PolyNull [] array, final char... values) {
         if (isEmpty(array) || isEmpty(values)) {
             return clone(array);
         }
@@ -7156,7 +7165,7 @@ public class ArrayUtils {
      *         earliest-encountered occurrences of the specified elements.
      * @since 3.0.1
      */
-    public static long @Nullable [] removeElements(final long @Nullable [] array, final long... values) {
+    public static long @PolyNull [] removeElements(final long @PolyNull [] array, final long... values) {
         if (isEmpty(array) || isEmpty(values)) {
             return clone(array);
         }
@@ -7244,7 +7253,7 @@ public class ArrayUtils {
      *         earliest-encountered occurrences of the specified elements.
      * @since 3.0.1
      */
-    public static float @Nullable [] removeElements(final float @Nullable [] array, final float... values) {
+    public static float @PolyNull [] removeElements(final float @PolyNull [] array, final float... values) {
         if (isEmpty(array) || isEmpty(values)) {
             return clone(array);
         }
@@ -7332,7 +7341,7 @@ public class ArrayUtils {
      *         earliest-encountered occurrences of the specified elements.
      * @since 3.0.1
      */
-    public static double @Nullable [] removeElements(final double @Nullable [] array, final double... values) {
+    public static double @PolyNull [] removeElements(final double @PolyNull [] array, final double... values) {
         if (isEmpty(array) || isEmpty(values)) {
             return clone(array);
         }
@@ -7416,7 +7425,7 @@ public class ArrayUtils {
      *         earliest-encountered occurrences of the specified elements.
      * @since 3.0.1
      */
-    public static boolean @Nullable [] removeElements(final boolean @Nullable [] array, final boolean... values) {
+    public static boolean @PolyNull [] removeElements(final boolean @PolyNull [] array, final boolean... values) {
         if (isEmpty(array) || isEmpty(values)) {
             return clone(array);
         }
@@ -7805,7 +7814,7 @@ public class ArrayUtils {
      * @return A new array containing the existing elements except the occurrences of the specified element.
      * @since 3.5
      */
-    public static boolean @Nullable [] removeAllOccurences(final boolean @Nullable [] array, final boolean element) {
+    public static boolean @PolyNull [] removeAllOccurences(final boolean @PolyNull [] array, final boolean element) {
         int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
@@ -7838,7 +7847,7 @@ public class ArrayUtils {
      * @return A new array containing the existing elements except the occurrences of the specified element.
      * @since 3.5
      */
-    public static char @Nullable [] removeAllOccurences(final char @Nullable [] array, final char element) {
+    public static char @PolyNull [] removeAllOccurences(final char @PolyNull [] array, final char element) {
         int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
@@ -7871,7 +7880,7 @@ public class ArrayUtils {
      * @return A new array containing the existing elements except the occurrences of the specified element.
      * @since 3.5
      */
-    public static byte @Nullable [] removeAllOccurences(final byte @Nullable [] array, final byte element) {
+    public static byte @PolyNull [] removeAllOccurences(final byte @PolyNull [] array, final byte element) {
         int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
@@ -7904,7 +7913,7 @@ public class ArrayUtils {
      * @return A new array containing the existing elements except the occurrences of the specified element.
      * @since 3.5
      */
-    public static short @Nullable [] removeAllOccurences(final short @Nullable [] array, final short element) {
+    public static short @PolyNull [] removeAllOccurences(final short @PolyNull [] array, final short element) {
         int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
@@ -7937,7 +7946,7 @@ public class ArrayUtils {
      * @return A new array containing the existing elements except the occurrences of the specified element.
      * @since 3.5
      */
-    public static int @Nullable [] removeAllOccurences(final int @Nullable [] array, final int element) {
+    public static int @PolyNull [] removeAllOccurences(final int @PolyNull [] array, final int element) {
         int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
@@ -7970,7 +7979,7 @@ public class ArrayUtils {
      * @return A new array containing the existing elements except the occurrences of the specified element.
      * @since 3.5
      */
-    public static long @Nullable [] removeAllOccurences(final long @Nullable [] array, final long element) {
+    public static long @PolyNull [] removeAllOccurences(final long @PolyNull [] array, final long element) {
         int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
@@ -8003,7 +8012,7 @@ public class ArrayUtils {
      * @return A new array containing the existing elements except the occurrences of the specified element.
      * @since 3.5
      */
-    public static float @Nullable [] removeAllOccurences(final float @Nullable [] array, final float element) {
+    public static float @PolyNull [] removeAllOccurences(final float @PolyNull [] array, final float element) {
         int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
@@ -8036,7 +8045,7 @@ public class ArrayUtils {
      * @return A new array containing the existing elements except the occurrences of the specified element.
      * @since 3.5
      */
-    public static double @Nullable [] removeAllOccurences(final double @Nullable [] array, final double element) {
+    public static double @PolyNull [] removeAllOccurences(final double @PolyNull [] array, final double element) {
         int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
@@ -8070,7 +8079,7 @@ public class ArrayUtils {
      * @return A new array containing the existing elements except the occurrences of the specified element.
      * @since 3.5
      */
-    public static <T extends @NonNull Object> T @Nullable [] removeAllOccurences(final T @Nullable [] array, final @Nullable T element) {
+    public static <T extends @NonNull Object> T @PolyNull [] removeAllOccurences(final T @PolyNull [] array, final @Nullable T element) {
         int index = indexOf(array, element);
         if (index == INDEX_NOT_FOUND) {
             return clone(array);
@@ -8160,7 +8169,7 @@ public class ArrayUtils {
      * and either {@code index < 0} or {@code index > array.length}
      * @since 3.6
      */
-    public static boolean @Nullable [] insert(final int index, final boolean @Nullable [] array, final boolean @Nullable ... values) {
+    public static boolean @PolyNull [] insert(final int index, final boolean @PolyNull [] array, final boolean @Nullable ... values) {
         if (array == null) {
             return null;
         }
@@ -8202,7 +8211,7 @@ public class ArrayUtils {
      * and either {@code index < 0} or {@code index > array.length}
      * @since 3.6
      */
-    public static byte @Nullable [] insert(final int index, final byte @Nullable [] array, final byte @Nullable ... values) {
+    public static byte @PolyNull [] insert(final int index, final byte @PolyNull [] array, final byte @Nullable ... values) {
         if (array == null) {
             return null;
         }
@@ -8244,7 +8253,7 @@ public class ArrayUtils {
      * and either {@code index < 0} or {@code index > array.length}
      * @since 3.6
      */
-    public static char @Nullable [] insert(final int index, final char @Nullable [] array, final char @Nullable ... values) {
+    public static char @PolyNull [] insert(final int index, final char @PolyNull [] array, final char @Nullable ... values) {
         if (array == null) {
             return null;
         }
@@ -8286,7 +8295,7 @@ public class ArrayUtils {
      * and either {@code index < 0} or {@code index > array.length}
      * @since 3.6
      */
-    public static double @Nullable [] insert(final int index, final double @Nullable [] array, final double @Nullable ... values) {
+    public static double @PolyNull [] insert(final int index, final double @PolyNull [] array, final double @Nullable ... values) {
         if (array == null) {
             return null;
         }
@@ -8328,7 +8337,7 @@ public class ArrayUtils {
      * and either {@code index < 0} or {@code index > array.length}
      * @since 3.6
      */
-    public static float @Nullable [] insert(final int index, final float @Nullable [] array, final float @Nullable ... values) {
+    public static float @PolyNull [] insert(final int index, final float @PolyNull [] array, final float @Nullable ... values) {
         if (array == null) {
             return null;
         }
@@ -8370,7 +8379,7 @@ public class ArrayUtils {
      * and either {@code index < 0} or {@code index > array.length}
      * @since 3.6
      */
-    public static int @Nullable [] insert(final int index, final int @Nullable [] array, final int @Nullable ... values) {
+    public static int @PolyNull [] insert(final int index, final int @PolyNull [] array, final int @Nullable ... values) {
         if (array == null) {
             return null;
         }
@@ -8412,7 +8421,7 @@ public class ArrayUtils {
      * and either {@code index < 0} or {@code index > array.length}
      * @since 3.6
      */
-    public static long @Nullable [] insert(final int index, final long @Nullable [] array, final long @Nullable ... values) {
+    public static long @PolyNull [] insert(final int index, final long @PolyNull [] array, final long @Nullable ... values) {
         if (array == null) {
             return null;
         }
@@ -8454,7 +8463,7 @@ public class ArrayUtils {
      * and either {@code index < 0} or {@code index > array.length}
      * @since 3.6
      */
-    public static short @Nullable [] insert(final int index, final short @Nullable [] array, final short @Nullable ... values) {
+    public static short @PolyNull [] insert(final int index, final short @PolyNull [] array, final short @Nullable ... values) {
         if (array == null) {
             return null;
         }
@@ -8498,7 +8507,7 @@ public class ArrayUtils {
      * @since 3.6
      */
     @SafeVarargs
-    public static <T> T @Nullable [] insert(final int index, final T @Nullable [] array, final T @Nullable ... values) {
+    public static <T> T @PolyNull [] insert(final int index, final T @PolyNull [] array, final T @Nullable ... values) {
         /*
          * Note on use of @SafeVarargs:
          *

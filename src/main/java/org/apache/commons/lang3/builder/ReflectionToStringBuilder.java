@@ -840,7 +840,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
             return this.getStyle().getNullText();
         }
         @SuppressWarnings("dereference.of.nullable")
-        // this.getObject() is non null here,this3 null check is performed at start of this method.
+        // this.getObject() is non null here,the null check is performed at start of this method.
         Class<?> clazz = this.getObject().getClass();
         this.appendFieldsIn(clazz);
         while (clazz.getSuperclass() != null && clazz != this.getUpToClass()) {
