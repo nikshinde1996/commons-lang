@@ -20,6 +20,7 @@ import java.util.Collection;
 
 import org.apache.commons.lang3.ClassUtils;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
@@ -81,7 +82,7 @@ public class RecursiveToStringStyle extends ToStringStyle {
     }
 
     @Override
-    protected void appendDetail(final StringBuffer buffer, final @Nullable String fieldName, final Collection<?> coll) {
+    protected void appendDetail(final StringBuffer buffer, final @Nullable String fieldName, final Collection<? extends @NonNull Object> coll) {
         appendClassName(buffer, coll);
         appendIdentityHashCode(buffer, coll);
         appendDetail(buffer, fieldName, coll.toArray());

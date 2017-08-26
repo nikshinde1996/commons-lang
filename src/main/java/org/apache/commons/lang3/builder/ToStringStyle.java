@@ -26,6 +26,7 @@ import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.framework.qual.AnnotatedFor;
 import org.checkerframework.checker.initialization.qual.UnknownInitialization;
 import org.checkerframework.checker.nullness.qual.AssertNonNullIfNonNull;
@@ -517,9 +518,9 @@ public abstract class ToStringStyle implements Serializable {
         try {
             if (value instanceof Collection<?>) {
                 if (detail) {
-                    appendDetail(buffer, fieldName, (Collection<?>) value);
+                    appendDetail(buffer, fieldName, (Collection<? extends @NonNull Object>) value);
                 } else {
-                    appendSummarySize(buffer, fieldName, ((Collection<?>) value).size());
+                    appendSummarySize(buffer, fieldName, ((Collection<? extends @NonNull Object>) value).size());
                 }
 
             } else if (value instanceof Map<?, ?>) {
@@ -641,7 +642,7 @@ public abstract class ToStringStyle implements Serializable {
      * @param coll  the <code>Collection</code> to add to the
      *  <code>toString</code>, not <code>null</code>
      */
-    protected void appendDetail(final StringBuffer buffer, final @Nullable String fieldName, final Collection<?> coll) {
+    protected void appendDetail(final StringBuffer buffer, final @Nullable String fieldName, final Collection<? extends @NonNull Object> coll) {
         buffer.append(coll);
     }
 

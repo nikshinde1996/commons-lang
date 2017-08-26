@@ -58,6 +58,9 @@ public abstract class Diff<T> extends Pair<T, T> {
      * @param fieldName
      *            the name of the field
      */
+    @SuppressWarnings("dereference.of.nullable") 
+    // TypeUtils.getTypeArguments() returns null if Class type is WildcardType, here class is GenericArrayType
+    // This warning is false positive, as checker cannot establish this correctness about return type of getTypeArguments() at runtime  
     protected Diff(final String fieldName) {
         this.type = ObjectUtils.defaultIfNull(
                 TypeUtils.getTypeArguments(getClass(), Diff.class).get(

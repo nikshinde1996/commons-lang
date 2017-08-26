@@ -93,7 +93,7 @@ public class MutableObject<T> implements Mutable<T>, Serializable {
      *          <code>true</code> if the objects have equivalent <code>value</code> fields;
      *          <code>false</code> otherwise.
      */
-    // BUG : this.value may be NULL. 
+    // BUG : this.value may be NULL, can cause NPE 
     @Override
     public boolean equals(final @Nullable Object obj) {
         if (obj == null) {

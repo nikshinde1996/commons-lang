@@ -255,7 +255,7 @@ public class SerializationUtils {
             primitiveTypes.put("void", void.class);
         }
 
-        private final ClassLoader classLoader;
+        private final @Nullable ClassLoader classLoader;
 
         /**
          * Constructor.
@@ -264,7 +264,7 @@ public class SerializationUtils {
          * @throws IOException if an I/O error occurs while reading stream header.
          * @see java.io.ObjectInputStream
          */
-        ClassLoaderAwareObjectInputStream(final InputStream in, final ClassLoader classLoader) throws IOException {
+        ClassLoaderAwareObjectInputStream(final InputStream in, final @Nullable ClassLoader classLoader) throws IOException {
             super(in);
             this.classLoader = classLoader;
         }

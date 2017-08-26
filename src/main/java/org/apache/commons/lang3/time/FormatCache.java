@@ -189,6 +189,9 @@ abstract class FormatCache<F extends Format> {
      * @return a localized standard date/time format
      * @throws IllegalArgumentException if the Locale has no date/time pattern defined
      */
+    @SuppressWarnings("dereference.of.nullable")                    
+    // This is private method and both dateStyle and timeStyle are never null at the same time, all uses of 
+    // method had only one argument null and no NPE occur in this case. Checker warning is false positive. 
     // package protected, for access from test code; do not make public or protected
     static String getPatternForStyle(final @Nullable Integer dateStyle, final @Nullable Integer timeStyle, final Locale locale) {
         final MultipartKey key = new MultipartKey(dateStyle, timeStyle, locale);
@@ -238,7 +241,9 @@ abstract class FormatCache<F extends Format> {
         /**
          * {@inheritDoc}
          */
-        // BUG : obj requires null check 
+        @SuppressWarnings("dereference.of.nullable")
+        // The MultipartKey class object is used as key in 
+        // ConcurrentMap and it is never null in any part of Implementation.  
         @Override
         public boolean equals(final @Nullable Object obj) {
             // Eliminate the usual boilerplate because

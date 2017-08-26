@@ -479,7 +479,7 @@ public class ArrayUtils {
      */
     @SuppressWarnings("argument.type.incompatible")
     // type represents Array class, hence type is non null    
-    public static <T> T[] nullToEmpty(final T @Nullable [] array, final Class<T[]> type) {
+    public static <T> @PolyNull T[] nullToEmpty(final @PolyNull T @Nullable [] array, final Class<T[]> type) {
         if (type == null) {
             throw new IllegalArgumentException("The type must not be null");
         }
@@ -504,7 +504,7 @@ public class ArrayUtils {
      * @return the same array, {@code public static} empty array if {@code null} or empty input
      * @since 2.5
      */
-    public static Object[] nullToEmpty(final Object @Nullable [] array) {
+    public static @PolyNull Object[] nullToEmpty(final @PolyNull Object @Nullable [] array) {
         if (isEmpty(array)) {
             return EMPTY_OBJECT_ARRAY;
         }
@@ -524,7 +524,7 @@ public class ArrayUtils {
      * @return the same array, {@code public static} empty array if {@code null} or empty input
      * @since 3.2
      */
-    public static Class<?>[] nullToEmpty(final Class<?> @Nullable [] array) {
+    public static @PolyNull Class<?>[] nullToEmpty(final @PolyNull Class<?> @Nullable [] array) {
         if (isEmpty(array)) {
             return EMPTY_CLASS_ARRAY;
         }
@@ -5124,7 +5124,7 @@ public class ArrayUtils {
      * @since 2.1
      * @throws IllegalArgumentException if the array types are incompatible
      */
-    public static <T> T @Nullable [] addAll(final T @Nullable [] array1, final T @Nullable ... array2) {
+    public static <T> T @PolyNull [] addAll(final T @PolyNull [] array1, final T @PolyNull ... array2) {
         if (array1 == null) {
             return clone(array2);
         } else if (array2 == null) {
@@ -5172,7 +5172,7 @@ public class ArrayUtils {
      * @return The new boolean[] array.
      * @since 2.1
      */
-    public static boolean @Nullable [] addAll(final boolean @Nullable [] array1, final boolean @Nullable ... array2) {
+    public static boolean @PolyNull [] addAll(final boolean @PolyNull [] array1, final boolean @PolyNull ... array2) {
         if (array1 == null) {
             return clone(array2);
         } else if (array2 == null) {
@@ -5201,7 +5201,7 @@ public class ArrayUtils {
      * @return The new char[] array.
      * @since 2.1
      */
-    public static char @Nullable [] addAll(final char @Nullable [] array1, final char @Nullable ... array2) {
+    public static char @PolyNull [] addAll(final char @PolyNull [] array1, final char @PolyNull ... array2) {
         if (array1 == null) {
             return clone(array2);
         } else if (array2 == null) {
@@ -5230,7 +5230,7 @@ public class ArrayUtils {
      * @return The new byte[] array.
      * @since 2.1
      */
-    public static byte @Nullable [] addAll(final byte @Nullable [] array1, final byte @Nullable ... array2) {
+    public static byte @PolyNull [] addAll(final byte @PolyNull [] array1, final byte @PolyNull ... array2) {
         if (array1 == null) {
             return clone(array2);
         } else if (array2 == null) {
@@ -5259,7 +5259,7 @@ public class ArrayUtils {
      * @return The new short[] array.
      * @since 2.1
      */
-    public static short @Nullable [] addAll(final short @Nullable [] array1, final short @Nullable ... array2) {
+    public static short @PolyNull [] addAll(final short @PolyNull [] array1, final short @PolyNull ... array2) {
         if (array1 == null) {
             return clone(array2);
         } else if (array2 == null) {
@@ -5288,7 +5288,7 @@ public class ArrayUtils {
      * @return The new int[] array.
      * @since 2.1
      */
-    public static int @Nullable [] addAll(final int @Nullable [] array1, final int @Nullable ... array2) {
+    public static int @PolyNull [] addAll(final int @PolyNull [] array1, final int @PolyNull ... array2) {
         if (array1 == null) {
             return clone(array2);
         } else if (array2 == null) {
@@ -5317,7 +5317,7 @@ public class ArrayUtils {
      * @return The new long[] array.
      * @since 2.1
      */
-    public static long @Nullable [] addAll(final long @Nullable [] array1, final long @Nullable ... array2) {
+    public static long @PolyNull [] addAll(final long @PolyNull [] array1, final long @PolyNull ... array2) {
         if (array1 == null) {
             return clone(array2);
         } else if (array2 == null) {
@@ -5346,7 +5346,7 @@ public class ArrayUtils {
      * @return The new float[] array.
      * @since 2.1
      */
-    public static float @Nullable [] addAll(final float @Nullable [] array1, final float @Nullable ... array2) {
+    public static float @PolyNull [] addAll(final float @PolyNull [] array1, final float @PolyNull ... array2) {
         if (array1 == null) {
             return clone(array2);
         } else if (array2 == null) {
@@ -5375,7 +5375,7 @@ public class ArrayUtils {
      * @return The new double[] array.
      * @since 2.1
      */
-    public static double @Nullable [] addAll(final double @Nullable [] array1, final double @Nullable ... array2) {
+    public static double @PolyNull [] addAll(final double @PolyNull [] array1, final double @PolyNull ... array2) {
         if (array1 == null) {
             return clone(array2);
         } else if (array2 == null) {

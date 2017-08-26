@@ -196,7 +196,7 @@ abstract class MemberUtils {
      * @param destClass The destination class
      * @return The cost of transforming an object
      */
-    private static float getObjectTransformationCost(Class<?> srcClass, final Class<?> destClass) {
+    private static float getObjectTransformationCost(@Nullable Class<?> srcClass, final Class<?> destClass) {
         if (destClass.isPrimitive()) {
             return getPrimitivePromotionCost(srcClass, destClass);
         }

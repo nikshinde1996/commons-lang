@@ -274,7 +274,7 @@ public class FieldUtils {
      * @throws IllegalAccessException
      *             if the field is not accessible
      */
-    public static Object readStaticField(final Field field) throws IllegalAccessException {
+    public static @Nullable Object readStaticField(final Field field) throws IllegalAccessException {
         return readStaticField(field, false);
     }
 
@@ -292,7 +292,7 @@ public class FieldUtils {
      * @throws IllegalAccessException
      *             if the field is not made accessible
      */
-    public static Object readStaticField(final Field field, final boolean forceAccess) throws IllegalAccessException {
+    public static @Nullable Object readStaticField(final Field field, final boolean forceAccess) throws IllegalAccessException {
         Validate.isTrue(field != null, "The field must not be null");
         Validate.isTrue(Modifier.isStatic(field.getModifiers()), "The field '%s' is not static", field.getName());
         return readField(field, (Object) null, forceAccess);
@@ -312,7 +312,7 @@ public class FieldUtils {
      * @throws IllegalAccessException
      *             if the field is not accessible
      */
-    public static Object readStaticField(final Class<?> cls, final String fieldName) throws IllegalAccessException {
+    public static @Nullable Object readStaticField(final Class<?> cls, final String fieldName) throws IllegalAccessException {
         return readStaticField(cls, fieldName, false);
     }
 
@@ -334,7 +334,7 @@ public class FieldUtils {
      * @throws IllegalAccessException
      *             if the field is not made accessible
      */
-    public static Object readStaticField(final Class<?> cls, final String fieldName, final boolean forceAccess) throws IllegalAccessException {
+    public static @Nullable Object readStaticField(final Class<?> cls, final String fieldName, final boolean forceAccess) throws IllegalAccessException {
         final Field field = getField(cls, fieldName, forceAccess);
         Validate.isTrue(field != null, "Cannot locate field '%s' on %s", fieldName, cls);
         // already forced access above, don't repeat it here:
@@ -357,7 +357,7 @@ public class FieldUtils {
      * @throws IllegalAccessException
      *             if the field is not accessible
      */
-    public static Object readDeclaredStaticField(final Class<?> cls, final String fieldName) throws IllegalAccessException {
+    public static @Nullable Object readDeclaredStaticField(final Class<?> cls, final String fieldName) throws IllegalAccessException {
         return readDeclaredStaticField(cls, fieldName, false);
     }
 
@@ -379,7 +379,7 @@ public class FieldUtils {
      * @throws IllegalAccessException
      *             if the field is not made accessible
      */
-    public static Object readDeclaredStaticField(final Class<?> cls, final String fieldName, final boolean forceAccess) throws IllegalAccessException {
+    public static @Nullable Object readDeclaredStaticField(final Class<?> cls, final String fieldName, final boolean forceAccess) throws IllegalAccessException {
         final Field field = getDeclaredField(cls, fieldName, forceAccess);
         Validate.isTrue(field != null, "Cannot locate declared field %s.%s", cls.getName(), fieldName);
         // already forced access above, don't repeat it here:
@@ -400,7 +400,7 @@ public class FieldUtils {
      * @throws IllegalAccessException
      *             if the field is not accessible
      */
-    public static Object readField(final Field field, final @Nullable Object target) throws IllegalAccessException {
+    public static @Nullable Object readField(final Field field, final @Nullable Object target) throws IllegalAccessException {
         return readField(field, target, false);
     }
 
@@ -420,7 +420,7 @@ public class FieldUtils {
      * @throws IllegalAccessException
      *             if the field is not made accessible
      */
-    public static Object readField(final Field field, final @Nullable Object target, final boolean forceAccess) throws IllegalAccessException {
+    public static @Nullable Object readField(final Field field, final @Nullable Object target, final boolean forceAccess) throws IllegalAccessException {
         Validate.isTrue(field != null, "The field must not be null");
         if (forceAccess && !field.isAccessible()) {
             field.setAccessible(true);
@@ -443,7 +443,7 @@ public class FieldUtils {
      * @throws IllegalAccessException
      *             if the named field is not {@code public}
      */
-    public static Object readField(final Object target, final String fieldName) throws IllegalAccessException {
+    public static @Nullable Object readField(final Object target, final String fieldName) throws IllegalAccessException {
         return readField(target, fieldName, false);
     }
 
@@ -464,7 +464,7 @@ public class FieldUtils {
      * @throws IllegalAccessException
      *             if the named field is not made accessible
      */
-    public static Object readField(final Object target, final String fieldName, final boolean forceAccess) throws IllegalAccessException {
+    public static @Nullable Object readField(final Object target, final String fieldName, final boolean forceAccess) throws IllegalAccessException {
         Validate.isTrue(target != null, "target object must not be null");
         final Class<?> cls = target.getClass();
         final Field field = getField(cls, fieldName, forceAccess);
@@ -487,7 +487,7 @@ public class FieldUtils {
      * @throws IllegalAccessException
      *             if the named field is not {@code public}
      */
-    public static Object readDeclaredField(final Object target, final String fieldName) throws IllegalAccessException {
+    public static @Nullable Object readDeclaredField(final Object target, final String fieldName) throws IllegalAccessException {
         return readDeclaredField(target, fieldName, false);
     }
 
@@ -508,7 +508,7 @@ public class FieldUtils {
      * @throws IllegalAccessException
      *             if the field is not made accessible
      */
-    public static Object readDeclaredField(final Object target, final String fieldName, final boolean forceAccess) throws IllegalAccessException {
+    public static @Nullable Object readDeclaredField(final Object target, final String fieldName, final boolean forceAccess) throws IllegalAccessException {
         Validate.isTrue(target != null, "target object must not be null");
         final Class<?> cls = target.getClass();
         final Field field = getDeclaredField(cls, fieldName, forceAccess);
