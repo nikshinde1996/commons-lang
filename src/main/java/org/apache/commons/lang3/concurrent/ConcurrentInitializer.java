@@ -17,6 +17,7 @@
 package org.apache.commons.lang3.concurrent;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
@@ -41,7 +42,7 @@ import org.checkerframework.framework.qual.AnnotatedFor;
  * @param <T> the type of the object managed by this initializer class
  */
 @AnnotatedFor({"nullness"}) 
-public interface ConcurrentInitializer<T> {
+public interface ConcurrentInitializer<T extends @NonNull Object> {
     /**
      * Returns the fully initialized object produced by this {@code
      * ConcurrentInitializer}. A concrete implementation here returns the
@@ -53,5 +54,5 @@ public interface ConcurrentInitializer<T> {
      * @throws ConcurrentException if an error occurred during initialization of
      * the object
      */
-    @Nullable T get() throws ConcurrentException;
+     T get() throws ConcurrentException;
 }

@@ -27,7 +27,10 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.dataflow.qual.Pure;
 import org.checkerframework.checker.nullness.qual.EnsuresNonNull;
+import org.checkerframework.checker.initialization.qual.UnderInitialization;
+import org.checkerframework.checker.initialization.qual.UnknownInitialization;
 
 /**
  * Tokenizes a string based based on delimiters (separators)
@@ -143,6 +146,9 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      *
      * @return a clone of <code>CSV_TOKENIZER_PROTOTYPE</code>.
      */
+    @SuppressWarnings("return.type.incompatible")
+    // StrTokenizer class implements Cloneable, hence this object is cloneable, and CloneNotSupportedException
+    // never occurs for this class object and clone method does not return 'null',see StrTokenizer.clone() to understand    
     private static StrTokenizer getCSVClone() {
         return (StrTokenizer) CSV_TOKENIZER_PROTOTYPE.clone();
     }
@@ -195,6 +201,9 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      *
      * @return a clone of <code>TSV_TOKENIZER_PROTOTYPE</code>.
      */
+    @SuppressWarnings("return.type.incompatible")
+    // StrTokenizer class implements Cloneable, hence this object is cloneable, and CloneNotSupportedException
+    // never occurs for this class object and clone method does not return 'null',see StrTokenizer.clone() to understand     
     private static StrTokenizer getTSVClone() {
         return (StrTokenizer) TSV_TOKENIZER_PROTOTYPE.clone();
     }
@@ -507,7 +516,7 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      * @return true if there are more tokens
      */
     @Override
-    public boolean hasNext() {
+    @Pure public boolean hasNext() {
         checkTokenized();
         return tokenPos < tokens.length;
     }
@@ -544,7 +553,7 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      * @return true if there are previous tokens
      */
     @Override
-    public boolean hasPrevious() {
+    @Pure public boolean hasPrevious() {
         checkTokenized();
         return tokenPos > 0;
     }
@@ -867,7 +876,7 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      * @param delim  the delimiter matcher to use
      * @return this, to enable chaining
      */
-    public StrTokenizer setDelimiterMatcher(final @Nullable StrMatcher delim) {
+    public StrTokenizer setDelimiterMatcher(@UnknownInitialization(org.apache.commons.lang3.text.StrTokenizer.class) StrTokenizer this, final @Nullable StrMatcher delim) {
         if (delim == null) {
             this.delimMatcher = StrMatcher.noneMatcher();
         } else {
@@ -882,7 +891,7 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      * @param delim  the delimiter character to use
      * @return this, to enable chaining
      */
-    public StrTokenizer setDelimiterChar(final char delim) {
+    public StrTokenizer setDelimiterChar(@UnknownInitialization(org.apache.commons.lang3.text.StrTokenizer.class) StrTokenizer this, final char delim) {
         return setDelimiterMatcher(StrMatcher.charMatcher(delim));
     }
 
@@ -892,7 +901,7 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      * @param delim  the delimiter string to use
      * @return this, to enable chaining
      */
-    public StrTokenizer setDelimiterString(final String delim) {
+    public StrTokenizer setDelimiterString(@UnknownInitialization(org.apache.commons.lang3.text.StrTokenizer.class) StrTokenizer this, final String delim) {
         return setDelimiterMatcher(StrMatcher.stringMatcher(delim));
     }
 
@@ -920,7 +929,7 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      * @param quote  the quote matcher to use, null ignored
      * @return this, to enable chaining
      */
-    public StrTokenizer setQuoteMatcher(final StrMatcher quote) {
+    public StrTokenizer setQuoteMatcher(@UnknownInitialization(org.apache.commons.lang3.text.StrTokenizer.class) StrTokenizer this, final StrMatcher quote) {
         if (quote != null) {
             this.quoteMatcher = quote;
         }
@@ -936,7 +945,7 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      * @param quote  the quote character to use
      * @return this, to enable chaining
      */
-    public StrTokenizer setQuoteChar(final char quote) {
+    public StrTokenizer setQuoteChar(@UnknownInitialization(org.apache.commons.lang3.text.StrTokenizer.class) StrTokenizer this, final char quote) {
         return setQuoteMatcher(StrMatcher.charMatcher(quote));
     }
 

@@ -126,5 +126,5 @@ public interface DateParser {
      * @return a <code>java.util.Date</code> object
      * @see java.text.DateFormat#parseObject(String, ParsePosition)
      */
-    Object parseObject(String source, ParsePosition pos);
+    @Nullable Object parseObject(String source, ParsePosition pos);
 }

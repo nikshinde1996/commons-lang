@@ -573,7 +573,7 @@ public class FastDateFormat extends Format implements DateParser, DatePrinter {
      * @see java.text.Format#parseObject(java.lang.String, java.text.ParsePosition)
      */
     @Override
-    public Object parseObject(final String source, final ParsePosition pos) {
+    public @Nullable Object parseObject(final String source, final ParsePosition pos) {
         return parser.parseObject(source, pos);
     }
 

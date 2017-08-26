@@ -79,11 +79,11 @@ public class ConstructorUtils {
      * @throws InstantiationException if an error occurs on instantiation
      * @see #invokeConstructor(java.lang.Class, java.lang.Object[], java.lang.Class[])
      */
-    public static <T> T invokeConstructor(final Class<T> cls, Object @Nullable ... args)
+    public static <T> T invokeConstructor(final Class<T> cls, Object... args)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException,
             InstantiationException {
         args = ArrayUtils.nullToEmpty(args);
-        final @Nullable Class<?> parameterTypes[] = ClassUtils.toClass(args);
+        final Class<?> parameterTypes[] = ClassUtils.toClass(args);
         return invokeConstructor(cls, args, parameterTypes);
     }
 
@@ -107,12 +107,12 @@ public class ConstructorUtils {
      * @throws InstantiationException if an error occurs on instantiation
      * @see Constructor#newInstance
      */
-    public static <T> T invokeConstructor(final Class<T> cls, Object @Nullable [] args,@Nullable Class<?> @Nullable [] parameterTypes)
+    public static <T> T invokeConstructor(final Class<T> cls, Object[] args, Class<?>[] parameterTypes)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException,
             InstantiationException {
         args = ArrayUtils.nullToEmpty(args);
         parameterTypes = ArrayUtils.nullToEmpty(parameterTypes);
-        final Constructor<T> ctor = getMatchingAccessibleConstructor(cls, parameterTypes);
+        final @Nullable Constructor<T> ctor = getMatchingAccessibleConstructor(cls, parameterTypes);
         if (ctor == null) {
             throw new NoSuchMethodException(
                 "No such accessible constructor on object: " + cls.getName());
@@ -143,11 +143,11 @@ public class ConstructorUtils {
      * @throws InstantiationException if an error occurs on instantiation
      * @see #invokeExactConstructor(java.lang.Class, java.lang.Object[], java.lang.Class[])
      */
-    public static <T> T invokeExactConstructor(final Class<T> cls, Object @Nullable ... args)
+    public static <T> T invokeExactConstructor(final Class<T> cls, Object... args)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException,
             InstantiationException {
         args = ArrayUtils.nullToEmpty(args);
-        final @Nullable Class<?> parameterTypes[] = ClassUtils.toClass(args);
+        final Class<?> parameterTypes[] = ClassUtils.toClass(args);
         return invokeExactConstructor(cls, args, parameterTypes);
     }
 
@@ -171,12 +171,12 @@ public class ConstructorUtils {
      * @throws InstantiationException if an error occurs on instantiation
      * @see Constructor#newInstance
      */
-    public static <T> T invokeExactConstructor(final Class<T> cls, Object @Nullable [] args,
-            Class<?> @Nullable [] parameterTypes) throws NoSuchMethodException, IllegalAccessException,
+    public static <T> T invokeExactConstructor(final Class<T> cls, Object[] args,
+            Class<?>[] parameterTypes) throws NoSuchMethodException, IllegalAccessException,
             InvocationTargetException, InstantiationException {
         args = ArrayUtils.nullToEmpty(args);
         parameterTypes = ArrayUtils.nullToEmpty(parameterTypes);
-        final Constructor<T> ctor = getAccessibleConstructor(cls, parameterTypes);
+        final @Nullable Constructor<T> ctor = getAccessibleConstructor(cls, parameterTypes);
         if (ctor == null) {
             throw new NoSuchMethodException(
                 "No such accessible constructor on object: "+ cls.getName());
@@ -200,7 +200,7 @@ public class ConstructorUtils {
      * @throws NullPointerException if {@code cls} is {@code null}
      */
     public static <T> @Nullable Constructor<T> getAccessibleConstructor(final Class<T> cls,
-            final Class<?> @Nullable ... parameterTypes) {
+            final Class<?> ... parameterTypes) {
         Validate.notNull(cls, "class cannot be null");
         try {
             return getAccessibleConstructor(cls.getConstructor(parameterTypes));
@@ -245,7 +245,7 @@ public class ConstructorUtils {
      * @throws NullPointerException if {@code cls} is {@code null}
      */
     public static <T> @Nullable Constructor<T> getMatchingAccessibleConstructor(final Class<T> cls,
-            final @Nullable Class<?>... parameterTypes) {
+            final Class<?> ... parameterTypes) {
         Validate.notNull(cls, "class cannot be null");
         // see if we can find the constructor directly
         // most of the time this works and it's much faster

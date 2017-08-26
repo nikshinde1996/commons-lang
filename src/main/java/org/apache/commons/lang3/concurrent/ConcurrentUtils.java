@@ -25,6 +25,7 @@ import org.apache.commons.lang3.Validate;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.AnnotatedFor;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.dataflow.qual.Pure;
 
 /**
  * <p>
@@ -156,7 +157,7 @@ public class ConcurrentUtils {
      *
      * @param ex the exception in question
      */
-    private static void throwCause(final ExecutionException ex) {
+    @Pure private static void throwCause(final ExecutionException ex) {
         if (ex.getCause() instanceof RuntimeException) {
             throw (RuntimeException) ex.getCause();
         }
@@ -180,7 +181,7 @@ public class ConcurrentUtils {
      * @throws ConcurrentException if the {@code ConcurrentInitializer} throws
      * an exception
      */
-    public static <T> @Nullable T initialize(final @Nullable ConcurrentInitializer<T> initializer)
+    @Pure public static <T extends @NonNull Object> @Nullable T initialize(final @Nullable ConcurrentInitializer<T> initializer)
             throws ConcurrentException {
         return initializer != null ? initializer.get() : null;
     }
@@ -199,7 +200,7 @@ public class ConcurrentUtils {
      * @throws ConcurrentRuntimeException if the initializer throws an exception
      */
     @SuppressWarnings("nullness:return.type.incompatible") 
-    public static <T> T initializeUnchecked(final ConcurrentInitializer<T> initializer) {
+    @Pure public static <T extends @NonNull Object> T initializeUnchecked(final ConcurrentInitializer<T> initializer) {
         try {
             // initialize(ConcurrentInitializer) returns null when ConcurrentInitializer argument
             // is non null, here initializer is non null. checker warning is false positive
@@ -273,7 +274,7 @@ public class ConcurrentUtils {
      * not be the object created by the {@link ConcurrentInitializer}
      * @throws ConcurrentException if the initializer throws an exception
      */
-    public static <K extends @NonNull Object, V extends @NonNull Object> @Nullable V createIfAbsent(final @Nullable ConcurrentMap<K, V> map, final K key,
+    @Pure public static <K extends @NonNull Object, V extends @NonNull Object> @Nullable V createIfAbsent(final @Nullable ConcurrentMap<K, V> map, final K key,
             final @Nullable ConcurrentInitializer<V> init) throws ConcurrentException {
         if (map == null || init == null) {
             return null;
@@ -301,12 +302,9 @@ public class ConcurrentUtils {
      * not be the object created by the {@link ConcurrentInitializer}
      * @throws ConcurrentRuntimeException if the initializer throws an exception
      */
-    @SuppressWarnings("nullness:return.type.incompatible") 
-    public static <K extends @NonNull Object, V extends @NonNull Object> V createIfAbsentUnchecked(final ConcurrentMap<K, V> map,
-            final K key, final ConcurrentInitializer<V> init) {
+    public static <K extends @NonNull Object, V extends @NonNull Object> @Nullable V createIfAbsentUnchecked(final @Nullable ConcurrentMap<K, V> map,
+            final K key, final @Nullable ConcurrentInitializer<V> init) {
         try {
-            // createIfAbsent() returns null if map or key is null here both map and key is non null,
-            // hence this method does not return null value, checker issue false postive warning. 
             return createIfAbsent(map, key, init);
         } catch (final ConcurrentException cex) {
             throw new ConcurrentRuntimeException(cex.getCause());

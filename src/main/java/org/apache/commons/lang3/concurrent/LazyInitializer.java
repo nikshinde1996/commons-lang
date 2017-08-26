@@ -16,6 +16,9 @@
  */
 package org.apache.commons.lang3.concurrent;
 
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.framework.qual.AnnotatedFor;
+
 /**
  * <p>
  * This class provides a generic implementation of the lazy initialization
@@ -77,7 +80,8 @@ package org.apache.commons.lang3.concurrent;
  * @since 3.0
  * @param <T> the type of the object managed by this initializer class
  */
-public abstract class LazyInitializer<T> implements ConcurrentInitializer<T> {
+@AnnotatedFor({"nullness"}) 
+public abstract class LazyInitializer<T extends @NonNull Object> implements ConcurrentInitializer<T> {
 
     private static final Object NO_INIT = new Object();
 

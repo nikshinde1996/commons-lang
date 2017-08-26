@@ -407,8 +407,8 @@ public class EventCountCircuitBreaker extends AbstractCircuitBreaker<Integer> {
      * @return the corresponding {@code StateStrategy}
      * @throws CircuitBreakingException if the strategy cannot be resolved
      */
-    // BUG : Is key (State) is not valid argument, this method will return null and can cause NPE
-    // The state object must be validated to check if its valid key. 
+    // BUG : If key (State) is not valid argument, this method will return null and can cause NPE
+    // The State object must be validated to check if its valid key for STRATEGY_MAP. 
     private static StateStrategy stateStrategy(final State state) {
         return STRATEGY_MAP.get(state);
     }

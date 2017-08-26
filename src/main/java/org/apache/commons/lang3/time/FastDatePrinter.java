@@ -35,6 +35,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.AnnotatedFor;
 import org.checkerframework.checker.initialization.qual.UnderInitialization;
+import org.checkerframework.checker.initialization.qual.UnknownInitialization;
 import org.checkerframework.checker.nullness.qual.EnsuresNonNull;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 
@@ -165,7 +166,7 @@ public class FastDatePrinter implements DatePrinter, Serializable {
      * <p>Initializes the instance for first use.</p>
      */
     @EnsuresNonNull("mRules") 
-    private void init() {
+    private void init(@UnknownInitialization(org.apache.commons.lang3.time.FastDatePrinter.class) FastDatePrinter this) {
         final List<Rule> rulesList = parsePattern();
         mRules = rulesList.toArray(new Rule[rulesList.size()]);
 
@@ -185,7 +186,7 @@ public class FastDatePrinter implements DatePrinter, Serializable {
      * @return a {@code List} of Rule objects
      * @throws IllegalArgumentException if pattern is invalid
      */
-    protected List<Rule> parsePattern() {
+    protected List<Rule> parsePattern(@UnknownInitialization(org.apache.commons.lang3.time.FastDatePrinter.class) FastDatePrinter this) {
         final DateFormatSymbols symbols = new DateFormatSymbols(mLocale);
         final List<Rule> rules = new ArrayList<>();
 
@@ -327,7 +328,7 @@ public class FastDatePrinter implements DatePrinter, Serializable {
      * @param indexRef  index references
      * @return parsed token
      */
-    protected String parseToken(final String pattern, final int[] indexRef) {
+    protected String parseToken(@UnknownInitialization(org.apache.commons.lang3.time.FastDatePrinter.class) FastDatePrinter this, final String pattern, final int[] indexRef) {
         final StringBuilder buf = new StringBuilder();
 
         int i = indexRef[0];
@@ -386,7 +387,7 @@ public class FastDatePrinter implements DatePrinter, Serializable {
      * @param padding  the padding required
      * @return a new rule with the correct padding
      */
-    protected NumberRule selectNumberRule(final int field, final int padding) {
+    protected NumberRule selectNumberRule(@UnknownInitialization(org.apache.commons.lang3.time.FastDatePrinter.class) FastDatePrinter this, final int field, final int padding) {
         switch (padding) {
         case 1:
             return new UnpaddedNumberField(field);

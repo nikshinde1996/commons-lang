@@ -1274,9 +1274,12 @@ public class ClassUtils {
                     }
 
                     @Override
-                    public Class<?> next() {
+                    @SuppressWarnings("dereference.of.nullable")
+                    // next.getValue() is null when declaration of MutableObject sets `value` to null
+                    // In this method, for MutableObject [next], the 'value' is non-null, since object 'type' is non-null
+                    // see declaration of MutableObject 'next'
+                    public Class<?> next() {  
                         final Class<?> result = next.getValue();
-                        // BUG : result may be null, can cause NPE
                         next.setValue(result.getSuperclass());
                         return result;
                     }

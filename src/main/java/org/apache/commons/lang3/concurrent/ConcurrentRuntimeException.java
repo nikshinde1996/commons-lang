@@ -16,6 +16,9 @@
  */
 package org.apache.commons.lang3.concurrent;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
+
 /**
  * <p>
  * An exception class used for reporting runtime error conditions related to
@@ -32,6 +35,7 @@ package org.apache.commons.lang3.concurrent;
  *
  * @since 3.0
  */
+@AnnotatedFor({"nullness"}) 
 public class ConcurrentRuntimeException extends RuntimeException {
     /**
      * The serial version UID.
@@ -65,7 +69,7 @@ public class ConcurrentRuntimeException extends RuntimeException {
      * @param cause the cause of this exception
      * @throws IllegalArgumentException if the cause is not a checked exception
      */
-    public ConcurrentRuntimeException(final String msg, final Throwable cause) {
+    public ConcurrentRuntimeException(final @Nullable String msg, final Throwable cause) {
         super(msg, ConcurrentUtils.checkedException(cause));
     }
 }

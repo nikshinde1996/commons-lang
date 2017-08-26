@@ -40,6 +40,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.nullness.qual.EnsuresNonNull;
+import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
+import org.checkerframework.checker.nullness.qual.RequiresNonNull;
+import org.checkerframework.checker.initialization.qual.UnknownInitialization;
 
 /**
  * <p>FastDateParser is a fast and thread-safe version of
@@ -92,7 +96,7 @@ public class FastDateParser implements DateParser, Serializable {
     private final int startYear;
 
     // derived fields
-    private transient List<StrategyAndWidth> patterns;
+    private transient @MonotonicNonNull List<StrategyAndWidth> patterns;
 
     // comparator used to sort regex alternatives
     // alternatives should be ordered longer first, and shorter last. ('february' before 'feb')
@@ -160,7 +164,8 @@ public class FastDateParser implements DateParser, Serializable {
      *
      * @param definingCalendar the {@link java.util.Calendar} instance used to initialize this FastDateParser
      */
-    private void init(final Calendar definingCalendar) {
+    @EnsuresNonNull("patterns") 
+    private void init(@UnknownInitialization(java.lang.Object.class) FastDateParser this, final Calendar definingCalendar) {
         patterns = new ArrayList<>();
 
         final StrategyParser fm = new StrategyParser(definingCalendar);
@@ -376,7 +381,7 @@ public class FastDateParser implements DateParser, Serializable {
      * @see org.apache.commons.lang3.time.DateParser#parseObject(java.lang.String, java.text.ParsePosition)
      */
     @Override
-    public Object parseObject(final String source, final ParsePosition pos) {
+    public @Nullable Object parseObject(final String source, final ParsePosition pos) {
         return parse(source, pos);
     }
 
@@ -513,11 +518,11 @@ public class FastDateParser implements DateParser, Serializable {
 
         private Pattern pattern;
 
-        void createPattern(final StringBuilder regex) {
+        void createPattern(@UnknownInitialization(org.apache.commons.lang3.time.FastDateParser.PatternStrategy.class) PatternStrategy this, final StringBuilder regex) {
             createPattern(regex.toString());
         }
 
-        void createPattern(final String regex) {
+        void createPattern(@UnknownInitialization(org.apache.commons.lang3.time.FastDateParser.PatternStrategy.class) PatternStrategy this, final String regex) {
             this.pattern = Pattern.compile(regex);
         }
 

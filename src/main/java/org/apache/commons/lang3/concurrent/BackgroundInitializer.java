@@ -22,6 +22,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.framework.qual.AnnotatedFor;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.checkerframework.checker.nullness.qual.EnsuresNonNullIf;
@@ -87,7 +88,7 @@ import org.checkerframework.checker.nullness.qual.EnsuresNonNullIf;
  * @param <T> the type of the object managed by this initializer class
  */
 @AnnotatedFor({"nullness"}) 
-public abstract class BackgroundInitializer<T> implements
+public abstract class BackgroundInitializer<T extends @NonNull Object> implements
         ConcurrentInitializer<T> {
     /** The external executor service for executing tasks. */
     private @Nullable ExecutorService externalExecutor; // @GuardedBy("this")
@@ -212,7 +213,7 @@ public abstract class BackgroundInitializer<T> implements
      * @throws IllegalStateException if {@link #start()} has not been called
      */
     @Override
-    public @Nullable T get() throws ConcurrentException {
+    public T get() throws ConcurrentException {
         try {
             return getFuture().get();
         } catch (final ExecutionException execex) {
