@@ -199,11 +199,12 @@ public class ConcurrentUtils {
      * @return the object managed by the {@code ConcurrentInitializer}
      * @throws ConcurrentRuntimeException if the initializer throws an exception
      */
-    @SuppressWarnings("nullness:return.type.incompatible") 
+    @SuppressWarnings({"nullness:return.type.incompatible","argument.type.incompatible"})
+    // initialize(ConcurrentInitializer) returns null when ConcurrentInitializer argument
+    // is non null, here initializer is non null. checker warning is false positive
+    // As ConcurrentException occurs, its cause is non-null, hence ConcurrentException.getCause() returns non-null value 
     @Pure public static <T extends @NonNull Object> T initializeUnchecked(final ConcurrentInitializer<T> initializer) {
         try {
-            // initialize(ConcurrentInitializer) returns null when ConcurrentInitializer argument
-            // is non null, here initializer is non null. checker warning is false positive
             return initialize(initializer);
         } catch (final ConcurrentException cex) {
             throw new ConcurrentRuntimeException(cex.getCause());
@@ -302,6 +303,8 @@ public class ConcurrentUtils {
      * not be the object created by the {@link ConcurrentInitializer}
      * @throws ConcurrentRuntimeException if the initializer throws an exception
      */
+    @SuppressWarnings("argument.type.incompatible") 
+    // As ConcurrentException occurs, its cause is non-null, hence ConcurrentException.getCause() returns non-null value 
     public static <K extends @NonNull Object, V extends @NonNull Object> @Nullable V createIfAbsentUnchecked(final @Nullable ConcurrentMap<K, V> map,
             final K key, final @Nullable ConcurrentInitializer<V> init) {
         try {

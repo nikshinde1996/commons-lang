@@ -31,6 +31,7 @@ import java.util.Set;
 import org.apache.commons.lang3.mutable.MutableObject;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.EnsuresNonNullIf;
 import org.checkerframework.framework.qual.AnnotatedFor;
 import org.checkerframework.checker.nullness.qual.PolyNull;
 
@@ -611,6 +612,7 @@ public class ClassUtils {
      * @param autoboxing  whether to use implicit autoboxing/unboxing between primitives and wrappers
      * @return {@code true} if assignment possible
      */
+    @EnsuresNonNullIf(expression={"#1","#2"},result=true) 
     public static boolean isAssignable(Class<?> @Nullable [] classArray, Class<?> @Nullable [] toClassArray, final boolean autoboxing) {
         if (!ArrayUtils.isSameLength(classArray, toClassArray)) {
             return false;
@@ -1260,7 +1262,7 @@ public class ClassUtils {
      * @return Iterable an Iterable over the class hierarchy of the given class
      * @since 3.2
      */
-    public static Iterable<Class<?>> hierarchy(final Class<?> type, final Interfaces interfacesBehavior) {
+    public static Iterable<Class<?>> hierarchy(final Class<?> type, final @Nullable Interfaces interfacesBehavior) {
         final Iterable<Class<?>> classes = new Iterable<Class<?>>() {
 
             @Override

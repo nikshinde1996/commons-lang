@@ -37,6 +37,7 @@ import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.ClassUtils.Interfaces;
 import org.apache.commons.lang3.Validate;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.checker.nullness.qual.PolyNull;
 import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
@@ -93,7 +94,7 @@ public class MethodUtils {
      *
      *  @since 3.4
      */
-    public static Object invokeMethod(final Object object, final String methodName) throws NoSuchMethodException,
+    public static @Nullable Object invokeMethod(final Object object, final String methodName) throws NoSuchMethodException,
             IllegalAccessException, InvocationTargetException {
         return invokeMethod(object, methodName, ArrayUtils.EMPTY_OBJECT_ARRAY, null);
     }
@@ -116,7 +117,7 @@ public class MethodUtils {
      *
      * @since 3.5
      */
-    public static Object invokeMethod(final Object object, final boolean forceAccess, final String methodName)
+    public static @Nullable Object invokeMethod(final Object object, final boolean forceAccess, final String methodName)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         return invokeMethod(object, forceAccess, methodName, ArrayUtils.EMPTY_OBJECT_ARRAY, null);
     }
@@ -143,11 +144,14 @@ public class MethodUtils {
      * @throws InvocationTargetException wraps an exception thrown by the method invoked
      * @throws IllegalAccessException if the requested method is not accessible via reflection
      */
-    public static Object invokeMethod(final Object object, final String methodName,
+    @SuppressWarnings("assignment.type.incompatible")
+    // null value of args is treated as null array object and not [null]. args in this method does not
+    // contains null elements,hence ClassUtils.toClass() returns array with non-null elements.  
+    public static @Nullable Object invokeMethod(final Object object, final String methodName,
             Object @Nullable ... args) throws NoSuchMethodException,
             IllegalAccessException, InvocationTargetException {
         args = ArrayUtils.nullToEmpty(args);
-        final @Nullable Class<?>[] parameterTypes = ClassUtils.toClass(args);
+        final Class<?>[] parameterTypes = ClassUtils.toClass(args);
         return invokeMethod(object, methodName, args, parameterTypes);
     }
 
@@ -174,7 +178,10 @@ public class MethodUtils {
      *
      * @since 3.5
      */
-    public static Object invokeMethod(final Object object, final boolean forceAccess, final String methodName,
+    @SuppressWarnings("assignment.type.incompatible")
+    // null value of args is treated as null array object and not [null]. args in this method does not
+    // contains null elements,hence ClassUtils.toClass() returns array with non-null elements.     
+    public static @Nullable Object invokeMethod(final Object object, final boolean forceAccess, final String methodName,
             Object @Nullable ... args) throws NoSuchMethodException,
             IllegalAccessException, InvocationTargetException {
         args = ArrayUtils.nullToEmpty(args);    
@@ -201,7 +208,7 @@ public class MethodUtils {
      * @throws IllegalAccessException if the requested method is not accessible via reflection
      * @since 3.5
      */
-    public static Object invokeMethod(final Object object, final boolean forceAccess, final String methodName,
+    public static @Nullable Object invokeMethod(final Object object, final boolean forceAccess, final String methodName,
             Object @Nullable [] args, Class<?> @Nullable [] parameterTypes)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         parameterTypes = ArrayUtils.nullToEmpty(parameterTypes);
@@ -252,7 +259,7 @@ public class MethodUtils {
      * @throws InvocationTargetException wraps an exception thrown by the method invoked
      * @throws IllegalAccessException if the requested method is not accessible via reflection
      */
-    public static Object invokeMethod(final Object object, final String methodName,
+    public static @Nullable Object invokeMethod(final Object object, final String methodName,
             final Object @Nullable [] args, final Class<?> @Nullable [] parameterTypes)
             throws NoSuchMethodException, IllegalAccessException,
             InvocationTargetException {
@@ -278,7 +285,7 @@ public class MethodUtils {
      *
      * @since 3.4
      */
-    public static Object invokeExactMethod(final Object object, final String methodName) throws NoSuchMethodException,
+    public static @Nullable Object invokeExactMethod(final Object object, final String methodName) throws NoSuchMethodException,
             IllegalAccessException, InvocationTargetException {
         return invokeExactMethod(object, methodName, ArrayUtils.EMPTY_OBJECT_ARRAY, null);
     }
@@ -300,7 +307,10 @@ public class MethodUtils {
      * @throws IllegalAccessException if the requested method is not accessible
      *  via reflection
      */
-    public static Object invokeExactMethod(final Object object, final String methodName,
+    @SuppressWarnings("assignment.type.incompatible") 
+    // null value of args is treated as null array object and not [null]. args in this method does not
+    // contains null elements,hence ClassUtils.toClass() returns array with non-null elements.    
+    public static @Nullable Object invokeExactMethod(final Object object, final String methodName,
             Object @Nullable ... args) throws NoSuchMethodException,
             IllegalAccessException, InvocationTargetException {
         args = ArrayUtils.nullToEmpty(args);     
@@ -327,7 +337,7 @@ public class MethodUtils {
      * @throws IllegalAccessException if the requested method is not accessible
      *  via reflection
      */
-    public static Object invokeExactMethod(final Object object, final String methodName,
+    public static @Nullable Object invokeExactMethod(final Object object, final String methodName,
             Object @Nullable [] args, Class<?> @Nullable [] parameterTypes)
             throws NoSuchMethodException, IllegalAccessException,
             InvocationTargetException {
@@ -362,7 +372,10 @@ public class MethodUtils {
      * @throws IllegalAccessException if the requested method is not accessible
      *  via reflection
      */
-    public static Object invokeExactStaticMethod(final Class<?> cls, final String methodName,
+    @SuppressWarnings("argument.type.incompatible") 
+    // For static methods, the arguments in Method.invoke() can be null, This method is for invoking static
+    // methods only 
+    public static @Nullable Object invokeExactStaticMethod(final Class<?> cls, final String methodName,
             Object @Nullable [] args, Class<?> @Nullable [] parameterTypes)
             throws NoSuchMethodException, IllegalAccessException,
             InvocationTargetException {
@@ -400,7 +413,10 @@ public class MethodUtils {
      * @throws IllegalAccessException if the requested method is not accessible
      *  via reflection
      */
-    public static Object invokeStaticMethod(final Class<?> cls, final String methodName,
+    @SuppressWarnings("assignment.type.incompatible") 
+    // null value of args is treated as null array object and not [null]. args in this method does not
+    // contains null elements,hence ClassUtils.toClass() returns array with non-null elements.    
+    public static @Nullable Object invokeStaticMethod(final Class<?> cls, final String methodName,
             Object @Nullable ... args) throws NoSuchMethodException,
             IllegalAccessException, InvocationTargetException {
         args = ArrayUtils.nullToEmpty(args);   
@@ -430,7 +446,10 @@ public class MethodUtils {
      * @throws IllegalAccessException if the requested method is not accessible
      *  via reflection
      */
-    public static Object invokeStaticMethod(final Class<?> cls, final String methodName,
+    @SuppressWarnings("argument.type.incompatible") 
+    // For static methods, the arguments in Method.invoke() can be null, This method is for invoking static
+    // methods only 
+    public static @Nullable Object invokeStaticMethod(final Class<?> cls, final String methodName,
             Object @Nullable [] args, Class<?> @Nullable [] parameterTypes)
             throws NoSuchMethodException, IllegalAccessException,
             InvocationTargetException {
@@ -479,6 +498,7 @@ public class MethodUtils {
 
         // Construct a new array for the variadic parameters
         final Class<?> varArgComponentType = methodParameterTypes[methodParameterTypes.length - 1].getComponentType();
+        assert varArgComponentType != null : "@AssumeAssertion(nullness): methodParameterTypes represents array class, hence getComponentType() returns non-null value";
         final int varArgLength = args.length - methodParameterTypes.length + 1;
 
         Object varArgsArray = Array.newInstance(ClassUtils.primitiveToWrapper(varArgComponentType), varArgLength);
@@ -515,7 +535,10 @@ public class MethodUtils {
      * @throws IllegalAccessException if the requested method is not accessible
      *  via reflection
      */
-    public static Object invokeExactStaticMethod(final Class<?> cls, final String methodName,
+    @SuppressWarnings("assignment.type.incompatible") 
+    // null value of args is treated as null array object and not [null]. args in this method does not
+    // contains null elements,hence ClassUtils.toClass() returns array with non-null elements.    
+    public static @Nullable Object invokeExactStaticMethod(final Class<?> cls, final String methodName,
             Object @Nullable ... args) throws NoSuchMethodException,
             IllegalAccessException, InvocationTargetException {
         args = ArrayUtils.nullToEmpty(args);   
@@ -553,7 +576,7 @@ public class MethodUtils {
      * @param method The method that we wish to call
      * @return The accessible method
      */
-    public static @Nullable Method getAccessibleMethod(Method method) {
+    public static @Nullable Method getAccessibleMethod(@Nullable Method method) {
         if (!MemberUtils.isAccessible(method)) {
             return null;
         }
@@ -618,7 +641,7 @@ public class MethodUtils {
      * @param parameterTypes The parameter type signatures
      * @return the accessible method or {@code null} if not found
      */
-    private static @Nullable Method getAccessibleMethodFromInterfaceNest(Class<?> cls,
+    private static @Nullable Method getAccessibleMethodFromInterfaceNest(@Nullable Class<?> cls,
             final String methodName, final Class<?>... parameterTypes) {
         // Search up the superclass chain
         for (; cls != null; cls = cls.getSuperclass()) {
@@ -705,8 +728,12 @@ public class MethodUtils {
         if (bestMatch != null && bestMatch.isVarArgs() && bestMatch.getParameterTypes().length > 0 && parameterTypes.length > 0) {
             final Class<?>[] methodParameterTypes = bestMatch.getParameterTypes();
             final Class<?> methodParameterComponentType = methodParameterTypes[methodParameterTypes.length - 1].getComponentType();
+            assert methodParameterComponentType != null : "@AssumeAssertion(nullness): methodParameterTypes represents array class, hence getComponentType() returns non-null value";
             final String methodParameterComponentTypeName = ClassUtils.primitiveToWrapper(methodParameterComponentType).getName();
             final String parameterTypeName = parameterTypes[parameterTypes.length - 1].getName();
+            @SuppressWarnings("dereference.of.nullable")
+            // parameterTypes is of Class<?> type, hence getAllSuperclass() returns non-null value.
+            // Class.getSuperclass() returns null for Object, interface, primitive, or void.
             final String parameterTypeSuperClassName = parameterTypes[parameterTypes.length - 1].getSuperclass().getName();
 
             if (!methodParameterComponentTypeName.equals(parameterTypeName)
@@ -986,7 +1013,7 @@ public class MethodUtils {
      * going up from this one
      *  {@code null} if null input
      */
-    private static @Nullable List<Class<?>> getAllSuperclassesAndInterfaces(final @Nullable Class<?> cls) {
+    private static @PolyNull List<Class<?>> getAllSuperclassesAndInterfaces(final @PolyNull Class<?> cls) {
         if (cls == null) {
             return null;
         }

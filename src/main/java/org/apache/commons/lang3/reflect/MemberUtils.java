@@ -25,6 +25,7 @@ import java.lang.reflect.Modifier;
 import org.apache.commons.lang3.ClassUtils;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.nullness.qual.EnsuresNonNullIf;
 
 /**
  * Contains common code for working with {@link java.lang.reflect.Method Methods}/{@link java.lang.reflect.Constructor Constructors},
@@ -85,6 +86,7 @@ abstract class MemberUtils {
      * @param m Member to check
      * @return {@code true} if <code>m</code> is accessible
      */
+    @EnsuresNonNullIf(expression="#1", result=true) 
     static boolean isAccessible(final @Nullable Member m) {
         return m != null && Modifier.isPublic(m.getModifiers()) && !m.isSynthetic();
     }
