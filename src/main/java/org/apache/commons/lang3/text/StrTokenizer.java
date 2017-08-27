@@ -29,6 +29,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.AnnotatedFor;
 import org.checkerframework.dataflow.qual.Pure;
 import org.checkerframework.checker.nullness.qual.EnsuresNonNull;
+import org.checkerframework.checker.nullness.qual.EnsuresNonNullIf;
 import org.checkerframework.checker.initialization.qual.UnderInitialization;
 import org.checkerframework.checker.initialization.qual.UnknownInitialization;
 
@@ -516,6 +517,7 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      * @return true if there are more tokens
      */
     @Override
+    @EnsuresNonNullIf(expression="tokens",result=true)
     @Pure public boolean hasNext() {
         checkTokenized();
         return tokenPos < tokens.length;
@@ -553,6 +555,7 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      * @return true if there are previous tokens
      */
     @Override
+    @EnsuresNonNullIf(expression="tokens",result=true)
     @Pure public boolean hasPrevious() {
         checkTokenized();
         return tokenPos > 0;
@@ -876,7 +879,7 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      * @param delim  the delimiter matcher to use
      * @return this, to enable chaining
      */
-    public StrTokenizer setDelimiterMatcher(@UnknownInitialization(org.apache.commons.lang3.text.StrTokenizer.class) StrTokenizer this, final @Nullable StrMatcher delim) {
+    public @UnknownInitialization(org.apache.commons.lang3.text.StrTokenizer.class) StrTokenizer setDelimiterMatcher(@UnknownInitialization(org.apache.commons.lang3.text.StrTokenizer.class) StrTokenizer this, final @Nullable StrMatcher delim) {
         if (delim == null) {
             this.delimMatcher = StrMatcher.noneMatcher();
         } else {
@@ -891,7 +894,7 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      * @param delim  the delimiter character to use
      * @return this, to enable chaining
      */
-    public StrTokenizer setDelimiterChar(@UnknownInitialization(org.apache.commons.lang3.text.StrTokenizer.class) StrTokenizer this, final char delim) {
+    public @UnknownInitialization(org.apache.commons.lang3.text.StrTokenizer.class) StrTokenizer setDelimiterChar(@UnknownInitialization(org.apache.commons.lang3.text.StrTokenizer.class) StrTokenizer this, final char delim) {
         return setDelimiterMatcher(StrMatcher.charMatcher(delim));
     }
 
@@ -901,7 +904,7 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      * @param delim  the delimiter string to use
      * @return this, to enable chaining
      */
-    public StrTokenizer setDelimiterString(@UnknownInitialization(org.apache.commons.lang3.text.StrTokenizer.class) StrTokenizer this, final String delim) {
+    public @UnknownInitialization(org.apache.commons.lang3.text.StrTokenizer.class) StrTokenizer setDelimiterString(@UnknownInitialization(org.apache.commons.lang3.text.StrTokenizer.class) StrTokenizer this, final String delim) {
         return setDelimiterMatcher(StrMatcher.stringMatcher(delim));
     }
 
@@ -929,7 +932,7 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      * @param quote  the quote matcher to use, null ignored
      * @return this, to enable chaining
      */
-    public StrTokenizer setQuoteMatcher(@UnknownInitialization(org.apache.commons.lang3.text.StrTokenizer.class) StrTokenizer this, final StrMatcher quote) {
+    public @UnknownInitialization(org.apache.commons.lang3.text.StrTokenizer.class) StrTokenizer setQuoteMatcher(@UnknownInitialization(org.apache.commons.lang3.text.StrTokenizer.class) StrTokenizer this, final StrMatcher quote) {
         if (quote != null) {
             this.quoteMatcher = quote;
         }
@@ -945,7 +948,7 @@ public class StrTokenizer implements ListIterator<String>, Cloneable {
      * @param quote  the quote character to use
      * @return this, to enable chaining
      */
-    public StrTokenizer setQuoteChar(@UnknownInitialization(org.apache.commons.lang3.text.StrTokenizer.class) StrTokenizer this, final char quote) {
+    public @UnknownInitialization(org.apache.commons.lang3.text.StrTokenizer.class) StrTokenizer setQuoteChar(@UnknownInitialization(org.apache.commons.lang3.text.StrTokenizer.class) StrTokenizer this, final char quote) {
         return setQuoteMatcher(StrMatcher.charMatcher(quote));
     }
 

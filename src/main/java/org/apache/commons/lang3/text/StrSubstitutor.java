@@ -230,8 +230,9 @@ public class StrSubstitutor {
         final Enumeration<?> propNames = valueProperties.propertyNames();
         while (propNames.hasMoreElements()) {
             final String propName = (String)propNames.nextElement();
-            assert propName != null : "@AssumeAssertion(nullness)";
+            assert propName != null : "@AssumeAssertion(nullness): while loop exits when no elements are present, hence propName is not null in loop";
             final String propValue = valueProperties.getProperty(propName);
+            assert propValue != null : "@AssumeAssertion(nullness): propValue is non-null as Property(propName) is present in valueProperties";
             valueMap.put(propName, propValue);
         }
         return StrSubstitutor.replace(source, valueMap);
@@ -991,7 +992,8 @@ public class StrSubstitutor {
      * @return this, to enable chaining
      * @throws IllegalArgumentException if the prefix matcher is null
      */
-    public StrSubstitutor setVariablePrefixMatcher(@UnknownInitialization(java.lang.Object.class) StrSubstitutor this, final StrMatcher prefixMatcher) {
+    @EnsuresNonNull("this.prefixMatcher") 
+    public @UnknownInitialization(java.lang.Object.class) StrSubstitutor setVariablePrefixMatcher(@UnknownInitialization(java.lang.Object.class) StrSubstitutor this, final StrMatcher prefixMatcher) {
         if (prefixMatcher == null) {
             throw new IllegalArgumentException("Variable prefix matcher must not be null!");
         }
@@ -1009,7 +1011,8 @@ public class StrSubstitutor {
      * @param prefix  the prefix character to use
      * @return this, to enable chaining
      */
-    public StrSubstitutor setVariablePrefix(final char prefix) {
+    @EnsuresNonNull("this.prefixMatcher") 
+    public @UnknownInitialization(java.lang.Object.class) StrSubstitutor setVariablePrefix(final char prefix) {
         return setVariablePrefixMatcher(StrMatcher.charMatcher(prefix));
     }
 
@@ -1023,7 +1026,8 @@ public class StrSubstitutor {
      * @return this, to enable chaining
      * @throws IllegalArgumentException if the prefix is null
      */
-    public StrSubstitutor setVariablePrefix(@UnknownInitialization(java.lang.Object.class) StrSubstitutor this, final String prefix) {
+    @EnsuresNonNull("this.prefixMatcher") 
+    public @UnknownInitialization(java.lang.Object.class) StrSubstitutor setVariablePrefix(@UnknownInitialization(java.lang.Object.class) StrSubstitutor this, final String prefix) {
        if (prefix == null) {
             throw new IllegalArgumentException("Variable prefix must not be null!");
         }
@@ -1056,7 +1060,8 @@ public class StrSubstitutor {
      * @return this, to enable chaining
      * @throws IllegalArgumentException if the suffix matcher is null
      */
-    public StrSubstitutor setVariableSuffixMatcher(@UnknownInitialization(java.lang.Object.class) StrSubstitutor this, final StrMatcher suffixMatcher) {
+    @EnsuresNonNull("this.suffixMatcher") 
+    public @UnknownInitialization(java.lang.Object.class) StrSubstitutor setVariableSuffixMatcher(@UnknownInitialization(java.lang.Object.class) StrSubstitutor this, final StrMatcher suffixMatcher) {
         if (suffixMatcher == null) {
             throw new IllegalArgumentException("Variable suffix matcher must not be null!");
         }
@@ -1074,7 +1079,8 @@ public class StrSubstitutor {
      * @param suffix  the suffix character to use
      * @return this, to enable chaining
      */
-    public StrSubstitutor setVariableSuffix(final char suffix) {
+    @EnsuresNonNull("this.suffixMatcher") 
+    public @UnknownInitialization(java.lang.Object.class) StrSubstitutor setVariableSuffix(final char suffix) {
         return setVariableSuffixMatcher(StrMatcher.charMatcher(suffix));
     }
 
@@ -1088,7 +1094,8 @@ public class StrSubstitutor {
      * @return this, to enable chaining
      * @throws IllegalArgumentException if the suffix is null
      */
-    public StrSubstitutor setVariableSuffix(@UnknownInitialization(java.lang.Object.class) StrSubstitutor this, final String suffix) {
+    @EnsuresNonNull("this.suffixMatcher") 
+    public @UnknownInitialization(java.lang.Object.class) StrSubstitutor setVariableSuffix(@UnknownInitialization(java.lang.Object.class) StrSubstitutor this, final String suffix) {
        if (suffix == null) {
             throw new IllegalArgumentException("Variable suffix must not be null!");
         }
@@ -1127,7 +1134,7 @@ public class StrSubstitutor {
      * @return this, to enable chaining
      * @since 3.2
      */
-    public StrSubstitutor setValueDelimiterMatcher(@UnknownInitialization(java.lang.Object.class) StrSubstitutor this, final @Nullable StrMatcher valueDelimiterMatcher) {
+    public @UnknownInitialization(java.lang.Object.class) StrSubstitutor setValueDelimiterMatcher(@UnknownInitialization(java.lang.Object.class) StrSubstitutor this, final @Nullable StrMatcher valueDelimiterMatcher) {
         this.valueDelimiterMatcher = valueDelimiterMatcher;
         return this;
     }
@@ -1143,7 +1150,7 @@ public class StrSubstitutor {
      * @return this, to enable chaining
      * @since 3.2
      */
-    public StrSubstitutor setValueDelimiter(final char valueDelimiter) {
+    public @UnknownInitialization(java.lang.Object.class) StrSubstitutor setValueDelimiter(final char valueDelimiter) {
         return setValueDelimiterMatcher(StrMatcher.charMatcher(valueDelimiter));
     }
 
@@ -1161,7 +1168,7 @@ public class StrSubstitutor {
      * @return this, to enable chaining
      * @since 3.2
      */
-    public StrSubstitutor setValueDelimiter(@UnknownInitialization(java.lang.Object.class) StrSubstitutor this, final @Nullable String valueDelimiter) {
+    public @UnknownInitialization(java.lang.Object.class) StrSubstitutor setValueDelimiter(@UnknownInitialization(java.lang.Object.class) StrSubstitutor this, final @Nullable String valueDelimiter) {
         if (StringUtils.isEmpty(valueDelimiter)) {
             setValueDelimiterMatcher(null);
             return this;
