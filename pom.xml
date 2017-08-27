@@ -550,6 +550,29 @@
       <scope>test</scope>
     </dependency>
 
+    <!-- annotations from the Checker Framework: nullness, interning, locking, ... -->
+    <dependency>
+      <groupId>org.checkerframework</groupId>
+      <artifactId>checker-qual</artifactId>
+      <version>2.1.14</version>
+    </dependency>
+    <dependency>
+      <groupId>org.checkerframework</groupId>
+      <artifactId>checker</artifactId>
+      <version>2.1.14</version>
+    </dependency>
+    <!-- The Type Annotations compiler. Uncomment if using Java 7 or annotations in comments. -->
+    <!-- <dependency>
+      <groupId>org.checkerframework</groupId>
+      <artifactId>compiler</artifactId>
+      <version>2.1.14</version>
+    </dependency> -->
+    <!-- The annotated JDK to use (change to jdk7 if using Java 7). -->
+    <dependency>
+      <groupId>org.checkerframework</groupId>
+      <artifactId>jdk8</artifactId>
+      <version>2.1.14</version>
+    </dependency>
   </dependencies>
 
   <distributionManagement>
@@ -600,6 +623,11 @@
     <!-- JMH Benchmark related properties, version, target compiler and name of the benchmarking uber jar. -->
     <jmh.version>1.17.4</jmh.version>
     <uberjar.name>benchmarks</uberjar.name>
+    <!-- These properties will be set by the Maven Dependency plugin -->
+    <!-- Change to jdk7 if using Java 7 -->
+    <annotatedJdk>${org.checkerframework:jdk8:jar}</annotatedJdk>
+    <!-- Uncomment to use the type annotations compiler. -->
+    <!-- <typeAnnotationsJavac>${org.checkerframework:compiler:jar}</typeAnnotationsJavac> -->
   </properties>
 
 
@@ -697,6 +725,46 @@
         <configuration>
           <excludeFilterFile>${basedir}/findbugs-exclude-filter.xml</excludeFilterFile>
         </configuration>
+      </plugin>
+      <plugin>
+      <!-- This plugin will set properties values using dependency information -->
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-dependency-plugin</artifactId>
+      <executions>
+        <execution>
+          <goals>
+            <goal>properties</goal>
+          </goals>
+        </execution>
+      </executions>
+      </plugin>
+      <plugin>
+      <artifactId>maven-compiler-plugin</artifactId>
+      <version>3.6.1</version>
+      <configuration>
+        <!-- Change source and target to 1.7 if using Java 7 -->
+        <source>1.8</source>
+        <target>1.8</target>
+        <fork>true</fork>
+        <compilerArguments>
+          <Xmaxerrs>10000</Xmaxerrs>
+          <Xmaxwarns>10000</Xmaxwarns>
+        </compilerArguments>
+        <annotationProcessors>
+          <!-- Add all the checkers you want to enable here -->
+          <annotationProcessor>org.checkerframework.checker.nullness.NullnessChecker</annotationProcessor>
+        </annotationProcessors>
+        <compilerArgs>
+          <!-- location of the annotated JDK, which comes from a Maven dependency -->
+          <arg>-Xbootclasspath/p:${annotatedJdk}</arg>
+          <!-- Uncomment the following line to use the type annotations compiler. -->
+          <!-- <arg>-J-Xbootclasspath/p:${typeAnnotationsJavac}</arg> -->
+          <!--<arg>-AuseDefaultsForUncheckedCode=source,bytecode</arg> -->
+          <arg>-Awarns</arg>
+          <arg>-Xmaxwarns</arg>
+          <arg>10000</arg>
+        </compilerArgs>
+      </configuration>
       </plugin>
     </plugins>
 
