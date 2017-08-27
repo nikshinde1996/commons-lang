@@ -198,6 +198,9 @@ abstract class MemberUtils {
      * @param destClass The destination class
      * @return The cost of transforming an object
      */
+    @SuppressWarnings("argument.type.incompatible")
+    // null argument is never passed in this private method, srcClass is annotated as @Nullable as it can be 
+    // later assigned null value after traversing parent class hierarchy. 
     private static float getObjectTransformationCost(@Nullable Class<?> srcClass, final Class<?> destClass) {
         if (destClass.isPrimitive()) {
             return getPrimitivePromotionCost(srcClass, destClass);

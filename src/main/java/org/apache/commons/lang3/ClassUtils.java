@@ -611,8 +611,7 @@ public class ClassUtils {
      * @param toClassArray  the array of Classes to try to assign into, may be {@code null}
      * @param autoboxing  whether to use implicit autoboxing/unboxing between primitives and wrappers
      * @return {@code true} if assignment possible
-     */
-    @EnsuresNonNullIf(expression={"#1","#2"},result=true) 
+     */ 
     public static boolean isAssignable(Class<?> @Nullable [] classArray, Class<?> @Nullable [] toClassArray, final boolean autoboxing) {
         if (!ArrayUtils.isSameLength(classArray, toClassArray)) {
             return false;
