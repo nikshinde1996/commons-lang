@@ -26,6 +26,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.framework.qual.AnnotatedFor;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.checkerframework.checker.nullness.qual.EnsuresNonNullIf;
+import org.checkerframework.checker.initialization.qual.UnknownInitialization;
 
 /**
  * <p>
@@ -138,7 +139,7 @@ public abstract class BackgroundInitializer<T extends @NonNull Object> implement
      * called
      */
     @EnsuresNonNullIf(expression="future", result=true) 
-    public synchronized boolean isStarted() {
+    public synchronized boolean isStarted(@UnknownInitialization(org.apache.commons.lang3.concurrent.BackgroundInitializer.class) BackgroundInitializer<T> this) {
         return future != null;
     }
 
@@ -156,7 +157,7 @@ public abstract class BackgroundInitializer<T extends @NonNull Object> implement
      * @throws IllegalStateException if this initializer has already been
      * started
      */
-    public final synchronized void setExternalExecutor(
+    public final synchronized void setExternalExecutor(@UnknownInitialization(org.apache.commons.lang3.concurrent.BackgroundInitializer.class) BackgroundInitializer<T> this,
             final @Nullable ExecutorService externalExecutor) {
         if (isStarted()) {
             throw new IllegalStateException(

@@ -672,6 +672,8 @@ public class ObjectUtils {
      * @throws CloneFailedException if the object is cloneable and the clone operation fails
      * @since 3.0
      */
+    @SuppressWarnings("argument.type.incompatible") 
+    // As InvocationTargetException occurs, its cause is non-null, hence InvocationTargetException.getCause() returns non-null value 
     public static <T> @Nullable T clone(final @Nullable T obj) {
         if (obj instanceof Cloneable) {
             final Object result;

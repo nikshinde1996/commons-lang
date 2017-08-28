@@ -79,7 +79,10 @@ public class ConstructorUtils {
      * @throws InstantiationException if an error occurs on instantiation
      * @see #invokeConstructor(java.lang.Class, java.lang.Object[], java.lang.Class[])
      */
-    public static <T> T invokeConstructor(final Class<T> cls, Object... args)
+    @SuppressWarnings("assignment.type.incompatible")
+    // null value fpr args is treated as null array object and not [null]. args in this method does not
+    // contains null elements,hence ClassUtils.toClass() returns array with non-null elements. 
+    public static <T> T invokeConstructor(final Class<T> cls, Object @Nullable ... args)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException,
             InstantiationException {
         args = ArrayUtils.nullToEmpty(args);
@@ -107,7 +110,7 @@ public class ConstructorUtils {
      * @throws InstantiationException if an error occurs on instantiation
      * @see Constructor#newInstance
      */
-    public static <T> T invokeConstructor(final Class<T> cls, Object[] args, Class<?>[] parameterTypes)
+    public static <T> T invokeConstructor(final Class<T> cls, Object @Nullable [] args, Class<?> @Nullable [] parameterTypes)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException,
             InstantiationException {
         args = ArrayUtils.nullToEmpty(args);
@@ -143,7 +146,10 @@ public class ConstructorUtils {
      * @throws InstantiationException if an error occurs on instantiation
      * @see #invokeExactConstructor(java.lang.Class, java.lang.Object[], java.lang.Class[])
      */
-    public static <T> T invokeExactConstructor(final Class<T> cls, Object... args)
+    @SuppressWarnings("assignment.type.incompatible")
+    // null value fpr args is treated as null array object and not [null]. args in this method does not
+    // contains null elements,hence ClassUtils.toClass() returns array with non-null elements.      
+    public static <T> T invokeExactConstructor(final Class<T> cls, Object @Nullable ... args)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException,
             InstantiationException {
         args = ArrayUtils.nullToEmpty(args);
@@ -171,8 +177,8 @@ public class ConstructorUtils {
      * @throws InstantiationException if an error occurs on instantiation
      * @see Constructor#newInstance
      */
-    public static <T> T invokeExactConstructor(final Class<T> cls, Object[] args,
-            Class<?>[] parameterTypes) throws NoSuchMethodException, IllegalAccessException,
+    public static <T> T invokeExactConstructor(final Class<T> cls, Object @Nullable [] args,
+            Class<?> @Nullable [] parameterTypes) throws NoSuchMethodException, IllegalAccessException,
             InvocationTargetException, InstantiationException {
         args = ArrayUtils.nullToEmpty(args);
         parameterTypes = ArrayUtils.nullToEmpty(parameterTypes);
@@ -199,8 +205,10 @@ public class ConstructorUtils {
      * @see #getAccessibleConstructor(java.lang.reflect.Constructor)
      * @throws NullPointerException if {@code cls} is {@code null}
      */
+    // BUG: parameterTypes can be null, it should be assigned empty array when null using ArrayUtils.nullToEmpty
+    // Also null argument is never passed in this method, when used in other methods of this class. 
     public static <T> @Nullable Constructor<T> getAccessibleConstructor(final Class<T> cls,
-            final Class<?> ... parameterTypes) {
+            final Class<?> @Nullable ... parameterTypes) {
         Validate.notNull(cls, "class cannot be null");
         try {
             return getAccessibleConstructor(cls.getConstructor(parameterTypes));
