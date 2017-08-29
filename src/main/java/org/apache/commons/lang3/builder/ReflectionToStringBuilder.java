@@ -632,6 +632,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      * @param clazz
      *            The class of object parameter
      */
+    //BUG : this.getObject() may be null. 
     protected void appendFieldsIn(final Class<?> clazz) {
         if (clazz.isArray()) {
             this.reflectionAppendArray(this.getObject());
@@ -695,7 +696,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      *
      * @see java.lang.reflect.Field#get(Object)
      */
-    protected Object getValue(final Field field) throws IllegalArgumentException, IllegalAccessException {
+    protected @Nullable Object getValue(final Field field) throws IllegalArgumentException, IllegalAccessException {
         return field.get(this.getObject());
     }
 
@@ -815,7 +816,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      * @param clazz
      *            The last super class to stop appending fields for.
      */
-    public void setUpToClass(@UnderInitialization(org.apache.commons.lang3.builder.ReflectionToStringBuilder.class) ReflectionToStringBuilder this,final Class<?> clazz) {
+    public void setUpToClass(@UnderInitialization(org.apache.commons.lang3.builder.ReflectionToStringBuilder.class) ReflectionToStringBuilder this,final @Nullable Class<?> clazz) {
         if (clazz != null) {
             final Object object = getObject();
             if (object != null && !clazz.isInstance(object)) {

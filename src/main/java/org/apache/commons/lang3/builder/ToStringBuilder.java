@@ -21,6 +21,8 @@ import org.apache.commons.lang3.Validate;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.dataflow.qual.Pure;
+import org.checkerframework.checker.initialization.qual.UnknownInitialization;
 
 /**
  * <p>Assists in implementing {@link Object#toString()} methods.</p>
@@ -1020,7 +1022,7 @@ public class ToStringBuilder implements Builder<String> {
      * @return The object being output.
      * @since 2.0
      */
-    public @Nullable Object getObject() {
+    @Pure public @Nullable Object getObject(@UnknownInitialization(org.apache.commons.lang3.builder.ToStringBuilder.class) ToStringBuilder this) {
         return object;
     }
 
