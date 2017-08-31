@@ -34,6 +34,8 @@ import org.apache.commons.lang3.Validate;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.AnnotatedFor;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.EnsuresNonNull;
+import org.checkerframework.checker.initialization.qual.UnknownInitialization;
 
 /**
  * <p>An EventListenerSupport object can be used to manage a list of event
@@ -125,6 +127,9 @@ public class EventListenerSupport<L extends @NonNull Object> implements Serializ
      * @throws IllegalArgumentException if <code>listenerInterface</code> is
      *         not an interface.
      */
+    @SuppressWarnings("argument.type.incompatible")
+    // By default context classLoader is non-null, i.e it is same as context class loader of parent
+    // thread. For null ClassLoader, it has to be explicitly set using Thread.setContextClassLoader() method. 
     public EventListenerSupport(final Class<L> listenerInterface) {
         this(listenerInterface, Thread.currentThread().getContextClassLoader());
     }
@@ -142,6 +147,7 @@ public class EventListenerSupport<L extends @NonNull Object> implements Serializ
      * @throws IllegalArgumentException if <code>listenerInterface</code> is
      *         not an interface.
      */
+    @EnsuresNonNull("this.prototypeArray") 
     public EventListenerSupport(final Class<L> listenerInterface, final ClassLoader classLoader) {
         this();
         Validate.notNull(listenerInterface, "Listener interface cannot be null.");
@@ -270,6 +276,9 @@ public class EventListenerSupport<L extends @NonNull Object> implements Serializ
      * @throws IOException if an IO error occurs
      * @throws ClassNotFoundException if the class cannot be resolved
      */
+    @SuppressWarnings("argument.type.incompatible")
+    // By default context classLoader is non-null, i.e it is same as context class loader of parent
+    // thread. For null ClassLoader, it has to be explicitly set using Thread.setContextClassLoader() method.  
     private void readObject(final ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
         @SuppressWarnings("unchecked") // Will throw CCE here if not correct
         final
@@ -290,7 +299,8 @@ public class EventListenerSupport<L extends @NonNull Object> implements Serializ
      * @param listenerInterface the class of the listener interface
      * @param classLoader the class loader to be used
      */
-    private void initializeTransientFields(final Class<L> listenerInterface, final ClassLoader classLoader) {
+    @EnsuresNonNull("this.prototypeArray") 
+    private void initializeTransientFields(@UnknownInitialization(org.apache.commons.lang3.event.EventListenerSupport.class) EventListenerSupport<L> this, final Class<L> listenerInterface, final ClassLoader classLoader) {
         @SuppressWarnings("unchecked") // Will throw CCE here if not correct
         final
         L[] array = (L[]) Array.newInstance(listenerInterface, 0);
@@ -303,7 +313,8 @@ public class EventListenerSupport<L extends @NonNull Object> implements Serializ
      * @param listenerInterface the class of the listener interface
      * @param classLoader the class loader to be used
      */
-    private void createProxy(final Class<L> listenerInterface, final ClassLoader classLoader) {
+    @EnsuresNonNull("this.proxy") 
+    private void createProxy(@UnknownInitialization(org.apache.commons.lang3.event.EventListenerSupport.class) EventListenerSupport<L> this, final Class<L> listenerInterface, final ClassLoader classLoader) {
         proxy = listenerInterface.cast(Proxy.newProxyInstance(classLoader,
                 new Class[] { listenerInterface }, createInvocationHandler()));
     }
@@ -313,7 +324,7 @@ public class EventListenerSupport<L extends @NonNull Object> implements Serializ
      * to the managed listeners.  Subclasses can override to provide custom behavior.
      * @return ProxyInvocationHandler
      */
-    protected InvocationHandler createInvocationHandler() {
+    protected InvocationHandler createInvocationHandler(@UnknownInitialization(org.apache.commons.lang3.event.EventListenerSupport.class) EventListenerSupport<L> this) {
         return new ProxyInvocationHandler();
     }
 

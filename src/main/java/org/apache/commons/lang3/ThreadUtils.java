@@ -75,6 +75,8 @@ public class ThreadUtils {
      * @throws  SecurityException  if the current thread cannot modify
      *          thread groups from this thread's thread group up to the system thread group
      */
+    @SuppressWarnings("dereference.of.nullable")
+    // threadGroupName is not-null in this method, also second null check in IF condition ensure that thread.getThreadGroup() is not null 
     public static @Nullable Thread findThreadById(final long threadId, final String threadGroupName) {
         Validate.isTrue(threadGroupName != null, "The thread group name must not be null");
         final Thread thread = findThreadById(threadId);
@@ -171,6 +173,9 @@ public class ThreadUtils {
      * @throws  SecurityException  if the current thread cannot modify
      *          thread groups from this thread's thread group up to the system thread group
      */
+    @SuppressWarnings("dereference.of.nullable") 
+    // threadGroup is not null, since Thread.currentThread() is reference to currently executing thread.
+    // and getThreadGroup() returns null when thread has stopped. 
     public static ThreadGroup getSystemThreadGroup() {
         ThreadGroup threadGroup = Thread.currentThread().getThreadGroup();
         while(threadGroup.getParent() != null) {
@@ -311,6 +316,8 @@ public class ThreadUtils {
         }
 
         @Override
+        @SuppressWarnings("dereference.of.nullable")
+        // constructor ensures that ThreadGroup name is not null, hence threadGroup.getName() returns non-null value.
         public boolean test(final ThreadGroup threadGroup) {
             return threadGroup != null && threadGroup.getName().equals(name);
         }
