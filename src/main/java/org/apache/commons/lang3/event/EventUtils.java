@@ -26,12 +26,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.lang3.reflect.MethodUtils;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * Provides some useful event-based utility methods.
  *
  * @since 3.0
  */
+@AnnotatedFor({"nullness"}) 
 public class EventUtils {
 
     /**
@@ -44,7 +48,7 @@ public class EventUtils {
      *
      * @throws IllegalArgumentException if the object doesn't support the listener type
      */
-    public static <L> void addEventListener(final Object eventSource, final Class<L> listenerType, final L listener) {
+    public static <L extends @NonNull Object> void addEventListener(final Object eventSource, final Class<L> listenerType, final L listener) {
         try {
             MethodUtils.invokeMethod(eventSource, "add" + listenerType.getSimpleName(), listener);
         } catch (final NoSuchMethodException e) {
@@ -71,7 +75,7 @@ public class EventUtils {
      * @param eventTypes   the event types (method names) from the listener interface (if none specified, all will be
      *                     supported)
      */
-    public static <L> void bindEventsToMethod(final Object target, final String methodName, final Object eventSource,
+    public static <L extends @NonNull Object> void bindEventsToMethod(final Object target, final String methodName, final Object eventSource,
             final Class<L> listenerType, final String... eventTypes) {
         final L listener = listenerType.cast(Proxy.newProxyInstance(target.getClass().getClassLoader(),
                 new Class[] { listenerType }, new EventBindingInvocationHandler(target, methodName, eventTypes)));
@@ -106,7 +110,10 @@ public class EventUtils {
          * @throws Throwable if an error occurs
          */
         @Override
-        public Object invoke(final Object proxy, final Method method, final Object[] parameters) throws Throwable {
+        @SuppressWarnings("nullness:override.return.invalid")
+        // This overridden method returns null, when eventTypes is not empty or it does not contain
+        // the specified method name in it.  
+        public @Nullable Object invoke(final Object proxy, final Method method, final Object[] parameters) throws Throwable {
             if (eventTypes.isEmpty() || eventTypes.contains(method.getName())) {
                 if (hasMatchingParametersMethod(method)) {
                     return MethodUtils.invokeMethod(target, methodName, parameters);

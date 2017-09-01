@@ -17,6 +17,8 @@
 package org.apache.commons.lang3;
 
 import org.apache.commons.lang3.math.NumberUtils;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>An enum representing all the versions of the Java specification.
@@ -25,6 +27,7 @@ import org.apache.commons.lang3.math.NumberUtils;
  *
  * @since 3.0
  */
+@AnnotatedFor({"nullness"}) 
 public enum JavaVersion {
 
     /**
@@ -134,7 +137,7 @@ public enum JavaVersion {
      * version is unknown
      */
     // helper for static importing
-    static JavaVersion getJavaVersion(final String nom) {
+    static @Nullable JavaVersion getJavaVersion(final @Nullable String nom) {
         return get(nom);
     }
 
@@ -147,7 +150,7 @@ public enum JavaVersion {
      * @return the corresponding enumeration constant or <b>null</b> if the
      * version is unknown
      */
-    static JavaVersion get(final String nom) {
+    static @Nullable JavaVersion get(final @Nullable String nom) {
         if ("0.9".equals(nom)) {
             return JAVA_0_9;
         } else if ("1.1".equals(nom)) {

@@ -23,6 +23,8 @@ import java.lang.reflect.Modifier;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.Validate;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p> Utility reflection methods focused on constructors, modeled after
@@ -43,6 +45,7 @@ import org.apache.commons.lang3.Validate;
  *
  * @since 2.5
  */
+@AnnotatedFor({"nullness"}) 
 public class ConstructorUtils {
 
     /**
@@ -76,7 +79,10 @@ public class ConstructorUtils {
      * @throws InstantiationException if an error occurs on instantiation
      * @see #invokeConstructor(java.lang.Class, java.lang.Object[], java.lang.Class[])
      */
-    public static <T> T invokeConstructor(final Class<T> cls, Object... args)
+    @SuppressWarnings("assignment.type.incompatible")
+    // null value fpr args is treated as null array object and not [null]. args in this method does not
+    // contains null elements,hence ClassUtils.toClass() returns array with non-null elements. 
+    public static <T> T invokeConstructor(final Class<T> cls, Object @Nullable ... args)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException,
             InstantiationException {
         args = ArrayUtils.nullToEmpty(args);
@@ -104,12 +110,12 @@ public class ConstructorUtils {
      * @throws InstantiationException if an error occurs on instantiation
      * @see Constructor#newInstance
      */
-    public static <T> T invokeConstructor(final Class<T> cls, Object[] args, Class<?>[] parameterTypes)
+    public static <T> T invokeConstructor(final Class<T> cls, Object @Nullable [] args, Class<?> @Nullable [] parameterTypes)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException,
             InstantiationException {
         args = ArrayUtils.nullToEmpty(args);
         parameterTypes = ArrayUtils.nullToEmpty(parameterTypes);
-        final Constructor<T> ctor = getMatchingAccessibleConstructor(cls, parameterTypes);
+        final @Nullable Constructor<T> ctor = getMatchingAccessibleConstructor(cls, parameterTypes);
         if (ctor == null) {
             throw new NoSuchMethodException(
                 "No such accessible constructor on object: " + cls.getName());
@@ -140,7 +146,10 @@ public class ConstructorUtils {
      * @throws InstantiationException if an error occurs on instantiation
      * @see #invokeExactConstructor(java.lang.Class, java.lang.Object[], java.lang.Class[])
      */
-    public static <T> T invokeExactConstructor(final Class<T> cls, Object... args)
+    @SuppressWarnings("assignment.type.incompatible")
+    // null value fpr args is treated as null array object and not [null]. args in this method does not
+    // contains null elements,hence ClassUtils.toClass() returns array with non-null elements.      
+    public static <T> T invokeExactConstructor(final Class<T> cls, Object @Nullable ... args)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException,
             InstantiationException {
         args = ArrayUtils.nullToEmpty(args);
@@ -168,12 +177,12 @@ public class ConstructorUtils {
      * @throws InstantiationException if an error occurs on instantiation
      * @see Constructor#newInstance
      */
-    public static <T> T invokeExactConstructor(final Class<T> cls, Object[] args,
-            Class<?>[] parameterTypes) throws NoSuchMethodException, IllegalAccessException,
+    public static <T> T invokeExactConstructor(final Class<T> cls, Object @Nullable [] args,
+            Class<?> @Nullable [] parameterTypes) throws NoSuchMethodException, IllegalAccessException,
             InvocationTargetException, InstantiationException {
         args = ArrayUtils.nullToEmpty(args);
         parameterTypes = ArrayUtils.nullToEmpty(parameterTypes);
-        final Constructor<T> ctor = getAccessibleConstructor(cls, parameterTypes);
+        final @Nullable Constructor<T> ctor = getAccessibleConstructor(cls, parameterTypes);
         if (ctor == null) {
             throw new NoSuchMethodException(
                 "No such accessible constructor on object: "+ cls.getName());
@@ -196,8 +205,10 @@ public class ConstructorUtils {
      * @see #getAccessibleConstructor(java.lang.reflect.Constructor)
      * @throws NullPointerException if {@code cls} is {@code null}
      */
-    public static <T> Constructor<T> getAccessibleConstructor(final Class<T> cls,
-            final Class<?>... parameterTypes) {
+    // BUG: parameterTypes can be null, it should be assigned empty array when null using ArrayUtils.nullToEmpty
+    // Also null argument is never passed in this method, when used in other methods of this class. 
+    public static <T> @Nullable Constructor<T> getAccessibleConstructor(final Class<T> cls,
+            final Class<?> @Nullable ... parameterTypes) {
         Validate.notNull(cls, "class cannot be null");
         try {
             return getAccessibleConstructor(cls.getConstructor(parameterTypes));
@@ -217,7 +228,7 @@ public class ConstructorUtils {
      * @see java.lang.SecurityManager
      * @throws NullPointerException if {@code ctor} is {@code null}
      */
-    public static <T> Constructor<T> getAccessibleConstructor(final Constructor<T> ctor) {
+    public static <T> @Nullable Constructor<T> getAccessibleConstructor(final Constructor<T> ctor) {
         Validate.notNull(ctor, "constructor cannot be null");
         return MemberUtils.isAccessible(ctor)
                 && isAccessible(ctor.getDeclaringClass()) ? ctor : null;
@@ -241,8 +252,8 @@ public class ConstructorUtils {
      * @return the constructor, null if no matching accessible constructor found
      * @throws NullPointerException if {@code cls} is {@code null}
      */
-    public static <T> Constructor<T> getMatchingAccessibleConstructor(final Class<T> cls,
-            final Class<?>... parameterTypes) {
+    public static <T> @Nullable Constructor<T> getMatchingAccessibleConstructor(final Class<T> cls,
+            final Class<?> ... parameterTypes) {
         Validate.notNull(cls, "class cannot be null");
         // see if we can find the constructor directly
         // most of the time this works and it's much faster

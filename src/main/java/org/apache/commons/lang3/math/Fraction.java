@@ -19,6 +19,8 @@ package org.apache.commons.lang3.math;
 import java.math.BigInteger;
 
 import org.apache.commons.lang3.Validate;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p><code>Fraction</code> is a <code>Number</code> implementation that
@@ -33,6 +35,7 @@ import org.apache.commons.lang3.Validate;
  *
  * @since 2.0
  */
+@AnnotatedFor({"nullness"}) 
 public final class Fraction extends Number implements Comparable<Fraction> {
 
     /**
@@ -108,11 +111,11 @@ public final class Fraction extends Number implements Comparable<Fraction> {
     /**
      * Cached output toString (class is immutable).
      */
-    private transient String toString = null;
+    private transient @Nullable String toString = null;
     /**
      * Cached output toProperString (class is immutable).
      */
-    private transient String toProperString = null;
+    private transient @Nullable String toProperString = null;
 
     /**
      * <p>Constructs a <code>Fraction</code> instance with the 2 parts
@@ -823,7 +826,7 @@ public final class Fraction extends Number implements Comparable<Fraction> {
      * @return <code>true</code> if this object is equal
      */
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(final @Nullable Object obj) {
         if (obj == this) {
             return true;
         }

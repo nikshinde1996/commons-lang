@@ -22,6 +22,9 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.initialization.qual.UnderInitialization;
 
 /**
  * <p>
@@ -137,6 +140,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @since 3.0
  */
+@AnnotatedFor({"nullness"}) 
 public class TimedSemaphore {
     /**
      * Constant for a value representing no limit. If the limit is set to a
@@ -161,7 +165,7 @@ public class TimedSemaphore {
     private final boolean ownExecutor;
 
     /** A future object representing the timer task. */
-    private ScheduledFuture<?> task; // @GuardedBy("this")
+    private @Nullable ScheduledFuture<?> task; // @GuardedBy("this")
 
     /** Stores the total number of invocations of the acquire() method. */
     private long totalAcquireCount; // @GuardedBy("this")
@@ -209,7 +213,7 @@ public class TimedSemaphore {
      * @param limit the limit for the semaphore
      * @throws IllegalArgumentException if the period is less or equals 0
      */
-    public TimedSemaphore(final ScheduledExecutorService service, final long timePeriod,
+    public TimedSemaphore(final @Nullable ScheduledExecutorService service, final long timePeriod,
             final TimeUnit timeUnit, final int limit) {
         Validate.inclusiveBetween(1, Long.MAX_VALUE, timePeriod, "Time period must be greater than 0!");
 
@@ -252,7 +256,7 @@ public class TimedSemaphore {
      *
      * @param limit the limit
      */
-    public final synchronized void setLimit(final int limit) {
+    public final synchronized void setLimit(@UnderInitialization(java.lang.Object.class) TimedSemaphore this, final int limit) {
         this.limit = limit;
     }
 

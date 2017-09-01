@@ -18,6 +18,8 @@
 package org.apache.commons.lang3.mutable;
 
 import java.io.Serializable;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * A mutable <code>Object</code> wrapper.
@@ -25,6 +27,7 @@ import java.io.Serializable;
  * @param <T> the type to set and get
  * @since 2.1
  */
+@AnnotatedFor({"nullness"}) 
 public class MutableObject<T> implements Mutable<T>, Serializable {
 
     /**
@@ -35,7 +38,7 @@ public class MutableObject<T> implements Mutable<T>, Serializable {
     private static final long serialVersionUID = 86241875189L;
 
     /** The mutable value. */
-    private T value;
+    private @Nullable T value;
 
     /**
      * Constructs a new MutableObject with the default value of <code>null</code>.
@@ -61,7 +64,9 @@ public class MutableObject<T> implements Mutable<T>, Serializable {
      * @return the value, may be null
      */
     @Override
-    public T getValue() {
+    @SuppressWarnings("nullness:override.return.invalid")
+    // return type may be null (as per documentation)
+    public @Nullable T getValue() {
         return this.value;
     }
 
@@ -88,8 +93,9 @@ public class MutableObject<T> implements Mutable<T>, Serializable {
      *          <code>true</code> if the objects have equivalent <code>value</code> fields;
      *          <code>false</code> otherwise.
      */
+    // BUG : this.value may be NULL, can cause NPE 
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(final @Nullable Object obj) {
         if (obj == null) {
             return false;
         }

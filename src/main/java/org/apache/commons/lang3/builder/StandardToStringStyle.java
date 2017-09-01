@@ -16,6 +16,10 @@
  */
 package org.apache.commons.lang3.builder;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.initialization.qual.UnknownInitialization;
+
 /**
  * <p>Works with {@link ToStringBuilder} to create a <code>toString</code>.</p>
  *
@@ -27,6 +31,7 @@ package org.apache.commons.lang3.builder;
  *
  * @since 1.0
  */
+@AnnotatedFor({"nullness"}) 
 public class StandardToStringStyle extends ToStringStyle {
 
     /**
@@ -199,7 +204,7 @@ public class StandardToStringStyle extends ToStringStyle {
      * @param arrayStart  the new array start text
      */
     @Override
-    public void setArrayStart(final String arrayStart) { // NOPMD as this is implementing the abstract class
+    public void setArrayStart(@UnknownInitialization(org.apache.commons.lang3.builder.ToStringStyle.class) StandardToStringStyle this,final @Nullable String arrayStart) { // NOPMD as this is implementing the abstract class
         super.setArrayStart(arrayStart);
     }
 
@@ -224,7 +229,7 @@ public class StandardToStringStyle extends ToStringStyle {
      * @param arrayEnd  the new array end text
      */
     @Override
-    public void setArrayEnd(final String arrayEnd) { // NOPMD as this is implementing the abstract class
+    public void setArrayEnd(final @Nullable String arrayEnd) { // NOPMD as this is implementing the abstract class
         super.setArrayEnd(arrayEnd);
     }
 
@@ -249,7 +254,7 @@ public class StandardToStringStyle extends ToStringStyle {
      * @param arraySeparator  the new array separator text
      */
     @Override
-    public void setArraySeparator(final String arraySeparator) { // NOPMD as this is implementing the abstract class
+    public void setArraySeparator(final @Nullable String arraySeparator) { // NOPMD as this is implementing the abstract class
         super.setArraySeparator(arraySeparator);
     }
 
@@ -274,7 +279,7 @@ public class StandardToStringStyle extends ToStringStyle {
      * @param contentStart  the new content start text
      */
     @Override
-    public void setContentStart(final String contentStart) { // NOPMD as this is implementing the abstract class
+    public void setContentStart(final @Nullable String contentStart) { // NOPMD as this is implementing the abstract class
         super.setContentStart(contentStart);
     }
 
@@ -299,7 +304,7 @@ public class StandardToStringStyle extends ToStringStyle {
      * @param contentEnd  the new content end text
      */
     @Override
-    public void setContentEnd(final String contentEnd) { // NOPMD as this is implementing the abstract class
+    public void setContentEnd(final @Nullable String contentEnd) { // NOPMD as this is implementing the abstract class
         super.setContentEnd(contentEnd);
     }
 
@@ -324,7 +329,7 @@ public class StandardToStringStyle extends ToStringStyle {
      * @param fieldNameValueSeparator  the new field name value separator text
      */
     @Override
-    public void setFieldNameValueSeparator(final String fieldNameValueSeparator) { // NOPMD as this is implementing the abstract class
+    public void setFieldNameValueSeparator(final @Nullable String fieldNameValueSeparator) { // NOPMD as this is implementing the abstract class
         super.setFieldNameValueSeparator(fieldNameValueSeparator);
     }
 
@@ -349,7 +354,7 @@ public class StandardToStringStyle extends ToStringStyle {
      * @param fieldSeparator  the new field separator text
      */
     @Override
-    public void setFieldSeparator(final String fieldSeparator) { // NOPMD as this is implementing the abstract class
+    public void setFieldSeparator(final @Nullable String fieldSeparator) { // NOPMD as this is implementing the abstract class
         super.setFieldSeparator(fieldSeparator);
     }
 
@@ -426,7 +431,7 @@ public class StandardToStringStyle extends ToStringStyle {
      * @param nullText  the new text to output when <code>null</code> found
      */
     @Override
-    public void setNullText(final String nullText) { // NOPMD as this is implementing the abstract class
+    public void setNullText(final @Nullable String nullText) { // NOPMD as this is implementing the abstract class
         super.setNullText(nullText);
     }
 
@@ -457,7 +462,7 @@ public class StandardToStringStyle extends ToStringStyle {
      * @param sizeStartText  the new start of size text
      */
     @Override
-    public void setSizeStartText(final String sizeStartText) { // NOPMD as this is implementing the abstract class
+    public void setSizeStartText(final @Nullable String sizeStartText) { // NOPMD as this is implementing the abstract class
         super.setSizeStartText(sizeStartText);
     }
 
@@ -488,7 +493,7 @@ public class StandardToStringStyle extends ToStringStyle {
      * @param sizeEndText  the new end of size text
      */
     @Override
-    public void setSizeEndText(final String sizeEndText) { // NOPMD as this is implementing the abstract class
+    public void setSizeEndText(final @Nullable String sizeEndText) { // NOPMD as this is implementing the abstract class
         super.setSizeEndText(sizeEndText);
     }
 
@@ -519,7 +524,7 @@ public class StandardToStringStyle extends ToStringStyle {
      * @param summaryObjectStartText  the new start of summary text
      */
     @Override
-    public void setSummaryObjectStartText(final String summaryObjectStartText) { // NOPMD as this is implementing the abstract class
+    public void setSummaryObjectStartText(final @Nullable String summaryObjectStartText) { // NOPMD as this is implementing the abstract class
         super.setSummaryObjectStartText(summaryObjectStartText);
     }
 
@@ -550,7 +555,7 @@ public class StandardToStringStyle extends ToStringStyle {
      * @param summaryObjectEndText  the new end of summary text
      */
     @Override
-    public void setSummaryObjectEndText(final String summaryObjectEndText) { // NOPMD as this is implementing the abstract class
+    public void setSummaryObjectEndText(final @Nullable String summaryObjectEndText) { // NOPMD as this is implementing the abstract class
         super.setSummaryObjectEndText(summaryObjectEndText);
     }
 

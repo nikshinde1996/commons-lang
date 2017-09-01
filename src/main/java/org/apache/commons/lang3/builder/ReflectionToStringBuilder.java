@@ -28,6 +28,11 @@ import java.util.List;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.Validate;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.initialization.qual.UnderInitialization;
+import org.checkerframework.checker.initialization.qual.UnknownInitialization;
 
 /**
  * <p>
@@ -94,6 +99,7 @@ import org.apache.commons.lang3.Validate;
  *
  * @since 2.0
  */
+@AnnotatedFor({"nullness"}) 
 public class ReflectionToStringBuilder extends ToStringBuilder {
 
     /**
@@ -154,7 +160,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      *
      * @see ToStringExclude
      */
-    public static String toString(final Object object, final ToStringStyle style) {
+    public static String toString(final Object object, final @Nullable ToStringStyle style) {
         return toString(object, style, false, false, null);
     }
 
@@ -194,7 +200,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      *
      * @see ToStringExclude
      */
-    public static String toString(final Object object, final ToStringStyle style, final boolean outputTransients) {
+    public static String toString(final Object object, final @Nullable ToStringStyle style, final boolean outputTransients) {
         return toString(object, style, outputTransients, false, null);
     }
 
@@ -242,7 +248,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      * @see ToStringExclude
      * @since 2.1
      */
-    public static String toString(final Object object, final ToStringStyle style, final boolean outputTransients, final boolean outputStatics) {
+    public static String toString(final Object object, final @Nullable ToStringStyle style, final boolean outputTransients, final boolean outputStatics) {
         return toString(object, style, outputTransients, outputStatics, null);
     }
 
@@ -295,9 +301,9 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      * @see ToStringExclude
      * @since 2.1
      */
-    public static <T> String toString(
-            final T object, final ToStringStyle style, final boolean outputTransients,
-            final boolean outputStatics, final Class<? super T> reflectUpToClass) {
+    public static <T extends @NonNull Object> String toString(
+            final T object, final @Nullable ToStringStyle style, final boolean outputTransients,
+            final boolean outputStatics, final @Nullable Class<? super T> reflectUpToClass) {
         return new ReflectionToStringBuilder(object, style, null, reflectUpToClass, outputTransients, outputStatics)
                 .toString();
     }
@@ -353,9 +359,9 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      * @see ToStringExclude
      * @since 3.6
      */
-    public static <T> String toString(
-            final T object, final ToStringStyle style, final boolean outputTransients,
-            final boolean outputStatics, boolean excludeNullValues, final Class<? super T> reflectUpToClass) {
+    public static <T extends @NonNull Object> String toString(
+            final T object, final @Nullable ToStringStyle style, final boolean outputTransients,
+            final boolean outputStatics, boolean excludeNullValues, final @Nullable Class<? super T> reflectUpToClass) {
         return new ReflectionToStringBuilder(object, style, null, reflectUpToClass, outputTransients, outputStatics, excludeNullValues)
                 .toString();
     }
@@ -369,7 +375,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      *            The field names to exclude. Null excludes nothing.
      * @return The toString value.
      */
-    public static String toStringExclude(final Object object, final Collection<String> excludeFieldNames) {
+    public static String toStringExclude(final Object object, final @Nullable Collection<String> excludeFieldNames) {
         return toStringExclude(object, toNoNullStringArray(excludeFieldNames));
     }
 
@@ -382,7 +388,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      *            The collection to convert
      * @return A new array of Strings.
      */
-    static String[] toNoNullStringArray(final Collection<String> collection) {
+    static String[] toNoNullStringArray(final @Nullable Collection<String> collection) {
         if (collection == null) {
             return ArrayUtils.EMPTY_STRING_ARRAY;
         }
@@ -398,7 +404,9 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      *            The array to check
      * @return The given array or a new array without null.
      */
-    static String[] toNoNullStringArray(final Object[] array) {
+    @SuppressWarnings("return.type.incompatible") 
+    // list does not contains null elements
+    static String[] toNoNullStringArray(final @Nullable Object[] array) {
         final List<String> list = new ArrayList<>(array.length);
         for (final Object e : array) {
             if (e != null) {
@@ -418,7 +426,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      *            The field names to exclude
      * @return The toString value.
      */
-    public static String toStringExclude(final Object object, final String... excludeFieldNames) {
+    public static String toStringExclude(final Object object, final @Nullable String... excludeFieldNames) {
         return new ReflectionToStringBuilder(object).setExcludeFieldNames(excludeFieldNames).toString();
     }
 
@@ -447,12 +455,12 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      *
      * @since 3.0 this is protected instead of private
      */
-    protected String[] excludeFieldNames;
+    protected String @Nullable [] excludeFieldNames;
 
     /**
      * The last super class to stop appending fields for.
      */
-    private Class<?> upToClass = null;
+    private @Nullable Class<?> upToClass = null;
 
     /**
      * <p>
@@ -488,7 +496,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      * @throws IllegalArgumentException
      *             if the Object passed in is <code>null</code>
      */
-    public ReflectionToStringBuilder(final Object object, final ToStringStyle style) {
+    public ReflectionToStringBuilder(final Object object, final @Nullable ToStringStyle style) {
         super(checkNotNull(object), style);
     }
 
@@ -514,7 +522,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      * @throws IllegalArgumentException
      *             if the Object passed in is <code>null</code>
      */
-    public ReflectionToStringBuilder(final Object object, final ToStringStyle style, final StringBuffer buffer) {
+    public ReflectionToStringBuilder(final Object object, final @Nullable ToStringStyle style, final @Nullable StringBuffer buffer) {
         super(checkNotNull(object), style, buffer);
     }
 
@@ -537,9 +545,9 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      *            whether to include static fields
      * @since 2.1
      */
-    public <T> ReflectionToStringBuilder(
-            final T object, final ToStringStyle style, final StringBuffer buffer,
-            final Class<? super T> reflectUpToClass, final boolean outputTransients, final boolean outputStatics) {
+    public <T extends @NonNull Object> ReflectionToStringBuilder(
+            final T object, final @Nullable ToStringStyle style, final @Nullable StringBuffer buffer,
+            final @Nullable Class<? super T> reflectUpToClass, final boolean outputTransients, final boolean outputStatics) {
         super(checkNotNull(object), style, buffer);
         this.setUpToClass(reflectUpToClass);
         this.setAppendTransients(outputTransients);
@@ -567,9 +575,9 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      *            whether to exclude fields who value is null
      * @since 3.6
      */
-    public <T> ReflectionToStringBuilder(
-            final T object, final ToStringStyle style, final StringBuffer buffer,
-            final Class<? super T> reflectUpToClass, final boolean outputTransients, final boolean outputStatics,
+    public <T extends @NonNull Object> ReflectionToStringBuilder(
+            final T object, final @Nullable ToStringStyle style, final @Nullable StringBuffer buffer,
+            final @Nullable Class<? super T> reflectUpToClass, final boolean outputTransients, final boolean outputStatics,
             final boolean excludeNullValues) {
         super(checkNotNull(object), style, buffer);
         this.setUpToClass(reflectUpToClass);
@@ -624,6 +632,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      * @param clazz
      *            The class of object parameter
      */
+    //BUG : this.getObject() may be null. 
     protected void appendFieldsIn(final Class<?> clazz) {
         if (clazz.isArray()) {
             this.reflectionAppendArray(this.getObject());
@@ -655,7 +664,8 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
     /**
      * @return Returns the excludeFieldNames.
      */
-    public String[] getExcludeFieldNames() {
+    // BUG : this.getExcludeFieldNames may be null,   
+    public String @Nullable [] getExcludeFieldNames() {
         return this.excludeFieldNames.clone();
     }
 
@@ -666,7 +676,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      *
      * @return The last super class to stop appending fields for.
      */
-    public Class<?> getUpToClass() {
+    public @Nullable Class<?> getUpToClass() {
         return this.upToClass;
     }
 
@@ -686,7 +696,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      *
      * @see java.lang.reflect.Field#get(Object)
      */
-    protected Object getValue(final Field field) throws IllegalArgumentException, IllegalAccessException {
+    protected @Nullable Object getValue(final Field field) throws IllegalArgumentException, IllegalAccessException {
         return field.get(this.getObject());
     }
 
@@ -748,7 +758,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      *            Whether or not to append static fields.
      * @since 2.1
      */
-    public void setAppendStatics(final boolean appendStatics) {
+    public void setAppendStatics(@UnderInitialization(org.apache.commons.lang3.builder.ReflectionToStringBuilder.class) ReflectionToStringBuilder this,final boolean appendStatics) {
         this.appendStatics = appendStatics;
     }
 
@@ -760,7 +770,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      * @param appendTransients
      *            Whether or not to append transient fields.
      */
-    public void setAppendTransients(final boolean appendTransients) {
+    public void setAppendTransients(@UnderInitialization(org.apache.commons.lang3.builder.ReflectionToStringBuilder.class) ReflectionToStringBuilder this,final boolean appendTransients) {
         this.appendTransients = appendTransients;
     }
 
@@ -773,7 +783,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      *            Whether or not to append fields whose values are null.
      * @since 3.6
      */
-    public void setExcludeNullValues(final boolean excludeNullValues) {
+    public void setExcludeNullValues(@UnderInitialization(org.apache.commons.lang3.builder.ReflectionToStringBuilder.class) ReflectionToStringBuilder this,final boolean excludeNullValues) {
         this.excludeNullValues = excludeNullValues;
     }
 
@@ -784,7 +794,10 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      *            The excludeFieldNames to excluding from toString or <code>null</code>.
      * @return <code>this</code>
      */
-    public ReflectionToStringBuilder setExcludeFieldNames(final String... excludeFieldNamesParam) {
+    @SuppressWarnings("argument.type.incompatible") 
+    // this.excludeFieldNames does not contain null elements, checker does not establish this correctness
+    // at runtime. toNoNullStringArray() returns array with removing null elements. 
+    public ReflectionToStringBuilder setExcludeFieldNames(final @Nullable String @Nullable ... excludeFieldNamesParam) {
         if (excludeFieldNamesParam == null) {
             this.excludeFieldNames = null;
         } else {
@@ -803,7 +816,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      * @param clazz
      *            The last super class to stop appending fields for.
      */
-    public void setUpToClass(final Class<?> clazz) {
+    public void setUpToClass(@UnderInitialization(org.apache.commons.lang3.builder.ReflectionToStringBuilder.class) ReflectionToStringBuilder this,final @Nullable Class<?> clazz) {
         if (clazz != null) {
             final Object object = getObject();
             if (object != null && !clazz.isInstance(object)) {
@@ -821,10 +834,14 @@ public class ReflectionToStringBuilder extends ToStringBuilder {
      * @return the built string
      */
     @Override
+    @SuppressWarnings("argument.type.incompatible")
+    // class.getSuperclass() is non null in while loop
     public String toString() {
         if (this.getObject() == null) {
             return this.getStyle().getNullText();
         }
+        @SuppressWarnings("dereference.of.nullable")
+        // this.getObject() is non null here,the null check is performed at start of this method.
         Class<?> clazz = this.getObject().getClass();
         this.appendFieldsIn(clazz);
         while (clazz.getSuperclass() != null && clazz != this.getUpToClass()) {

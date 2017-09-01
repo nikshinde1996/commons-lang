@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>
@@ -84,6 +86,7 @@ import org.apache.commons.lang3.tuple.Pair;
  * @see ContextedRuntimeException
  * @since 3.0
  */
+@AnnotatedFor({"nullness"}) 
 public class ContextedException extends Exception implements ExceptionContext {
 
     /** The serialization version. */
@@ -108,7 +111,7 @@ public class ContextedException extends Exception implements ExceptionContext {
      *
      * @param message  the exception message, may be null
      */
-    public ContextedException(final String message) {
+    public ContextedException(final @Nullable String message) {
         super(message);
         exceptionContext = new DefaultExceptionContext();
     }
@@ -120,7 +123,7 @@ public class ContextedException extends Exception implements ExceptionContext {
      *
      * @param cause  the underlying cause of the exception, may be null
      */
-    public ContextedException(final Throwable cause) {
+    public ContextedException(final @Nullable Throwable cause) {
         super(cause);
         exceptionContext = new DefaultExceptionContext();
     }
@@ -133,7 +136,7 @@ public class ContextedException extends Exception implements ExceptionContext {
      * @param message  the exception message, may be null
      * @param cause  the underlying cause of the exception, may be null
      */
-    public ContextedException(final String message, final Throwable cause) {
+    public ContextedException(final @Nullable String message, final @Nullable Throwable cause) {
         super(message, cause);
         exceptionContext = new DefaultExceptionContext();
     }
@@ -145,7 +148,7 @@ public class ContextedException extends Exception implements ExceptionContext {
      * @param cause  the underlying cause of the exception, may be null
      * @param context  the context used to store the additional information, null uses default implementation
      */
-    public ContextedException(final String message, final Throwable cause, ExceptionContext context) {
+    public ContextedException(final @Nullable String message, final @Nullable Throwable cause,@Nullable ExceptionContext context) {
         super(message, cause);
         if (context == null) {
             context = new DefaultExceptionContext();
@@ -168,7 +171,7 @@ public class ContextedException extends Exception implements ExceptionContext {
      * @return {@code this}, for method chaining, not {@code null}
      */
     @Override
-    public ContextedException addContextValue(final String label, final Object value) {
+    public ContextedException addContextValue(final String label, final @Nullable Object value) {
         exceptionContext.addContextValue(label, value);
         return this;
     }
@@ -187,7 +190,7 @@ public class ContextedException extends Exception implements ExceptionContext {
      * @return {@code this}, for method chaining, not {@code null}
      */
     @Override
-    public ContextedException setContextValue(final String label, final Object value) {
+    public ContextedException setContextValue(final String label, final @Nullable Object value) {
         exceptionContext.setContextValue(label, value);
         return this;
     }
@@ -196,7 +199,7 @@ public class ContextedException extends Exception implements ExceptionContext {
      * {@inheritDoc}
      */
     @Override
-    public List<Object> getContextValues(final String label) {
+    public List<@Nullable Object> getContextValues(final @Nullable String label) {
         return this.exceptionContext.getContextValues(label);
     }
 
@@ -204,7 +207,7 @@ public class ContextedException extends Exception implements ExceptionContext {
      * {@inheritDoc}
      */
     @Override
-    public Object getFirstContextValue(final String label) {
+    public @Nullable Object getFirstContextValue(final @Nullable String label) {
         return this.exceptionContext.getFirstContextValue(label);
     }
 
@@ -242,7 +245,7 @@ public class ContextedException extends Exception implements ExceptionContext {
      * @return the message
      * @since 3.0.1
      */
-    public String getRawMessage() {
+    public @Nullable String getRawMessage() {
         return super.getMessage();
     }
 
@@ -250,7 +253,7 @@ public class ContextedException extends Exception implements ExceptionContext {
      * {@inheritDoc}
      */
     @Override
-    public String getFormattedExceptionMessage(final String baseMessage) {
+    public String getFormattedExceptionMessage(final @Nullable String baseMessage) {
         return exceptionContext.getFormattedExceptionMessage(baseMessage);
     }
 }

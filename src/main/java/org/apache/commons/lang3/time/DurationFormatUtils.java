@@ -24,6 +24,8 @@ import java.util.TimeZone;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>Duration formatting utilities and constants. The following table describes the tokens
@@ -47,6 +49,7 @@ import org.apache.commons.lang3.Validate;
  * size. Values will be left-padded with 0 unless padding is disabled in the method invocation.
  * @since 2.1
  */
+@AnnotatedFor({"nullness"}) 
 public class DurationFormatUtils {
 
     /**
@@ -504,6 +507,7 @@ public class DurationFormatUtils {
         for (int i = 0; i < format.length(); i++) {
             final char ch = format.charAt(i);
             if (inLiteral && ch != '\'') {
+                assert buffer != null : "@AssumeAssertion(nullness)";
                 buffer.append(ch); // buffer can't be null if inLiteral is true
                 continue;
             }
@@ -645,7 +649,7 @@ public class DurationFormatUtils {
          * @return boolean <code>true</code> if equal
          */
         @Override
-        public boolean equals(final Object obj2) {
+        public boolean equals(final @Nullable Object obj2) {
             if (obj2 instanceof Token) {
                 final Token tok2 = (Token) obj2;
                 if (this.value.getClass() != tok2.value.getClass()) {

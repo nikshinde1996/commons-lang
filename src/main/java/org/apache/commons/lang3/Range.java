@@ -18,6 +18,8 @@ package org.apache.commons.lang3;
 
 import java.io.Serializable;
 import java.util.Comparator;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>An immutable range of objects from a minimum to maximum point inclusive.</p>
@@ -29,6 +31,7 @@ import java.util.Comparator;
  *
  * @since 3.0
  */
+@AnnotatedFor({"nullness"}) 
 public final class Range<T> implements Serializable {
 
     /**
@@ -56,7 +59,7 @@ public final class Range<T> implements Serializable {
     /**
      * Cached output toString (class is immutable).
      */
-    private transient String toString;
+    private transient @Nullable String toString;
 
     /**
      * <p>Obtains a range using the specified element as both the minimum
@@ -89,7 +92,7 @@ public final class Range<T> implements Serializable {
      * @throws IllegalArgumentException if the element is null
      * @throws ClassCastException if using natural ordering and the elements are not {@code Comparable}
      */
-    public static <T> Range<T> is(final T element, final Comparator<T> comparator) {
+    public static <T> Range<T> is(final T element, final @Nullable Comparator<T> comparator) {
         return between(element, element, comparator);
     }
 
@@ -130,7 +133,7 @@ public final class Range<T> implements Serializable {
      * @throws IllegalArgumentException if either element is null
      * @throws ClassCastException if using natural ordering and the elements are not {@code Comparable}
      */
-    public static <T> Range<T> between(final T fromInclusive, final T toInclusive, final Comparator<T> comparator) {
+    public static <T> Range<T> between(final T fromInclusive, final T toInclusive, final @Nullable Comparator<T> comparator) {
         return new Range<>(fromInclusive, toInclusive, comparator);
     }
 
@@ -142,7 +145,7 @@ public final class Range<T> implements Serializable {
      * @param comp  the comparator to be used, null for natural ordering
      */
     @SuppressWarnings("unchecked")
-    private Range(final T element1, final T element2, final Comparator<T> comp) {
+    private Range(final T element1, final T element2, final @Nullable Comparator<T> comp) {
         if (element1 == null || element2 == null) {
             throw new IllegalArgumentException("Elements in a range must not be null: element1=" +
                                                element1 + ", element2=" + element2);
@@ -215,7 +218,7 @@ public final class Range<T> implements Serializable {
      * @param element  the element to check for, null returns false
      * @return true if the specified element occurs within this range
      */
-    public boolean contains(final T element) {
+    public boolean contains(final @Nullable T element) {
         if (element == null) {
             return false;
         }
@@ -228,7 +231,7 @@ public final class Range<T> implements Serializable {
      * @param element  the element to check for, null returns false
      * @return true if this range is entirely after the specified element
      */
-    public boolean isAfter(final T element) {
+    public boolean isAfter(final @Nullable T element) {
         if (element == null) {
             return false;
         }
@@ -241,7 +244,7 @@ public final class Range<T> implements Serializable {
      * @param element  the element to check for, null returns false
      * @return true if the specified element occurs within this range
      */
-    public boolean isStartedBy(final T element) {
+    public boolean isStartedBy(final @Nullable T element) {
         if (element == null) {
             return false;
         }
@@ -254,7 +257,7 @@ public final class Range<T> implements Serializable {
      * @param element  the element to check for, null returns false
      * @return true if the specified element occurs within this range
      */
-    public boolean isEndedBy(final T element) {
+    public boolean isEndedBy(final @Nullable T element) {
         if (element == null) {
             return false;
         }
@@ -267,7 +270,7 @@ public final class Range<T> implements Serializable {
      * @param element  the element to check for, null returns false
      * @return true if this range is entirely before the specified element
      */
-    public boolean isBefore(final T element) {
+    public boolean isBefore(final @Nullable T element) {
         if (element == null) {
             return false;
         }
@@ -308,7 +311,7 @@ public final class Range<T> implements Serializable {
      * @return true if this range contains the specified range
      * @throws RuntimeException if ranges cannot be compared
      */
-    public boolean containsRange(final Range<T> otherRange) {
+    public boolean containsRange(final @Nullable Range<T> otherRange) {
         if (otherRange == null) {
             return false;
         }
@@ -325,7 +328,7 @@ public final class Range<T> implements Serializable {
      * @return true if this range is completely after the specified range
      * @throws RuntimeException if ranges cannot be compared
      */
-    public boolean isAfterRange(final Range<T> otherRange) {
+    public boolean isAfterRange(final @Nullable Range<T> otherRange) {
         if (otherRange == null) {
             return false;
         }
@@ -344,7 +347,7 @@ public final class Range<T> implements Serializable {
      *  range; otherwise, {@code false}
      * @throws RuntimeException if ranges cannot be compared
      */
-    public boolean isOverlappedBy(final Range<T> otherRange) {
+    public boolean isOverlappedBy(final @Nullable Range<T> otherRange) {
         if (otherRange == null) {
             return false;
         }
@@ -362,7 +365,7 @@ public final class Range<T> implements Serializable {
      * @return true if this range is completely before the specified range
      * @throws RuntimeException if ranges cannot be compared
      */
-    public boolean isBeforeRange(final Range<T> otherRange) {
+    public boolean isBeforeRange(final @Nullable Range<T> otherRange) {
         if (otherRange == null) {
             return false;
         }
@@ -402,7 +405,7 @@ public final class Range<T> implements Serializable {
      * @return true if this object is equal
      */
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(final @Nullable Object obj) {
         if (obj == this) {
             return true;
         } else if (obj == null || obj.getClass() != getClass()) {
@@ -477,7 +480,7 @@ public final class Range<T> implements Serializable {
          * @return negative, 0, positive comparison value
          */
         @Override
-        public int compare(final Object obj1, final Object obj2) {
+        public int compare(final @Nullable Object obj1, final @Nullable Object obj2) {
             return ((Comparable) obj1).compareTo(obj2);
         }
     }

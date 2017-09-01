@@ -22,6 +22,9 @@ import java.util.List;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.Validate;
+import org.checkerframework.checker.nullness.qual.Nullable;     
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>
@@ -64,13 +67,14 @@ import org.apache.commons.lang3.Validate;
  * @see DiffResult
  * @see ToStringStyle
  */
+@AnnotatedFor({"nullness"}) 
 public class DiffBuilder implements Builder<DiffResult> {
 
-    private final List<Diff<?>> diffs;
+    private final List<Diff<? extends @NonNull Object>> diffs;
     private final boolean objectsTriviallyEqual;
     private final Object left;
     private final Object right;
-    private final ToStringStyle style;
+    private final @Nullable ToStringStyle style;
 
     /**
      * <p>
@@ -101,7 +105,7 @@ public class DiffBuilder implements Builder<DiffResult> {
      * @since 3.4
      */
     public DiffBuilder(final Object lhs, final Object rhs,
-            final ToStringStyle style, final boolean testTriviallyEqual) {
+            final @Nullable ToStringStyle style, final boolean testTriviallyEqual) {
 
         Validate.isTrue(lhs != null, "lhs cannot be null");
         Validate.isTrue(rhs != null, "rhs cannot be null");
@@ -142,7 +146,7 @@ public class DiffBuilder implements Builder<DiffResult> {
      *             if {@code lhs} or {@code rhs} is {@code null}
      */
     public DiffBuilder(final Object lhs, final Object rhs,
-            final ToStringStyle style) {
+            final @Nullable ToStringStyle style) {
 
             this(lhs, rhs, style, true);
     }
@@ -202,8 +206,8 @@ public class DiffBuilder implements Builder<DiffResult> {
      * @throws IllegalArgumentException
      *             if field name is {@code null}
      */
-    public DiffBuilder append(final String fieldName, final boolean[] lhs,
-            final boolean[] rhs) {
+    public DiffBuilder append(final String fieldName, final boolean @Nullable [] lhs,
+            final boolean @Nullable [] rhs) {
         validateFieldNameNotNull(fieldName);
         if (objectsTriviallyEqual) {
             return this;
@@ -213,12 +217,12 @@ public class DiffBuilder implements Builder<DiffResult> {
                 private static final long serialVersionUID = 1L;
 
                 @Override
-                public Boolean[] getLeft() {
+                public Boolean @Nullable [] getLeft() {
                     return ArrayUtils.toObject(lhs);
                 }
 
                 @Override
-                public Boolean[] getRight() {
+                public Boolean @Nullable [] getRight() {
                     return ArrayUtils.toObject(rhs);
                 }
             });
@@ -280,8 +284,8 @@ public class DiffBuilder implements Builder<DiffResult> {
      * @throws IllegalArgumentException
      *             if field name is {@code null}
      */
-    public DiffBuilder append(final String fieldName, final byte[] lhs,
-            final byte[] rhs) {
+    public DiffBuilder append(final String fieldName, final byte @Nullable [] lhs,
+            final byte @Nullable [] rhs) {
         validateFieldNameNotNull(fieldName);
 
         if (objectsTriviallyEqual) {
@@ -292,12 +296,12 @@ public class DiffBuilder implements Builder<DiffResult> {
                 private static final long serialVersionUID = 1L;
 
                 @Override
-                public Byte[] getLeft() {
+                public Byte @Nullable [] getLeft() {
                     return ArrayUtils.toObject(lhs);
                 }
 
                 @Override
-                public Byte[] getRight() {
+                public Byte @Nullable [] getRight() {
                     return ArrayUtils.toObject(rhs);
                 }
             });
@@ -360,8 +364,8 @@ public class DiffBuilder implements Builder<DiffResult> {
      * @throws IllegalArgumentException
      *             if field name is {@code null}
      */
-    public DiffBuilder append(final String fieldName, final char[] lhs,
-            final char[] rhs) {
+    public DiffBuilder append(final String fieldName, final char @Nullable [] lhs,
+            final char @Nullable [] rhs) {
         validateFieldNameNotNull(fieldName);
 
         if (objectsTriviallyEqual) {
@@ -372,12 +376,12 @@ public class DiffBuilder implements Builder<DiffResult> {
                 private static final long serialVersionUID = 1L;
 
                 @Override
-                public Character[] getLeft() {
+                public Character @Nullable [] getLeft() {
                     return ArrayUtils.toObject(lhs);
                 }
 
                 @Override
-                public Character[] getRight() {
+                public Character @Nullable [] getRight() {
                     return ArrayUtils.toObject(rhs);
                 }
             });
@@ -440,8 +444,8 @@ public class DiffBuilder implements Builder<DiffResult> {
      * @throws IllegalArgumentException
      *             if field name is {@code null}
      */
-    public DiffBuilder append(final String fieldName, final double[] lhs,
-            final double[] rhs) {
+    public DiffBuilder append(final String fieldName, final double @Nullable [] lhs,
+            final double @Nullable [] rhs) {
         validateFieldNameNotNull(fieldName);
 
         if (objectsTriviallyEqual) {
@@ -452,12 +456,12 @@ public class DiffBuilder implements Builder<DiffResult> {
                 private static final long serialVersionUID = 1L;
 
                 @Override
-                public Double[] getLeft() {
+                public Double @Nullable [] getLeft() {
                     return ArrayUtils.toObject(lhs);
                 }
 
                 @Override
-                public Double[] getRight() {
+                public Double @Nullable [] getRight() {
                     return ArrayUtils.toObject(rhs);
                 }
             });
@@ -520,8 +524,8 @@ public class DiffBuilder implements Builder<DiffResult> {
      * @throws IllegalArgumentException
      *             if field name is {@code null}
      */
-    public DiffBuilder append(final String fieldName, final float[] lhs,
-            final float[] rhs) {
+    public DiffBuilder append(final String fieldName, final float @Nullable [] lhs,
+            final float @Nullable [] rhs) {
         validateFieldNameNotNull(fieldName);
 
         if (objectsTriviallyEqual) {
@@ -532,12 +536,12 @@ public class DiffBuilder implements Builder<DiffResult> {
                 private static final long serialVersionUID = 1L;
 
                 @Override
-                public Float[] getLeft() {
+                public Float @Nullable [] getLeft() {
                     return ArrayUtils.toObject(lhs);
                 }
 
                 @Override
-                public Float[] getRight() {
+                public Float @Nullable [] getRight() {
                     return ArrayUtils.toObject(rhs);
                 }
             });
@@ -600,8 +604,8 @@ public class DiffBuilder implements Builder<DiffResult> {
      * @throws IllegalArgumentException
      *             if field name is {@code null}
      */
-    public DiffBuilder append(final String fieldName, final int[] lhs,
-            final int[] rhs) {
+    public DiffBuilder append(final String fieldName, final int @Nullable [] lhs,
+            final int @Nullable [] rhs) {
         validateFieldNameNotNull(fieldName);
 
         if (objectsTriviallyEqual) {
@@ -612,12 +616,12 @@ public class DiffBuilder implements Builder<DiffResult> {
                 private static final long serialVersionUID = 1L;
 
                 @Override
-                public Integer[] getLeft() {
+                public Integer @Nullable [] getLeft() {
                     return ArrayUtils.toObject(lhs);
                 }
 
                 @Override
-                public Integer[] getRight() {
+                public Integer @Nullable [] getRight() {
                     return ArrayUtils.toObject(rhs);
                 }
             });
@@ -680,8 +684,8 @@ public class DiffBuilder implements Builder<DiffResult> {
      * @throws IllegalArgumentException
      *             if field name is {@code null}
      */
-    public DiffBuilder append(final String fieldName, final long[] lhs,
-            final long[] rhs) {
+    public DiffBuilder append(final String fieldName, final long @Nullable [] lhs,
+            final long @Nullable [] rhs) {
         validateFieldNameNotNull(fieldName);
 
         if (objectsTriviallyEqual) {
@@ -692,12 +696,12 @@ public class DiffBuilder implements Builder<DiffResult> {
                 private static final long serialVersionUID = 1L;
 
                 @Override
-                public Long[] getLeft() {
+                public Long @Nullable [] getLeft() {
                     return ArrayUtils.toObject(lhs);
                 }
 
                 @Override
-                public Long[] getRight() {
+                public Long @Nullable [] getRight() {
                     return ArrayUtils.toObject(rhs);
                 }
             });
@@ -760,8 +764,8 @@ public class DiffBuilder implements Builder<DiffResult> {
      * @throws IllegalArgumentException
      *             if field name is {@code null}
      */
-    public DiffBuilder append(final String fieldName, final short[] lhs,
-            final short[] rhs) {
+    public DiffBuilder append(final String fieldName, final short @Nullable [] lhs,
+            final short @Nullable [] rhs) {
         validateFieldNameNotNull(fieldName);
 
         if (objectsTriviallyEqual) {
@@ -772,12 +776,12 @@ public class DiffBuilder implements Builder<DiffResult> {
                 private static final long serialVersionUID = 1L;
 
                 @Override
-                public Short[] getLeft() {
+                public Short @Nullable [] getLeft() {
                     return ArrayUtils.toObject(lhs);
                 }
 
                 @Override
-                public Short[] getRight() {
+                public Short @Nullable [] getRight() {
                     return ArrayUtils.toObject(rhs);
                 }
             });
@@ -800,8 +804,8 @@ public class DiffBuilder implements Builder<DiffResult> {
      * @throws IllegalArgumentException
      *             if field name is {@code null}
      */
-    public DiffBuilder append(final String fieldName, final Object lhs,
-            final Object rhs) {
+    public DiffBuilder append(final String fieldName, final @Nullable Object lhs,
+            final @Nullable Object rhs) {
         validateFieldNameNotNull(fieldName);
         if (objectsTriviallyEqual) {
             return this;
@@ -818,6 +822,7 @@ public class DiffBuilder implements Builder<DiffResult> {
             objectToTest = rhs;
         }
 
+        assert objectToTest != null : "@AssumeAssertion(nullness)";
         if (objectToTest.getClass().isArray()) {
             if (objectToTest instanceof boolean[]) {
                 return append(fieldName, (boolean[]) lhs, (boolean[]) rhs);
@@ -856,12 +861,12 @@ public class DiffBuilder implements Builder<DiffResult> {
             private static final long serialVersionUID = 1L;
 
             @Override
-            public Object getLeft() {
+            public @Nullable Object getLeft() {
                 return lhs;
             }
 
             @Override
-            public Object getRight() {
+            public @Nullable Object getRight() {
                 return rhs;
             }
         });
@@ -884,8 +889,8 @@ public class DiffBuilder implements Builder<DiffResult> {
      * @throws IllegalArgumentException
      *             if field name is {@code null}
      */
-    public DiffBuilder append(final String fieldName, final Object[] lhs,
-            final Object[] rhs) {
+    public DiffBuilder append(final String fieldName, final Object @Nullable [] lhs,
+            final Object @Nullable [] rhs) {
         validateFieldNameNotNull(fieldName);
         if (objectsTriviallyEqual) {
             return this;
@@ -896,12 +901,12 @@ public class DiffBuilder implements Builder<DiffResult> {
                 private static final long serialVersionUID = 1L;
 
                 @Override
-                public Object[] getLeft() {
+                public Object @Nullable [] getLeft() {
                     return lhs;
                 }
 
                 @Override
-                public Object[] getRight() {
+                public Object @Nullable [] getRight() {
                     return rhs;
                 }
             });
@@ -954,7 +959,7 @@ public class DiffBuilder implements Builder<DiffResult> {
             return this;
         }
 
-        for (final Diff<?> diff : diffResult.getDiffs()) {
+        for (final Diff<? extends @NonNull Object> diff : diffResult.getDiffs()) {
             append(fieldName + "." + diff.getFieldName(),
                    diff.getLeft(), diff.getRight());
         }

@@ -16,6 +16,9 @@
  */
 package org.apache.commons.lang3.tuple;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
+
 /**
  * <p>An immutable triple consisting of three {@code Object} elements.</p>
  *
@@ -32,6 +35,7 @@ package org.apache.commons.lang3.tuple;
  *
  * @since 3.2
  */
+@AnnotatedFor({"nullness"}) 
 public final class ImmutableTriple<L, M, R> extends Triple<L, M, R> {
 
     /**
@@ -59,11 +63,11 @@ public final class ImmutableTriple<L, M, R> extends Triple<L, M, R> {
     }
 
     /** Left object */
-    public final L left;
+    public final @Nullable L left;
     /** Middle object */
-    public final M middle;
+    public final @Nullable M middle;
     /** Right object */
-    public final R right;
+    public final @Nullable R right;
 
     /**
      * <p>Obtains an immutable triple of from three objects inferring the generic types.</p>
@@ -79,7 +83,7 @@ public final class ImmutableTriple<L, M, R> extends Triple<L, M, R> {
      * @param right  the right element, may be null
      * @return a triple formed from the three parameters, not null
      */
-    public static <L, M, R> ImmutableTriple<L, M, R> of(final L left, final M middle, final R right) {
+    public static <L, M, R> ImmutableTriple<L, M, R> of(final @Nullable L left, final @Nullable M middle, final @Nullable R right) {
         return new ImmutableTriple<>(left, middle, right);
     }
 
@@ -90,7 +94,7 @@ public final class ImmutableTriple<L, M, R> extends Triple<L, M, R> {
      * @param middle the middle value, may be null
      * @param right  the right value, may be null
      */
-    public ImmutableTriple(final L left, final M middle, final R right) {
+    public ImmutableTriple(final @Nullable L left, final @Nullable M middle, final @Nullable R right) {
         super();
         this.left = left;
         this.middle = middle;
@@ -102,7 +106,7 @@ public final class ImmutableTriple<L, M, R> extends Triple<L, M, R> {
      * {@inheritDoc}
      */
     @Override
-    public L getLeft() {
+    public @Nullable L getLeft() {
         return left;
     }
 
@@ -110,7 +114,7 @@ public final class ImmutableTriple<L, M, R> extends Triple<L, M, R> {
      * {@inheritDoc}
      */
     @Override
-    public M getMiddle() {
+    public @Nullable M getMiddle() {
         return middle;
     }
 
@@ -118,7 +122,7 @@ public final class ImmutableTriple<L, M, R> extends Triple<L, M, R> {
      * {@inheritDoc}
      */
     @Override
-    public R getRight() {
+    public @Nullable R getRight() {
         return right;
     }
 }

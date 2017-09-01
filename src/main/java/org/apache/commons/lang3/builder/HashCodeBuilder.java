@@ -26,6 +26,8 @@ import java.util.Set;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.Validate;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>
@@ -100,6 +102,7 @@ import org.apache.commons.lang3.Validate;
  *
  * @since 1.0
  */
+@AnnotatedFor({"nullness"}) 
 public class HashCodeBuilder implements Builder<Integer> {
     /**
      * The default initial value to use in reflection hash code building.
@@ -118,7 +121,7 @@ public class HashCodeBuilder implements Builder<Integer> {
      *
      * @since 2.3
      */
-    private static final ThreadLocal<Set<IDKey>> REGISTRY = new ThreadLocal<>();
+    private static final ThreadLocal< @Nullable Set<IDKey>> REGISTRY = new ThreadLocal<>();
 
     /*
      * NOTE: we cannot store the actual objects in a HashSet, as that would use the very hashCode()
@@ -145,7 +148,7 @@ public class HashCodeBuilder implements Builder<Integer> {
      * @return Set the registry of objects being traversed
      * @since 2.3
      */
-    static Set<IDKey> getRegistry() {
+    static @Nullable Set<IDKey> getRegistry() {
         return REGISTRY.get();
     }
 
@@ -353,9 +356,10 @@ public class HashCodeBuilder implements Builder<Integer> {
      * @since 2.0
      */
     public static <T> int reflectionHashCode(final int initialNonZeroOddNumber, final int multiplierNonZeroOddNumber, final T object,
-            final boolean testTransients, final Class<? super T> reflectUpToClass, final String... excludeFields) {
+            final boolean testTransients, final @Nullable Class<? super T> reflectUpToClass, final String... excludeFields) {
         Validate.isTrue(object != null, "The object to build a hash code for must not be null");
         final HashCodeBuilder builder = new HashCodeBuilder(initialNonZeroOddNumber, multiplierNonZeroOddNumber);
+        @SuppressWarnings("dereference.of.nullable") // Validate.isTrue() ensure that object is non null in this part
         Class<?> clazz = object.getClass();
         reflectionAppend(object, clazz, builder, testTransients, excludeFields);
         while (clazz.getSuperclass() != null && clazz != reflectUpToClass) {
@@ -604,7 +608,7 @@ public class HashCodeBuilder implements Builder<Integer> {
      *            the array to add to the <code>hashCode</code>
      * @return this
      */
-    public HashCodeBuilder append(final boolean[] array) {
+    public HashCodeBuilder append(final boolean @Nullable [] array) {
         if (array == null) {
             iTotal = iTotal * iConstant;
         } else {
@@ -642,7 +646,7 @@ public class HashCodeBuilder implements Builder<Integer> {
      *            the array to add to the <code>hashCode</code>
      * @return this
      */
-    public HashCodeBuilder append(final byte[] array) {
+    public HashCodeBuilder append(final byte @Nullable [] array) {
         if (array == null) {
             iTotal = iTotal * iConstant;
         } else {
@@ -676,7 +680,7 @@ public class HashCodeBuilder implements Builder<Integer> {
      *            the array to add to the <code>hashCode</code>
      * @return this
      */
-    public HashCodeBuilder append(final char[] array) {
+    public HashCodeBuilder append(final char @Nullable [] array) {
         if (array == null) {
             iTotal = iTotal * iConstant;
         } else {
@@ -709,7 +713,7 @@ public class HashCodeBuilder implements Builder<Integer> {
      *            the array to add to the <code>hashCode</code>
      * @return this
      */
-    public HashCodeBuilder append(final double[] array) {
+    public HashCodeBuilder append(final double @Nullable [] array) {
         if (array == null) {
             iTotal = iTotal * iConstant;
         } else {
@@ -743,7 +747,7 @@ public class HashCodeBuilder implements Builder<Integer> {
      *            the array to add to the <code>hashCode</code>
      * @return this
      */
-    public HashCodeBuilder append(final float[] array) {
+    public HashCodeBuilder append(final float @Nullable [] array) {
         if (array == null) {
             iTotal = iTotal * iConstant;
         } else {
@@ -777,7 +781,7 @@ public class HashCodeBuilder implements Builder<Integer> {
      *            the array to add to the <code>hashCode</code>
      * @return this
      */
-    public HashCodeBuilder append(final int[] array) {
+    public HashCodeBuilder append(final int @Nullable [] array) {
         if (array == null) {
             iTotal = iTotal * iConstant;
         } else {
@@ -815,7 +819,7 @@ public class HashCodeBuilder implements Builder<Integer> {
      *            the array to add to the <code>hashCode</code>
      * @return this
      */
-    public HashCodeBuilder append(final long[] array) {
+    public HashCodeBuilder append(final long @Nullable [] array) {
         if (array == null) {
             iTotal = iTotal * iConstant;
         } else {
@@ -835,7 +839,7 @@ public class HashCodeBuilder implements Builder<Integer> {
      *            the Object to add to the <code>hashCode</code>
      * @return this
      */
-    public HashCodeBuilder append(final Object object) {
+    public HashCodeBuilder append(final @Nullable Object object) {
         if (object == null) {
             iTotal = iTotal * iConstant;
 
@@ -893,7 +897,7 @@ public class HashCodeBuilder implements Builder<Integer> {
      *            the array to add to the <code>hashCode</code>
      * @return this
      */
-    public HashCodeBuilder append(final Object[] array) {
+    public HashCodeBuilder append(final Object @Nullable [] array) {
         if (array == null) {
             iTotal = iTotal * iConstant;
         } else {
@@ -927,7 +931,7 @@ public class HashCodeBuilder implements Builder<Integer> {
      *            the array to add to the <code>hashCode</code>
      * @return this
      */
-    public HashCodeBuilder append(final short[] array) {
+    public HashCodeBuilder append(final short @Nullable [] array) {
         if (array == null) {
             iTotal = iTotal * iConstant;
         } else {

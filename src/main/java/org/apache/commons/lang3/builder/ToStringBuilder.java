@@ -18,6 +18,11 @@ package org.apache.commons.lang3.builder;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.Validate;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.dataflow.qual.Pure;
+import org.checkerframework.checker.initialization.qual.UnknownInitialization;
 
 /**
  * <p>Assists in implementing {@link Object#toString()} methods.</p>
@@ -86,6 +91,7 @@ import org.apache.commons.lang3.Validate;
  *
  * @since 1.0
  */
+@AnnotatedFor({"nullness"}) 
 public class ToStringBuilder implements Builder<String> {
 
     /**
@@ -159,7 +165,7 @@ public class ToStringBuilder implements Builder<String> {
      * @return the String result
      * @see ReflectionToStringBuilder#toString(Object,ToStringStyle)
      */
-    public static String reflectionToString(final Object object, final ToStringStyle style) {
+    public static String reflectionToString(final Object object, final @Nullable ToStringStyle style) {
         return ReflectionToStringBuilder.toString(object, style);
     }
 
@@ -173,7 +179,7 @@ public class ToStringBuilder implements Builder<String> {
      * @return the String result
      * @see ReflectionToStringBuilder#toString(Object,ToStringStyle,boolean)
      */
-    public static String reflectionToString(final Object object, final ToStringStyle style, final boolean outputTransients) {
+    public static String reflectionToString(final Object object, final @Nullable ToStringStyle style, final boolean outputTransients) {
         return ReflectionToStringBuilder.toString(object, style, outputTransients, false, null);
     }
 
@@ -190,11 +196,11 @@ public class ToStringBuilder implements Builder<String> {
      * @see ReflectionToStringBuilder#toString(Object,ToStringStyle,boolean,boolean,Class)
      * @since 2.0
      */
-    public static <T> String reflectionToString(
+    public static <T extends @NonNull Object> String reflectionToString(
         final T object,
-        final ToStringStyle style,
+        final @Nullable ToStringStyle style,
         final boolean outputTransients,
-        final Class<? super T> reflectUpToClass) {
+        final @Nullable Class<? super T> reflectUpToClass) {
         return ReflectionToStringBuilder.toString(object, style, outputTransients, false, reflectUpToClass);
     }
 
@@ -207,7 +213,7 @@ public class ToStringBuilder implements Builder<String> {
     /**
      * The object being output, may be null.
      */
-    private final Object object;
+    private @Nullable final Object object;
     /**
      * The style of output to use, not null.
      */
@@ -232,7 +238,7 @@ public class ToStringBuilder implements Builder<String> {
      * @param object  the Object to build a <code>toString</code> for, not recommended to be null
      * @param style  the style of the <code>toString</code> to create, null uses the default style
      */
-    public ToStringBuilder(final Object object, final ToStringStyle style) {
+    public ToStringBuilder(final Object object, final @Nullable ToStringStyle style) {
         this(object, style, null);
     }
 
@@ -247,7 +253,7 @@ public class ToStringBuilder implements Builder<String> {
      * @param style  the style of the <code>toString</code> to create, null uses the default style
      * @param buffer  the <code>StringBuffer</code> to populate, may be null
      */
-    public ToStringBuilder(final Object object, ToStringStyle style, StringBuffer buffer) {
+    public ToStringBuilder(final Object object,@Nullable ToStringStyle style,@Nullable StringBuffer buffer) {
         if (style == null) {
             style = getDefaultStyle();
         }
@@ -534,7 +540,7 @@ public class ToStringBuilder implements Builder<String> {
      * @param array  the array to add to the <code>hashCode</code>
      * @return this
      */
-    public ToStringBuilder append(final String fieldName, final boolean[] array) {
+    public ToStringBuilder append(final String fieldName, final boolean @Nullable [] array) {
         style.append(buffer, fieldName, array, null);
         return this;
     }
@@ -554,7 +560,7 @@ public class ToStringBuilder implements Builder<String> {
      *  for summary info
      * @return this
      */
-    public ToStringBuilder append(final String fieldName, final boolean[] array, final boolean fullDetail) {
+    public ToStringBuilder append(final String fieldName, final boolean @Nullable [] array, final boolean fullDetail) {
         style.append(buffer, fieldName, array, Boolean.valueOf(fullDetail));
         return this;
     }
@@ -579,7 +585,7 @@ public class ToStringBuilder implements Builder<String> {
      * @param array  the array to add to the <code>toString</code>
      * @return this
      */
-    public ToStringBuilder append(final String fieldName, final byte[] array) {
+    public ToStringBuilder append(final String fieldName, final byte @Nullable [] array) {
         style.append(buffer, fieldName, array, null);
         return this;
     }
@@ -599,7 +605,7 @@ public class ToStringBuilder implements Builder<String> {
      *  for summary info
      * @return this
      */
-    public ToStringBuilder append(final String fieldName, final byte[] array, final boolean fullDetail) {
+    public ToStringBuilder append(final String fieldName, final byte @Nullable [] array, final boolean fullDetail) {
         style.append(buffer, fieldName, array, Boolean.valueOf(fullDetail));
         return this;
     }
@@ -625,7 +631,7 @@ public class ToStringBuilder implements Builder<String> {
      * @param array  the array to add to the <code>toString</code>
      * @return this
      */
-    public ToStringBuilder append(final String fieldName, final char[] array) {
+    public ToStringBuilder append(final String fieldName, final char @Nullable [] array) {
         style.append(buffer, fieldName, array, null);
         return this;
     }
@@ -645,7 +651,7 @@ public class ToStringBuilder implements Builder<String> {
      *  for summary info
      * @return this
      */
-    public ToStringBuilder append(final String fieldName, final char[] array, final boolean fullDetail) {
+    public ToStringBuilder append(final String fieldName, final char @Nullable  [] array, final boolean fullDetail) {
         style.append(buffer, fieldName, array, Boolean.valueOf(fullDetail));
         return this;
     }
@@ -671,7 +677,7 @@ public class ToStringBuilder implements Builder<String> {
      * @param array  the array to add to the <code>toString</code>
      * @return this
      */
-    public ToStringBuilder append(final String fieldName, final double[] array) {
+    public ToStringBuilder append(final String fieldName, final double @Nullable [] array) {
         style.append(buffer, fieldName, array, null);
         return this;
     }
@@ -691,7 +697,7 @@ public class ToStringBuilder implements Builder<String> {
      *  for summary info
      * @return this
      */
-    public ToStringBuilder append(final String fieldName, final double[] array, final boolean fullDetail) {
+    public ToStringBuilder append(final String fieldName, final double @Nullable [] array, final boolean fullDetail) {
         style.append(buffer, fieldName, array, Boolean.valueOf(fullDetail));
         return this;
     }
@@ -717,7 +723,7 @@ public class ToStringBuilder implements Builder<String> {
      * @param array  the array to add to the <code>toString</code>
      * @return this
      */
-    public ToStringBuilder append(final String fieldName, final float[] array) {
+    public ToStringBuilder append(final String fieldName, final float @Nullable [] array) {
         style.append(buffer, fieldName, array, null);
         return this;
     }
@@ -737,7 +743,7 @@ public class ToStringBuilder implements Builder<String> {
      *  for summary info
      * @return this
      */
-    public ToStringBuilder append(final String fieldName, final float[] array, final boolean fullDetail) {
+    public ToStringBuilder append(final String fieldName, final float @Nullable [] array, final boolean fullDetail) {
         style.append(buffer, fieldName, array, Boolean.valueOf(fullDetail));
         return this;
     }
@@ -763,7 +769,7 @@ public class ToStringBuilder implements Builder<String> {
      * @param array  the array to add to the <code>toString</code>
      * @return this
      */
-    public ToStringBuilder append(final String fieldName, final int[] array) {
+    public ToStringBuilder append(final String fieldName, final int @Nullable [] array) {
         style.append(buffer, fieldName, array, null);
         return this;
     }
@@ -783,7 +789,7 @@ public class ToStringBuilder implements Builder<String> {
      *  for summary info
      * @return this
      */
-    public ToStringBuilder append(final String fieldName, final int[] array, final boolean fullDetail) {
+    public ToStringBuilder append(final String fieldName, final int @Nullable [] array, final boolean fullDetail) {
         style.append(buffer, fieldName, array, Boolean.valueOf(fullDetail));
         return this;
     }
@@ -809,7 +815,7 @@ public class ToStringBuilder implements Builder<String> {
      * @param array  the array to add to the <code>toString</code>
      * @return this
      */
-    public ToStringBuilder append(final String fieldName, final long[] array) {
+    public ToStringBuilder append(final String fieldName, final long @Nullable [] array) {
         style.append(buffer, fieldName, array, null);
         return this;
     }
@@ -829,7 +835,7 @@ public class ToStringBuilder implements Builder<String> {
      *  for summary info
      * @return this
      */
-    public ToStringBuilder append(final String fieldName, final long[] array, final boolean fullDetail) {
+    public ToStringBuilder append(final String fieldName, final long @Nullable [] array, final boolean fullDetail) {
         style.append(buffer, fieldName, array, Boolean.valueOf(fullDetail));
         return this;
     }
@@ -842,7 +848,7 @@ public class ToStringBuilder implements Builder<String> {
      * @param obj  the value to add to the <code>toString</code>
      * @return this
      */
-    public ToStringBuilder append(final String fieldName, final Object obj) {
+    public ToStringBuilder append(final String fieldName, final @Nullable Object obj) {
         style.append(buffer, fieldName, obj, null);
         return this;
     }
@@ -857,7 +863,7 @@ public class ToStringBuilder implements Builder<String> {
      *  <code>false</code> for summary info
      * @return this
      */
-    public ToStringBuilder append(final String fieldName, final Object obj, final boolean fullDetail) {
+    public ToStringBuilder append(final String fieldName, final @Nullable Object obj, final boolean fullDetail) {
         style.append(buffer, fieldName, obj, Boolean.valueOf(fullDetail));
         return this;
     }
@@ -870,7 +876,7 @@ public class ToStringBuilder implements Builder<String> {
      * @param array  the array to add to the <code>toString</code>
      * @return this
      */
-    public ToStringBuilder append(final String fieldName, final Object[] array) {
+    public ToStringBuilder append(final String fieldName, final Object @Nullable [] array) {
         style.append(buffer, fieldName, array, null);
         return this;
     }
@@ -890,7 +896,7 @@ public class ToStringBuilder implements Builder<String> {
      *  for summary info
      * @return this
      */
-    public ToStringBuilder append(final String fieldName, final Object[] array, final boolean fullDetail) {
+    public ToStringBuilder append(final String fieldName, final Object @Nullable [] array, final boolean fullDetail) {
         style.append(buffer, fieldName, array, Boolean.valueOf(fullDetail));
         return this;
     }
@@ -916,7 +922,7 @@ public class ToStringBuilder implements Builder<String> {
      * @param array  the array to add to the <code>toString</code>
      * @return this
      */
-    public ToStringBuilder append(final String fieldName, final short[] array) {
+    public ToStringBuilder append(final String fieldName, final short @Nullable [] array) {
         style.append(buffer, fieldName, array, null);
         return this;
     }
@@ -936,7 +942,7 @@ public class ToStringBuilder implements Builder<String> {
      *  for summary info
      * @return this
      */
-    public ToStringBuilder append(final String fieldName, final short[] array, final boolean fullDetail) {
+    public ToStringBuilder append(final String fieldName, final short @Nullable [] array, final boolean fullDetail) {
         style.append(buffer, fieldName, array, Boolean.valueOf(fullDetail));
         return this;
     }
@@ -1003,7 +1009,7 @@ public class ToStringBuilder implements Builder<String> {
      * @return this
      * @since 2.0
      */
-    public ToStringBuilder appendToString(final String toString) {
+    public ToStringBuilder appendToString(final @Nullable String toString) {
         if (toString != null) {
             style.appendToString(buffer, toString);
         }
@@ -1016,7 +1022,7 @@ public class ToStringBuilder implements Builder<String> {
      * @return The object being output.
      * @since 2.0
      */
-    public Object getObject() {
+    @Pure public @Nullable Object getObject(@UnknownInitialization(org.apache.commons.lang3.builder.ToStringBuilder.class) ToStringBuilder this) {
         return object;
     }
 
@@ -1052,6 +1058,8 @@ public class ToStringBuilder implements Builder<String> {
      * @return the String <code>toString</code>
      */
     @Override
+    @SuppressWarnings("argument.type.incompatible")
+    // this.getObject() is non null in else block
     public String toString() {
         if (this.getObject() == null) {
             this.getStringBuffer().append(this.getStyle().getNullText());

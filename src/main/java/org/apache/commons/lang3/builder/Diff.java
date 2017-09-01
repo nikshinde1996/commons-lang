@@ -21,6 +21,8 @@ import java.lang.reflect.Type;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.reflect.TypeUtils;
 import org.apache.commons.lang3.tuple.Pair;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>
@@ -40,11 +42,12 @@ import org.apache.commons.lang3.tuple.Pair;
  *            equivalent.
  * @since 3.3
  */
+@AnnotatedFor({"nullness"}) 
 public abstract class Diff<T> extends Pair<T, T> {
 
     private static final long serialVersionUID = 1L;
 
-    private final Type type;
+    private final @Nullable Type type;
     private final String fieldName;
 
     /**
@@ -55,6 +58,9 @@ public abstract class Diff<T> extends Pair<T, T> {
      * @param fieldName
      *            the name of the field
      */
+    @SuppressWarnings("dereference.of.nullable") 
+    // TypeUtils.getTypeArguments() returns null if Class type is WildcardType, here class is GenericArrayType
+    // This warning is false positive, as checker cannot establish this correctness about return type of getTypeArguments() at runtime  
     protected Diff(final String fieldName) {
         this.type = ObjectUtils.defaultIfNull(
                 TypeUtils.getTypeArguments(getClass(), Diff.class).get(
@@ -69,7 +75,7 @@ public abstract class Diff<T> extends Pair<T, T> {
      *
      * @return the field type
      */
-    public final Type getType() {
+    public final @Nullable Type getType() {
         return type;
     }
 

@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.io.Writer;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * Executes a sequence of translators one after the other. Execution ends whenever
@@ -30,6 +32,7 @@ import org.apache.commons.lang3.ArrayUtils;
  * <a href="https://commons.apache.org/proper/commons-text/javadocs/api-release/org/apache/commons/text/AggregateTranslator.html">
  * AggregateTranslator</a> instead
  */
+@AnnotatedFor({"nullness"}) 
 @Deprecated
 public class AggregateTranslator extends CharSequenceTranslator {
 

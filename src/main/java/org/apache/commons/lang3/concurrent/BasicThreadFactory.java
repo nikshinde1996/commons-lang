@@ -21,6 +21,9 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.apache.commons.lang3.Validate;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.dataflow.qual.Pure;
 
 /**
  * <p>
@@ -88,6 +91,7 @@ import org.apache.commons.lang3.Validate;
  *
  * @since 3.0
  */
+@AnnotatedFor({"nullness"}) 
 public class BasicThreadFactory implements ThreadFactory {
     /** A counter for the threads created by this factory. */
     private final AtomicLong threadCounter;
@@ -96,16 +100,16 @@ public class BasicThreadFactory implements ThreadFactory {
     private final ThreadFactory wrappedFactory;
 
     /** Stores the uncaught exception handler. */
-    private final Thread.UncaughtExceptionHandler uncaughtExceptionHandler;
+    private final Thread. @Nullable UncaughtExceptionHandler uncaughtExceptionHandler;
 
     /** Stores the naming pattern for newly created threads. */
-    private final String namingPattern;
+    private final @Nullable String namingPattern;
 
     /** Stores the priority. */
-    private final Integer priority;
+    private final @Nullable Integer priority;
 
     /** Stores the daemon status flag. */
-    private final Boolean daemonFlag;
+    private final @Nullable Boolean daemonFlag;
 
     /**
      * Creates a new instance of {@code ThreadFactoryImpl} and configures it
@@ -146,7 +150,7 @@ public class BasicThreadFactory implements ThreadFactory {
      *
      * @return the naming pattern
      */
-    public final String getNamingPattern() {
+    @Pure public final @Nullable String getNamingPattern() {
         return namingPattern;
     }
 
@@ -158,7 +162,7 @@ public class BasicThreadFactory implements ThreadFactory {
      *
      * @return the daemon flag
      */
-    public final Boolean getDaemonFlag() {
+    @Pure public final @Nullable Boolean getDaemonFlag() {
         return daemonFlag;
     }
 
@@ -168,7 +172,7 @@ public class BasicThreadFactory implements ThreadFactory {
      *
      * @return the priority for newly created threads
      */
-    public final Integer getPriority() {
+    @Pure public final @Nullable Integer getPriority() {
         return priority;
     }
 
@@ -178,7 +182,7 @@ public class BasicThreadFactory implements ThreadFactory {
      *
      * @return the {@code UncaughtExceptionHandler}
      */
-    public final Thread.UncaughtExceptionHandler getUncaughtExceptionHandler() {
+    @Pure public final Thread. @Nullable UncaughtExceptionHandler getUncaughtExceptionHandler() {
         return uncaughtExceptionHandler;
     }
 
@@ -255,19 +259,19 @@ public class BasicThreadFactory implements ThreadFactory {
         implements org.apache.commons.lang3.builder.Builder<BasicThreadFactory> {
 
         /** The wrapped factory. */
-        private ThreadFactory wrappedFactory;
+        private @Nullable ThreadFactory wrappedFactory;
 
         /** The uncaught exception handler. */
-        private Thread.UncaughtExceptionHandler exceptionHandler;
+        private Thread. @Nullable UncaughtExceptionHandler exceptionHandler;
 
         /** The naming pattern. */
-        private String namingPattern;
+        private @Nullable String namingPattern;
 
         /** The priority. */
-        private Integer priority;
+        private @Nullable Integer priority;
 
         /** The daemon flag. */
-        private Boolean daemonFlag;
+        private @Nullable Boolean daemonFlag;
 
         /**
          * Sets the {@code ThreadFactory} to be wrapped by the new {@code

@@ -23,6 +23,9 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 import org.apache.commons.lang3.ClassUtils;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.nullness.qual.EnsuresNonNullIf;
 
 /**
  * Contains common code for working with {@link java.lang.reflect.Method Methods}/{@link java.lang.reflect.Constructor Constructors},
@@ -30,6 +33,7 @@ import org.apache.commons.lang3.ClassUtils;
  *
  * @since 2.5
  */
+@AnnotatedFor({"nullness"}) 
 abstract class MemberUtils {
     // TODO extract an interface to implement compareParameterSets(...)?
 
@@ -52,7 +56,7 @@ abstract class MemberUtils {
      * @param o the AccessibleObject to set as accessible
      * @return a boolean indicating whether the accessibility of the object was set to true.
      */
-    static boolean setAccessibleWorkaround(final AccessibleObject o) {
+    static boolean setAccessibleWorkaround(final @Nullable AccessibleObject o) {
         if (o == null || o.isAccessible()) {
             return false;
         }
@@ -82,7 +86,8 @@ abstract class MemberUtils {
      * @param m Member to check
      * @return {@code true} if <code>m</code> is accessible
      */
-    static boolean isAccessible(final Member m) {
+    @EnsuresNonNullIf(expression="#1", result=true) 
+    static boolean isAccessible(final @Nullable Member m) {
         return m != null && Modifier.isPublic(m.getModifiers()) && !m.isSynthetic();
     }
 
@@ -166,11 +171,13 @@ abstract class MemberUtils {
 
             final float varArgsCost = 0.001f;
             final Class<?> destClass = destArgs[destArgs.length-1].getComponentType();
+            assert destClass != null : "@AssumeAssertion(nullness): invoking class object represents array class";
             if (noVarArgsPassed) {
                 // When no varargs passed, the best match is the most generic matching type, not the most specific.
                 totalCost += getObjectTransformationCost(destClass, Object.class) + varArgsCost;
             } else if (explicitArrayForVarags) {
                 final Class<?> sourceClass = srcArgs[srcArgs.length-1].getComponentType();
+                assert sourceClass != null : "@AssumeAssertion(nullness): invoking class object represents array class";
                 totalCost += getObjectTransformationCost(sourceClass, destClass) + varArgsCost;
             } else {
                 // This is typical varargs case.
@@ -191,7 +198,10 @@ abstract class MemberUtils {
      * @param destClass The destination class
      * @return The cost of transforming an object
      */
-    private static float getObjectTransformationCost(Class<?> srcClass, final Class<?> destClass) {
+    @SuppressWarnings("argument.type.incompatible")
+    // null argument is never passed in this private method, srcClass is annotated as @Nullable as it can be 
+    // later assigned null value after traversing parent class hierarchy. 
+    private static float getObjectTransformationCost(@Nullable Class<?> srcClass, final Class<?> destClass) {
         if (destClass.isPrimitive()) {
             return getPrimitivePromotionCost(srcClass, destClass);
         }

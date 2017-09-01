@@ -23,6 +23,8 @@ import java.util.Arrays;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>Helper methods for working with {@link Annotation} instances.</p>
@@ -42,6 +44,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  *
  * @since 3.0
  */
+@AnnotatedFor({"nullness"}) 
 public class AnnotationUtils {
 
     /**
@@ -87,7 +90,7 @@ public class AnnotationUtils {
          * {@inheritDoc}
          */
         @Override
-        protected void appendDetail(final StringBuffer buffer, final String fieldName, Object value) {
+        protected void appendDetail(final StringBuffer buffer, final @Nullable String fieldName, Object value) {
             if (value instanceof Annotation) {
                 value = AnnotationUtils.toString((Annotation) value);
             }
@@ -118,7 +121,7 @@ public class AnnotationUtils {
      * @return {@code true} if the two annotations are {@code equal} or both
      * {@code null}
      */
-    public static boolean equals(final Annotation a1, final Annotation a2) {
+    public static boolean equals(final @Nullable Annotation a1, final @Nullable Annotation a2) {
         if (a1 == a2) {
             return true;
         }
@@ -217,7 +220,7 @@ public class AnnotationUtils {
      * @param type the type to check, {@code null}
      * @return {@code true} if the type is a valid type to use in an annotation
      */
-    public static boolean isValidAnnotationMemberType(Class<?> type) {
+    public static boolean isValidAnnotationMemberType(@Nullable Class<?> type) {
         if (type == null) {
             return false;
         }
@@ -257,7 +260,7 @@ public class AnnotationUtils {
      * @param o2 the second object
      * @return a flag whether these objects are equal
      */
-    private static boolean memberEquals(final Class<?> type, final Object o1, final Object o2) {
+    private static boolean memberEquals(final Class<?> type, final @Nullable Object o1, final @Nullable Object o2) {
         if (o1 == o2) {
             return true;
         }

@@ -16,6 +16,9 @@
  */
 package org.apache.commons.lang3.mutable;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
+
 /**
  * A mutable <code>double</code> wrapper.
  * <p>
@@ -24,6 +27,7 @@ package org.apache.commons.lang3.mutable;
  * @see Double
  * @since 2.1
  */
+@AnnotatedFor({"nullness"}) 
 public class MutableDouble extends Number implements Comparable<MutableDouble>, Mutable<Number> {
 
     /**
@@ -377,7 +381,7 @@ public class MutableDouble extends Number implements Comparable<MutableDouble>, 
      * @return <code>true</code> if the objects are the same; <code>false</code> otherwise.
      */
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(final @Nullable Object obj) {
         return obj instanceof MutableDouble
             && Double.doubleToLongBits(((MutableDouble) obj).value) == Double.doubleToLongBits(value);
     }

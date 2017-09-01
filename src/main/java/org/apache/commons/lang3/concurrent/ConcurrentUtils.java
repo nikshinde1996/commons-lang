@@ -22,6 +22,10 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.Validate;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.dataflow.qual.Pure;
 
 /**
  * <p>
@@ -31,6 +35,7 @@ import org.apache.commons.lang3.Validate;
  *
  * @since 3.0
  */
+@AnnotatedFor({"nullness"}) 
 public class ConcurrentUtils {
 
     /**
@@ -58,11 +63,10 @@ public class ConcurrentUtils {
      * @param ex the exception to be processed
      * @return a {@code ConcurrentException} with the checked cause
      */
-    public static ConcurrentException extractCause(final ExecutionException ex) {
+    public static @Nullable ConcurrentException extractCause(final @Nullable ExecutionException ex) {
         if (ex == null || ex.getCause() == null) {
             return null;
         }
-
         throwCause(ex);
         return new ConcurrentException(ex.getMessage(), ex.getCause());
     }
@@ -79,12 +83,11 @@ public class ConcurrentUtils {
      * @param ex the exception to be processed
      * @return a {@code ConcurrentRuntimeException} with the checked cause
      */
-    public static ConcurrentRuntimeException extractCauseUnchecked(
-            final ExecutionException ex) {
+    public static @Nullable ConcurrentRuntimeException extractCauseUnchecked(
+            final @Nullable ExecutionException ex) {
         if (ex == null || ex.getCause() == null) {
             return null;
         }
-
         throwCause(ex);
         return new ConcurrentRuntimeException(ex.getMessage(), ex.getCause());
     }
@@ -102,7 +105,7 @@ public class ConcurrentUtils {
      * @throws ConcurrentException if the cause of the {@code
      * ExecutionException} is a checked exception
      */
-    public static void handleCause(final ExecutionException ex)
+    public static void handleCause(final @Nullable ExecutionException ex)
             throws ConcurrentException {
         final ConcurrentException cex = extractCause(ex);
 
@@ -154,7 +157,7 @@ public class ConcurrentUtils {
      *
      * @param ex the exception in question
      */
-    private static void throwCause(final ExecutionException ex) {
+    @Pure private static void throwCause(final ExecutionException ex) {
         if (ex.getCause() instanceof RuntimeException) {
             throw (RuntimeException) ex.getCause();
         }
@@ -178,7 +181,7 @@ public class ConcurrentUtils {
      * @throws ConcurrentException if the {@code ConcurrentInitializer} throws
      * an exception
      */
-    public static <T> T initialize(final ConcurrentInitializer<T> initializer)
+    @Pure public static <T extends @NonNull Object> @Nullable T initialize(final @Nullable ConcurrentInitializer<T> initializer)
             throws ConcurrentException {
         return initializer != null ? initializer.get() : null;
     }
@@ -196,7 +199,11 @@ public class ConcurrentUtils {
      * @return the object managed by the {@code ConcurrentInitializer}
      * @throws ConcurrentRuntimeException if the initializer throws an exception
      */
-    public static <T> T initializeUnchecked(final ConcurrentInitializer<T> initializer) {
+    @SuppressWarnings({"nullness:return.type.incompatible","argument.type.incompatible"})
+    // initialize(ConcurrentInitializer) returns null when ConcurrentInitializer argument
+    // is non null, here initializer is non null. checker warning is false positive
+    // As ConcurrentException occurs, its cause is non-null, hence ConcurrentException.getCause() returns non-null value 
+    @Pure public static <T extends @NonNull Object> T initializeUnchecked(final ConcurrentInitializer<T> initializer) {
         try {
             return initialize(initializer);
         } catch (final ConcurrentException cex) {
@@ -239,7 +246,7 @@ public class ConcurrentUtils {
      * @param value the value to be added
      * @return the value stored in the map after this operation
      */
-    public static <K, V> V putIfAbsent(final ConcurrentMap<K, V> map, final K key, final V value) {
+    public static <K extends @NonNull Object, V extends @NonNull Object> @Nullable V putIfAbsent(final @Nullable ConcurrentMap<K, V> map, final K key, final V value) {
         if (map == null) {
             return null;
         }
@@ -268,8 +275,8 @@ public class ConcurrentUtils {
      * not be the object created by the {@link ConcurrentInitializer}
      * @throws ConcurrentException if the initializer throws an exception
      */
-    public static <K, V> V createIfAbsent(final ConcurrentMap<K, V> map, final K key,
-            final ConcurrentInitializer<V> init) throws ConcurrentException {
+    @Pure public static <K extends @NonNull Object, V extends @NonNull Object> @Nullable V createIfAbsent(final @Nullable ConcurrentMap<K, V> map, final K key,
+            final @Nullable ConcurrentInitializer<V> init) throws ConcurrentException {
         if (map == null || init == null) {
             return null;
         }
@@ -296,8 +303,10 @@ public class ConcurrentUtils {
      * not be the object created by the {@link ConcurrentInitializer}
      * @throws ConcurrentRuntimeException if the initializer throws an exception
      */
-    public static <K, V> V createIfAbsentUnchecked(final ConcurrentMap<K, V> map,
-            final K key, final ConcurrentInitializer<V> init) {
+    @SuppressWarnings("argument.type.incompatible") 
+    // As ConcurrentException occurs, its cause is non-null, hence ConcurrentException.getCause() returns non-null value 
+    public static <K extends @NonNull Object, V extends @NonNull Object> @Nullable V createIfAbsentUnchecked(final @Nullable ConcurrentMap<K, V> map,
+            final K key, final @Nullable ConcurrentInitializer<V> init) {
         try {
             return createIfAbsent(map, key, init);
         } catch (final ConcurrentException cex) {
@@ -321,7 +330,7 @@ public class ConcurrentUtils {
      * @param value  the constant value to return, may be null
      * @return an instance of Future that will return the value, never null
      */
-    public static <T> Future<T> constantFuture(final T value) {
+    public static <T> Future<T> constantFuture(final @Nullable T value) {
         return new ConstantFuture<>(value);
     }
 
@@ -331,7 +340,7 @@ public class ConcurrentUtils {
      */
     static final class ConstantFuture<T> implements Future<T> {
         /** The constant value. */
-        private final T value;
+        private final @Nullable T value;
 
         /**
          * Creates a new instance of {@code ConstantFuture} and initializes it
@@ -339,7 +348,7 @@ public class ConcurrentUtils {
          *
          * @param value the value (may be <b>null</b>)
          */
-        ConstantFuture(final T value) {
+        ConstantFuture(final @Nullable T value) {
             this.value = value;
         }
 
@@ -357,7 +366,9 @@ public class ConcurrentUtils {
          * {@inheritDoc} This implementation just returns the constant value.
          */
         @Override
-        public T get() {
+        @SuppressWarnings("nullness:override.return.invalid")
+        // the constant value may be null for class ConstantFuture (from documentation) 
+        public @Nullable T get() {
             return value;
         }
 
@@ -366,7 +377,9 @@ public class ConcurrentUtils {
          * does not block, therefore the timeout has no meaning.
          */
         @Override
-        public T get(final long timeout, final TimeUnit unit) {
+        @SuppressWarnings("nullness:override.return.invalid")
+        // the constant value may be null for class ConstantFuture (from documentation)
+        public @Nullable T get(final long timeout, final TimeUnit unit) {
             return value;
         }
 

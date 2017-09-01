@@ -17,6 +17,9 @@
 package org.apache.commons.lang3.concurrent;
 
 import java.util.Objects;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>
@@ -37,12 +40,13 @@ import java.util.Objects;
  * @since 3.0
  * @param <T> the type of the object managed by this initializer
  */
-public class ConstantInitializer<T> implements ConcurrentInitializer<T> {
+@AnnotatedFor({"nullness"}) 
+public class ConstantInitializer<T extends @NonNull Object> implements ConcurrentInitializer<T> {
     /** Constant for the format of the string representation. */
     private static final String FMT_TO_STRING = "ConstantInitializer@%d [ object = %s ]";
 
     /** Stores the managed object. */
-    private final T object;
+    private final @Nullable T object;
 
     /**
      * Creates a new instance of {@code ConstantInitializer} and initializes it
@@ -53,7 +57,7 @@ public class ConstantInitializer<T> implements ConcurrentInitializer<T> {
      *
      * @param obj the object to be managed by this initializer
      */
-    public ConstantInitializer(final T obj) {
+    public ConstantInitializer(final @Nullable T obj) {
         object = obj;
     }
 
@@ -64,7 +68,7 @@ public class ConstantInitializer<T> implements ConcurrentInitializer<T> {
      *
      * @return the object managed by this initializer
      */
-    public final T getObject() {
+    public final @Nullable T getObject() {
         return object;
     }
 
@@ -76,7 +80,9 @@ public class ConstantInitializer<T> implements ConcurrentInitializer<T> {
      * @throws ConcurrentException if an error occurs
      */
     @Override
-    public T get() throws ConcurrentException {
+    @SuppressWarnings("nullness:override.return.invalid")
+    // object may be null for ConstantInitializer class (from documentation)
+    public @Nullable T get() throws ConcurrentException {
         return getObject();
     }
 
@@ -87,6 +93,8 @@ public class ConstantInitializer<T> implements ConcurrentInitializer<T> {
      * @return a hash code for this object
      */
     @Override
+    @SuppressWarnings("nullness:dereference.of.nullable")
+    // false positive warning due to type checking limitations in conditional statements
     public int hashCode() {
         return getObject() != null ? getObject().hashCode() : 0;
     }
@@ -101,7 +109,7 @@ public class ConstantInitializer<T> implements ConcurrentInitializer<T> {
      * @return a flag whether the objects are equal
      */
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(final @Nullable Object obj) {
         if (this == obj) {
             return true;
         }

@@ -29,6 +29,11 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.mutable.MutableObject;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.EnsuresNonNullIf;
+import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.nullness.qual.PolyNull;
 
 /**
  * <p>Operates on classes without using reflection.</p>
@@ -43,6 +48,7 @@ import org.apache.commons.lang3.mutable.MutableObject;
  *
  * @since 2.0
  */
+@AnnotatedFor({"nullness"}) 
 public class ClassUtils {
     /**
      * Inclusivity literals for {@link #hierarchy(Class, Interfaces)}.
@@ -167,10 +173,10 @@ public class ClassUtils {
      * <p>Gets the class name minus the package name for an {@code Object}.</p>
      *
      * @param object  the class to get the short name for, may be null
-     * @param valueIfNull  the value to return if null
+     * @param valueIfNull  the value to return if null, may be null
      * @return the class name of the object without the package name, or the null value
      */
-    public static String getShortClassName(final Object object, final String valueIfNull) {
+    public static @Nullable String getShortClassName(final @Nullable Object object, final @Nullable String valueIfNull) {
         if (object == null) {
             return valueIfNull;
         }
@@ -187,7 +193,7 @@ public class ClassUtils {
      * @param cls  the class to get the short name for.
      * @return the class name without the package name or an empty string
      */
-    public static String getShortClassName(final Class<?> cls) {
+    public static String getShortClassName(final @Nullable Class<?> cls) {
         if (cls == null) {
             return StringUtils.EMPTY;
         }
@@ -206,7 +212,7 @@ public class ClassUtils {
      * @param className  the className to get the short name for
      * @return the class name of the class without the package name or an empty string
      */
-    public static String getShortClassName(String className) {
+    public static String getShortClassName(@Nullable String className) {
         if (StringUtils.isEmpty(className)) {
             return StringUtils.EMPTY;
         }
@@ -247,7 +253,7 @@ public class ClassUtils {
      * @since 3.0
      * @see Class#getSimpleName()
      */
-    public static String getSimpleName(final Class<?> cls) {
+    public static String getSimpleName(final @Nullable Class<?> cls) {
         if (cls == null) {
             return StringUtils.EMPTY;
         }
@@ -263,7 +269,7 @@ public class ClassUtils {
      * @since 3.0
      * @see Class#getSimpleName()
      */
-    public static String getSimpleName(final Object object, final String valueIfNull) {
+    public static String getSimpleName(final @Nullable Object object, final String valueIfNull) {
         if (object == null) {
             return valueIfNull;
         }
@@ -279,7 +285,7 @@ public class ClassUtils {
      * @param valueIfNull  the value to return if null
      * @return the package name of the object, or the null value
      */
-    public static String getPackageName(final Object object, final String valueIfNull) {
+    public static @Nullable String getPackageName(final @Nullable Object object, final @Nullable String valueIfNull) {
         if (object == null) {
             return valueIfNull;
         }
@@ -292,7 +298,7 @@ public class ClassUtils {
      * @param cls  the class to get the package name for, may be {@code null}.
      * @return the package name or an empty string
      */
-    public static String getPackageName(final Class<?> cls) {
+    public static String getPackageName(final @Nullable Class<?> cls) {
         if (cls == null) {
             return StringUtils.EMPTY;
         }
@@ -307,8 +313,8 @@ public class ClassUtils {
      *
      * @param className  the className to get the package name for, may be {@code null}
      * @return the package name or an empty string
-     */
-    public static String getPackageName(String className) {
+     */ 
+    public static String getPackageName(@Nullable String className) {
         if (StringUtils.isEmpty(className)) {
             return StringUtils.EMPTY;
         }
@@ -341,7 +347,7 @@ public class ClassUtils {
      * @see #getAbbreviatedName(String, int)
      * @since 3.4
      */
-    public static String getAbbreviatedName(final Class<?> cls, final int len) {
+    public static String getAbbreviatedName(final @Nullable Class<?> cls, final int len) {
       if (cls == null) {
         return StringUtils.EMPTY;
       }
@@ -373,7 +379,7 @@ public class ClassUtils {
      * @throws IllegalArgumentException if len &lt;= 0
      * @since 3.4
      */
-    public static String getAbbreviatedName(final String className, final int len) {
+    public static String getAbbreviatedName(final @Nullable String className, final int len) {
       if (len <= 0) {
         throw new IllegalArgumentException("len must be > 0");
       }
@@ -419,7 +425,7 @@ public class ClassUtils {
      * @return the {@code List} of superclasses in order going up from this one
      *  {@code null} if null input
      */
-    public static List<Class<?>> getAllSuperclasses(final Class<?> cls) {
+    public static @PolyNull List<Class<?>> getAllSuperclasses(final @PolyNull Class<?> cls) {
         if (cls == null) {
             return null;
         }
@@ -445,7 +451,7 @@ public class ClassUtils {
      * @return the {@code List} of interfaces in order,
      *  {@code null} if null input
      */
-    public static List<Class<?>> getAllInterfaces(final Class<?> cls) {
+    public static @PolyNull List<Class<?>> getAllInterfaces(final @PolyNull Class<?> cls) {
         if (cls == null) {
             return null;
         }
@@ -462,7 +468,7 @@ public class ClassUtils {
      * @param cls  the class to look up, may be {@code null}
      * @param interfacesFound the {@code Set} of interfaces for the class
      */
-    private static void getAllInterfaces(Class<?> cls, final HashSet<Class<?>> interfacesFound) {
+    private static void getAllInterfaces(@Nullable Class<?> cls, final HashSet<Class<?>> interfacesFound) {
         while (cls != null) {
             final Class<?>[] interfaces = cls.getInterfaces();
 
@@ -490,11 +496,11 @@ public class ClassUtils {
      *  {@code null} if null input
      * @throws ClassCastException if classNames contains a non String entry
      */
-    public static List<Class<?>> convertClassNamesToClasses(final List<String> classNames) {
+    public static @PolyNull List<@Nullable Class<?>> convertClassNamesToClasses(final @PolyNull List<String> classNames) {
         if (classNames == null) {
             return null;
         }
-        final List<Class<?>> classes = new ArrayList<>(classNames.size());
+        final List<@Nullable Class<?>> classes = new ArrayList<>(classNames.size());
         for (final String className : classNames) {
             try {
                 classes.add(Class.forName(className));
@@ -517,11 +523,11 @@ public class ClassUtils {
      *  {@code null} if null input
      * @throws ClassCastException if {@code classes} contains a non-{@code Class} entry
      */
-    public static List<String> convertClassesToClassNames(final List<Class<?>> classes) {
+    public static @PolyNull List<@Nullable String> convertClassesToClassNames(final @PolyNull List< @Nullable Class<?>> classes) {
         if (classes == null) {
             return null;
         }
-        final List<String> classNames = new ArrayList<>(classes.size());
+        final List<@Nullable String> classNames = new ArrayList<>(classes.size());
         for (final Class<?> cls : classes) {
             if (cls == null) {
                 classNames.add(null);
@@ -570,7 +576,7 @@ public class ClassUtils {
      * @param toClassArray  the array of Classes to try to assign into, may be {@code null}
      * @return {@code true} if assignment possible
      */
-    public static boolean isAssignable(final Class<?>[] classArray, final Class<?>... toClassArray) {
+    public static boolean isAssignable(final Class<?> @Nullable [] classArray, final Class<?> @Nullable ... toClassArray) {
         return isAssignable(classArray, toClassArray, SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_5));
     }
 
@@ -605,8 +611,8 @@ public class ClassUtils {
      * @param toClassArray  the array of Classes to try to assign into, may be {@code null}
      * @param autoboxing  whether to use implicit autoboxing/unboxing between primitives and wrappers
      * @return {@code true} if assignment possible
-     */
-    public static boolean isAssignable(Class<?>[] classArray, Class<?>[] toClassArray, final boolean autoboxing) {
+     */ 
+    public static boolean isAssignable(Class<?> @Nullable [] classArray, Class<?> @Nullable [] toClassArray, final boolean autoboxing) {
         if (!ArrayUtils.isSameLength(classArray, toClassArray)) {
             return false;
         }
@@ -634,7 +640,7 @@ public class ClassUtils {
      *         {@link Short}, {@link Integer}, {@link Long}, {@link Double}, {@link Float}).
      * @since 3.1
      */
-    public static boolean isPrimitiveOrWrapper(final Class<?> type) {
+    public static boolean isPrimitiveOrWrapper(final @Nullable Class<?> type) {
         if (type == null) {
             return false;
         }
@@ -651,7 +657,7 @@ public class ClassUtils {
      *         {@link Integer}, {@link Long}, {@link Double}, {@link Float}).
      * @since 3.1
      */
-    public static boolean isPrimitiveWrapper(final Class<?> type) {
+    public static boolean isPrimitiveWrapper(final @Nullable Class<?> type) {
         return wrapperPrimitiveMap.containsKey(type);
     }
 
@@ -686,7 +692,7 @@ public class ClassUtils {
      * @param toClass  the Class to try to assign into, returns false if null
      * @return {@code true} if assignment possible
      */
-    public static boolean isAssignable(final Class<?> cls, final Class<?> toClass) {
+    public static boolean isAssignable(final @Nullable Class<?> cls, final @Nullable Class<?> toClass) {
         return isAssignable(cls, toClass, SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_5));
     }
 
@@ -717,7 +723,7 @@ public class ClassUtils {
      * @param autoboxing  whether to use implicit autoboxing/unboxing between primitives and wrappers
      * @return {@code true} if assignment possible
      */
-    public static boolean isAssignable(Class<?> cls, final Class<?> toClass, final boolean autoboxing) {
+    public static boolean isAssignable(@Nullable Class<?> cls, final @Nullable Class<?> toClass, final boolean autoboxing) {
         if (toClass == null) {
             return false;
         }
@@ -802,8 +808,8 @@ public class ClassUtils {
      * {@code cls} is not a primitive. {@code null} if null input.
      * @since 2.1
      */
-    public static Class<?> primitiveToWrapper(final Class<?> cls) {
-        Class<?> convertedClass = cls;
+    public static @PolyNull Class<?> primitiveToWrapper(final @PolyNull Class<?> cls) {
+        @PolyNull Class<?> convertedClass = cls;
         if (cls != null && cls.isPrimitive()) {
             convertedClass = primitiveWrapperMap.get(cls);
         }
@@ -820,7 +826,7 @@ public class ClassUtils {
      * Empty array if an empty array passed in.
      * @since 2.1
      */
-    public static Class<?>[] primitivesToWrappers(final Class<?>... classes) {
+    public static Class<?> @PolyNull [] primitivesToWrappers(final Class<?> @PolyNull ... classes) {
         if (classes == null) {
             return null;
         }
@@ -852,7 +858,7 @@ public class ClassUtils {
      * @see #primitiveToWrapper(Class)
      * @since 2.4
      */
-    public static Class<?> wrapperToPrimitive(final Class<?> cls) {
+    public static @Nullable Class<?> wrapperToPrimitive(final @Nullable Class<?> cls) {
         return wrapperPrimitiveMap.get(cls);
     }
 
@@ -870,16 +876,16 @@ public class ClassUtils {
      * @see #wrapperToPrimitive(Class)
      * @since 2.4
      */
-    public static Class<?>[] wrappersToPrimitives(final Class<?>... classes) {
+    public static @Nullable Class<?> @Nullable [] wrappersToPrimitives(final @Nullable Class<?> @Nullable ... classes) {
         if (classes == null) {
             return null;
         }
-
+        assert classes != null : "@AssumeAssertion(nullness)";
         if (classes.length == 0) {
             return classes;
         }
 
-        final Class<?>[] convertedClasses = new Class[classes.length];
+        final @Nullable Class<?>[] convertedClasses = new Class[classes.length];
         for (int i = 0; i < classes.length; i++) {
             convertedClasses[i] = wrapperToPrimitive(classes[i]);
         }
@@ -895,7 +901,7 @@ public class ClassUtils {
      * @return {@code true} if the class is an inner or static nested class,
      *  false if not or {@code null}
      */
-    public static boolean isInnerClass(final Class<?> cls) {
+    public static boolean isInnerClass(final @Nullable Class<?> cls) {
         return cls != null && cls.getEnclosingClass() != null;
     }
 
@@ -983,6 +989,9 @@ public class ClassUtils {
      * @return the class represented by {@code className} using the current thread's context class loader
      * @throws ClassNotFoundException if the class is not found
      */
+    @SuppressWarnings("argument.type.incompatible") 
+    // loader is non null, checker does not establish correctness due to type cheker limitations
+    // in  conditional operators  
     public static Class<?> getClass(final String className, final boolean initialize) throws ClassNotFoundException {
         final ClassLoader contextCL = Thread.currentThread().getContextClassLoader();
         final ClassLoader loader = contextCL == null ? ClassUtils.class.getClassLoader() : contextCL;
@@ -1081,13 +1090,13 @@ public class ClassUtils {
      * @return a {@code Class} array, {@code null} if null array input
      * @since 2.4
      */
-    public static Class<?>[] toClass(final Object... array) {
+    public static @Nullable Class<?> @PolyNull [] toClass(final @Nullable Object @PolyNull ... array) {
         if (array == null) {
             return null;
         } else if (array.length == 0) {
             return ArrayUtils.EMPTY_CLASS_ARRAY;
         }
-        final Class<?>[] classes = new Class[array.length];
+        final @Nullable Class<?>[] classes = new Class[array.length];
         for (int i = 0; i < array.length; i++) {
             classes[i] = array[i] == null ? null : array[i].getClass();
         }
@@ -1104,7 +1113,7 @@ public class ClassUtils {
      * @return the canonical name of the object without the package name, or the null value
      * @since 2.4
      */
-    public static String getShortCanonicalName(final Object object, final String valueIfNull) {
+    public static @Nullable String getShortCanonicalName(final @Nullable Object object, final @Nullable String valueIfNull) {
         if (object == null) {
             return valueIfNull;
         }
@@ -1118,7 +1127,7 @@ public class ClassUtils {
      * @return the canonical name without the package name or an empty string
      * @since 2.4
      */
-    public static String getShortCanonicalName(final Class<?> cls) {
+    public static String getShortCanonicalName(final @Nullable Class<?> cls) {
         if (cls == null) {
             return StringUtils.EMPTY;
         }
@@ -1148,7 +1157,7 @@ public class ClassUtils {
      * @return the package name of the object, or the null value
      * @since 2.4
      */
-    public static String getPackageCanonicalName(final Object object, final String valueIfNull) {
+    public static @Nullable String getPackageCanonicalName(final @Nullable Object object, final String valueIfNull) {
         if (object == null) {
             return valueIfNull;
         }
@@ -1162,7 +1171,7 @@ public class ClassUtils {
      * @return the package name or an empty string
      * @since 2.4
      */
-    public static String getPackageCanonicalName(final Class<?> cls) {
+    public static String getPackageCanonicalName(final @Nullable Class<?> cls) {
         if (cls == null) {
             return StringUtils.EMPTY;
         }
@@ -1179,7 +1188,7 @@ public class ClassUtils {
      * @return the package name or an empty string
      * @since 2.4
      */
-    public static String getPackageCanonicalName(final String canonicalName) {
+    public static String getPackageCanonicalName(final @Nullable String canonicalName) {
         return ClassUtils.getPackageName(getCanonicalName(canonicalName));
     }
 
@@ -1199,11 +1208,12 @@ public class ClassUtils {
      * @return canonical form of class name
      * @since 2.4
      */
-    private static String getCanonicalName(String className) {
+    private static @Nullable String getCanonicalName(@Nullable String className) {
         className = StringUtils.deleteWhitespace(className);
         if (className == null) {
             return null;
         }
+        assert className != null : "@AssumeAssertion(nullness)";
         int dim = 0;
         while (className.startsWith("[")) {
             dim++;
@@ -1223,6 +1233,7 @@ public class ClassUtils {
                 className = reverseAbbreviationMap.get(className.substring(0, 1));
             }
         }
+        // BUG : className may be null, if mentioned String(key) is not present in reverseAbbreviationMap. 
         final StringBuilder canonicalClassNameBuffer = new StringBuilder(className);
         for (int i = 0; i < dim; i++) {
             canonicalClassNameBuffer.append("[]");
@@ -1250,12 +1261,12 @@ public class ClassUtils {
      * @return Iterable an Iterable over the class hierarchy of the given class
      * @since 3.2
      */
-    public static Iterable<Class<?>> hierarchy(final Class<?> type, final Interfaces interfacesBehavior) {
+    public static Iterable<Class<?>> hierarchy(final Class<?> type, final @Nullable Interfaces interfacesBehavior) {
         final Iterable<Class<?>> classes = new Iterable<Class<?>>() {
 
             @Override
             public Iterator<Class<?>> iterator() {
-                final MutableObject<Class<?>> next = new MutableObject<Class<?>>(type);
+                final MutableObject<@Nullable Class<?>> next = new MutableObject<@Nullable Class<?>>(type);
                 return new Iterator<Class<?>>() {
 
                     @Override
@@ -1264,7 +1275,11 @@ public class ClassUtils {
                     }
 
                     @Override
-                    public Class<?> next() {
+                    @SuppressWarnings("dereference.of.nullable")
+                    // next.getValue() is null when declaration of MutableObject sets `value` to null
+                    // In this method, for MutableObject [next], the 'value' is non-null, since object 'type' is non-null
+                    // see declaration of MutableObject 'next'
+                    public Class<?> next() {  
                         final Class<?> result = next.getValue();
                         next.setValue(result.getSuperclass());
                         return result;

@@ -20,6 +20,8 @@ import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 
 import org.apache.commons.lang3.Validate;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>Type literal comparable to {@code javax.enterprise.util.TypeLiteral},
@@ -71,6 +73,7 @@ import org.apache.commons.lang3.Validate;
  *
  * @since 3.2
  */
+@AnnotatedFor({"nullness"}) 
 public abstract class TypeLiteral<T> implements Typed<T> {
 
     @SuppressWarnings("rawtypes")
@@ -95,7 +98,7 @@ public abstract class TypeLiteral<T> implements Typed<T> {
     }
 
     @Override
-    public final boolean equals(final Object obj) {
+    public final boolean equals(final @Nullable Object obj) {
         if (obj == this) {
             return true;
         }

@@ -23,6 +23,7 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * <p>
@@ -51,7 +52,7 @@ import java.util.concurrent.FutureTask;
  *
  * @since 3.6
  */
-public class Memoizer<I, O> implements Computable<I, O> {
+public class Memoizer<I extends @NonNull Object, O> implements Computable<I, O> {
 
     private final ConcurrentMap<I, Future<O>> cache = new ConcurrentHashMap<>();
     private final Computable<I, O> computable;

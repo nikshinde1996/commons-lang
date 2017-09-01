@@ -21,6 +21,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang3.Validate;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>
@@ -35,7 +38,8 @@ import org.apache.commons.lang3.Validate;
  *
  * @since 3.3
  */
-public class DiffResult implements Iterable<Diff<?>> {
+@AnnotatedFor({"nullness"}) 
+public class DiffResult implements Iterable<Diff<? extends @NonNull Object>> {
 
     /**
      * <p>
@@ -47,7 +51,7 @@ public class DiffResult implements Iterable<Diff<?>> {
 
     private static final String DIFFERS_STRING = "differs from";
 
-    private final List<Diff<?>> diffs;
+    private final List<Diff<? extends @NonNull Object>> diffs;
     private final Object lhs;
     private final Object rhs;
     private final ToStringStyle style;
@@ -71,8 +75,8 @@ public class DiffResult implements Iterable<Diff<?>> {
      * @throws IllegalArgumentException
      *             if {@code lhs}, {@code rhs} or {@code diffs} is {@code null}
      */
-    DiffResult(final Object lhs, final Object rhs, final List<Diff<?>> diffs,
-            final ToStringStyle style) {
+    DiffResult(final Object lhs, final Object rhs, final List<Diff<? extends @NonNull Object>> diffs,
+            final @Nullable ToStringStyle style) {
         Validate.isTrue(lhs != null, "Left hand object cannot be null");
         Validate.isTrue(rhs != null, "Right hand object cannot be null");
         Validate.isTrue(diffs != null, "List of differences cannot be null");
@@ -96,7 +100,7 @@ public class DiffResult implements Iterable<Diff<?>> {
      *
      * @return an unmodifiable list of {@code Diff}s
      */
-    public List<Diff<?>> getDiffs() {
+    public List<Diff<? extends @NonNull Object>> getDiffs() {
         return Collections.unmodifiableList(diffs);
     }
 
@@ -177,7 +181,7 @@ public class DiffResult implements Iterable<Diff<?>> {
         final ToStringBuilder lhsBuilder = new ToStringBuilder(lhs, style);
         final ToStringBuilder rhsBuilder = new ToStringBuilder(rhs, style);
 
-        for (final Diff<?> diff : diffs) {
+        for (final Diff<? extends @NonNull Object> diff : diffs) {
             lhsBuilder.append(diff.getFieldName(), diff.getLeft());
             rhsBuilder.append(diff.getFieldName(), diff.getRight());
         }
@@ -194,7 +198,7 @@ public class DiffResult implements Iterable<Diff<?>> {
      * @return the iterator
      */
     @Override
-    public Iterator<Diff<?>> iterator() {
+    public Iterator<Diff<? extends @NonNull Object>> iterator() {
         return diffs.iterator();
     }
 }

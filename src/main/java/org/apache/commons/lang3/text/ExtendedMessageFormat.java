@@ -28,6 +28,8 @@ import java.util.Objects;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.Validate;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * Extends <code>java.text.MessageFormat</code> to allow pluggable/additional formatting
@@ -69,6 +71,7 @@ import org.apache.commons.lang3.Validate;
  * <a href="https://commons.apache.org/proper/commons-text/javadocs/api-release/org/apache/commons/text/ExtendedMessageFormat.html">
  * ExtendedMessageFormat</a> instead
  */
+@AnnotatedFor({"nullness"}) 
 @Deprecated
 public class ExtendedMessageFormat extends MessageFormat {
     private static final long serialVersionUID = -2362048321261811743L;
@@ -81,7 +84,7 @@ public class ExtendedMessageFormat extends MessageFormat {
     private static final char QUOTE = '\'';
 
     private String toPattern;
-    private final Map<String, ? extends FormatFactory> registry;
+    private final @Nullable Map<String, ? extends FormatFactory> registry;
 
     /**
      * Create a new ExtendedMessageFormat for the default locale.
@@ -111,7 +114,7 @@ public class ExtendedMessageFormat extends MessageFormat {
      * @param registry  the registry of format factories, may be null
      * @throws IllegalArgumentException in case of a bad pattern.
      */
-    public ExtendedMessageFormat(final String pattern, final Map<String, ? extends FormatFactory> registry) {
+    public ExtendedMessageFormat(final String pattern, final @Nullable Map<String, ? extends FormatFactory> registry) {
         this(pattern, Locale.getDefault(), registry);
     }
 
@@ -123,7 +126,7 @@ public class ExtendedMessageFormat extends MessageFormat {
      * @param registry  the registry of format factories, may be null
      * @throws IllegalArgumentException in case of a bad pattern.
      */
-    public ExtendedMessageFormat(final String pattern, final Locale locale, final Map<String, ? extends FormatFactory> registry) {
+    public ExtendedMessageFormat(final String pattern, final Locale locale, final @Nullable Map<String, ? extends FormatFactory> registry) {
         super(DUMMY_PATTERN);
         setLocale(locale);
         this.registry = registry;
@@ -263,7 +266,7 @@ public class ExtendedMessageFormat extends MessageFormat {
      * @return true if this object equals the other, otherwise false
      */
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(final @Nullable Object obj) {
         if (obj == this) {
             return true;
         }
@@ -300,7 +303,7 @@ public class ExtendedMessageFormat extends MessageFormat {
      * @param desc String
      * @return Format
      */
-    private Format getFormat(final String desc) {
+    private @Nullable Format getFormat(final String desc) {
         if (registry != null) {
             String name = desc;
             String args = null;
@@ -472,8 +475,8 @@ public class ExtendedMessageFormat extends MessageFormat {
      * @param appendTo optional StringBuilder to append
      * @return <code>appendTo</code>
      */
-    private StringBuilder appendQuotedString(final String pattern, final ParsePosition pos,
-            final StringBuilder appendTo) {
+    private @Nullable StringBuilder appendQuotedString(final String pattern, final ParsePosition pos,
+            final @Nullable StringBuilder appendTo) {
         assert pattern.toCharArray()[pos.getIndex()] == QUOTE :
             "Quoted string must start with quote character";
 
@@ -515,7 +518,7 @@ public class ExtendedMessageFormat extends MessageFormat {
      * @param coll to check
      * @return <code>true</code> if some Object was found, <code>false</code> otherwise.
      */
-    private boolean containsElements(final Collection<?> coll) {
+    private boolean containsElements(final @Nullable Collection<?> coll) {
         if (coll == null || coll.isEmpty()) {
             return false;
         }

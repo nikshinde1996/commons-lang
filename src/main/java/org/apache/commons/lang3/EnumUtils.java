@@ -23,6 +23,8 @@ import java.util.EnumSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>Utility library to provide helper methods for Java enums.</p>
@@ -31,6 +33,7 @@ import java.util.Map;
  *
  * @since 3.0
  */
+@AnnotatedFor({"nullness"}) 
 public class EnumUtils {
 
     private static final String NULL_ELEMENTS_NOT_PERMITTED = "null elements not permitted";
@@ -54,6 +57,8 @@ public class EnumUtils {
      * @param enumClass  the class of the enum to query, not null
      * @return the modifiable map of enum names to enums, never null
      */
+    @SuppressWarnings("iterating.over.nullable") 
+    // As invoking class object represents an Enum type, ClassObject.getEnumConstants() returns non null value. 
     public static <E extends Enum<E>> Map<String, E> getEnumMap(final Class<E> enumClass) {
         final Map<String, E> map = new LinkedHashMap<>();
         for (final E e: enumClass.getEnumConstants()) {
@@ -71,6 +76,8 @@ public class EnumUtils {
      * @param enumClass  the class of the enum to query, not null
      * @return the modifiable list of enums, never null
      */
+    @SuppressWarnings("argument.type.incompatible") 
+    // As invoking class object represents an Enum type, ClassObject.getEnumConstants() returns non null value. 
     public static <E extends Enum<E>> List<E> getEnumList(final Class<E> enumClass) {
         return new ArrayList<>(Arrays.asList(enumClass.getEnumConstants()));
     }
@@ -86,7 +93,7 @@ public class EnumUtils {
      * @param enumName   the enum name, null returns false
      * @return true if the enum name is valid, otherwise false
      */
-    public static <E extends Enum<E>> boolean isValidEnum(final Class<E> enumClass, final String enumName) {
+    public static <E extends Enum<E>> boolean isValidEnum(final Class<E> enumClass, final @Nullable String enumName) {
         if (enumName == null) {
             return false;
         }
@@ -109,7 +116,7 @@ public class EnumUtils {
      * @param enumName   the enum name, null returns null
      * @return the enum, null if not found
      */
-    public static <E extends Enum<E>> E getEnum(final Class<E> enumClass, final String enumName) {
+    public static @Nullable <E extends Enum<E>> E getEnum(final Class<E> enumClass, final @Nullable String enumName) {
         if (enumName == null) {
             return null;
         }
@@ -165,6 +172,8 @@ public class EnumUtils {
      * @throws IllegalArgumentException if {@code enumClass} is not an enum class, or if any {@code values} {@code null}
      * @since 3.2
      */
+    @SuppressWarnings("dereference.of.nullable")
+    // As invoking class object represents an Enum type, ClassObject.getEnumConstants() returns non null value. 
     public static <E extends Enum<E>> long[] generateBitVectors(final Class<E> enumClass, final Iterable<? extends E> values) {
         asEnum(enumClass);
         Validate.notNull(values);
@@ -221,6 +230,8 @@ public class EnumUtils {
      * @since 3.2
      */
     @SafeVarargs
+    @SuppressWarnings("dereference.of.nullable") 
+    // As invoking class object represents an Enum type, ClassObject.getEnumConstants() returns non null value.
     public static <E extends Enum<E>> long[] generateBitVectors(final Class<E> enumClass, final E... values) {
         asEnum(enumClass);
         Validate.noNullElements(values);
@@ -265,6 +276,8 @@ public class EnumUtils {
      * @throws IllegalArgumentException if {@code enumClass} is not an enum class
      * @since 3.2
      */
+    @SuppressWarnings("iterating.over.nullable") 
+    // As invoking class object represents an Enum type, ClassObject.getEnumConstants() returns non null value. 
     public static <E extends Enum<E>> EnumSet<E> processBitVectors(final Class<E> enumClass, final long... values) {
         final EnumSet<E> results = EnumSet.noneOf(asEnum(enumClass));
         final long[] lvalues = ArrayUtils.clone(Validate.notNull(values));
@@ -287,8 +300,9 @@ public class EnumUtils {
      * @throws IllegalArgumentException if {@code enumClass} is not an enum class or has more than 64 values
      * @since 3.0.1
      */
-    private static <E extends Enum<E>> Class<E> checkBitVectorable(final Class<E> enumClass) {
+    private static <E extends Enum<E>> Class<E> checkBitVectorable(final Class<E> enumClass) { 
         final E[] constants = asEnum(enumClass).getEnumConstants();
+        assert constants != null : "@AssumeAssertion(nullness): As invoking class object represents an Enum type, ClassObject.getEnumConstants() returns non null value.";
         Validate.isTrue(constants.length <= Long.SIZE, CANNOT_STORE_S_S_VALUES_IN_S_BITS,
             Integer.valueOf(constants.length), enumClass.getSimpleName(), Integer.valueOf(Long.SIZE));
 

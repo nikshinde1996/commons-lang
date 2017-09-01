@@ -20,6 +20,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.regex.Pattern;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>This class assists in validating arguments. The validation methods are
@@ -153,7 +156,7 @@ public class Validate {
      * @see #isTrue(boolean, String, long)
      * @see #isTrue(boolean, String, double)
      */
-    public static void isTrue(final boolean expression, final String message, final Object... values) {
+    public static void isTrue(final boolean expression, final String message, final @Nullable Object... values) {
         if (!expression) {
             throw new IllegalArgumentException(String.format(message, values));
         }
@@ -980,7 +983,7 @@ public class Validate {
      *
      * @since 3.0
      */
-    public static <T> void inclusiveBetween(final T start, final T end, final Comparable<T> value) {
+    public static <T extends @NonNull Object> void inclusiveBetween(final T start, final T end, final Comparable<T> value) {
         // TODO when breaking BC, consider returning value
         if (value.compareTo(start) < 0 || value.compareTo(end) > 0) {
             throw new IllegalArgumentException(String.format(DEFAULT_INCLUSIVE_BETWEEN_EX_MESSAGE, value, start, end));
@@ -1005,7 +1008,7 @@ public class Validate {
      *
      * @since 3.0
      */
-    public static <T> void inclusiveBetween(final T start, final T end, final Comparable<T> value, final String message, final Object... values) {
+    public static <T extends @NonNull Object> void inclusiveBetween(final T start, final T end, final Comparable<T> value, final String message, final Object... values) {
         // TODO when breaking BC, consider returning value
         if (value.compareTo(start) < 0 || value.compareTo(end) > 0) {
             throw new IllegalArgumentException(String.format(message, values));
@@ -1118,7 +1121,7 @@ public class Validate {
      *
      * @since 3.0
      */
-    public static <T> void exclusiveBetween(final T start, final T end, final Comparable<T> value) {
+    public static <T extends @NonNull Object> void exclusiveBetween(final T start, final T end, final Comparable<T> value) {
         // TODO when breaking BC, consider returning value
         if (value.compareTo(start) <= 0 || value.compareTo(end) >= 0) {
             throw new IllegalArgumentException(String.format(DEFAULT_EXCLUSIVE_BETWEEN_EX_MESSAGE, value, start, end));
@@ -1143,7 +1146,7 @@ public class Validate {
      *
      * @since 3.0
      */
-    public static <T> void exclusiveBetween(final T start, final T end, final Comparable<T> value, final String message, final Object... values) {
+    public static <T extends @NonNull Object> void exclusiveBetween(final T start, final T end, final Comparable<T> value, final String message, final Object... values) {
         // TODO when breaking BC, consider returning value
         if (value.compareTo(start) <= 0 || value.compareTo(end) >= 0) {
             throw new IllegalArgumentException(String.format(message, values));

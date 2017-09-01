@@ -16,6 +16,9 @@
  */
 package org.apache.commons.lang3.tuple;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
+
 /**
  * <p>A mutable pair consisting of two {@code Object} elements.</p>
  *
@@ -26,15 +29,16 @@ package org.apache.commons.lang3.tuple;
  *
  * @since Lang 3.0
  */
+@AnnotatedFor({"nullness"}) 
 public class MutablePair<L, R> extends Pair<L, R> {
 
     /** Serialization version */
     private static final long serialVersionUID = 4954918890077093841L;
 
     /** Left object */
-    public L left;
+    public @Nullable L left;
     /** Right object */
-    public R right;
+    public @Nullable R right;
 
     /**
      * <p>Obtains an immutable pair of from two objects inferring the generic types.</p>
@@ -48,7 +52,7 @@ public class MutablePair<L, R> extends Pair<L, R> {
      * @param right  the right element, may be null
      * @return a pair formed from the two parameters, not null
      */
-    public static <L, R> MutablePair<L, R> of(final L left, final R right) {
+    public static <L, R> MutablePair<L, R> of(final @Nullable L left, final @Nullable R right) {
         return new MutablePair<>(left, right);
     }
 
@@ -65,7 +69,7 @@ public class MutablePair<L, R> extends Pair<L, R> {
      * @param left  the left value, may be null
      * @param right  the right value, may be null
      */
-    public MutablePair(final L left, final R right) {
+    public MutablePair(final @Nullable L left, final @Nullable R right) {
         super();
         this.left = left;
         this.right = right;
@@ -76,7 +80,7 @@ public class MutablePair<L, R> extends Pair<L, R> {
      * {@inheritDoc}
      */
     @Override
-    public L getLeft() {
+    public @Nullable L getLeft() {
         return left;
     }
 
@@ -85,7 +89,7 @@ public class MutablePair<L, R> extends Pair<L, R> {
      *
      * @param left  the new value of the left element, may be null
      */
-    public void setLeft(final L left) {
+    public void setLeft(final @Nullable L left) {
         this.left = left;
     }
 
@@ -93,7 +97,7 @@ public class MutablePair<L, R> extends Pair<L, R> {
      * {@inheritDoc}
      */
     @Override
-    public R getRight() {
+    public @Nullable R getRight() {
         return right;
     }
 
@@ -102,7 +106,7 @@ public class MutablePair<L, R> extends Pair<L, R> {
      *
      * @param right  the new value of the right element, may be null
      */
-    public void setRight(final R right) {
+    public void setRight(final @Nullable R right) {
         this.right = right;
     }
 
@@ -114,7 +118,9 @@ public class MutablePair<L, R> extends Pair<L, R> {
      * @return the old value for the right element
      */
     @Override
-    public R setValue(final R value) {
+    @SuppressWarnings("nullness:override.return.invalid")
+    // getRight() may return null in Pair and MutablePair pair.
+    public @Nullable R setValue(final R value) {
         final R result = getRight();
         setRight(value);
         return result;

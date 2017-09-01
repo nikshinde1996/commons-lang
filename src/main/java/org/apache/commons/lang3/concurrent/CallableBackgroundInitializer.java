@@ -20,6 +20,9 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 
 import org.apache.commons.lang3.Validate;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.initialization.qual.UnderInitialization;
 
 /**
  * <p>
@@ -66,7 +69,8 @@ import org.apache.commons.lang3.Validate;
  * @since 3.0
  * @param <T> the type of the object managed by this initializer class
  */
-public class CallableBackgroundInitializer<T> extends BackgroundInitializer<T> {
+@AnnotatedFor({"nullness"}) 
+public class CallableBackgroundInitializer<T extends @NonNull Object> extends BackgroundInitializer<T> {
     /** The Callable to be executed. */
     private final Callable<T> callable;
 
@@ -119,7 +123,7 @@ public class CallableBackgroundInitializer<T> extends BackgroundInitializer<T> {
      * @param call the object to check
      * @throws IllegalArgumentException if the {@code Callable} is <b>null</b>
      */
-    private void checkCallable(final Callable<T> call) {
+    private void checkCallable(@UnderInitialization(org.apache.commons.lang3.concurrent.BackgroundInitializer.class) CallableBackgroundInitializer<T> this, final Callable<T> call) {
         Validate.isTrue(call != null, "Callable must not be null!");
     }
 }

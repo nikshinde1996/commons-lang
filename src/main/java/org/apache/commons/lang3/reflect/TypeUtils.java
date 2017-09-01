@@ -37,6 +37,11 @@ import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.Validate;
 import org.apache.commons.lang3.builder.Builder;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.PolyNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 
 /**
  * <p> Utility methods focusing on type inspection, particularly with regard to
@@ -44,6 +49,7 @@ import org.apache.commons.lang3.builder.Builder;
  *
  * @since 3.0
  */
+@AnnotatedFor({"nullness"}) 
 public class TypeUtils {
 
     /**
@@ -57,8 +63,8 @@ public class TypeUtils {
         private WildcardTypeBuilder() {
         }
 
-        private Type[] upperBounds;
-        private Type[] lowerBounds;
+        private Type @Nullable [] upperBounds;
+        private Type @Nullable [] lowerBounds;
 
         /**
          * Specify upper bounds of the wildcard type to build.
@@ -124,7 +130,7 @@ public class TypeUtils {
          * {@inheritDoc}
          */
         @Override
-        public boolean equals(final Object obj) {
+        public boolean equals(final @Nullable Object obj) {
             return obj == this || obj instanceof GenericArrayType && TypeUtils.equals(this, (GenericArrayType) obj);
         }
 
@@ -196,7 +202,7 @@ public class TypeUtils {
          * {@inheritDoc}
          */
         @Override
-        public boolean equals(final Object obj) {
+        public boolean equals(final @Nullable Object obj) {
             return obj == this || obj instanceof ParameterizedType && TypeUtils.equals(this, ((ParameterizedType) obj));
         }
 
@@ -230,7 +236,11 @@ public class TypeUtils {
          * @param upperBounds of this type
          * @param lowerBounds of this type
          */
-        private WildcardTypeImpl(final Type[] upperBounds, final Type[] lowerBounds) {
+        @SuppressWarnings("nullness:assignment.type.incompatible")
+        // ObjectUtils.defaultIfNull returns null if both arguments are null.
+        // here EMPTY_BOUNDS is non null, hence this.upperBounds, this.lowerBounds are assigned non
+        // null value.
+        private WildcardTypeImpl(final Type @Nullable [] upperBounds, final Type @Nullable [] lowerBounds) {
             this.upperBounds = ObjectUtils.defaultIfNull(upperBounds, EMPTY_BOUNDS);
             this.lowerBounds = ObjectUtils.defaultIfNull(lowerBounds, EMPTY_BOUNDS);
         }
@@ -263,7 +273,7 @@ public class TypeUtils {
          * {@inheritDoc}
          */
         @Override
-        public boolean equals(final Object obj) {
+        public boolean equals(final @Nullable Object obj) {
             return obj == this || obj instanceof WildcardType && TypeUtils.equals(this, (WildcardType) obj);
         }
 
@@ -307,7 +317,7 @@ public class TypeUtils {
      * @param toType the target type
      * @return {@code true} if {@code type} is assignable to {@code toType}.
      */
-    public static boolean isAssignable(final Type type, final Type toType) {
+    public static boolean isAssignable(final @Nullable Type type, final @Nullable Type toType) {
         return isAssignable(type, toType, null);
     }
 
@@ -320,8 +330,8 @@ public class TypeUtils {
      * @param typeVarAssigns optional map of type variable assignments
      * @return {@code true} if {@code type} is assignable to {@code toType}.
      */
-    private static boolean isAssignable(final Type type, final Type toType,
-            final Map<TypeVariable<?>, Type> typeVarAssigns) {
+    private static boolean isAssignable(final @Nullable Type type, final @Nullable Type toType,
+            final @Nullable Map<TypeVariable<?>, Type> typeVarAssigns) {
         if (toType == null || toType instanceof Class<?>) {
             return isAssignable(type, (Class<?>) toType);
         }
@@ -353,7 +363,7 @@ public class TypeUtils {
      * @param toClass the target class
      * @return {@code true} if {@code type} is assignable to {@code toClass}.
      */
-    private static boolean isAssignable(final Type type, final Class<?> toClass) {
+    private static boolean isAssignable(final @Nullable Type type, final @Nullable Class<?> toClass) {
         if (type == null) {
             // consistency with ClassUtils.isAssignable() behavior
             return toClass == null || !toClass.isPrimitive();
@@ -420,8 +430,8 @@ public class TypeUtils {
      * @param typeVarAssigns a map with type variables
      * @return {@code true} if {@code type} is assignable to {@code toType}.
      */
-    private static boolean isAssignable(final Type type, final ParameterizedType toParameterizedType,
-            final Map<TypeVariable<?>, Type> typeVarAssigns) {
+    private static boolean isAssignable(final @Nullable Type type, final @Nullable ParameterizedType toParameterizedType,
+            final @Nullable Map<TypeVariable<?>, Type> typeVarAssigns) {
         if (type == null) {
             return true;
         }
@@ -489,7 +499,7 @@ public class TypeUtils {
      * @return Type or {@code null} if some variable was not in the map
      * @since 3.2
      */
-    private static Type unrollVariableAssignments(TypeVariable<?> var, final Map<TypeVariable<?>, Type> typeVarAssigns) {
+    private static @Nullable Type unrollVariableAssignments(TypeVariable<?> var, final Map<TypeVariable<?>, Type> typeVarAssigns) {
         Type result;
         do {
             result = typeVarAssigns.get(var);
@@ -512,8 +522,8 @@ public class TypeUtils {
      * @return {@code true} if {@code type} is assignable to
      * {@code toGenericArrayType}.
      */
-    private static boolean isAssignable(final Type type, final GenericArrayType toGenericArrayType,
-            final Map<TypeVariable<?>, Type> typeVarAssigns) {
+    private static boolean isAssignable(final @Nullable Type type, final @Nullable GenericArrayType toGenericArrayType,
+            final @Nullable Map<TypeVariable<?>, Type> typeVarAssigns) {
         if (type == null) {
             return true;
         }
@@ -588,8 +598,8 @@ public class TypeUtils {
      * @return {@code true} if {@code type} is assignable to
      * {@code toWildcardType}.
      */
-    private static boolean isAssignable(final Type type, final WildcardType toWildcardType,
-            final Map<TypeVariable<?>, Type> typeVarAssigns) {
+    private static boolean isAssignable(final @Nullable Type type, final WildcardType toWildcardType,
+            final @Nullable Map<TypeVariable<?>, Type> typeVarAssigns) {
         if (type == null) {
             return true;
         }
@@ -606,12 +616,12 @@ public class TypeUtils {
         }
 
         final Type[] toUpperBounds = getImplicitUpperBounds(toWildcardType);
-        final Type[] toLowerBounds = getImplicitLowerBounds(toWildcardType);
+        final @Nullable Type[] toLowerBounds = getImplicitLowerBounds(toWildcardType);
 
         if (type instanceof WildcardType) {
             final WildcardType wildcardType = (WildcardType) type;
             final Type[] upperBounds = getImplicitUpperBounds(wildcardType);
-            final Type[] lowerBounds = getImplicitLowerBounds(wildcardType);
+            final @Nullable Type[] lowerBounds = getImplicitLowerBounds(wildcardType);
 
             for (Type toBound : toUpperBounds) {
                 // if there are assignments for unresolved type variables,
@@ -675,8 +685,8 @@ public class TypeUtils {
      * @return {@code true} if {@code type} is assignable to
      * {@code toTypeVariable}.
      */
-    private static boolean isAssignable(final Type type, final TypeVariable<?> toTypeVariable,
-            final Map<TypeVariable<?>, Type> typeVarAssigns) {
+    private static boolean isAssignable(final @Nullable Type type, final @Nullable TypeVariable<?> toTypeVariable,
+            final @Nullable Map<TypeVariable<?>, Type> typeVarAssigns) {
         if (type == null) {
             return true;
         }
@@ -721,7 +731,7 @@ public class TypeUtils {
      * @return the replaced type
      * @throws IllegalArgumentException if the type cannot be substituted
      */
-    private static Type substituteTypeVariables(final Type type, final Map<TypeVariable<?>, Type> typeVarAssigns) {
+    private static @PolyNull Type substituteTypeVariables(final @PolyNull Type type, final @Nullable Map<TypeVariable<?>, Type> typeVarAssigns) {
         if (type instanceof TypeVariable<?> && typeVarAssigns != null) {
             final Type replacementType = typeVarAssigns.get(type);
 
@@ -747,7 +757,7 @@ public class TypeUtils {
      * @return a {@code Map} of the type arguments to their respective type
      * variables.
      */
-    public static Map<TypeVariable<?>, Type> getTypeArguments(final ParameterizedType type) {
+    public static @Nullable Map<TypeVariable<?>, Type> getTypeArguments(final ParameterizedType type) {
         return getTypeArguments(type, getRawType(type), null);
     }
 
@@ -783,7 +793,7 @@ public class TypeUtils {
      * each type in the inheritance hierarchy from {@code type} to
      * {@code toClass} inclusive.
      */
-    public static Map<TypeVariable<?>, Type> getTypeArguments(final Type type, final Class<?> toClass) {
+    public static @Nullable Map<TypeVariable<?>, Type> getTypeArguments(final Type type, final Class<?> toClass) {
         return getTypeArguments(type, toClass, null);
     }
 
@@ -795,8 +805,8 @@ public class TypeUtils {
      * @param subtypeVarAssigns a map with type variables
      * @return the {@code Map} with type arguments
      */
-    private static Map<TypeVariable<?>, Type> getTypeArguments(final Type type, final Class<?> toClass,
-            final Map<TypeVariable<?>, Type> subtypeVarAssigns) {
+    private static @Nullable Map<TypeVariable<?>, Type> getTypeArguments(final Type type, final Class<?> toClass,
+            final @Nullable Map<TypeVariable<?>, Type> subtypeVarAssigns) {
         if (type instanceof Class<?>) {
             return getTypeArguments((Class<?>) type, toClass, subtypeVarAssigns);
         }
@@ -844,9 +854,9 @@ public class TypeUtils {
      * @param subtypeVarAssigns a map with type variables
      * @return the {@code Map} with type arguments
      */
-    private static Map<TypeVariable<?>, Type> getTypeArguments(
-            final ParameterizedType parameterizedType, final Class<?> toClass,
-            final Map<TypeVariable<?>, Type> subtypeVarAssigns) {
+    private static @Nullable Map<TypeVariable<?>, Type> getTypeArguments(
+            final ParameterizedType parameterizedType, final @Nullable Class<?> toClass,
+            final @Nullable Map<TypeVariable<?>, Type> subtypeVarAssigns) {
         final Class<?> cls = getRawType(parameterizedType);
 
         // make sure they're assignable
@@ -897,8 +907,8 @@ public class TypeUtils {
      * @param subtypeVarAssigns a map with type variables
      * @return the {@code Map} with type arguments
      */
-    private static Map<TypeVariable<?>, Type> getTypeArguments(Class<?> cls, final Class<?> toClass,
-            final Map<TypeVariable<?>, Type> subtypeVarAssigns) {
+    private static @Nullable Map<TypeVariable<?>, Type> getTypeArguments(@Nullable Class<?> cls, final @Nullable Class<?> toClass,
+            final @Nullable Map<TypeVariable<?>, Type> subtypeVarAssigns) {
         // make sure they're assignable
         if (!isAssignable(cls, toClass)) {
             return null;
@@ -922,11 +932,13 @@ public class TypeUtils {
                 : new HashMap<>(subtypeVarAssigns);
 
         // has target class been reached?
+        // toClass is non null here
         if (toClass.equals(cls)) {
             return typeVarAssigns;
         }
 
         // walk the inheritance hierarchy until the target class is reached
+        // toClass, cls is non null here
         return getTypeArguments(getClosestParentType(cls, toClass), toClass, typeVarAssigns);
     }
 
@@ -957,7 +969,7 @@ public class TypeUtils {
      * for the type variables in each type in the inheritance hierarchy from
      * {@code type} to {@code toClass} inclusive.
      */
-    public static Map<TypeVariable<?>, Type> determineTypeArguments(final Class<?> cls,
+    public static @Nullable Map<TypeVariable<?>, Type> determineTypeArguments(final Class<?> cls,
             final ParameterizedType superType) {
         Validate.notNull(cls, "cls is null");
         Validate.notNull(superType, "superType is null");
@@ -1095,7 +1107,7 @@ public class TypeUtils {
      * @param type the target type
      * @return {@code true} if {@code value} is an instance of {@code type}.
      */
-    public static boolean isInstance(final Object value, final Type type) {
+    public static boolean isInstance(final @Nullable Object value, final @Nullable Type type) {
         if (type == null) {
             return false;
         }
@@ -1194,7 +1206,7 @@ public class TypeUtils {
      * @return a non-empty array containing the lower bounds of the wildcard
      * type.
      */
-    public static Type[] getImplicitLowerBounds(final WildcardType wildcardType) {
+    public static @Nullable Type[] getImplicitLowerBounds(final WildcardType wildcardType) {
         Validate.notNull(wildcardType, "wildcardType is null");
         final Type[] bounds = wildcardType.getLowerBounds();
 
@@ -1266,7 +1278,7 @@ public class TypeUtils {
      * @return the resolved {@link Class} object or {@code null} if
      * the type could not be resolved
      */
-    public static Class<?> getRawType(final Type type, final Type assigningType) {
+    public static @Nullable Class<?> getRawType(final Type type, final @Nullable Type assigningType) {
         if (type instanceof Class<?>) {
             // it is raw, no problem
             return (Class<?>) type;
@@ -1344,7 +1356,7 @@ public class TypeUtils {
      * @param type the type to be checked
      * @return component type or null if type is not an array type
      */
-    public static Type getArrayComponentType(final Type type) {
+    public static @Nullable Type getArrayComponentType(final Type type) {
         if (type instanceof Class<?>) {
             final Class<?> clazz = (Class<?>) type;
             return clazz.isArray() ? clazz.getComponentType() : null;
@@ -1363,7 +1375,7 @@ public class TypeUtils {
      * @return Type
      * @since 3.2
      */
-    public static Type unrollVariables(Map<TypeVariable<?>, Type> typeArguments, final Type type) {
+    public static Type unrollVariables( @Nullable Map<TypeVariable<?>, Type> typeArguments, final Type type) {
         if (typeArguments == null) {
             typeArguments = Collections.emptyMap();
         }
@@ -1427,7 +1439,7 @@ public class TypeUtils {
      * @return boolean
      * @since 3.2
      */
-    public static boolean containsTypeVariables(final Type type) {
+    public static boolean containsTypeVariables(final @Nullable Type type) {
         if (type instanceof TypeVariable<?>) {
             return true;
         }
@@ -1487,7 +1499,7 @@ public class TypeUtils {
      * @return {@link ParameterizedType}
      * @since 3.2
      */
-    public static final ParameterizedType parameterizeWithOwner(final Type owner, final Class<?> raw,
+    public static final ParameterizedType parameterizeWithOwner(final @Nullable Type owner, final Class<?> raw,
         final Type... typeArguments) {
         Validate.notNull(raw, "raw class is null");
         final Type useOwner;
@@ -1505,7 +1517,7 @@ public class TypeUtils {
         Validate.isTrue(raw.getTypeParameters().length == typeArguments.length,
             "invalid number of type parameters specified: expected %d, got %d", raw.getTypeParameters().length,
             typeArguments.length);
-
+    
         return new ParameterizedTypeImpl(raw, useOwner, typeArguments);
     }
 
@@ -1531,6 +1543,8 @@ public class TypeUtils {
      * @param variables expected map keys
      * @return array of map values corresponding to specified keys
      */
+    @SuppressWarnings("assignment.type.incompatible") 
+    // result[index] is assigned non-null value, since earlier it is validated that mappings contains the key  
     private static Type[] extractTypeArgumentsFrom(final Map<TypeVariable<?>, Type> mappings, final TypeVariable<?>[] variables) {
         final Type[] result = new Type[variables.length];
         int index = 0;
@@ -1570,7 +1584,7 @@ public class TypeUtils {
      * @return boolean
      * @since 3.2
      */
-    public static boolean equals(final Type t1, final Type t2) {
+    public static boolean equals(final @Nullable Type t1, final @Nullable Type t2) {
         if (Objects.equals(t1, t2)) {
             return true;
         }
@@ -1593,7 +1607,7 @@ public class TypeUtils {
      * @return boolean
      * @since 3.2
      */
-    private static boolean equals(final ParameterizedType p, final Type t) {
+    private static boolean equals(final ParameterizedType p, final @Nullable Type t) {
         if (t instanceof ParameterizedType) {
             final ParameterizedType other = (ParameterizedType) t;
             if (equals(p.getRawType(), other.getRawType()) && equals(p.getOwnerType(), other.getOwnerType())) {
@@ -1610,7 +1624,7 @@ public class TypeUtils {
      * @return boolean
      * @since 3.2
      */
-    private static boolean equals(final GenericArrayType a, final Type t) {
+    private static boolean equals(final GenericArrayType a, final @Nullable Type t) {
         return t instanceof GenericArrayType
             && equals(a.getGenericComponentType(), ((GenericArrayType) t).getGenericComponentType());
     }
@@ -1622,7 +1636,7 @@ public class TypeUtils {
      * @return boolean
      * @since 3.2
      */
-    private static boolean equals(final WildcardType w, final Type t) {
+    private static boolean equals(final WildcardType w, final @Nullable Type t) {
         if (t instanceof WildcardType) {
             final WildcardType other = (WildcardType) t;
             return equals(getImplicitLowerBounds(w), getImplicitLowerBounds(other))
@@ -1638,7 +1652,7 @@ public class TypeUtils {
      * @return boolean
      * @since 3.2
      */
-    private static boolean equals(final Type[] t1, final Type[] t2) {
+    private static boolean equals(final @Nullable Type[] t1, final @Nullable Type[] t2) {
         if (t1.length == t2.length) {
             for (int i = 0; i < t1.length; i++) {
                 if (!equals(t1[i], t2[i])) {
@@ -1684,6 +1698,8 @@ public class TypeUtils {
      * @return String
      * @since 3.2
      */
+    @SuppressWarnings("dereference.of.nullable") 
+    // while loop breaks if c.getEnclosingClass() is null, hence c is assigned non-null value at the end of the loop 
     public static String toLongString(final TypeVariable<?> var) {
         Validate.notNull(var, "var is null");
         final StringBuilder buf = new StringBuilder();
@@ -1741,6 +1757,8 @@ public class TypeUtils {
      * @return String
      * @since 3.2
      */
+    @SuppressWarnings("argument.type.incompatible") 
+    // null check in IF condition ensure that c.getEnclosingClass() is not null in IF block 
     private static String classToString(final Class<?> c) {
         if (c.isArray()) {
             return toString(c.getComponentType()) + "[]";

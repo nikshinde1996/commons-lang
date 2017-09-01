@@ -16,6 +16,10 @@
  */
 package org.apache.commons.lang3.concurrent;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.framework.qual.AnnotatedFor;
+
 /**
  * <p>
  * Definition of an interface for the thread-safe initialization of objects.
@@ -37,7 +41,8 @@ package org.apache.commons.lang3.concurrent;
  * @since 3.0
  * @param <T> the type of the object managed by this initializer class
  */
-public interface ConcurrentInitializer<T> {
+@AnnotatedFor({"nullness"}) 
+public interface ConcurrentInitializer<T extends @NonNull Object> {
     /**
      * Returns the fully initialized object produced by this {@code
      * ConcurrentInitializer}. A concrete implementation here returns the
@@ -49,5 +54,5 @@ public interface ConcurrentInitializer<T> {
      * @throws ConcurrentException if an error occurred during initialization of
      * the object
      */
-    T get() throws ConcurrentException;
+     T get() throws ConcurrentException;
 }

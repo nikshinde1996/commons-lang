@@ -32,6 +32,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.initialization.qual.UnderInitialization;
+import org.checkerframework.checker.initialization.qual.UnknownInitialization;
+import org.checkerframework.checker.nullness.qual.EnsuresNonNull;
+import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 
 /**
  * <p>FastDatePrinter is a fast and thread-safe version of
@@ -77,6 +83,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
  * @since 3.2
  * @see FastDateParser
  */
+@AnnotatedFor({"nullness"}) 
 public class FastDatePrinter implements DatePrinter, Serializable {
     // A lot of the speed in this class comes from caching, but some comes
     // from the special int to StringBuffer conversion.
@@ -129,7 +136,7 @@ public class FastDatePrinter implements DatePrinter, Serializable {
     /**
      * The parsed rules.
      */
-    private transient Rule[] mRules;
+    private transient Rule @MonotonicNonNull [] mRules;
     /**
      * The estimated maximum length.
      */
@@ -158,7 +165,8 @@ public class FastDatePrinter implements DatePrinter, Serializable {
     /**
      * <p>Initializes the instance for first use.</p>
      */
-    private void init() {
+    @EnsuresNonNull("mRules") 
+    private void init(@UnknownInitialization(org.apache.commons.lang3.time.FastDatePrinter.class) FastDatePrinter this) {
         final List<Rule> rulesList = parsePattern();
         mRules = rulesList.toArray(new Rule[rulesList.size()]);
 
@@ -178,7 +186,7 @@ public class FastDatePrinter implements DatePrinter, Serializable {
      * @return a {@code List} of Rule objects
      * @throws IllegalArgumentException if pattern is invalid
      */
-    protected List<Rule> parsePattern() {
+    protected List<Rule> parsePattern(@UnknownInitialization(org.apache.commons.lang3.time.FastDatePrinter.class) FastDatePrinter this) {
         final DateFormatSymbols symbols = new DateFormatSymbols(mLocale);
         final List<Rule> rules = new ArrayList<>();
 
@@ -320,7 +328,7 @@ public class FastDatePrinter implements DatePrinter, Serializable {
      * @param indexRef  index references
      * @return parsed token
      */
-    protected String parseToken(final String pattern, final int[] indexRef) {
+    protected String parseToken(@UnknownInitialization(org.apache.commons.lang3.time.FastDatePrinter.class) FastDatePrinter this, final String pattern, final int[] indexRef) {
         final StringBuilder buf = new StringBuilder();
 
         int i = indexRef[0];
@@ -379,7 +387,7 @@ public class FastDatePrinter implements DatePrinter, Serializable {
      * @param padding  the padding required
      * @return a new rule with the correct padding
      */
-    protected NumberRule selectNumberRule(final int field, final int padding) {
+    protected NumberRule selectNumberRule(@UnknownInitialization(org.apache.commons.lang3.time.FastDatePrinter.class) FastDatePrinter this, final int field, final int padding) {
         switch (padding) {
         case 1:
             return new UnpaddedNumberField(field);
@@ -626,7 +634,7 @@ public class FastDatePrinter implements DatePrinter, Serializable {
      * @return {@code true} if equal
      */
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(final @Nullable Object obj) {
         if (!(obj instanceof FastDatePrinter)) {
             return false;
         }
@@ -1557,7 +1565,7 @@ public class FastDatePrinter implements DatePrinter, Serializable {
          * {@inheritDoc}
          */
         @Override
-        public boolean equals(final Object obj) {
+        public boolean equals(final @Nullable Object obj) {
             if (this == obj) {
                 return true;
             }

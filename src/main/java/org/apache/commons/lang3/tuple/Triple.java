@@ -20,6 +20,8 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>A triple consisting of three elements.</p>
@@ -37,6 +39,7 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
  *
  * @since 3.2
  */
+@AnnotatedFor({"nullness"}) 
 public abstract class Triple<L, M, R> implements Comparable<Triple<L, M, R>>, Serializable {
 
     /** Serialization version */
@@ -56,7 +59,7 @@ public abstract class Triple<L, M, R> implements Comparable<Triple<L, M, R>>, Se
      * @param right  the right element, may be null
      * @return a triple formed from the three parameters, not null
      */
-    public static <L, M, R> Triple<L, M, R> of(final L left, final M middle, final R right) {
+    public static <L, M, R> Triple<L, M, R> of(final @Nullable L left, final @Nullable M middle, final @Nullable R right) {
         return new ImmutableTriple<>(left, middle, right);
     }
 
@@ -66,21 +69,21 @@ public abstract class Triple<L, M, R> implements Comparable<Triple<L, M, R>>, Se
      *
      * @return the left element, may be null
      */
-    public abstract L getLeft();
+    public abstract @Nullable L getLeft();
 
     /**
      * <p>Gets the middle element from this triple.</p>
      *
      * @return the middle element, may be null
      */
-    public abstract M getMiddle();
+    public abstract @Nullable M getMiddle();
 
     /**
      * <p>Gets the right element from this triple.</p>
      *
      * @return the right element, may be null
      */
-    public abstract R getRight();
+    public abstract @Nullable R getRight();
 
     //-----------------------------------------------------------------------
     /**
@@ -105,7 +108,7 @@ public abstract class Triple<L, M, R> implements Comparable<Triple<L, M, R>>, Se
      * @return true if the elements of the triple are equal
      */
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(final @Nullable Object obj) {
         if (obj == this) {
             return true;
         }
@@ -124,6 +127,9 @@ public abstract class Triple<L, M, R> implements Comparable<Triple<L, M, R>>, Se
      * @return the hash code
      */
     @Override
+    @SuppressWarnings("nullness:dereference.of.nullable")
+    // false positive warning due to type checking limitations in conditional operator.
+    // getLeft().hashCode() is not executed when getLeft() is null.
     public int hashCode() {
         return (getLeft() == null ? 0 : getLeft().hashCode()) ^
             (getMiddle() == null ? 0 : getMiddle().hashCode()) ^

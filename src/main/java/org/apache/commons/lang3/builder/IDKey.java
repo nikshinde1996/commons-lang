@@ -17,6 +17,9 @@
 
 package org.apache.commons.lang3.builder;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
+
 // adapted from org.apache.axis.utils.IDKey
 
 /**
@@ -26,6 +29,7 @@ package org.apache.commons.lang3.builder;
  * This is necessary to disambiguate the occasional duplicate
  * identityHashCodes that can occur.
  */
+@AnnotatedFor({"nullness"}) 
 final class IDKey {
         private final Object value;
         private final int id;
@@ -58,7 +62,7 @@ final class IDKey {
          * @return if the instances are for the same object
          */
         @Override
-        public boolean equals(final Object other) {
+        public boolean equals(final @Nullable Object other) {
             if (!(other instanceof IDKey)) {
                 return false;
             }

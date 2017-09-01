@@ -26,6 +26,8 @@ import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * Default implementation of the context storing the label-value pairs for contexted exceptions.
@@ -50,7 +52,7 @@ public class DefaultExceptionContext implements ExceptionContext, Serializable {
      * {@inheritDoc}
      */
     @Override
-    public DefaultExceptionContext addContextValue(final String label, final Object value) {
+    public DefaultExceptionContext addContextValue(final String label, final @Nullable Object value) {
         contextValues.add(new ImmutablePair<>(label, value));
         return this;
     }
@@ -59,7 +61,7 @@ public class DefaultExceptionContext implements ExceptionContext, Serializable {
      * {@inheritDoc}
      */
     @Override
-    public DefaultExceptionContext setContextValue(final String label, final Object value) {
+    public DefaultExceptionContext setContextValue(final String label, final @Nullable Object value) {
         for (final Iterator<Pair<String, Object>> iter = contextValues.iterator(); iter.hasNext();) {
             final Pair<String, Object> p = iter.next();
             if (StringUtils.equals(label, p.getKey())) {
@@ -74,8 +76,8 @@ public class DefaultExceptionContext implements ExceptionContext, Serializable {
      * {@inheritDoc}
      */
     @Override
-    public List<Object> getContextValues(final String label) {
-        final List<Object> values = new ArrayList<>();
+    public List<@Nullable Object> getContextValues(final @Nullable String label) {
+        final List<@Nullable Object> values = new ArrayList<>();
         for (final Pair<String, Object> pair : contextValues) {
             if (StringUtils.equals(label, pair.getKey())) {
                 values.add(pair.getValue());
@@ -88,7 +90,7 @@ public class DefaultExceptionContext implements ExceptionContext, Serializable {
      * {@inheritDoc}
      */
     @Override
-    public Object getFirstContextValue(final String label) {
+    public @Nullable Object getFirstContextValue(final @Nullable String label) {
         for (final Pair<String, Object> pair : contextValues) {
             if (StringUtils.equals(label, pair.getKey())) {
                 return pair.getValue();
@@ -101,6 +103,8 @@ public class DefaultExceptionContext implements ExceptionContext, Serializable {
      * {@inheritDoc}
      */
     @Override
+    @SuppressWarnings("argument.type.incompatible")
+    // Pair used to store contextValues does not allow null keys (left element).
     public Set<String> getContextLabels() {
         final Set<String> labels = new HashSet<>();
         for (final Pair<String, Object> pair : contextValues) {
@@ -124,7 +128,7 @@ public class DefaultExceptionContext implements ExceptionContext, Serializable {
      * @return the exception message <b>with</b> context information appended, never null
      */
     @Override
-    public String getFormattedExceptionMessage(final String baseMessage){
+    public String getFormattedExceptionMessage(final @Nullable String baseMessage){
         final StringBuilder buffer = new StringBuilder(256);
         if (baseMessage != null) {
             buffer.append(baseMessage);

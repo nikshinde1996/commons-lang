@@ -30,6 +30,10 @@ import java.util.TreeSet;
 import org.apache.commons.lang3.exception.CloneFailedException;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.commons.lang3.text.StrBuilder;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.checker.nullness.qual.PolyNull;
+import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * <p>Operations on {@code Object}.</p>
@@ -44,6 +48,7 @@ import org.apache.commons.lang3.text.StrBuilder;
 //@Immutable
 @SuppressWarnings("deprecation") // deprecated class StrBuilder is imported
 // because it is part of the signature of deprecated methods
+@AnnotatedFor({"nullness"})
 public class ObjectUtils {
 
     /**
@@ -93,7 +98,7 @@ public class ObjectUtils {
      * @param defaultValue  the default value to return, may be {@code null}
      * @return {@code object} if it is not {@code null}, defaultValue otherwise
      */
-    public static <T> T defaultIfNull(final T object, final T defaultValue) {
+    public static <T> @PolyNull T defaultIfNull(final @Nullable T object, final @PolyNull T defaultValue) {
         return object != null ? object : defaultValue;
     }
 
@@ -120,7 +125,7 @@ public class ObjectUtils {
      * @since 3.0
      */
     @SafeVarargs
-    public static <T> T firstNonNull(final T... values) {
+    public static <T> @Nullable T firstNonNull(final @Nullable T... values) {
         if (values != null) {
             for (final T val : values) {
                 if (val != null) {
@@ -154,7 +159,7 @@ public class ObjectUtils {
      * If the array is {@code null} or empty {@code false} is also returned.
      * @since 3.5
      */
-    public static boolean anyNotNull(final Object... values) {
+    public static boolean anyNotNull(final @Nullable Object... values) {
         return firstNonNull(values) != null;
     }
 
@@ -183,7 +188,7 @@ public class ObjectUtils {
      * {@code true} if all values in the array are not {@code null}s or array contains no elements.
      * @since 3.5
      */
-    public static boolean allNotNull(final Object... values) {
+    public static boolean allNotNull(final @Nullable Object @Nullable ... values) {
         if (values == null) {
             return false;
         }
@@ -221,7 +226,7 @@ public class ObjectUtils {
      * be removed from future releases.
      */
     @Deprecated
-    public static boolean equals(final Object object1, final Object object2) {
+    public static boolean equals(final @Nullable Object object1, final @Nullable Object object2) {
         if (object1 == object2) {
             return true;
         }
@@ -250,7 +255,7 @@ public class ObjectUtils {
      * @param object2  the second object, may be {@code null}
      * @return {@code false} if the values of both objects are the same
      */
-    public static boolean notEqual(final Object object1, final Object object2) {
+    public static boolean notEqual(final @Nullable Object object1, final @Nullable Object object2) {
         return !ObjectUtils.equals(object1, object2);
     }
 
@@ -270,7 +275,7 @@ public class ObjectUtils {
      * removed in future releases
      */
     @Deprecated
-    public static int hashCode(final Object obj) {
+    public static int hashCode(final @Nullable Object obj) {
         // hashCode(Object) retained for performance, as hash code is often critical
         return obj == null ? 0 : obj.hashCode();
     }
@@ -298,7 +303,7 @@ public class ObjectUtils {
      * removed in future releases.
      */
     @Deprecated
-    public static int hashCodeMulti(final Object... objects) {
+    public static int hashCodeMulti(final @Nullable Object... objects) {
         int hash = 1;
         if (objects != null) {
             for (final Object object : objects) {
@@ -327,7 +332,7 @@ public class ObjectUtils {
      * @return the default toString text, or {@code null} if
      *  {@code null} passed in
      */
-    public static String identityToString(final Object object) {
+    public static @Nullable String identityToString(final @Nullable Object object) {
         if (object == null) {
             return null;
         }
@@ -451,7 +456,7 @@ public class ObjectUtils {
      * method returns an empty String. To preserve behavior use {@code java.util.Objects.toString(myObject, "")}
      */
     @Deprecated
-    public static String toString(final Object obj) {
+    public static String toString(final @Nullable Object obj) {
         return obj == null ? StringUtils.EMPTY : obj.toString();
     }
 
@@ -477,7 +482,7 @@ public class ObjectUtils {
      * will be removed in future releases.
      */
     @Deprecated
-    public static String toString(final Object obj, final String nullStr) {
+    public static @Nullable String toString(final @Nullable Object obj, final @Nullable String nullStr) {
         return obj == null ? nullStr : obj.toString();
     }
 
@@ -497,7 +502,7 @@ public class ObjectUtils {
      *  </ul>
      */
     @SafeVarargs
-    public static <T extends Comparable<? super T>> T min(final T... values) {
+    public static <T extends Comparable<? super T>> @Nullable T min(final @Nullable T... values) {
         T result = null;
         if (values != null) {
             for (final T value : values) {
@@ -523,7 +528,7 @@ public class ObjectUtils {
      *  </ul>
      */
     @SafeVarargs
-    public static <T extends Comparable<? super T>> T max(final T... values) {
+    public static <T extends Comparable<? super T>> @Nullable T max(final @Nullable T... values) {
         T result = null;
         if (values != null) {
             for (final T value : values) {
@@ -545,7 +550,7 @@ public class ObjectUtils {
      * @return a negative value if c1 &lt; c2, zero if c1 = c2
      *  and a positive value if c1 &gt; c2
      */
-    public static <T extends Comparable<? super T>> int compare(final T c1, final T c2) {
+    public static <T extends Comparable<? super T>> int compare(final @Nullable T c1, final @Nullable T c2) {
         return compare(c1, c2, false);
     }
 
@@ -562,7 +567,7 @@ public class ObjectUtils {
      *  and a positive value if c1 &gt; c2
      * @see java.util.Comparator#compare(Object, Object)
      */
-    public static <T extends Comparable<? super T>> int compare(final T c1, final T c2, final boolean nullGreater) {
+    public static <T extends Comparable<? super T>> int compare(final @Nullable T c1, final @Nullable T c2, final boolean nullGreater) {
         if (c1 == c2) {
             return 0;
         } else if (c1 == null) {
@@ -629,7 +634,7 @@ public class ObjectUtils {
      * @since 3.0.1
      */
     @SafeVarargs
-    public static <T> T mode(final T... items) {
+    public static <T extends @NonNull Object> @Nullable T mode(final T... items) {
         if (ArrayUtils.isNotEmpty(items)) {
             final HashMap<T, MutableInt> occurrences = new HashMap<>(items.length);
             for (final T t : items) {
@@ -667,7 +672,9 @@ public class ObjectUtils {
      * @throws CloneFailedException if the object is cloneable and the clone operation fails
      * @since 3.0
      */
-    public static <T> T clone(final T obj) {
+    @SuppressWarnings("argument.type.incompatible") 
+    // As InvocationTargetException occurs, its cause is non-null, hence InvocationTargetException.getCause() returns non-null value 
+    public static <T> @Nullable T clone(final @Nullable T obj) {
         if (obj instanceof Cloneable) {
             final Object result;
             if (obj.getClass().isArray()) {
@@ -721,7 +728,7 @@ public class ObjectUtils {
      * @throws CloneFailedException if the object is cloneable and the clone operation fails
      * @since 3.0
      */
-    public static <T> T cloneIfPossible(final T obj) {
+    public static <T> @Nullable T cloneIfPossible(final @Nullable T obj) {
         final T clone = clone(obj);
         return clone == null ? obj : clone;
     }

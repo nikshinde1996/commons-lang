@@ -31,6 +31,11 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.apache.commons.lang3.Validate;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.EnsuresNonNull;
+import org.checkerframework.checker.initialization.qual.UnknownInitialization;
 
 /**
  * <p>An EventListenerSupport object can be used to manage a list of event
@@ -66,7 +71,8 @@ import org.apache.commons.lang3.Validate;
  *
  * @since 3.0
  */
-public class EventListenerSupport<L> implements Serializable {
+@AnnotatedFor({"nullness"}) 
+public class EventListenerSupport<L extends @NonNull Object> implements Serializable {
 
     /** Serialization version */
     private static final long serialVersionUID = 3593265990380473632L;
@@ -121,6 +127,9 @@ public class EventListenerSupport<L> implements Serializable {
      * @throws IllegalArgumentException if <code>listenerInterface</code> is
      *         not an interface.
      */
+    @SuppressWarnings("argument.type.incompatible")
+    // By default context classLoader is non-null, i.e it is same as context class loader of parent
+    // thread. For null ClassLoader, it has to be explicitly set using Thread.setContextClassLoader() method. 
     public EventListenerSupport(final Class<L> listenerInterface) {
         this(listenerInterface, Thread.currentThread().getContextClassLoader());
     }
@@ -138,6 +147,7 @@ public class EventListenerSupport<L> implements Serializable {
      * @throws IllegalArgumentException if <code>listenerInterface</code> is
      *         not an interface.
      */
+    @EnsuresNonNull("this.prototypeArray") 
     public EventListenerSupport(final Class<L> listenerInterface, final ClassLoader classLoader) {
         this();
         Validate.notNull(listenerInterface, "Listener interface cannot be null.");
@@ -266,6 +276,9 @@ public class EventListenerSupport<L> implements Serializable {
      * @throws IOException if an IO error occurs
      * @throws ClassNotFoundException if the class cannot be resolved
      */
+    @SuppressWarnings("argument.type.incompatible")
+    // By default context classLoader is non-null, i.e it is same as context class loader of parent
+    // thread. For null ClassLoader, it has to be explicitly set using Thread.setContextClassLoader() method.  
     private void readObject(final ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
         @SuppressWarnings("unchecked") // Will throw CCE here if not correct
         final
@@ -276,6 +289,7 @@ public class EventListenerSupport<L> implements Serializable {
         @SuppressWarnings("unchecked") // Will throw CCE here if not correct
         final
         Class<L> listenerInterface = (Class<L>) srcListeners.getClass().getComponentType();
+        assert listenerInterface != null : "@AssumeAssertion(nullness): invoking class represents array class, hence listenerInterface is non null.";
 
         initializeTransientFields(listenerInterface, Thread.currentThread().getContextClassLoader());
     }
@@ -285,7 +299,8 @@ public class EventListenerSupport<L> implements Serializable {
      * @param listenerInterface the class of the listener interface
      * @param classLoader the class loader to be used
      */
-    private void initializeTransientFields(final Class<L> listenerInterface, final ClassLoader classLoader) {
+    @EnsuresNonNull("this.prototypeArray") 
+    private void initializeTransientFields(@UnknownInitialization(org.apache.commons.lang3.event.EventListenerSupport.class) EventListenerSupport<L> this, final Class<L> listenerInterface, final ClassLoader classLoader) {
         @SuppressWarnings("unchecked") // Will throw CCE here if not correct
         final
         L[] array = (L[]) Array.newInstance(listenerInterface, 0);
@@ -298,7 +313,8 @@ public class EventListenerSupport<L> implements Serializable {
      * @param listenerInterface the class of the listener interface
      * @param classLoader the class loader to be used
      */
-    private void createProxy(final Class<L> listenerInterface, final ClassLoader classLoader) {
+    @EnsuresNonNull("this.proxy") 
+    private void createProxy(@UnknownInitialization(org.apache.commons.lang3.event.EventListenerSupport.class) EventListenerSupport<L> this, final Class<L> listenerInterface, final ClassLoader classLoader) {
         proxy = listenerInterface.cast(Proxy.newProxyInstance(classLoader,
                 new Class[] { listenerInterface }, createInvocationHandler()));
     }
@@ -308,7 +324,7 @@ public class EventListenerSupport<L> implements Serializable {
      * to the managed listeners.  Subclasses can override to provide custom behavior.
      * @return ProxyInvocationHandler
      */
-    protected InvocationHandler createInvocationHandler() {
+    protected InvocationHandler createInvocationHandler(@UnknownInitialization(org.apache.commons.lang3.event.EventListenerSupport.class) EventListenerSupport<L> this) {
         return new ProxyInvocationHandler();
     }
 
@@ -330,7 +346,10 @@ public class EventListenerSupport<L> implements Serializable {
          * @throws Throwable if an error occurs
          */
         @Override
-        public Object invoke(final Object unusedProxy, final Method method, final Object[] args) throws Throwable {
+        @SuppressWarnings("nullness:override.return.invalid")        
+        // This method returns null after invoking all listeners.
+        // TODO : Ask reason for returning null
+        public @Nullable Object invoke(final Object unusedProxy, final Method method, final Object[] args) throws Throwable {
             for (final L listener : listeners) {
                 method.invoke(listener, args);
             }

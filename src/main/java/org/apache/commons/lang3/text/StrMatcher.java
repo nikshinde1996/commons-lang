@@ -19,6 +19,8 @@ package org.apache.commons.lang3.text;
 import java.util.Arrays;
 
 import org.apache.commons.lang3.StringUtils;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * A matcher class that can be queried to determine if a character array
@@ -32,6 +34,7 @@ import org.apache.commons.lang3.StringUtils;
  * <a href="https://commons.apache.org/proper/commons-text/javadocs/api-release/org/apache/commons/text/StrMatcher.html">
  * StrMatcher</a> instead
  */
+@AnnotatedFor({"nullness"}) 
 @Deprecated
 public abstract class StrMatcher {
 
@@ -173,7 +176,7 @@ public abstract class StrMatcher {
      * @param chars  the characters to match, null or empty matches nothing
      * @return a new matcher for the given char[]
      */
-    public static StrMatcher charSetMatcher(final char... chars) {
+    public static StrMatcher charSetMatcher(final char @Nullable ... chars) {
         if (chars == null || chars.length == 0) {
             return NONE_MATCHER;
         }
@@ -188,8 +191,8 @@ public abstract class StrMatcher {
      *
      * @param chars  the characters to match, null or empty matches nothing
      * @return a new Matcher for the given characters
-     */
-    public static StrMatcher charSetMatcher(final String chars) {
+     */ 
+    public static StrMatcher charSetMatcher(final @Nullable String chars) {
         if (StringUtils.isEmpty(chars)) {
             return NONE_MATCHER;
         }
@@ -205,7 +208,7 @@ public abstract class StrMatcher {
      * @param str  the string to match, null or empty matches nothing
      * @return a new Matcher for the given String
      */
-    public static StrMatcher stringMatcher(final String str) {
+    public static StrMatcher stringMatcher(final @Nullable String str) {
         if (StringUtils.isEmpty(str)) {
             return NONE_MATCHER;
         }

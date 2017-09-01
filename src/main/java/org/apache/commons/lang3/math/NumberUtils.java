@@ -23,12 +23,16 @@ import java.math.BigInteger;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.apache.commons.lang3.Validate;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.nullness.qual.PolyNull;
 
 /**
  * <p>Provides extra functionality for Java Number classes.</p>
  *
  * @since 2.0
  */
+@AnnotatedFor({"nullness"}) 
 public class NumberUtils {
 
     /** Reusable Long constant for zero. */
@@ -97,7 +101,7 @@ public class NumberUtils {
      *  conversion fails
      * @since 2.1
      */
-    public static int toInt(final String str) {
+    public static int toInt(final @Nullable String str) {
         return toInt(str, 0);
     }
 
@@ -118,7 +122,7 @@ public class NumberUtils {
      * @return the int represented by the string, or the default if conversion fails
      * @since 2.1
      */
-    public static int toInt(final String str, final int defaultValue) {
+    public static int toInt(final @Nullable String str, final int defaultValue) {
         if(str == null) {
             return defaultValue;
         }
@@ -146,7 +150,7 @@ public class NumberUtils {
      *  conversion fails
      * @since 2.1
      */
-    public static long toLong(final String str) {
+    public static long toLong(final @Nullable String str) {
         return toLong(str, 0L);
     }
 
@@ -167,7 +171,7 @@ public class NumberUtils {
      * @return the long represented by the string, or the default if conversion fails
      * @since 2.1
      */
-    public static long toLong(final String str, final long defaultValue) {
+    public static long toLong(final @Nullable String str, final long defaultValue) {
         if (str == null) {
             return defaultValue;
         }
@@ -196,7 +200,7 @@ public class NumberUtils {
      *  if conversion fails
      * @since 2.1
      */
-    public static float toFloat(final String str) {
+    public static float toFloat(final @Nullable String str) {
         return toFloat(str, 0.0f);
     }
 
@@ -219,7 +223,7 @@ public class NumberUtils {
      *  if conversion fails
      * @since 2.1
      */
-    public static float toFloat(final String str, final float defaultValue) {
+    public static float toFloat(final @Nullable String str, final float defaultValue) {
       if (str == null) {
           return defaultValue;
       }
@@ -248,7 +252,7 @@ public class NumberUtils {
      *  if conversion fails
      * @since 2.1
      */
-    public static double toDouble(final String str) {
+    public static double toDouble(final @Nullable String str) {
         return toDouble(str, 0.0d);
     }
 
@@ -271,7 +275,7 @@ public class NumberUtils {
      *  if conversion fails
      * @since 2.1
      */
-    public static double toDouble(final String str, final double defaultValue) {
+    public static double toDouble(final @Nullable String str, final double defaultValue) {
       if (str == null) {
           return defaultValue;
       }
@@ -300,7 +304,7 @@ public class NumberUtils {
      *  conversion fails
      * @since 2.5
      */
-    public static byte toByte(final String str) {
+    public static byte toByte(final @Nullable String str) {
         return toByte(str, (byte) 0);
     }
 
@@ -321,7 +325,7 @@ public class NumberUtils {
      * @return the byte represented by the string, or the default if conversion fails
      * @since 2.5
      */
-    public static byte toByte(final String str, final byte defaultValue) {
+    public static byte toByte(final @Nullable String str, final byte defaultValue) {
         if(str == null) {
             return defaultValue;
         }
@@ -349,7 +353,7 @@ public class NumberUtils {
      *  conversion fails
      * @since 2.5
      */
-    public static short toShort(final String str) {
+    public static short toShort(final @Nullable String str) {
         return toShort(str, (short) 0);
     }
 
@@ -370,7 +374,7 @@ public class NumberUtils {
      * @return the short represented by the string, or the default if conversion fails
      * @since 2.5
      */
-    public static short toShort(final String str, final short defaultValue) {
+    public static short toShort(final @Nullable String str, final short defaultValue) {
         if(str == null) {
             return defaultValue;
         }
@@ -448,7 +452,7 @@ public class NumberUtils {
      * @return Number created from the string (or null if the input is null)
      * @throws NumberFormatException if the value cannot be converted
      */
-    public static Number createNumber(final String str) throws NumberFormatException {
+    public static @Nullable Number createNumber(final @Nullable String str) throws NumberFormatException {
         if (str == null) {
             return null;
         }
@@ -653,7 +657,7 @@ public class NumberUtils {
      * @param str  the String to check
      * @return if it is all zeros or <code>null</code>
      */
-    private static boolean isAllZeros(final String str) {
+    private static boolean isAllZeros(final @Nullable String str) {
         if (str == null) {
             return true;
         }
@@ -675,7 +679,7 @@ public class NumberUtils {
      * @return converted <code>Float</code> (or null if the input is null)
      * @throws NumberFormatException if the value cannot be converted
      */
-    public static Float createFloat(final String str) {
+    public static @PolyNull Float createFloat(final @PolyNull String str) {
         if (str == null) {
             return null;
         }
@@ -691,7 +695,7 @@ public class NumberUtils {
      * @return converted <code>Double</code> (or null if the input is null)
      * @throws NumberFormatException if the value cannot be converted
      */
-    public static Double createDouble(final String str) {
+    public static @PolyNull Double createDouble(final @PolyNull String str) {
         if (str == null) {
             return null;
         }
@@ -709,7 +713,7 @@ public class NumberUtils {
      * @return converted <code>Integer</code> (or null if the input is null)
      * @throws NumberFormatException if the value cannot be converted
      */
-    public static Integer createInteger(final String str) {
+    public static @PolyNull Integer createInteger(final @PolyNull String str) {
         if (str == null) {
             return null;
         }
@@ -728,7 +732,7 @@ public class NumberUtils {
      * @return converted <code>Long</code> (or null if the input is null)
      * @throws NumberFormatException if the value cannot be converted
      */
-    public static Long createLong(final String str) {
+    public static @PolyNull Long createLong(final @PolyNull String str) {
         if (str == null) {
             return null;
         }
@@ -745,7 +749,7 @@ public class NumberUtils {
      * @return converted <code>BigInteger</code> (or null if the input is null)
      * @throws NumberFormatException if the value cannot be converted
      */
-    public static BigInteger createBigInteger(final String str) {
+    public static @PolyNull BigInteger createBigInteger(final @PolyNull String str) {
         if (str == null) {
             return null;
         }
@@ -780,7 +784,7 @@ public class NumberUtils {
      * @return converted <code>BigDecimal</code> (or null if the input is null)
      * @throws NumberFormatException if the value cannot be converted
      */
-    public static BigDecimal createBigDecimal(final String str) {
+    public static @PolyNull BigDecimal createBigDecimal(final @PolyNull String str) {
         if (str == null) {
             return null;
         }
@@ -1340,7 +1344,7 @@ public class NumberUtils {
      * @param str  the <code>String</code> to check
      * @return <code>true</code> if str contains only Unicode numeric
      */
-    public static boolean isDigits(final String str) {
+    public static boolean isDigits(final @Nullable String str) {
         return StringUtils.isNumeric(str);
     }
 
@@ -1370,7 +1374,7 @@ public class NumberUtils {
      *             use {@link NumberUtils#isCreatable(String)} instead
      */
     @Deprecated
-    public static boolean isNumber(final String str) {
+    public static boolean isNumber(final @Nullable String str) {
         return isCreatable(str);
     }
 
@@ -1396,7 +1400,7 @@ public class NumberUtils {
      * @return <code>true</code> if the string is a correctly formatted number
      * @since 3.5 the code supports the "+" suffix on numbers except for integers in Java 1.6
      */
-    public static boolean isCreatable(final String str) {
+    public static boolean isCreatable(final @Nullable String str) {
         if (StringUtils.isEmpty(str)) {
             return false;
         }
@@ -1530,7 +1534,7 @@ public class NumberUtils {
      * @return {@code true} if the string is a parsable number.
      * @since 3.4
      */
-    public static boolean isParsable(final String str) {
+    public static boolean isParsable(final @Nullable String str) {
         if (StringUtils.isEmpty(str)) {
             return false;
         }

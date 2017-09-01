@@ -19,6 +19,8 @@ package org.apache.commons.lang3;
 
 import java.nio.charset.Charset;
 import java.nio.charset.IllegalCharsetNameException;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>Character encoding names required of every implementation of the Java platform.</p>
@@ -37,6 +39,7 @@ import java.nio.charset.IllegalCharsetNameException;
  * This class will be removed in a future release.
  */
 @Deprecated
+@AnnotatedFor({"nullness"})
 public class CharEncoding {
 
     /**
@@ -96,7 +99,7 @@ public class CharEncoding {
      * values are not accepted by that method and an {@link IllegalCharsetNameException} may be thrown.
      */
     @Deprecated
-    public static boolean isSupported(final String name) {
+    public static boolean isSupported(final @Nullable String name) {
         if (name == null) {
             return false;
         }

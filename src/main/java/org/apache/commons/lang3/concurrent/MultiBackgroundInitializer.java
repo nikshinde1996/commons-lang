@@ -24,6 +24,8 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
 import org.apache.commons.lang3.Validate;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>
@@ -95,6 +97,7 @@ import org.apache.commons.lang3.Validate;
  *
  * @since 3.0
  */
+@AnnotatedFor({"nullness"}) 
 public class MultiBackgroundInitializer
         extends
         BackgroundInitializer<MultiBackgroundInitializer.MultiBackgroundInitializerResults> {
@@ -196,7 +199,7 @@ public class MultiBackgroundInitializer
         }
 
         // collect the results
-        final Map<String, Object> results = new HashMap<>();
+        final Map<String,@Nullable Object> results = new HashMap<>();
         final Map<String, ConcurrentException> excepts = new HashMap<>();
         for (final Map.Entry<String, BackgroundInitializer<?>> e : inits.entrySet()) {
             try {
@@ -224,7 +227,7 @@ public class MultiBackgroundInitializer
         private final Map<String, BackgroundInitializer<?>> initializers;
 
         /** A map with the result objects. */
-        private final Map<String, Object> resultObjects;
+        private final Map<String,@Nullable Object> resultObjects;
 
         /** A map with the exceptions. */
         private final Map<String, ConcurrentException> exceptions;
@@ -240,7 +243,7 @@ public class MultiBackgroundInitializer
          */
         private MultiBackgroundInitializerResults(
                 final Map<String, BackgroundInitializer<?>> inits,
-                final Map<String, Object> results,
+                final Map<String,@Nullable Object> results,
                 final Map<String, ConcurrentException> excepts) {
             initializers = inits;
             resultObjects = results;
@@ -271,7 +274,7 @@ public class MultiBackgroundInitializer
          * BackgroundInitializer}
          * @throws NoSuchElementException if the name cannot be resolved
          */
-        public Object getResultObject(final String name) {
+        public @Nullable Object getResultObject(final String name) {
             checkName(name);
             return resultObjects.get(name);
         }
@@ -299,7 +302,7 @@ public class MultiBackgroundInitializer
          * @return the exception thrown by this initializer
          * @throws NoSuchElementException if the name cannot be resolved
          */
-        public ConcurrentException getException(final String name) {
+        public @Nullable ConcurrentException getException(final String name) {
             checkName(name);
             return exceptions.get(name);
         }

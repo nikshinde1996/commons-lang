@@ -19,6 +19,9 @@ package org.apache.commons.lang3.builder;
 import java.util.Collection;
 
 import org.apache.commons.lang3.ClassUtils;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>Works with {@link ToStringBuilder} to create a "deep" <code>toString</code>.</p>
@@ -50,6 +53,7 @@ import org.apache.commons.lang3.ClassUtils;
  *
  * @since 3.2
  */
+@AnnotatedFor({"nullness"}) 
 public class RecursiveToStringStyle extends ToStringStyle {
 
     /**
@@ -67,7 +71,7 @@ public class RecursiveToStringStyle extends ToStringStyle {
     }
 
     @Override
-    public void appendDetail(final StringBuffer buffer, final String fieldName, final Object value) {
+    public void appendDetail(final StringBuffer buffer, final @Nullable String fieldName, final Object value) {
         if (!ClassUtils.isPrimitiveWrapper(value.getClass()) &&
             !String.class.equals(value.getClass()) &&
             accept(value.getClass())) {
@@ -78,7 +82,7 @@ public class RecursiveToStringStyle extends ToStringStyle {
     }
 
     @Override
-    protected void appendDetail(final StringBuffer buffer, final String fieldName, final Collection<?> coll) {
+    protected void appendDetail(final StringBuffer buffer, final @Nullable String fieldName, final Collection<? extends @NonNull Object> coll) {
         appendClassName(buffer, coll);
         appendIdentityHashCode(buffer, coll);
         appendDetail(buffer, fieldName, coll.toArray());

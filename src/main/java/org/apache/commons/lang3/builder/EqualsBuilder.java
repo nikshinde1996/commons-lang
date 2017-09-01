@@ -26,6 +26,8 @@ import java.util.Set;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.ClassUtils;
 import org.apache.commons.lang3.tuple.Pair;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>Assists in implementing {@link Object#equals(Object)} methods.</p>
@@ -84,6 +86,7 @@ import org.apache.commons.lang3.tuple.Pair;
  *
  * @since 1.0
  */
+@AnnotatedFor({"nullness"}) 
 public class EqualsBuilder implements Builder<Boolean> {
 
     /**
@@ -93,7 +96,7 @@ public class EqualsBuilder implements Builder<Boolean> {
      *
      * @since 3.0
      */
-    private static final ThreadLocal<Set<Pair<IDKey, IDKey>>> REGISTRY = new ThreadLocal<>();
+    private static final ThreadLocal< @Nullable Set<Pair<IDKey, IDKey>>> REGISTRY = new ThreadLocal<>();
 
     /*
      * NOTE: we cannot store the actual objects in a HashSet, as that would use the very hashCode()
@@ -121,7 +124,7 @@ public class EqualsBuilder implements Builder<Boolean> {
      * @return Set the registry of objects being traversed
      * @since 3.0
      */
-    static Set<Pair<IDKey, IDKey>> getRegistry() {
+    static @Nullable Set<Pair<IDKey, IDKey>> getRegistry() {
         return REGISTRY.get();
     }
 
@@ -213,8 +216,8 @@ public class EqualsBuilder implements Builder<Boolean> {
 
     private boolean testTransients = false;
     private boolean testRecursive = false;
-    private Class<?> reflectUpToClass = null;
-    private String[] excludeFields = null;
+    private @Nullable Class<?> reflectUpToClass = null;
+    private String @Nullable [] excludeFields = null;
 
     /**
      * <p>Constructor for EqualsBuilder.</p>
@@ -256,7 +259,7 @@ public class EqualsBuilder implements Builder<Boolean> {
      * @return EqualsBuilder - used to chain calls.
      * @since 3.6
      */
-    public EqualsBuilder setReflectUpToClass(final Class<?> reflectUpToClass) {
+    public EqualsBuilder setReflectUpToClass(final @Nullable Class<?> reflectUpToClass) {
         this.reflectUpToClass = reflectUpToClass;
         return this;
     }
@@ -381,7 +384,7 @@ public class EqualsBuilder implements Builder<Boolean> {
      * @see EqualsExclude
      * @since 2.0
      */
-    public static boolean reflectionEquals(final Object lhs, final Object rhs, final boolean testTransients, final Class<?> reflectUpToClass,
+    public static boolean reflectionEquals(final Object lhs, final Object rhs, final boolean testTransients, final @Nullable Class<?> reflectUpToClass,
             final String... excludeFields) {
         return reflectionEquals(lhs, rhs, testTransients, reflectUpToClass, false, excludeFields);
     }
@@ -422,7 +425,7 @@ public class EqualsBuilder implements Builder<Boolean> {
      * @see EqualsExclude
      * @since 3.6
      */
-    public static boolean reflectionEquals(final Object lhs, final Object rhs, final boolean testTransients, final Class<?> reflectUpToClass,
+    public static boolean reflectionEquals(final Object lhs, final Object rhs, final boolean testTransients, final @Nullable Class<?> reflectUpToClass,
             final boolean testRecursive, final String... excludeFields) {
         if (lhs == rhs) {
             return true;
@@ -462,7 +465,7 @@ public class EqualsBuilder implements Builder<Boolean> {
      * @param rhs  the left hand object
      * @return EqualsBuilder - used to chain calls.
      */
-    public EqualsBuilder reflectionAppend(final Object lhs, final Object rhs) {
+    public EqualsBuilder reflectionAppend(final @Nullable Object lhs, final @Nullable Object rhs) {
         if (!isEquals) {
             return this;
         }
@@ -593,7 +596,7 @@ public class EqualsBuilder implements Builder<Boolean> {
      * @param rhs  the right hand object
      * @return EqualsBuilder - used to chain calls.
      */
-    public EqualsBuilder append(final Object lhs, final Object rhs) {
+    public EqualsBuilder append(final @Nullable Object lhs, final @Nullable Object rhs) {
         if (!isEquals) {
             return this;
         }
@@ -801,7 +804,7 @@ public class EqualsBuilder implements Builder<Boolean> {
      * @param rhs  the right hand <code>Object[]</code>
      * @return EqualsBuilder - used to chain calls.
      */
-    public EqualsBuilder append(final Object[] lhs, final Object[] rhs) {
+    public EqualsBuilder append(final Object @Nullable [] lhs, final Object @Nullable [] rhs) {
         if (!isEquals) {
             return this;
         }
@@ -832,7 +835,7 @@ public class EqualsBuilder implements Builder<Boolean> {
      * @param rhs  the right hand <code>long[]</code>
      * @return EqualsBuilder - used to chain calls.
      */
-    public EqualsBuilder append(final long[] lhs, final long[] rhs) {
+    public EqualsBuilder append(final long @Nullable [] lhs, final long @Nullable [] rhs) {
         if (!isEquals) {
             return this;
         }
@@ -863,7 +866,7 @@ public class EqualsBuilder implements Builder<Boolean> {
      * @param rhs  the right hand <code>int[]</code>
      * @return EqualsBuilder - used to chain calls.
      */
-    public EqualsBuilder append(final int[] lhs, final int[] rhs) {
+    public EqualsBuilder append(final int @Nullable [] lhs, final int @Nullable [] rhs) {
         if (!isEquals) {
             return this;
         }
@@ -894,7 +897,7 @@ public class EqualsBuilder implements Builder<Boolean> {
      * @param rhs  the right hand <code>short[]</code>
      * @return EqualsBuilder - used to chain calls.
      */
-    public EqualsBuilder append(final short[] lhs, final short[] rhs) {
+    public EqualsBuilder append(final short @Nullable [] lhs, final short @Nullable [] rhs) {
         if (!isEquals) {
             return this;
         }
@@ -925,7 +928,7 @@ public class EqualsBuilder implements Builder<Boolean> {
      * @param rhs  the right hand <code>char[]</code>
      * @return EqualsBuilder - used to chain calls.
      */
-    public EqualsBuilder append(final char[] lhs, final char[] rhs) {
+    public EqualsBuilder append(final char @Nullable [] lhs, final char @Nullable [] rhs) {
         if (!isEquals) {
             return this;
         }
@@ -956,7 +959,7 @@ public class EqualsBuilder implements Builder<Boolean> {
      * @param rhs  the right hand <code>byte[]</code>
      * @return EqualsBuilder - used to chain calls.
      */
-    public EqualsBuilder append(final byte[] lhs, final byte[] rhs) {
+    public EqualsBuilder append(final byte @Nullable [] lhs, final byte @Nullable [] rhs) {
         if (!isEquals) {
             return this;
         }
@@ -987,7 +990,7 @@ public class EqualsBuilder implements Builder<Boolean> {
      * @param rhs  the right hand <code>double[]</code>
      * @return EqualsBuilder - used to chain calls.
      */
-    public EqualsBuilder append(final double[] lhs, final double[] rhs) {
+    public EqualsBuilder append(final double @Nullable [] lhs, final double @Nullable [] rhs) {
         if (!isEquals) {
             return this;
         }
@@ -1018,7 +1021,7 @@ public class EqualsBuilder implements Builder<Boolean> {
      * @param rhs  the right hand <code>float[]</code>
      * @return EqualsBuilder - used to chain calls.
      */
-    public EqualsBuilder append(final float[] lhs, final float[] rhs) {
+    public EqualsBuilder append(final float @Nullable [] lhs, final float @Nullable [] rhs) {
         if (!isEquals) {
             return this;
         }
@@ -1049,7 +1052,7 @@ public class EqualsBuilder implements Builder<Boolean> {
      * @param rhs  the right hand <code>boolean[]</code>
      * @return EqualsBuilder - used to chain calls.
      */
-    public EqualsBuilder append(final boolean[] lhs, final boolean[] rhs) {
+    public EqualsBuilder append(final boolean @Nullable [] lhs, final boolean @Nullable [] rhs) {
         if (!isEquals) {
             return this;
         }

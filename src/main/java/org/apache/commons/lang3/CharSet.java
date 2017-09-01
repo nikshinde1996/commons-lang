@@ -22,6 +22,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
+import org.checkerframework.checker.nullness.qual.PolyNull;
+import org.checkerframework.checker.initialization.qual.UnderInitialization;
 
 /**
  * <p>A set of characters.</p>
@@ -31,6 +35,7 @@ import java.util.Set;
  * <p>#ThreadSafe#</p>
  * @since 1.0
  */
+@AnnotatedFor({"nullness"}) 
 public class CharSet implements Serializable {
 
     /**
@@ -44,7 +49,7 @@ public class CharSet implements Serializable {
      * A CharSet defining no characters.
      * @since 2.0
      */
-    public static final CharSet EMPTY = new CharSet((String) null);
+    public static final @Nullable CharSet EMPTY = new CharSet((String) null);
 
     /**
      * A CharSet defining ASCII alphabetic characters "a-zA-Z".
@@ -75,7 +80,7 @@ public class CharSet implements Serializable {
      * Subclasses can add more common patterns if desired
      * @since 2.0
      */
-    protected static final Map<String, CharSet> COMMON = Collections.synchronizedMap(new HashMap<String, CharSet>());
+    protected static final Map< @Nullable String, CharSet> COMMON = Collections.synchronizedMap(new HashMap< @Nullable String, CharSet>());
 
     static {
         COMMON.put(null, EMPTY);
@@ -152,7 +157,7 @@ public class CharSet implements Serializable {
      * @return a CharSet instance
      * @since 2.4
      */
-    public static CharSet getInstance(final String... setStrs) {
+    public static @PolyNull CharSet getInstance(final String @PolyNull ... setStrs) {
         if (setStrs == null) {
             return null;
         }
@@ -186,7 +191,7 @@ public class CharSet implements Serializable {
      *
      * @param str  set definition string
      */
-    protected void add(final String str) {
+    protected void add(@UnderInitialization(org.apache.commons.lang3.CharSet.class) CharSet this, final String str) {
         if (str == null) {
             return;
         }
@@ -259,7 +264,7 @@ public class CharSet implements Serializable {
      * @since 2.0
      */
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(final @Nullable Object obj) {
         if (obj == this) {
             return true;
         }

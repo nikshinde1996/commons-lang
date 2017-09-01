@@ -27,6 +27,8 @@ import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.Validate;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>A suite of utilities surrounding the use of the
@@ -51,6 +53,7 @@ import org.apache.commons.lang3.Validate;
  *
  * @since 2.0
  */
+@AnnotatedFor({"nullness"}) 
 public class DateUtils {
 
     /**
@@ -298,7 +301,7 @@ public class DateUtils {
      * @throws ParseException if none of the date patterns were suitable (or there were none)
      * @since 3.2
      */
-    public static Date parseDate(final String str, final Locale locale, final String... parsePatterns) throws ParseException {
+    public static Date parseDate(final String str, final @Nullable Locale locale, final String... parsePatterns) throws ParseException {
         return parseDateWithLeniency(str, locale, parsePatterns, true);
     }
 
@@ -340,7 +343,7 @@ public class DateUtils {
      * @throws ParseException if none of the date patterns were suitable
      * @since 3.2
      */
-    public static Date parseDateStrictly(final String str, final Locale locale, final String... parsePatterns) throws ParseException {
+    public static Date parseDateStrictly(final String str, final @Nullable Locale locale, final String... parsePatterns) throws ParseException {
         return parseDateWithLeniency(str, locale, parsePatterns, false);
     }
 
@@ -362,7 +365,7 @@ public class DateUtils {
      * @see java.util.Calendar#isLenient()
      */
     private static Date parseDateWithLeniency(
-            final String str, final Locale locale, final String[] parsePatterns, final boolean lenient) throws ParseException {
+            final String str, final @Nullable Locale locale, final String[] parsePatterns, final boolean lenient) throws ParseException {
         if (str == null || parsePatterns == null) {
             throw new IllegalArgumentException("Date and Patterns must not be null");
         }

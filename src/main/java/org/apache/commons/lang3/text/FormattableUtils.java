@@ -24,6 +24,8 @@ import java.util.Formatter;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>Provides utilities for working with the {@code Formattable} interface.</p>
@@ -37,6 +39,7 @@ import org.apache.commons.lang3.Validate;
  * <a href="https://commons.apache.org/proper/commons-text/javadocs/api-release/org/apache/commons/text/FormattableUtils.html">
  * FormattableUtils</a> instead
  */
+@AnnotatedFor({"nullness"}) 
 @Deprecated
 public class FormattableUtils {
 
@@ -117,7 +120,7 @@ public class FormattableUtils {
      * @return the {@code formatter} instance, not null
      */
     public static Formatter append(final CharSequence seq, final Formatter formatter, final int flags, final int width,
-            final int precision, final CharSequence ellipsis) {
+            final int precision, final @Nullable CharSequence ellipsis) {
         return append(seq, formatter, flags, width, precision, ' ', ellipsis);
     }
 
@@ -135,7 +138,7 @@ public class FormattableUtils {
      * @return the {@code formatter} instance, not null
      */
     public static Formatter append(final CharSequence seq, final Formatter formatter, final int flags, final int width,
-            final int precision, final char padChar, final CharSequence ellipsis) {
+            final int precision, final char padChar, final @Nullable CharSequence ellipsis) {
         Validate.isTrue(ellipsis == null || precision < 0 || ellipsis.length() <= precision,
                 "Specified ellipsis '%1$s' exceeds precision of %2$s", ellipsis, Integer.valueOf(precision));
         final StringBuilder buf = new StringBuilder(seq);

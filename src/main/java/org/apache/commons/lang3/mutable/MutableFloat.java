@@ -16,6 +16,9 @@
  */
 package org.apache.commons.lang3.mutable;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
+
 /**
  * A mutable <code>float</code> wrapper.
  * <p>
@@ -24,6 +27,7 @@ package org.apache.commons.lang3.mutable;
  * @see Float
  * @since 2.1
  */
+@AnnotatedFor({"nullness"}) 
 public class MutableFloat extends Number implements Comparable<MutableFloat>, Mutable<Number> {
 
     /**
@@ -379,7 +383,7 @@ public class MutableFloat extends Number implements Comparable<MutableFloat>, Mu
      * @see java.lang.Float#floatToIntBits(float)
      */
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(final @Nullable Object obj) {
         return obj instanceof MutableFloat
             && Float.floatToIntBits(((MutableFloat) obj).value) == Float.floatToIntBits(value);
     }

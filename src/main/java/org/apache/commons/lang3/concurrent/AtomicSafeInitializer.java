@@ -17,6 +17,9 @@
 package org.apache.commons.lang3.concurrent;
 
 import java.util.concurrent.atomic.AtomicReference;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * <p>
@@ -52,10 +55,11 @@ import java.util.concurrent.atomic.AtomicReference;
  * @since 3.0
  * @param <T> the type of the object managed by this initializer class
  */
-public abstract class AtomicSafeInitializer<T> implements
+@AnnotatedFor({"nullness"}) 
+public abstract class AtomicSafeInitializer<T extends @NonNull Object> implements
         ConcurrentInitializer<T> {
     /** A guard which ensures that initialize() is called only once. */
-    private final AtomicReference<AtomicSafeInitializer<T>> factory =
+    private final AtomicReference<@Nullable AtomicSafeInitializer<T>> factory =
             new AtomicReference<>();
 
     /** Holds the reference to the managed object. */

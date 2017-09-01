@@ -18,6 +18,8 @@ package org.apache.commons.lang3.text;
 
 import java.text.Format;
 import java.util.Locale;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * Format factory.
@@ -27,6 +29,7 @@ import java.util.Locale;
  * <a href="https://commons.apache.org/proper/commons-text/javadocs/api-release/org/apache/commons/text/FormatFactory.html">
  * FormatFactory</a> instead
  */
+@AnnotatedFor({"nullness"}) 
 @Deprecated
 public interface FormatFactory {
 
@@ -40,6 +43,6 @@ public interface FormatFactory {
      * @param locale The locale, may be null
      * @return The format instance
      */
-    Format getFormat(String name, String arguments, Locale locale);
+    Format getFormat(String name, String arguments,@Nullable Locale locale);
 
 }

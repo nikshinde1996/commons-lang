@@ -23,6 +23,8 @@ import java.util.Collection;
 import java.util.Comparator;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.AnnotatedFor;
 
 /**
  * Assists in implementing {@link java.lang.Comparable#compareTo(Object)} methods.
@@ -92,6 +94,7 @@ import org.apache.commons.lang3.ArrayUtils;
  * @see HashCodeBuilder
  * @since 1.0
  */
+@AnnotatedFor({"nullness"}) 
 public class CompareToBuilder implements Builder<Integer> {
 
     /**
@@ -138,7 +141,7 @@ public class CompareToBuilder implements Builder<Integer> {
      * @throws ClassCastException  if <code>rhs</code> is not assignment-compatible
      *  with <code>lhs</code>
      */
-    public static int reflectionCompare(final Object lhs, final Object rhs) {
+    public static int reflectionCompare(final @Nullable Object lhs, final @Nullable Object rhs) {
         return reflectionCompare(lhs, rhs, false, null);
     }
 
@@ -170,7 +173,7 @@ public class CompareToBuilder implements Builder<Integer> {
      * @throws ClassCastException  if <code>rhs</code> is not assignment-compatible
      *  with <code>lhs</code>
      */
-    public static int reflectionCompare(final Object lhs, final Object rhs, final boolean compareTransients) {
+    public static int reflectionCompare(final @Nullable Object lhs, final @Nullable Object rhs, final boolean compareTransients) {
         return reflectionCompare(lhs, rhs, compareTransients, null);
     }
 
@@ -203,7 +206,7 @@ public class CompareToBuilder implements Builder<Integer> {
      *  with <code>lhs</code>
      * @since 2.2
      */
-    public static int reflectionCompare(final Object lhs, final Object rhs, final Collection<String> excludeFields) {
+    public static int reflectionCompare(final @Nullable Object lhs, final @Nullable Object rhs, final Collection<String> excludeFields) {
         return reflectionCompare(lhs, rhs, ReflectionToStringBuilder.toNoNullStringArray(excludeFields));
     }
 
@@ -236,7 +239,7 @@ public class CompareToBuilder implements Builder<Integer> {
      *  with <code>lhs</code>
      * @since 2.2
      */
-    public static int reflectionCompare(final Object lhs, final Object rhs, final String... excludeFields) {
+    public static int reflectionCompare(final @Nullable Object lhs, final @Nullable Object rhs, final String... excludeFields) {
         return reflectionCompare(lhs, rhs, false, null, excludeFields);
     }
 
@@ -273,10 +276,10 @@ public class CompareToBuilder implements Builder<Integer> {
      * @since 2.2 (2.0 as <code>reflectionCompare(Object, Object, boolean, Class)</code>)
      */
     public static int reflectionCompare(
-        final Object lhs,
-        final Object rhs,
+        final @Nullable Object lhs,
+        final @Nullable Object rhs,
         final boolean compareTransients,
-        final Class<?> reflectUpToClass,
+        final @Nullable Class<?> reflectUpToClass,
         final String... excludeFields) {
 
         if (lhs == rhs) {
@@ -373,7 +376,7 @@ public class CompareToBuilder implements Builder<Integer> {
      * @throws ClassCastException  if <code>rhs</code> is not assignment-compatible
      *  with <code>lhs</code>
      */
-    public CompareToBuilder append(final Object lhs, final Object rhs) {
+    public CompareToBuilder append(final @Nullable Object lhs, final @Nullable Object rhs) {
         return append(lhs, rhs, null);
     }
 
@@ -402,7 +405,7 @@ public class CompareToBuilder implements Builder<Integer> {
      *  with <code>lhs</code>
      * @since 2.0
      */
-    public CompareToBuilder append(final Object lhs, final Object rhs, final Comparator<?> comparator) {
+    public CompareToBuilder append(final @Nullable Object lhs, final @Nullable Object rhs, final @Nullable Comparator<?> comparator) {
         if (comparison != 0) {
             return this;
         }
@@ -435,7 +438,7 @@ public class CompareToBuilder implements Builder<Integer> {
         return this;
     }
 
-    private void appendArray(final Object lhs, final Object rhs, final Comparator<?> comparator) {
+    private void appendArray(final Object lhs, final Object rhs, final @Nullable Comparator<?> comparator) {
         // switch on type of array, to dispatch to the correct handler
         // handles multi dimensional arrays
         // throws a ClassCastException if rhs is not the correct array type
@@ -629,7 +632,7 @@ public class CompareToBuilder implements Builder<Integer> {
      * @throws ClassCastException  if <code>rhs</code> is not assignment-compatible
      *  with <code>lhs</code>
      */
-    public CompareToBuilder append(final Object[] lhs, final Object[] rhs) {
+    public CompareToBuilder append(final Object @Nullable [] lhs, final Object @Nullable [] rhs) {
         return append(lhs, rhs, null);
     }
 
@@ -656,7 +659,7 @@ public class CompareToBuilder implements Builder<Integer> {
      *  with <code>lhs</code>
      * @since 2.0
      */
-    public CompareToBuilder append(final Object[] lhs, final Object[] rhs, final Comparator<?> comparator) {
+    public CompareToBuilder append(final Object @Nullable [] lhs, final Object @Nullable [] rhs, final @Nullable Comparator<?> comparator) {
         if (comparison != 0) {
             return this;
         }
